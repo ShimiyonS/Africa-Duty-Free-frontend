@@ -1,0 +1,10 @@
+.nav-link {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 14px;
+    border-bottom: 2px solid var(--white-color);
+}
+
+li .nav-link:hover {
+    border-bottom: 2px solid var(--button-color);
+}
