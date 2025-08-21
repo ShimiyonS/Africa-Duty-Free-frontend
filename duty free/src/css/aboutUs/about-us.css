@@ -1,0 +1,42 @@
+.aux-head-before {
+    font-size: 31px;
+    font-weight: 900;
+    text-transform: capitalize;
+    line-height: 1.2em;
+    margin: 0px 0px 44px 0px;
+    max-width: 643px;
+    font-family: "JustusProMedium", Sans-serif !important;
+}
+
+.why-choose {
+    font-size: 20px;
+    font-weight: 400;
+    text-transform: capitalize;
+    line-height: 1.22em;
+    color: #AE9962;
+    margin: 0px 0px 35px 0px;
+}
+
+.aux-modern-heading-divider {
+    height: 1px;
+    width: 165px;
+    background-color: #AE9962;
+}
+
+.about-main-img {
+    height: 570px;
+    width: 600px;
+    border-radius: 20px;
+}
+
+.border-right h4 {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.4em;
+    letter-spacing: -0.2px;
+    margin: 0px 0px 10px 0px;
+}
+
+.border-right {
+    border-right: 1px solid #AE9962;
+}
