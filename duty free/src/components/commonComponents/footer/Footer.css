@@ -1,0 +1,10 @@
+.footer{
+    border-bottom: 1px solid var(--border-color);
+}
+.footer .nav-link:hover {
+    cursor: pointer;
+    color: var(--secondary-color);
+}
+.icon-link:hover{
+    color: var(--secondary-color);
+}
