@@ -10,9 +10,26 @@
 }
 
 :root {
-    --black-color:#000;
+    --black-color: #000;
     --white-color: #FFFFFF;
-    --secondary-color:#AE9962;
-    --button-color:#B4462A;
-    --border-color:rgba(34, 34, 34, 0.1)
+    --secondary-color: #AE9962;
+    --button-color: #B4462A;
+    --navigation-color: #5E5E5E;
+    --text-color-secondary: #fff;
+    --text-color-primary: #000;
+    --shadow: 0px 0px 0px #000;
+    --border-color: rgba(34, 34, 34, 0.1)
+}
+
+.linear-bg {
+    background: #27242B;
+    background: linear-gradient(90deg, rgba(39, 36, 43, 1) 19%, rgba(125, 46, 32, 1) 42%, rgba(184, 66, 33, 1) 68%, rgba(173, 154, 101, 1) 89%);
+}
+
+.primary-text-color {
+    color: var(--text-color-primary);
+}
+
+.secondary-text-color {
+    color: var(--text-color-secondary);
 }
