@@ -1,0 +1,59 @@
+.bread-color {
+    color: var(--navigation-color);
+}
+
+.mid-heading {
+    font-size: 22px;
+}
+
+.category-banner {
+    height: 180px;
+    background-repeat: repeat;
+    padding: 100px 0px 30px 80px;
+}
+
+.banner-des {
+    width: 120px;
+    color: var(--text-color-secondary);
+}
+
+.brand-swiper .swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.brand-swiper.swiper .swiper-slide  img {
+    width: 100%;
+}
+.card-category {
+    border-radius: 20px;
+}
+
+.category-image {
+    border-radius: 20px;
+    height: 230px;
+    border: 1px solid red;
+
+}
+
+.category-nav {
+    color: var(--text-color-secondary);
+    font-size: 22px;
+    padding: 10px 0px;
+}
+
+.small-image {
+    height: 200px;
+    box-shadow: 0px 0px 8px 0px var(--text-color-primary);
+}
+
+.big-image {
+    height: 272px;
+    border-radius: 26px;
+    object-fit: cover;
+    box-shadow: 0px 0px 8px 0px var(--text-color-primary);
+}
+
+.sale-banner-heading {
+    font-weight: bold;
+}
