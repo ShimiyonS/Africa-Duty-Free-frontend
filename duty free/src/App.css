@@ -4,8 +4,13 @@
     font-family: "DMSansRegular", Sans-serif;
 }
 
+@font-face {
+    font-family: 'justusMedium';
+    src: url('./font/JustusProMedium.TTF') format('truetype');
+}
+
 :root {
     --white-color: #FFFFFF;
-    --secondary-color:#AE9962;
-    --button-color:#B4462A
+    --secondary-color: #AE9962;
+    --button-color: #B4462A
 }
