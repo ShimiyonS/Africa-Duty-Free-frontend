@@ -7,9 +7,11 @@ import BestBuy from '../components/commonComponents/BestBuy'
 import Products from '../components/commonComponents/Products'
 import NewProducts from '../components/commonComponents/NewProducts'
 import SaleCard from '../components/commonComponents/SaleCard'
+import { banner } from '../Files/data'
 
 const BrandDetails = () => {
     const { slug } = useParams()
+    const bannerDetails = banner?.find((item) => item?.name === slug);
 
     const [brand, setBrands] = useState([])
     useEffect(() => {
@@ -22,7 +24,7 @@ const BrandDetails = () => {
     return (
         <div>
             <BreadCrumb navigation={[{ key: "home", nav: "/" }, { key: "products", nav: "/shop" }, { key: `${slug}`, nav: "" }]} />
-            <CategoryBanner bannerDetails={{ image: "", description: "" }} />
+            <CategoryBanner bannerDetails={bannerDetails} />
             <BrandSwiper />
             <BestBuy />
             <Products data={brand} />

@@ -1,0 +1,60 @@
+.section-1 {
+    position: relative;
+}
+
+.home-banner {
+    width: 100%;
+    height: calc(100vh - 200px);
+    background-image: url("../assets/home-banner.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.shop-btn {
+    background-color: #ECA203;
+    font-family: "DMSansMedium", Sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 24px;
+    color: var(--black-color);
+}
+
+.wigited-buttons {
+    position: absolute;
+    width: 100%;
+    bottom: -21px;
+    color: var(--white-color);
+}
+
+.wigited-box {
+    width: 150px;
+    height: 65px;
+    padding: 10px;
+    text-align: center;
+    background: linear-gradient(90deg, rgba(39, 36, 43, 1) 19%, rgba(125, 46, 32, 1) 42%, rgba(184, 66, 33, 1) 68%, rgba(173, 154, 101, 1) 89%);
+}
+
+.offers {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25px;
+    color: var(--white-color);
+}
+
+
+.offerbanner1 {
+    background-color: var(--secondary-color);
+    padding: 10px 10px 10px 20px;
+    font-family: "justusMedium" ;
+}
+
+.offerbanner2 {
+    background-color: var(--color-red);
+    padding: 10px 10px 10px 20px;
+}

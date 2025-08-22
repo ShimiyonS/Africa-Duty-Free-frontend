@@ -21,11 +21,12 @@ const apiRequest = async (method, url, data = {}, headers = {}) => {
         const response = await api({
             method,
             url,
-            data, 
+            data,
             params: method === "GET" ? data : {},
             headers,
         });
         return response.data;
+
     } catch (error) {
         console.error("API Error:", error.response?.data || error.message);
         throw error;

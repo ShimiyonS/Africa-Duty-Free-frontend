@@ -9,19 +9,18 @@ import SaleCard from '../components/commonComponents/SaleCard'
 import BestBuy from '../components/commonComponents/BestBuy'
 import { useParams } from 'react-router-dom'
 import { banner } from '../Files/data'
-
+import DiscountComponent from '../components/commonComponents/DiscountComponent'
 const CategoryDetails = () => {
     const { slug } = useParams();
-    const [category, setCategory] = useState([])
-
+    const [products, setProducts] = useState([])
     const bannerDetails = banner?.find((item) => item?.name === slug);
 
     useEffect(() => {
-        const fetchCategory = async () => {
-            const data = await apiRequest("GET", `/products/category/${slug}`, { page: 1 });
-            setCategory(data?.products)
-        };
-        fetchCategory();
+        const fetchProducts = async () => {
+            const data = await apiRequest("GET", "/products");
+            setProducts(data?.products)
+        }
+        fetchProducts()
     }, [])
     return (
         <div className=''>
@@ -29,10 +28,11 @@ const CategoryDetails = () => {
             <CategoryBanner bannerDetails={bannerDetails} />
             <BrandSwiper />
             <BestBuy />
-            <Products data={category} />
+            <Products data={products} />
             <SaleCard data={0} imageClass={"small-image"} />
-            <NewProducts />
+            <NewProducts heading={"New Product"} productsdata={products} />
             <SaleCard data={1} headingClass={"text-center"} imageClass={"big-image"} />
+            <DiscountComponent />
         </div>
     )
 }
