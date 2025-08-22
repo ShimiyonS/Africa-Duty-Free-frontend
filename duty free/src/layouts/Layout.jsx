@@ -6,9 +6,9 @@ import NavBar from '../components/commonComponents/header/navbar.jsx'
 const Layout = () => {
     return (
         <>
-            <SaleBanner content={"Shop - 30 % less vs high street prices - that is Real Value Duty Free Retail."}/>
-            <Header/>
-            <NavBar/>
+            <SaleBanner content={"Shop - 30 % less vs high street prices - that is Real Value Duty Free Retail."} />
+            <Header />
+            <NavBar />
             <Outlet />
             <div>footer</div>
         </>
