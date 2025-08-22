@@ -1,16 +1,16 @@
 import React from 'react'
-import aboutImg from '../images/aboutUs/travelers.png'
-import '../css/aboutUs/about-us.css'
+import aboutImg from '../assets/travelers.png'
+import '../css/about-us.css'
 
 const About = () => {
   return (
-    <div className="d-block d-md-flex justify-content-center gap-5 about-main-div container ">
+    <div className="d-block mt-5 d-lg-flex justify-content-center gap-2 about-main-div container ">
 
-      <div >
-        <img className="about-main-img mt-3 col-md-6 col-sm-12 " src={aboutImg} alt="about-img" />
+      <div className=" col-md-12 col-sm-12 col-lg-6" >
+        <img className="about-main-img mt-3 " src={aboutImg} alt="about-img" />
       </div>
 
-      <section class="aux-widget-modern-heading col-md-6 col-sm-12">
+      <section class="aux-widget-modern-heading col-md-12 col-lg-6 col-sm-12">
         <div class="aux-widget-inner">
           <p class="why-choose">Why Choose Us</p>
           <h3 class="aux-modern-heading-secondary aux-head-before  pb-5">Delivering exceptional duty-free services across Africa with unmatched quality and care.</h3>
