@@ -1,4 +1,3 @@
-import React from 'react'
 import aboutImg from '../assets/travelers.png'
 import '../css/about-us.css'
 
