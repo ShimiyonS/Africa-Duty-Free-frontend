@@ -21,7 +21,7 @@ const CategoryDetails = ({ breadNavigation, bannerDetails }) => {
     useEffect(() => {
         const fetchProducts = async () => {
             const data = await apiRequest("GET", "/products", { page: 1 });
-            setProducts(data?.products)
+            setProducts(data?.products)  
         };
         fetchProducts();
     }, [])

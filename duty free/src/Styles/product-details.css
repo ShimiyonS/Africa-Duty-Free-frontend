@@ -1,0 +1,51 @@
+.product-img {
+    height: 512px;
+    width: 512px;
+}
+
+.product-description {
+    max-width: 420px;
+}
+
+.product-price {
+    color: #AA3F1D;
+}
+
+.input-box {
+    width: 118px;
+    height: 56px;
+    text-align: center;
+}
+
+.add-cart {
+    width: 220px;
+    height: 56px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.input-box::-webkit-outer-spin-button,
+.input-box::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.input-box[type=number] {
+    -moz-appearance: textfield;
+}
+
+.wishlist {
+    border: 1px solid grey;
+}
+
+.brand-anker-tag {
+    color: #AA3F1D;
+}
+
+.product-description-inner {
+    background-color: #AE9962;
+}
+
+.product-description-details {
+    background-color: #F3F3F3;
+}
