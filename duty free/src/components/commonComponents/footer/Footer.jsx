@@ -11,18 +11,18 @@ const Footer = () => {
                 <div className="col-12 col-sm-6 col-md-3">
                     <img src={Footerimg} width={200} height={200} alt="footer-img" />
                 </div>
-                <div className="col-12 col-sm-6 col-md-3">
+                <div className="col-12 col-sm-6 col-md-3 pt-3">
                     <p className='fw-bold'>Visit Link</p>
                     <Link className="nav-link pb-2">Privacy</Link>
                     <Link className="nav-link pb-2">Terms & Conditions</Link>
                 </div>
-                <div className="col-12 col-sm-6 col-md-3">
+                <div className="col-12 col-sm-6 col-md-3 pt-3">
                     <p className='fw-bold'>Company</p>
                     <Link className="nav-link pb-2">Home backup</Link>
-                    <Link className="nav-link pb-2">About</Link>
+                    <Link to="/about" className="nav-link pb-2">About</Link>
                     <Link className="nav-link pb-2">Contact us</Link>
                 </div>
-                <div className="col-12 col-sm-6 col-md-3">
+                <div className="col-12 col-sm-6 col-md-3 pt-3">
                     <p className='fw-bold'>Contact</p>
                     <a className="nav-link pb-2">Info</a>
                     <a className="nav-link pb-2">Sales</a>
