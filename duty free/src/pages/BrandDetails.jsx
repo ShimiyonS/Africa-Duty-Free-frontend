@@ -1,40 +1,38 @@
-import { useEffect, useState } from 'react'
 import BreadCrumb from '../components/commonComponents/BreadCrumb'
-import CategoryBanner from '../components/commonComponents/CategoryBanner'
-import BrandSwiper from '../components/commonComponents/BrandSwiper'
-import NewProducts from '../components/commonComponents/NewProducts'
-import Products from '../components/commonComponents/Products'
-import { apiRequest } from '../commonMethod/common'
-import SaleCard from '../components/commonComponents/SaleCard'
-import BestBuy from '../components/commonComponents/BestBuy'
 import { useParams } from 'react-router-dom'
+import CategoryBanner from '../components/commonComponents/CategoryBanner'
+import { useEffect, useState } from 'react'
+import BrandSwiper from '../components/commonComponents/BrandSwiper'
+import BestBuy from '../components/commonComponents/BestBuy'
+import Products from '../components/commonComponents/Products'
+import NewProducts from '../components/commonComponents/NewProducts'
+import SaleCard from '../components/commonComponents/SaleCard'
 import { banner } from '../Files/data'
-import DiscountComponent from '../components/commonComponents/DiscountComponent'
-const CategoryDetails = () => {
-    const { slug } = useParams();
-    const [products, setProducts] = useState([])
+
+const BrandDetails = () => {
+    const { slug } = useParams()
     const bannerDetails = banner?.find((item) => item?.name === slug);
 
+    const [brand, setBrands] = useState([])
     useEffect(() => {
-        const fetchProducts = async () => {
-            const data = await apiRequest("GET", "/products");
-            setProducts(data?.products)
-        }
-        fetchProducts()
+        const fetchBrand = async () => {
+            const data = await apiRequest("GET", `/products/category/${slug}`);
+            setBrands(data?.products)
+        };
+        fetchBrand();
     }, [])
     return (
-        <div className=''>
+        <div>
             <BreadCrumb navigation={[{ key: "home", nav: "/" }, { key: "products", nav: "/shop" }, { key: `${slug}`, nav: "" }]} />
             <CategoryBanner bannerDetails={bannerDetails} />
             <BrandSwiper />
             <BestBuy />
-            <Products data={products} />
+            <Products data={brand} />
             <SaleCard data={0} imageClass={"small-image"} />
-            <NewProducts heading={"New Product"} productsdata={products} />
+            <NewProducts />
             <SaleCard data={1} headingClass={"text-center"} imageClass={"big-image"} />
-            <DiscountComponent />
         </div>
     )
 }
 
-export default CategoryDetails
+export default BrandDetails

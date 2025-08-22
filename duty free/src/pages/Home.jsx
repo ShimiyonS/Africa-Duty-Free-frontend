@@ -12,6 +12,7 @@ import NewProducts from "../components/commonComponents/NewProducts"
 import { useEffect, useState } from "react"
 import { apiRequest } from "../commonMethod/common"
 import DiscountComponent from "../components/commonComponents/DiscountComponent"
+import BestBuy from "../components/commonComponents/BestBuy"
 
 const Home = () => {
   const [products, setProducts] = useState([])
@@ -47,19 +48,20 @@ const Home = () => {
       </div>
 
       <BrandSwiper />
+      {/* <BestBuy /> */}
 
       <div className='d-flex align-items-center flex-wrap'>
-        <div className='p-4 col-12 col-md-6 col-lg-3'>
-          <CategoryCard image={categoryimage1} text={"Fragrance"} />
+        <div className='p-3 col-12 col-md-6 col-lg-3'>
+          <CategoryCard image={categoryimage1} text={"Fragrance"} link={"liqueur"} />
         </div>
         <div className='p-3 col-12 col-md-6 col-lg-3'>
-          <CategoryCard image={categoryimage2} text={"Skincare"} />
+          <CategoryCard image={categoryimage2} text={"Skincare"} link={"fragrances"} />
         </div>
         <div className='p-3 col-12 col-md-6 col-lg-3'>
-          <CategoryCard image={categoryimage3} text={"Gift Sets"} />
+          <CategoryCard image={categoryimage3} text={"Gift Sets"} link={"cosmetics"} />
         </div>
         <div className='p-3 col-12 col-md-6 col-lg-3'>
-          <CategoryCard image={categoryimage4} text={"Accesoires"} />
+          <CategoryCard image={categoryimage4} text={"Accesoires"} link={"cosmetics"} />
         </div>
       </div>
 
@@ -88,9 +90,9 @@ const Home = () => {
         </div>
       </div>
 
-       <NewProducts heading={"Great value offers"} productsdata={products} />
+      <NewProducts heading={"Great value offers"} productsdata={products} />
 
-       <DiscountComponent/>
+      <DiscountComponent />
 
     </div>
   )
