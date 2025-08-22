@@ -1,0 +1,87 @@
+.main-content {
+    font-size: 50px;
+    font-weight: 300;
+    font-family: justusMedium;
+    text-transform: capitalize;
+    line-height: 1em;
+    color: rgb(200, 63, 29);
+    margin: 0px 0px 22px;
+    max-width: 478px;
+}
+
+.content-div {
+    max-width: 378px;
+}
+
+.input-box {
+    background-color: #F0B13B;
+    border: none;
+    padding: 10px 0 10px 60px;
+    border-bottom-left-radius: 50px !important;
+    border-top-left-radius: 50px !important;
+}
+
+.input-box::placeholder {
+    color: black;
+}
+
+.input-box:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: #ccc;
+}
+
+.form-input input[type="submit"] {
+    box-shadow: none !important;
+    margin: -1px;
+    border: none;
+    height: 44px;
+    width: 56px;
+    background: #f0b13b;
+    border-left: 1px solid #000;
+    background-image: url(../assets/sned_email.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    border-bottom-right-radius: 50px !important;
+    border-top-right-radius: 50px !important;
+}
+
+
+.discount-main-component {
+    background-image: url(../assets/discount-img.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 530px;
+    border-radius: 40px;
+    position: relative;
+}
+
+@media (max-width:768px) and (min-width:768px) {
+    .never-miss-out {
+        padding-left: 342px;
+    }
+}
+
+
+@media (max-width:426px) {
+    .discount-main-component {
+        height: 252px !important;
+    }
+
+    .discount-main-component::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .main-content {
+        font-size: 27px;
+    }
+
+    .content-div {
+        max-width: 308px;
+    }
+}

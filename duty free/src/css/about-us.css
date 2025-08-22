@@ -1,0 +1,49 @@
+.aux-head-before {
+    font-size: 31px;
+    font-weight: 900;
+    text-transform: capitalize;
+    line-height: 1.2em;
+    margin: 0px 0px 44px 0px;
+    max-width: 580px;
+    font-family: "JustusMedium";
+}
+
+.why-choose {
+    font-size: 20px;
+    font-weight: 400;
+    font-family: "justusMedium";
+    text-transform: capitalize;
+    line-height: 1.22em;
+    color: --secondary-color;
+    margin: 0px 0px 35px 0px;
+}
+
+.aux-modern-heading-divider {
+    height: 1px;
+    width: 165px;
+    background-color: #AE9962;
+}
+
+.about-main-img {
+    height: 595px;
+    width: 95%;
+    border-radius: 20px;
+}
+
+@media (max-width:426px) {
+    .about-main-img {
+        width: 100%;
+    }
+}
+
+.border-right h4 {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.4em;
+    letter-spacing: -0.2px;
+    margin: 0px 0px 10px 0px;
+}
+
+.border-right {
+    border-right: 1px solid #AE9962;
+}
