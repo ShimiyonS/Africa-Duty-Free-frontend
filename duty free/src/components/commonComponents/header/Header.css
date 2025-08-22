@@ -20,7 +20,7 @@
 .header-search {
     width: 350px;
     border-radius: 50px 0px 0px 50px;
-    border-color: #FFFFFF;
+    border-color: var(--white-color);
 }
 
 .header-search:focus {
@@ -28,7 +28,7 @@
 }
 
 .header-submit {
-    border-color: #FFFFFF;
+    border-color: var(--white-color);
     border-radius: 0px 50px 50px 0px;
     border-left: 0px;
 }
@@ -38,10 +38,26 @@
     background-color: var(--button-color);
 }
 
-.aux-burger {
-    width: 35px;
+.toggle-icon {
+    height: 35px;
 }
 
- .aux-burger .mid-line {
-    border: 1px solid #000000 !important;
+.toggle-icon span {
+    width: 35px;
+    height: 2px;
+    background-color: var(--black-color);
+    display: block;
+    transition: 0.3s linear;
+}
+
+.toggle-icon-active .start-line {
+    transform: translateY(10px) rotate(45deg);
+}
+
+.toggle-icon-active .mid-line {
+    height: 0px;
+}
+
+.toggle-icon-active .end-line {
+    transform: translateY(-22px) rotate(-45deg);
 }
