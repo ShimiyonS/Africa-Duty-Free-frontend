@@ -4,8 +4,11 @@ import Layout from './layouts/Layout';
 import Home from './pages/Home';
 import About from './pages/About';
 import NoPage from './pages/NoPage';
-import CategoryRoute from './routes/CategoryRoute';
 import ProductDetails from './pages/ProductDetails';
+import BrandDetails from './pages/BrandDetails';
+import CategoryDetails from './pages/CategoryDetails';
+import ShopDetails from './pages/ShopDetails';
+import Cart from './pages/Cart';
 
 function App() {
 
@@ -15,9 +18,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index path="/" element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="/product-category/*" element={<CategoryRoute />} />
+            <Route path="/product-category/:slug" element={<CategoryDetails />} />
             <Route path="/product/:slug" element={<ProductDetails />} />
+            <Route path="/brand/:slug" element={<BrandDetails />} />
+            <Route path="/africa-best-buy/product-category/:slug" element={<BrandDetails />} />
+            <Route path="/shop" element={<ShopDetails />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>

@@ -1,15 +1,13 @@
-import  { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { firstLetterCapital } from '../../commonMethod/common';
 import ProductCard from './ProductCard';
 import "../../Styles/product.css";
 import PaginationCommon from './PaginationCommon';
+import EmptyCustom from './EmptyCustom';
 
-const Products = ({ data }) => {
-    const location = useLocation();
-    const path = location.pathname;
-    const segments = path.split("/").filter(Boolean);
-    const category = segments[segments.length - 1];
+const Products = ({ data, headingText }) => {
+    const { slug } = useParams()
 
     // pagination state
     const [currentPage, setCurrentPage] = useState(1);
@@ -30,22 +28,26 @@ const Products = ({ data }) => {
         <div>
             <div className='container'>
                 <p className='mb-5 linear-bg px-3 py-2 secondary-text-color'>
-                    {firstLetterCapital(category)}
+                    {firstLetterCapital(slug || headingText)}
                 </p>
-                <div className='product-grid'>
+                {currentData?.length ? <><div className='product-grid'>
                     {currentData?.map((item, idx) => (
                         <div key={idx}>
                             <ProductCard data={item} />
                         </div>
                     ))}
+
                 </div>
-                <PaginationCommon
-                    data={data}
-                    handlePage={handlePage}
-                    currentPage={currentPage}
-                    visibleLength={itemsPerPage}
-                    parentClass={"pt-2 mb-5"}
-                />
+                    <PaginationCommon
+                        data={data}
+                        handlePage={handlePage}
+                        currentPage={currentPage}
+                        visibleLength={itemsPerPage}
+                        parentClass={"pt-2 mb-5"}
+                    />
+                </>
+                    : <EmptyCustom />}
+
             </div>
         </div>
     );
