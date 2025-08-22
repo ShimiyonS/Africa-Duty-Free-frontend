@@ -14,7 +14,7 @@
     font-family: "justusMedium";
     text-transform: capitalize;
     line-height: 1.22em;
-    color: --secondary-color;
+    color: var(--secondary-color);
     margin: 0px 0px 35px 0px;
 }
 
