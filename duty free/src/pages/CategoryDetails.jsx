@@ -14,6 +14,7 @@ import NewProducts from '../components/commonComponents/NewProducts'
 import Products from '../components/commonComponents/Products'
 import { apiRequest } from '../commonMethod/common'
 import SaleCard from '../components/commonComponents/SaleCard'
+import DiscountComponent from '../components/commonComponents/DiscountComponent'
 
 const CategoryDetails = ({ breadNavigation, bannerDetails }) => {
     const [products, setProducts] = useState([])
@@ -69,8 +70,9 @@ const CategoryDetails = ({ breadNavigation, bannerDetails }) => {
             </div>
             <Products data={products} />
             <SaleCard data={saleFirst} imageClass={"small-image"} />
-            <NewProducts />
+            <NewProducts heading={"New Product"} productsdata={products} />
             <SaleCard data={saleSecond} headingClass={"text-center"} imageClass={"big-image"} />
+            <DiscountComponent/>
 
         </div>
     )

@@ -7,18 +7,11 @@ import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { apiRequest } from '../../commonMethod/common';
 import ProductCard from './ProductCard';
-const NewProducts = () => {
-    const [products, setProducts] = useState([])
-    useEffect(() => {
-        const fetchProducts = async () => {
-            const data = await apiRequest("GET", "/products", { page: 1 });
-            setProducts(data?.products)
-        };
-        fetchProducts();
-    }, [])
+const NewProducts = ({heading , productsdata}) => {
+
     return (
         <div className='container'>
-            <p className='mb-5 linear-bg px-3 py-2 secondary-text-color'>New products</p>
+            <p className='mb-5 linear-bg px-3 py-2 secondary-text-color'>{heading}</p>
             <Swiper
                 slidesPerView={5}
                 spaceBetween={50}
@@ -46,7 +39,7 @@ const NewProducts = () => {
                 modules={[Autoplay, FreeMode, Navigation]}
                 className="product-swiper"
             >
-                {products.map((item) => {
+                {productsdata?.map((item) => {
                     return (
                         <SwiperSlide>
                             <ProductCard data={item} />

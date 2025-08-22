@@ -5,19 +5,24 @@
     border-bottom: 2px solid var(--white-color);
 }
 
+.nav-header ul li .active {
+    border-bottom: 2px solid var(--button-color) !important;
+}
+
 li .nav-link:hover {
-    border-bottom: 2px solid var(--button-color);
+    border-bottom: 2px solid var(--button-color) !important;
 }
 
 .sidebar {
     transition: 0.5s linear;
 }
-.icon-close{
+
+.icon-close {
     transition: 0.2s linear;
     transform: rotate(-90deg);
 }
 
-.icon-close:hover{
+.icon-close:hover {
     transform: rotate(90deg);
 }
 
