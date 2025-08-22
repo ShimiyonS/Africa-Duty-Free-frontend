@@ -5,7 +5,9 @@
 }
 
 :root {
+    --black-color:#000;
     --white-color: #FFFFFF;
     --secondary-color:#AE9962;
-    --button-color:#B4462A
+    --button-color:#B4462A;
+    --border-color:rgba(34, 34, 34, 0.1)
 }

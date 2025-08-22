@@ -1,11 +1,17 @@
 import "./navbar.css"
 import { NavLink } from "react-router-dom";
-const NavBar = () => {
+import { TfiClose } from "react-icons/tfi";
+const NavBar = ({ condition,togglemenu }) => {
   return (
-    <div>
-      <nav>
+    <div className={`${condition ? "sidebartoggle-active" : ""} sidebar`}>
+      <nav className="nav-header">
         <ul className="d-block d-lg-flex justify-content-center list-unstyled gap-4 m-0">
-          <li> <NavLink to="/beauty" className="nav-link">BEAUTY</NavLink> </li>
+          <li className="d-flex justify-content-end">
+            <button className='d-lg-none bg-transparent border-0 p-3 icon-close' onClick={() => togglemenu(condition)}>
+              <TfiClose />
+            </button>
+          </li>
+          <li><NavLink to="/beauty" className="nav-link">BEAUTY</NavLink></li>
           <li><NavLink to="/spirits" className="nav-link">SPIRITS</NavLink></li>
           <li><NavLink to="/spirits" className="nav-link">ACCESSORIES</NavLink></li>
           <li><NavLink to="/spirits" className="nav-link">TRAVELLERS EXCLUSIVES</NavLink></li>

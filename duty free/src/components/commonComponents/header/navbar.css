@@ -1,4 +1,4 @@
-.nav-link {
+.nav-header ul li .nav-link {
     padding-left: 10px;
     padding-right: 10px;
     font-size: 14px;
@@ -7,4 +7,42 @@
 
 li .nav-link:hover {
     border-bottom: 2px solid var(--button-color);
+}
+
+.sidebar {
+    transition: 0.5s linear;
+}
+.icon-close{
+    transition: 0.2s linear;
+    transform: rotate(-90deg);
+}
+
+.icon-close:hover{
+    transform: rotate(90deg);
+}
+
+@media (max-width: 992px) {
+    .sidebar {
+        position: fixed;
+        left: -500px;
+        top: 0px;
+        width: 250px;
+        height: 100vh;
+        background-color: var(--white-color);
+        border-right: 4px solid var(--border-color);
+    }
+
+    .nav-link {
+        padding: 8px;
+        font-size: 14px;
+        border-bottom: 0px;
+    }
+
+    li .nav-link:hover {
+        border-bottom: 4px solid var(--black-color) !important;
+    }
+
+    .sidebartoggle-active {
+        left: 0px;
+    }
 }
