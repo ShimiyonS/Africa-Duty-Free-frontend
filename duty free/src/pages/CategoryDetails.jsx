@@ -19,6 +19,7 @@ const CategoryDetails = () => {
         const fetchProducts = async () => {
             const data = await apiRequest("GET", "/products");
             setProducts(data?.products)
+            
         }
         fetchProducts()
     }, [])

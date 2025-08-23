@@ -17,6 +17,10 @@ li .nav-link:hover {
     transition: 0.5s linear;
 }
 
+.sidebar .nav-link {
+    color: rgb(51, 51, 51);
+}
+
 .icon-close {
     transition: 0.2s linear;
     transform: rotate(-90deg);
@@ -29,7 +33,8 @@ li .nav-link:hover {
 @media (max-width: 992px) {
     .sidebar {
         position: fixed;
-        left: -500px;
+        z-index: 999;
+        left: -100%;
         top: 0px;
         width: 250px;
         height: 100vh;
