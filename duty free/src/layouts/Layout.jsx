@@ -4,6 +4,7 @@ import Header from '../components/commonComponents/header/Header.jsx'
 import NavBar from '../components/commonComponents/header/navbar.jsx'
 import Footer from '../components/commonComponents/footer/Footer.jsx'
 import { useState } from 'react'
+import DiscountComponent from '../components/commonComponents/DiscountComponent.jsx'
 
 const Layout = () => {
     const [togglesidebar, setTooglesidebar] = useState(false)
@@ -16,6 +17,7 @@ const Layout = () => {
             <Header togglemenu={togglemenu} togglesidebar={togglesidebar} />
             <NavBar condition={togglesidebar} togglemenu={togglemenu}/>
             <Outlet />
+            <DiscountComponent />
             <Footer/>
         </>
 

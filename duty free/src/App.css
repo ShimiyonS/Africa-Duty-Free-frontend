@@ -15,6 +15,7 @@
     --text-color-primary: #000;
     --shadow: 0px 0px 0px #000;
     --border-color: rgba(34, 34, 34, 0.1);
+    --border-color2: #3D3D3D;
     --color-red: #c73e1c;
     --checkbox-label-color: #888;
     --login-btn-color: #3ba1da;
@@ -35,3 +36,57 @@
 .secondary-text-color {
     color: var(--text-color-secondary);
 }
+
+/* conatct-us-form css */
+
+.contact-us-form {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.contact-us-header {
+    font-size: 45px;
+    font-weight: bold;
+    color: var(--black-color);
+    font-family: "JustusProMedium";
+}
+
+.contact-us-subheader {
+    font-size: 20px;
+}
+
+.icon-wrapper {
+    background-color: rgb(246, 246, 246);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.contact-us-icon {
+    font-size: 20px;
+    color: var(--secondary-color);
+}
+
+.contact-info-details a {
+    color: var(--checkbox-label-color);
+}
+
+@media (max-width:426px) {
+    .contact-us-form {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .contact-us-header {
+        font-size: 35px;
+    }
+
+    .contact-us-subheader {
+        font-size: 20px;
+    }
+}
+
+/* ------------------------------------------------------------------- */
