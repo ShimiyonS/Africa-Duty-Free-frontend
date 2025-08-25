@@ -20,6 +20,7 @@
     --shadow: 0px 0px 0px #000;
     --border-color: rgba(34, 34, 34, 0.1);
     --color-red : #c73e1c;
+    --text-muted:#6c757d;
 }
 
 .linear-bg {
