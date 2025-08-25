@@ -8,29 +8,32 @@
 }
 
 .product-price {
-    color: #AA3F1D;
-}
-
-.input-box {
-    width: 118px;
-    height: 56px;
-    text-align: center;
+    color: var(--button-color);
 }
 
 .add-cart {
     width: 220px;
     height: 56px;
+    background-color: var(--secondary-color);
+}
+
+.count-div {
+    width: 110px;
+    height: 56px;
+    max-width: 110px;
+    border: 1px solid grey;
+    border-radius: 10px;
 }
 
 /* Chrome, Safari, Edge, Opera */
-.input-box::-webkit-outer-spin-button,
-.input-box::-webkit-inner-spin-button {
+.product-input-box::-webkit-outer-spin-button,
+.product-input-box::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
 /* Firefox */
-.input-box[type=number] {
+.product-input-box[type=number] {
     -moz-appearance: textfield;
 }
 
@@ -39,7 +42,7 @@
 }
 
 .brand-anker-tag {
-    color: #AA3F1D;
+    color: var(--button-color);
 }
 
 .product-description-inner {
@@ -48,4 +51,17 @@
 
 .product-description-details {
     background-color: #F3F3F3;
+}
+
+.increment-btn,
+.decrement-btn {
+    background: none !important;
+    color: var(--secondary-color) !important;
+    border: none
+}
+
+@media (max-width:426px) {
+    .product-img {
+        width: 368px;
+    }
 }
