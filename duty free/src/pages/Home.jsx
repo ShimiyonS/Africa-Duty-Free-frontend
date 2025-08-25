@@ -1,5 +1,4 @@
 import "../Styles/home.css"
-import HomeBanner2 from "../assets/home-banner-2.png"
 import BrandSwiper from "../components/commonComponents/BrandSwiper"
 import CategoryCard from "../components/commonComponents/CategoryCard"
 import categoryimage1 from "../assets/liquor.jpeg"
@@ -13,7 +12,7 @@ import { useEffect, useState } from "react"
 import { apiRequest } from "../commonMethod/common"
 import DiscountComponent from "../components/commonComponents/DiscountComponent"
 import BestBuy from "../components/commonComponents/BestBuy"
-import { Link } from "react-router-dom"
+import Banner from "../components/commonComponents/Banner"
 
 const Home = () => {
   const [products, setProducts] = useState([])
@@ -24,50 +23,35 @@ const Home = () => {
     };
     fetchProducts();
   }, [])
+
+  const bestBuy = [
+    {
+      name: "Fragrance",
+      link: "liqueur",
+      image: categoryimage1
+    },
+    {
+      name: "Skincare",
+      link: "fragrances",
+      image: categoryimage2
+    },
+    {
+      name: "Gift Sets",
+      link: "cosmetics",
+      image: categoryimage3
+    },
+    {
+      name: "Accesoires",
+      link: "cosmetics",
+      image: categoryimage4
+    }
+  ]
   return (
     <div className="container">
-
-      <div className="section-1">
-        <div className="home-banner text-white">
-          <div className="col-6">
-            <h3>duty free</h3>
-            <h3>30%</h3>
-            <h3>less on high street prices</h3>
-            <img src={HomeBanner2} width={200} height={200} alt="homebanner" />
-          </div>
-          <div className="d-none d-md-block col-6">
-            <h3>the good life</h3>
-            <h3>the best brands</h3>
-            <h3>real value duty free</h3>
-            <Link to="/shop" className="rounded-pill border-0 shop-btn text-decoration-none">Shop Now</Link>
-          </div>
-        </div>
-        <div className="wigited-buttons d-flex gap-3 justify-content-center">
-          <div className="wigited-box">Exclusive for Diplomats</div>
-          <div className="wigited-box">For Duty-free Operators</div>
-        </div>
-      </div>
-
+      <Banner />
       <BrandSwiper />
-      {/* <BestBuy /> */}
-
-      <div className='d-flex align-items-center flex-wrap'>
-        <div className='p-3 col-12 col-md-6 col-lg-3'>
-          <CategoryCard image={categoryimage1} text={"Fragrance"} link={"liqueur"} />
-        </div>
-        <div className='p-3 col-12 col-md-6 col-lg-3'>
-          <CategoryCard image={categoryimage2} text={"Skincare"} link={"fragrances"} />
-        </div>
-        <div className='p-3 col-12 col-md-6 col-lg-3'>
-          <CategoryCard image={categoryimage3} text={"Gift Sets"} link={"cosmetics"} />
-        </div>
-        <div className='p-3 col-12 col-md-6 col-lg-3'>
-          <CategoryCard image={categoryimage4} text={"Accesoires"} link={"cosmetics"} />
-        </div>
-      </div>
-
-      <NewProducts heading={"Most Popular"} productsdata={products} />
-
+      <BestBuy data={bestBuy} itemClassName={`p-3 col-12 col-md-6 col-lg-3`}/>
+      <NewProducts heading={"Most Popular"} productsdata={products} parentClassName={"mt-5"} />
       <div className="container py-4 row justify-content-center gap-5">
         <div className="d-flex p-0 col-12 col-xl-4 col-lg-5 col-md-6 col-sm-12 offers">
           <div className="col-6 offerbanner1">
@@ -90,11 +74,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-
       <NewProducts heading={"Great value offers"} productsdata={products} />
-
       <DiscountComponent />
-
     </div>
   )
 }
