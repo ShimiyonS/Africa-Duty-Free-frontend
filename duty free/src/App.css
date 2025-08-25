@@ -16,6 +16,10 @@
     --shadow: 0px 0px 0px #000;
     --border-color: rgba(34, 34, 34, 0.1);
     --color-red: #c73e1c;
+    --checkbox-label-color: #888;
+    --login-btn-color: #3ba1da;
+    --register-btn-color: #eeeeee;
+    --color-red: #c73e1c;
     --button-color-yellow: #ECA203;
 }
 
