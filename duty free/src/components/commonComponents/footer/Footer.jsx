@@ -18,14 +18,14 @@ const Footer = () => {
                 </div>
                 <div className="col-12 col-sm-6 col-md-3 pt-3">
                     <p className='fw-bold'>Company</p>
-                    <Link to="/" className="nav-link pb-2">Home backup</Link>
+                    <Link to="/home" className="nav-link pb-2">Home backup</Link>
                     <Link to="/about" className="nav-link pb-2">About</Link>
-                    <Link to="/" className="nav-link pb-2">Contact us</Link>
+                    <Link to="/contact-us" className="nav-link pb-2">Contact us</Link>
                 </div>
                 <div className="col-12 col-sm-6 col-md-3 pt-3">
                     <p className='fw-bold'>Contact</p>
-                    <a className="nav-link pb-2">Info</a>
-                    <a className="nav-link pb-2">Sales</a>
+                    <Link to="/mailto:info@africat-duty-free.com" className="nav-link pb-2">Info</Link>
+                    <Link to="/mailto:sales@africat-duty-free.com" className="nav-link pb-2">Sales</Link>
 
                 </div>
             </div>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import DiscountComponent from '../components/commonComponents/DiscountComponent';
 
 const Register = () => {
     const [username, setUsername] = useState("");
@@ -111,7 +110,7 @@ const Register = () => {
                     </form>
                 </div>
             </div>
-            <DiscountComponent />
+             
         </>
     )
 }

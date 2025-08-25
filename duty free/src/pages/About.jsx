@@ -1,6 +1,5 @@
 import aboutImg from '../assets/travelers.png'
 import '../css/about-us.css'
-import DiscountComponent from '../components/commonComponents/DiscountComponent'
 
 const About = () => {
   return (
@@ -22,7 +21,7 @@ const About = () => {
           </div>
         </section>
       </div>
-      <DiscountComponent />
+       
     </div>
   )
 }

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { HiEmojiSad } from "react-icons/hi";
 import "../Styles/login.css"
-import DiscountComponent from "../components/commonComponents/DiscountComponent";
 import { Link } from "react-router-dom";
 
 
@@ -77,7 +76,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            <DiscountComponent />
+             
         </>
     );
 }

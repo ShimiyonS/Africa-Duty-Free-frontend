@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import DiscountComponent from '../components/commonComponents/DiscountComponent'
 
 const ForgotPassword = () => {
     const [passwordchangerequest, setPasswordchangerequest] = useState(false)
@@ -38,7 +37,7 @@ const ForgotPassword = () => {
                 </div>
             </div>
             <div>
-                <DiscountComponent />
+                 
             </div>
 
         </>

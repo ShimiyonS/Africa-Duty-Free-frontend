@@ -10,7 +10,6 @@ import OfferProduct2 from "../assets/categoryimage5.jpg"
 import NewProducts from "../components/commonComponents/NewProducts"
 import { useEffect, useState } from "react"
 import { apiRequest } from "../commonMethod/common"
-import DiscountComponent from "../components/commonComponents/DiscountComponent"
 import BestBuy from "../components/commonComponents/BestBuy"
 import Banner from "../components/commonComponents/Banner"
 
@@ -75,7 +74,7 @@ const Home = () => {
         </div>
       </div>
       <NewProducts heading={"Great value offers"} productsdata={products} />
-      <DiscountComponent />
+       
     </div>
   )
 }
