@@ -16,9 +16,10 @@
 .input-box {
     background-color: #F0B13B;
     border: none;
-    padding: 10px 0 10px 60px;
     border-bottom-left-radius: 50px !important;
     border-top-left-radius: 50px !important;
+    flex: 1;
+    padding: 13px 16px;
 }
 
 .input-box::placeholder {
@@ -28,25 +29,25 @@
 .input-box:focus {
     outline: none;
     box-shadow: none;
-    border-color: #ccc;
+}
+
+.form-input {
+    display: flex;
+    max-width: 400px;
 }
 
 .form-input input[type="submit"] {
-    box-shadow: none !important;
-    margin: -1px;
     border: none;
-    height: 44px;
     width: 56px;
     background: #f0b13b;
     border-left: 1px solid #000;
     background-image: url(../assets/sned_email.png);
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 88% 80%;
     background-position: center;
     border-bottom-right-radius: 50px !important;
     border-top-right-radius: 50px !important;
 }
-
 
 .discount-main-component {
     background-image: url(../assets/discount-img.png);
@@ -62,12 +63,16 @@
     .never-miss-out {
         padding-left: 342px;
     }
-}
 
+    .discount-main-component {
+        height: 400px;
+    }
+}
 
 @media (max-width:426px) {
     .discount-main-component {
         height: 252px !important;
+        background-position-x: left;
     }
 
     .discount-main-component::before {
@@ -75,6 +80,7 @@
         position: absolute;
         inset: 0;
         background-color: rgba(0, 0, 0, 0.6);
+        pointer-events: none;
     }
 
     .main-content {
