@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react'
 import { FreeMode, Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { apiRequest } from '../../commonMethod/common';
 import ProductCard from './ProductCard';
-const NewProducts = ({heading , productsdata}) => {
+const NewProducts = ({ heading, productsdata, parentClassName }) => {
 
     return (
-        <div className='container'>
-            <p className='mb-5 linear-bg px-3 py-2 secondary-text-color'>{heading}</p>
+        <div className={`container ${parentClassName}`}>
+            <p className='mb-5 product-wrapper-title linear-bg px-3 py-2 secondary-text-color'>{heading}</p>
             <Swiper
                 slidesPerView={5}
                 spaceBetween={50}
@@ -25,7 +23,15 @@ const NewProducts = ({heading , productsdata}) => {
                         slidesPerView: 1,
                         spaceBetween: 20,
                     },
+                    426: {
+                        slidesPerView: 2,
+                        spaceBetween: 40,
+                    },
                     768: {
+                        slidesPerView: 3,
+                        spaceBetween: 40,
+                    },
+                    900: {
                         slidesPerView: 4,
                         spaceBetween: 40,
                     },
