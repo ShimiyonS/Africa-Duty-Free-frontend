@@ -1,4 +1,4 @@
-.aux-head-before {
+.about-content {
     font-size: 31px;
     font-weight: 900;
     text-transform: capitalize;
@@ -46,4 +46,19 @@
 
 .border-right {
     border-right: 1px solid #AE9962;
+}
+
+@media (max-width:1024px) {
+    .about-content {
+        font-size: 45px;
+        margin: 0px 0px 26px 0px;
+        max-width: 83%;
+    }
+}
+
+@media (max-width:787px) {
+    .about-content {
+        font-size: 29px;
+        max-width: 100%;
+    }
 }
