@@ -13,6 +13,7 @@ import { useEffect, useState } from "react"
 import { apiRequest } from "../commonMethod/common"
 import DiscountComponent from "../components/commonComponents/DiscountComponent"
 import BestBuy from "../components/commonComponents/BestBuy"
+import { Link } from "react-router-dom"
 
 const Home = () => {
   const [products, setProducts] = useState([])
@@ -38,7 +39,7 @@ const Home = () => {
             <h3>the good life</h3>
             <h3>the best brands</h3>
             <h3>real value duty free</h3>
-            <button className="rounded-pill border-0 shop-btn">Shop Now</button>
+            <Link to="/shop" className="rounded-pill border-0 shop-btn text-decoration-none">Shop Now</Link>
           </div>
         </div>
         <div className="wigited-buttons d-flex gap-3 justify-content-center">
