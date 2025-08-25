@@ -6,4 +6,8 @@
 .salebanner-content {
     color: var(--white-color);
     padding: 6px;
+    font-family: "JustusProRegular";
+    word-spacing: 2px;
+    padding: 10px;
+    line-height: 1;
 }

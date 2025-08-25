@@ -11,13 +11,13 @@ const NavBar = ({ condition,togglemenu }) => {
               <TfiClose />
             </button>
           </li>
-          <li><NavLink to="/product-category/fragrances" className="nav-link">BEAUTY</NavLink></li>
-          <li><NavLink to="/product-category/liqueur" className="nav-link">SPIRITS</NavLink></li>
-          <li><NavLink to="/product-category/accessories" className="nav-link">ACCESSORIES</NavLink></li>
-          <li><NavLink to="/product-category/travelers" className="nav-link">TRAVELLERS EXCLUSIVES</NavLink></li>
-          <li><NavLink to="/product-category/special-offers" className="nav-link">SPECIAL OFFERS</NavLink></li>
-          <li><NavLink to="/about" className="nav-link">ABOUT</NavLink></li>
-          <li><NavLink to="/shop" className="nav-link">SHOP</NavLink></li>
+          <li><NavLink to="/product-category/fragrances" className="nav-link pb-2">BEAUTY</NavLink></li>
+          <li><NavLink to="/product-category/liqueur" className="nav-link pb-2">SPIRITS</NavLink></li>
+          <li><NavLink to="/product-category/accessories" className="nav-link pb-2">ACCESSORIES</NavLink></li>
+          <li><NavLink to="/product-category/travelers" className="nav-link pb-2">TRAVELLERS EXCLUSIVES</NavLink></li>
+          <li><NavLink to="/product-category/special-offers" className="nav-link pb-2">SPECIAL OFFERS</NavLink></li>
+          <li><NavLink to="/about" className="nav-link pb-2">ABOUT</NavLink></li>
+          <li><NavLink to="/shop" className="nav-link pb-2">SHOP</NavLink></li>
         </ul>
       </nav>
     </div>

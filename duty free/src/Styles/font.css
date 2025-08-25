@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'JustusProBold';
+    src: url('../font/JustusProBold.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'JustusProBoldIt';
+    src: url('../font/JustusProBoldIt.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'JustusProItalic';
+    src: url('../font/JustusProItalic.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'JustusProLight';
+    src: url('../font/JustusProLight.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'JustusProLightIt';
+    src: url('../font/JustusProLightIt.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'JustusProMedium';
+    src: url('../font/JustusProMedium.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'JustusProMediumIt';
+    src: url('../font/JustusProMedium.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'JustusProRegular';
+    src: url('../font/JustusProRegular.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'JustusProTh';
+    src: url('../font/JustusProTh.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'JustusProThinIt';
+    src: url('../font/JustusProThinIt.TTF') format('truetype');
+}

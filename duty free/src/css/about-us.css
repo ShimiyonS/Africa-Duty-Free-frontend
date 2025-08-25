@@ -5,13 +5,13 @@
     line-height: 1.2em;
     margin: 0px 0px 44px 0px;
     max-width: 580px;
-    font-family: "JustusMedium";
+    font-family: "JustusProMedium";
 }
 
 .why-choose {
     font-size: 20px;
     font-weight: 400;
-    font-family: "justusMedium";
+    font-family: "JustusProMedium";
     text-transform: capitalize;
     line-height: 1.22em;
     color: var(--secondary-color);

@@ -1,7 +1,3 @@
-.section-1 {
-    position: relative;
-}
-
 .home-banner {
     width: 100%;
     height: calc(100vh - 200px);
@@ -10,24 +6,47 @@
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     margin-bottom: 50px;
+    padding: 0px 120px;
 }
 
-.shop-btn {
-    background-color: #ECA203;
+.banner-heading:nth-child(1),
+.banner-heading:nth-child(3) {
+    font-size: 35px;
+    color: var(--text-color-secondary);
+}
+
+.banner-right-heading {
+    font-family: 'JustusProTh';
+    color: var(--text-color-secondary);
+    font-size: 35px;
+
+}
+
+.banner-heading:nth-child(3)>span {
+    font-size: 18px;
+}
+
+.banner-heading:nth-child(2) {
+    font-size: 80px;
+    color: var(--text-color-secondary);
+}
+
+.shop-btn,
+.shop-left-btn {
+    width: max-content;
+    background-color: var(--button-color-yellow);
     font-family: "DMSansMedium", Sans-serif;
     font-size: 16px;
     font-weight: 600;
-    padding: 12px 24px;
     color: var(--black-color);
 }
 
 .wigited-buttons {
-    position: absolute;
-    width: 100%;
-    bottom: -21px;
+    bottom: -30px;
     color: var(--white-color);
 }
 
@@ -51,10 +70,38 @@
 .offerbanner1 {
     background-color: var(--secondary-color);
     padding: 10px 10px 10px 20px;
-    font-family: "justusMedium" ;
+    font-family: "JustusProMedium";
 }
 
 .offerbanner2 {
     background-color: var(--color-red);
     padding: 10px 10px 10px 20px;
+}
+
+@media screen and (max-width:768px) {
+    .home-banner {
+        padding: 0px 20px;
+    }
+
+    .home-banner-image {
+        width: 150px;
+        height: 130px;
+        margin-left: auto;
+    }
+}
+
+@media screen and (max-width:426px) {
+    .right-side-banner {
+        display: none;
+    }
+
+    .wigited-buttons {
+        position: relative !important;
+        bottom: 0px !important;
+    }
+
+    .shop-left-btn {
+        display: block !important;
+    }
+
 }

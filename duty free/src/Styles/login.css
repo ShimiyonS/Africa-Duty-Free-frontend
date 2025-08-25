@@ -1,0 +1,82 @@
+/* common css for both login and register forms */
+.auth-container {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.auth-form {
+    width: 500px;
+}
+
+.custom-auth-input {
+    border-radius: 0 !important;
+}
+
+.custom-auth-input:focus {
+    box-shadow: none !important;
+    border: 1px solid #bbb !important;
+}
+
+.auth-btns {
+    padding: 14px 20px;
+    font-size: 15px;
+    width: 50%;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.auth-btn-1 {
+    background-color: var(--login-btn-color);
+    color: var(--white-color);
+}
+
+.auth-btn-1:hover {
+    background-color: #44b0ec;
+}
+
+.auth-btn-2 {
+    text-decoration: none;
+    background-color: var(--register-btn-color);
+    color: var(--checkbox-label-color);
+}
+
+.auth-btn-2:hover {
+    background-color: #e5e5e5;
+}
+/* ---------------------------------------------------------------------------------- */
+
+/* login form css */
+.custom-login-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.custom-login-checkbox .icon {
+    vertical-align: middle;
+    margin-right: 8px;
+    display: none;
+}
+
+.custom-login-checkbox input[type="checkbox"]+label .unchecked {
+    display: inline-block;
+}
+
+.custom-login-checkbox input[type="checkbox"]:checked+label .unchecked {
+    display: none;
+}
+
+.custom-login-checkbox input[type="checkbox"]:checked+label .checked {
+    display: inline-block;
+}
+
+.input-checkbox-label {
+    color: var(--checkbox-label-color);
+}
+
+.forgot-password, .forgot-password-message {
+    color: var(--checkbox-label-color);
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
