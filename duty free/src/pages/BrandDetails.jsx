@@ -8,9 +8,11 @@ import Products from '../components/commonComponents/Products'
 import NewProducts from '../components/commonComponents/NewProducts'
 import SaleCard from '../components/commonComponents/SaleCard'
 import { banner } from '../Files/data'
+import Common from '../commonMethod/Common'
 
 const BrandDetails = () => {
     const { slug } = useParams()
+    const { apiRequest } = Common()
     const bannerDetails = banner?.find((item) => item?.name === slug);
 
     const [brand, setBrands] = useState([])
