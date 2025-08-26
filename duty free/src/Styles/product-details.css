@@ -177,8 +177,6 @@
     font-weight: bold;
     border-bottom: 4px solid white;
 }
-
-
 .review-header {
     text-transform: capitalize;
     font-size: 30px;
@@ -192,7 +190,6 @@
     color: var(--secondary-color) !important;
     border: none
 }
-
 
 .popup-overlay {
     position: fixed;
@@ -326,5 +323,5 @@
     }
     .share-emoji::after {
         left: 9%;
-        }
+    }
 }

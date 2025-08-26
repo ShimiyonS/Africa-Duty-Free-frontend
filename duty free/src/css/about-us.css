@@ -23,15 +23,9 @@
     width: 165px;
     background-color: #AE9962;
 }
-
-.about-main-img {
-    height: 595px;
-    width: 95%;
-    border-radius: 20px;
-}
-
-@media (max-width:426px) {
+@media (max-width:1024px) {
     .about-main-img {
+        height: 100% !important;
         width: 100%;
     }
 }
@@ -44,8 +38,10 @@
     margin: 0px 0px 10px 0px;
 }
 
-.border-right {
-    border-right: 1px solid #AE9962;
+@media(min-width:767px) {
+    .border-right {
+        border-right: 1px solid #AE9962;
+    }
 }
 
 @media (max-width:1024px) {
