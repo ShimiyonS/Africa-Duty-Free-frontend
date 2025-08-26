@@ -78,6 +78,19 @@
     padding: 10px 10px 10px 20px;
 }
 
+/* main page css start */
+.main-home-category {
+    font-size: 14px;
+    font-family: "JustusProMedium", Sans-serif;
+}
+
+.main-home-category-heading {
+    font-size: 25px;
+    font-family: "JustusProMedium", Sans-serif;
+}
+
+/* main page css end */
+
 @media screen and (max-width:768px) {
     .home-banner {
         padding: 0px 20px;

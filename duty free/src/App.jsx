@@ -15,7 +15,6 @@ import ShopDetails from './pages/ShopDetails';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import MainPage from './pages/MainPage';
-import MyProvider from './Provider/CommonProvider';
 
 function App() {
 

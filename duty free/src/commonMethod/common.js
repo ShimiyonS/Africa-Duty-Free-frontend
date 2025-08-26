@@ -39,9 +39,9 @@ const apiRequest = async (method, url, data = {}, headers = {}) => {
 
 const Common = () => {
     const dispatch = useDispatch();
-    const viewCart = useSelector(
+    const getActiveCart = useSelector(
         (state) => state.viewCart
     );
-    return { dispatch, viewCart ,firstLetterCapital, apiRequest}
+    return { dispatch, getActiveCart ,firstLetterCapital, apiRequest}
 }
 export default Common;
