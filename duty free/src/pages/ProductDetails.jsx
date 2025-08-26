@@ -17,6 +17,12 @@ import { FaGetPocket } from "react-icons/fa";
 import { BsEnvelopePaperFill } from "react-icons/bs";
 import { FaRegPaperPlane } from "react-icons/fa6";
 import ZoomImg from '../assets/zoom-dark.svg'
+import { IoIosShareAlt } from "react-icons/io";
+import { MdFullscreen } from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
+import { FiMinimize } from "react-icons/fi";
+import { saveAs } from 'file-saver';
+import Products from '../components/commonComponents/Products'
 
 const ProductDetails = () => {
     const { id } = useParams()
@@ -26,11 +32,18 @@ const ProductDetails = () => {
     const [rating, setRating] = useState(4)
     const [open, setOpen] = useState(false);
     const imgRef = useRef(null);
+    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [relatedData, setRelatedData] = useState(null)
+    const BASEURL = import.meta.env.VITE_APP_BASE_URL;
+    const imageUrl = product?.images?.[0]
+    const fileName = 'my-downloaded-image.jpg';
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
                 const data = await apiRequest("GET", `products/${id}`)
+                const related = await apiRequest("GET", `products`)
+                setRelatedData(related)
                 setProduct(data);
             } catch (error) {
                 console.error("api fetching error", error)
@@ -38,6 +51,7 @@ const ProductDetails = () => {
         }
         fetchProduct();
     }, [id])
+    console.log(product)
 
     //for rating star 
     const handleRating = (rate) => {
@@ -57,25 +71,95 @@ const ProductDetails = () => {
         }
     };
 
+    // Exit fullscreen function
+    const handleExitFullscreen = () => {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    };
+
+    // fullscreen change detect
+    useEffect(() => {
+        const handleChange = () => {
+            if (document.fullscreenElement) {
+                setIsFullscreen(true);
+            } else {
+                setIsFullscreen(false);
+            }
+        };
+
+        document.addEventListener("fullscreenchange", handleChange);
+        document.addEventListener("webkitfullscreenchange", handleChange);
+        document.addEventListener("msfullscreenchange", handleChange);
+
+        return () => {
+            document.removeEventListener("fullscreenchange", handleChange);
+            document.removeEventListener("webkitfullscreenchange", handleChange);
+            document.removeEventListener("msfullscreenchange", handleChange);
+        };
+    }, []);
+
+    // download img function
+    const handleDownload = () => {
+        saveAs(imageUrl, fileName);
+    };
+
     return (
         <div className="container">
             <div className="d-flex flex-wrap justify-content-center  pb-5 ">
-                <div className="col-sm-12 col-md-6 col-lg-6 position-relative" >
-                    <img ref={imgRef} src={product?.images?.[0]} alt={product?.title} className="product-img" />
+                <div className="col-sm-12 col-md-8 col-lg-6 position-relative" >
+                    <img src={product?.images?.[0]} alt={product?.title} className="product-img" />
                     <img src={ZoomImg} alt="zoom-img" className="position-absolute zoom-img" onClick={() => setOpen(true)} />
                 </div>
 
                 {/* pop-up-img */}
                 {open && (
                     <div className="popup-overlay" onClick={() => setOpen(false)}>
-                        {/* Fullscreen button */}
-                        <button className="fullscreen-btn" onClick={handleFullscreen}>
-                            ⛶
-                        </button>
-                        <button className="close-btn" onClick={() => setOpen(false)}>x</button>
-                        <div className="popup-content">
-                            <img src={product?.images?.[0]} alt="pop-up-img" />
-
+                        <div className="popup-wrapper" ref={imgRef} onClick={(e) => e.stopPropagation()}>
+                            {/* Fullscreen button */}
+                            <div className="share-icon">
+                                <IoIosShareAlt />
+                                <div className="share-tooltip">
+                                    <a
+                                        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                                            `${BASEURL}/product/${product.title}`
+                                        )}`}
+                                        target="_blank"
+                                        className="share-facebook text-decoration-none p-2">
+                                        Share on Facebook
+                                    </a>
+                                    <a
+                                        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(product.title)}&url=${encodeURIComponent(`${BASEURL}/product/${product.title}`)}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="share-twitter text-decoration-none p-2" >Tweet</a>
+                                    <a
+                                        href={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(
+                                            `${BASEURL}/product/${product.title}`
+                                        )}&media=${encodeURIComponent(product.thumbnail)}&description=${encodeURIComponent(product.title)}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="share-pinterest text-decoration-none p-2"
+                                    >
+                                        Pin it
+                                    </a>
+                                    <p href="" target="_blank" className="share--download text-decoration-none p-2 text-black" onClick={handleDownload}>Download image</p>
+                                </div>
+                            </div>
+                            <button className="fullscreen-btn" onClick={isFullscreen ? handleExitFullscreen : handleFullscreen}>
+                                {!isFullscreen ? <MdFullscreen /> : <FiMinimize />}
+                            </button>
+                            <button className="close-btn" onClick={() => setOpen(false)}><IoMdClose /></button>
+                            <div className="popup-wrapper" >
+                                <div className="popup-content">
+                                    <img src={product?.images?.[0]} alt="pop-up-img" />
+                                </div>
+                                <p className="pt-5 product-title-end text-center">{product?.title}</p>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -84,7 +168,7 @@ const ProductDetails = () => {
                     <h2 className="pt-5 pb-5 product-page-title">{product?.title}</h2>
                     <span className="pb-2 product-price">${count * product?.price}</span>
                     <p className="pt-3 product-description d-flex flex-wrap">{product?.description}</p>
-                    <div className="d-flex gap-3">
+                    <div className="d-flex gap-3 flex-column flex-md-row">
                         <div className="rounded-5 count-div d-flex align-items-center gap-3 p-2">
                             <button onClick={() => count > 1 && (setCount(count - 1))} className="decrement-btn" disabled={count === 0}>-</button>
                             <h5 className="m-0">{count}</h5>
@@ -96,7 +180,7 @@ const ProductDetails = () => {
                         </div>
                     </div>
 
-                    <div className="d-flex align-items-center pt-5 gap-3">
+                    <div className="d-flex align-items-md-center flex-column flex-md-row pt-5 gap-3">
                         <div className="rounded-5 wishlist p-2 d-flex justify-content-center align-items-center py-3">
                             <span type="submit" name="add-to-cart" className="add-wishlist rounded-5 border-0 px-4 py-2" >Add to wishlist</span> <CiHeart size={30} />
                         </div>
@@ -201,7 +285,7 @@ const ProductDetails = () => {
                         </div>
                     }
 
-                    <div className="review-section ps-4 ps-md-5">
+                    <div className="review-section ps-4 ps-md-5 mb-5">
                         {activeTab === "description" ? (
                             <p className="ps-0 ps-md-5 pt-3">{product?.description}</p>
                         ) : (
@@ -226,7 +310,8 @@ const ProductDetails = () => {
                     </div>
                 </div>
             </div>
-        </div>
+            <Products data={relatedData?.products} headingText="Related Products" className="pt-5" />
+        </div >
     )
 }
 export default ProductDetails
