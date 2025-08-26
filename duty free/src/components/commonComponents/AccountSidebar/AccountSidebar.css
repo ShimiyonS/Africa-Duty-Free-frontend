@@ -1,0 +1,32 @@
+.account-update{
+    width: 60%;
+}
+.account-links{
+    position: relative;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: #eee;
+    color: var(--navigation-color);
+}
+
+.side-bar-links .active .sidebar-icons{
+    color: var(--button-bg-color-secondary);
+}
+
+.side-bar-links .active span{
+color: var(--border-color2);
+}
+
+.account-links>span:nth-child(2){
+    position: relative;
+}
+
+.account-links>span:nth-child(2)::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--navigation-color);
+    width: 1px;
+}

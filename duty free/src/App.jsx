@@ -13,6 +13,7 @@ import BrandDetails from './pages/BrandDetails';
 import CategoryDetails from './pages/CategoryDetails';
 import ShopDetails from './pages/ShopDetails';
 import Cart from './pages/Cart';
+import AccountRoutes from './routes/AccountRoutes';
 
 function App() {
 
@@ -33,7 +34,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="*" element={<NoPage />} />
+            <Route path="/account/*" element={<AccountRoutes />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>
