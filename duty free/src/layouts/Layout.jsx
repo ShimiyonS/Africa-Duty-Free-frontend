@@ -6,6 +6,7 @@ import Footer from '../components/commonComponents/footer/Footer.jsx'
 import { useState } from 'react'
 import CardModal from '../components/commonComponents/CardModal.jsx'
 import Common from '../commonMethod/Common.js'
+import DiscountComponent from '../components/commonComponents/DiscountComponent.jsx'
 
 const Layout = () => {
     const [togglesidebar, setTooglesidebar] = useState(false)
@@ -20,7 +21,8 @@ const Layout = () => {
             <Header togglemenu={togglemenu} togglesidebar={togglesidebar} />
             <NavBar condition={togglesidebar} togglemenu={togglemenu} />
             <Outlet />
-            <Footer />
+            <DiscountComponent />
+            <Footer/>
         </>
 
     )

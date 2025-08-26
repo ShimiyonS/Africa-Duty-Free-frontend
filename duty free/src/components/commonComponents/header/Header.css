@@ -67,6 +67,7 @@
     transform: translateY(-22px) rotate(-45deg);
 }
 
+/* login-popup css */
 .login-popup {
     width: 60% !important;
     border-radius: 0px !important;
@@ -93,4 +94,180 @@
     font-size: 12px;
     padding: 5px;
     margin-top: 1rem;
+}
+
+/* ---------------------------------------------------------------------- */
+
+/* duty-popup-css */
+
+.duty-popup {
+    max-width: 650px !important;
+}
+
+.duty-content {
+    border-radius: 30px 0px 0px 30px;
+}
+
+.duty-popup-header {
+    padding: 0 0.5rem;
+}
+
+.duty-popup-heading {
+    text-align: center;
+    font-weight: bold;
+    font-family: "JustusProMedium";
+    font-size: 2.375em;
+}
+
+.duty-popup-form input,
+.duty-popup-form select,
+.duty-popup-form label,
+.duty-popup-form textarea,
+.duty-popup-form p,
+.duty-popup-form button {
+    font-family: "JustusProRegular";
+}
+
+.duty-popup-form label,
+.duty-popup-form p {
+    padding: 10px;
+}
+
+.custom-radio {
+    appearance: none;
+    /* Remove default */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    background-color: var(--border-color);
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.custom-radio:checked {
+    background-color: #007bff;
+    border-color: var(--border-color);
+}
+
+.custom-radio:checked::after {
+    content: "✔";
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: -2px;
+    left: 2px;
+}
+
+.radio-section label {
+    color: var(--black-color);
+}
+
+.duty-popup-textarea {
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 15px;
+    outline: none;
+}
+
+.duty-popup-inputs {
+    width: 100%;
+    outline: none;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    padding: 18px 30px;
+    color: var(--black-color);
+    line-height: 1;
+    background-color: transparent;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.duty-popup-button {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 15px 35px 15px 35px;
+}
+
+/* ------------------------------------------------------------ */
+
+
+/* cart side bar css */
+.header-cart-toggle {
+    position: relative;
+}
+
+.header-cart-total {
+    position: absolute;
+    top: -5px;
+    left: 25px;
+    font-size: 14px;
+    padding: 3px;
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border-radius: 50%;
+}
+
+.header-cart {
+    max-width: 350px !important;
+}
+
+.whishlist-content {
+    border-bottom: 1px solid var(--black-color);
+}
+
+.header-cart-image {
+    width: 80px;
+    height: 80px;
+}
+
+.header-cart-product-link {
+    color: var(--button-color);
+    font-size: 14px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    text-align: start;
+    display: block;
+    padding: 0px;
+}
+
+.header-cart-product-link:hover {
+    color: var(--login-btn-color);
+}
+
+.whishilist-button {
+    text-decoration: none;
+    padding: 20px 35px;
+    font-size: 0.8125em;
+    font-weight: 700;
+    border: 1px solid var(--border-color2);
+    transition: all 450ms;
+    background: var(--border-color2);
+    color: var(--border-color2);
+}
+
+.header-cart-link {
+    background-color: var(--white-color);
+}
+
+.header-checkout-link {
+    color: var(--white-color);
+}
+
+.header-cart-link:hover {
+    background: var(--border-color2);
+    color: var(--white-color);
+}
+
+.header-checkout-link:hover {
+    color: var(--border-color2);
+    background-color: var(--white-color);
 }

@@ -9,7 +9,6 @@ import SaleCard from '../components/commonComponents/SaleCard'
 import BestBuy from '../components/commonComponents/BestBuy'
 import { useParams } from 'react-router-dom'
 import { banner } from '../Files/data'
-import DiscountComponent from '../components/commonComponents/DiscountComponent'
 const CategoryDetails = () => {
     const { slug } = useParams();
       const { apiRequest } = Common()
@@ -34,7 +33,7 @@ const CategoryDetails = () => {
             <SaleCard data={0} imageClass={"small-image"} />
             <NewProducts heading={"New Product"} productsdata={products} />
             <SaleCard data={1} headingClass={"text-center"} imageClass={"big-image"} />
-            <DiscountComponent />
+             
         </div>
     )
 }

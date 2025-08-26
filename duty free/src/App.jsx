@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import About from './pages/About';
+import ContactUs from './pages/ContactUs';
 import NoPage from './pages/NoPage';
 import ProductDetails from './pages/ProductDetails';
 import BrandDetails from './pages/BrandDetails';
@@ -33,6 +34,7 @@ function App() {
             <Route path="/africa-best-buy/product-category/:slug" element={<BrandDetails />} />
             <Route path="/shop" element={<ShopDetails />} />
             <Route path="/about" element={<About />} />
+            <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="*" element={<NoPage />} />
