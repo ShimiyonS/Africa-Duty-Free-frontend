@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { firstLetterCapital } from '../../commonMethod/common';
+import Common from '../../commonMethod/Common';
 import ProductCard from './ProductCard';
 import "../../Styles/product.css";
 import PaginationCommon from './PaginationCommon';
@@ -8,7 +8,7 @@ import EmptyCustom from './EmptyCustom';
 
 const Products = ({ data, headingText }) => {
     const { slug } = useParams()
-
+    const { firstLetterCapital } = Common()
     // pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5; // show 5 products per page
@@ -28,7 +28,7 @@ const Products = ({ data, headingText }) => {
         <div>
             <div className='container'>
                 <p className='mb-5 linear-bg px-3 py-2 secondary-text-color'>
-                    {firstLetterCapital(slug || headingText)}
+                    {firstLetterCapital(slug ?? headingText ?? "")}
                 </p>
                 {currentData?.length ? <><div className='product-grid'>
                     {currentData?.map((item, idx) => (

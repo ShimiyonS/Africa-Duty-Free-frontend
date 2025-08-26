@@ -1,8 +1,9 @@
 import { useLocation } from 'react-router-dom';
-import { firstLetterCapital } from '../../commonMethod/common';
+import Common from '../../commonMethod/Common';
 
 const CategoryBanner = ({ bannerDetails }) => {
     const location = useLocation();
+    const { firstLetterCapital } = Common()
     const path = location.pathname;
     const segments = path.split("/").filter(Boolean);
     const category = segments[segments.length - 1];

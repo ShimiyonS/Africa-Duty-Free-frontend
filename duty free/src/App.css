@@ -5,6 +5,11 @@
     font-family: "DMSansRegular", Sans-serif;
 }
 
+.dm-regular {
+    font-family: "DMSansRegular", Sans-serif;
+    font-weight: 600;
+}
+
 :root {
     --black-color: #000;
     --white-color: #FFFFFF;
@@ -16,12 +21,16 @@
     --shadow: 0px 0px 0px #000;
     --border-color: rgba(34, 34, 34, 0.1);
     --border-color2: #3D3D3D;
+    --text-muted: #6c757d;
     --color-red: #c73e1c;
     --checkbox-label-color: #888;
     --login-btn-color: #3ba1da;
     --register-btn-color: #eeeeee;
     --color-red: #c73e1c;
     --button-color-yellow: #ECA203;
+    --button-bg-color-secondary: #1691aa;
+    --iconic-color: #ae9962;
+    --alert-color: #1ecf6f;
 }
 
 .linear-bg {
@@ -45,6 +54,43 @@
     background-color: var(--color-red);
 }
 
+.link-custom {
+    color: var(--button-color) !important;
+}
+
+.link-custom:hover {
+    color: var(--button-bg-color-secondary) !important;
+}
+
+.placeholder-custom::placeholder {
+    color: #aaa;
+}
+
+.alert-wrapper {
+    background-color: var(--alert-color);
+    padding: 23px;
+    border-radius: 5px;
+    bottom: 20px;
+    left: 20px;
+    max-width: 500px;
+    width: 100%;
+    z-index: 999;
+    position: fixed;
+    color: var(--text-color-secondary);
+}
+
+.alert-text {
+    font-family: "JustusProMedium", Sans-serif;
+}
+
+.alert-link {
+    font-size: 12px;
+    padding: 7px 13px;
+    border: 3px solid var(--text-color-secondary);
+    border-radius: 50px;
+    width: 130px;
+    text-align: center;
+}
 /* conatct-us-form css */
 
 .contact-us-form {

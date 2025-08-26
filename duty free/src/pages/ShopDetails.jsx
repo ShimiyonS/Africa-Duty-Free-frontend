@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { apiRequest } from '../commonMethod/common';
+import Common from '../commonMethod/Common';
 import BreadCrumb from '../components/commonComponents/BreadCrumb';
 import Products from '../components/commonComponents/Products';
 import BestBuy from '../components/commonComponents/BestBuy';
@@ -12,7 +12,7 @@ import SaleCard from '../components/commonComponents/SaleCard';
 const ShopDetails = () => {
     const [shop, setShop] = useState([])
     const bannerDetails = banner?.find((item) => item?.name === "shop");
-
+    const { apiRequest } = Common()
     useEffect(() => {
         const fetchShop = async () => {
             const data = await apiRequest("GET", `/products/`);

@@ -14,15 +14,18 @@ import CategoryDetails from './pages/CategoryDetails';
 import ShopDetails from './pages/ShopDetails';
 import Cart from './pages/Cart';
 import AccountRoutes from './routes/AccountRoutes';
+import Checkout from './pages/Checkout';
+import MainPage from './pages/MainPage';
+import MyProvider from './Provider/CommonProvider';
 
 function App() {
 
   return (
     <>
-      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index path="/" element={<Home />} />
+            <Route path="/home" element={<MainPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/password-reset" element={<ForgotPassword />} />
@@ -35,10 +38,10 @@ function App() {
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/account/*" element={<AccountRoutes />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>
-      </BrowserRouter>
     </>
   )
 }
