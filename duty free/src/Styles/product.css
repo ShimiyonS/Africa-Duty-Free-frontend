@@ -7,6 +7,7 @@
 
 .product-title {
     font-size: 18px;
+    font-family: "JustusProRegular", Sans-serif;
     color: var(--text-color-primary);
 }
 
@@ -74,11 +75,54 @@
     top: 10px;
     right: 15px;
 }
-.heart-btn >svg{
+
+.heart-btn>svg {
     width: 100%;
     height: 100%;
 }
 
+.product-heading {
+    font-size: 33px;
+    font-weight: bold;
+    font-family: "JustusProMedium";
+    color: var(--text-color-primary);
+}
+
+.most-popular .product-image {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.most-popular .product-price {
+    color: var(--iconic-color);
+}
+
+.gold-color {
+    color: var(--iconic-color);
+}
+
+.pop-tool {
+    bottom: -130px;
+    width: 200px;
+    z-index: 2;
+    transition: bottom 0.4s ease-in-out;
+}
+
+.product-card:hover .pop-tool {
+    bottom: 30px;
+}
+
+.pop-tool button {
+    background-color: var(--text-color-secondary);
+}
+
+.pop-tool button:hover {
+    background-color: var(--iconic-color);
+}
+
+.pop-tool button:hover svg {
+    color: var(--text-color-secondary);
+}
 
 @media screen and (max-width:760px) {
     .product-grid {

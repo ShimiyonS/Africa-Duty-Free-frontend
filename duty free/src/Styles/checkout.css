@@ -1,0 +1,42 @@
+.custom-input {
+    border: 1px solid #aaa;
+    padding: 20px 20px;
+    margin-bottom: 15px;
+}
+
+.apply-btn {
+    background-color: #eee;
+    color: var(--text-color-primary);
+    display: block;
+    border: 0;
+    padding: 16px 35px;
+    font-family: "JustusProMedium", Sans-serif;
+}
+
+.checkout-item-image {
+    width: 100px;
+    height: 100px;
+}
+
+.order-btn {
+    background-color: #eee;
+    color: var(--text-color-primary);
+    padding: 20px 20px;
+    font-family: "JustusProMedium", Sans-serif;
+}
+
+.checkout-form-label {
+    font-size: 19px;
+    font-weight: 600;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.checkout-form-label.required::after {
+    content: "*";
+    color: red;
+    top: -9px;
+    font-weight: bold;
+    right: -12px;
+    position: absolute;
+}

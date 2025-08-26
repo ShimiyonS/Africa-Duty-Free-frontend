@@ -4,7 +4,7 @@ import CategoryBanner from '../components/commonComponents/CategoryBanner'
 import BrandSwiper from '../components/commonComponents/BrandSwiper'
 import NewProducts from '../components/commonComponents/NewProducts'
 import Products from '../components/commonComponents/Products'
-import { apiRequest } from '../commonMethod/common'
+import Common from '../commonMethod/Common'
 import SaleCard from '../components/commonComponents/SaleCard'
 import BestBuy from '../components/commonComponents/BestBuy'
 import { useParams } from 'react-router-dom'
@@ -12,6 +12,7 @@ import { banner } from '../Files/data'
 import DiscountComponent from '../components/commonComponents/DiscountComponent'
 const CategoryDetails = () => {
     const { slug } = useParams();
+      const { apiRequest } = Common()
     const [products, setProducts] = useState([])
     const bannerDetails = banner?.find((item) => item?.name === slug);
 

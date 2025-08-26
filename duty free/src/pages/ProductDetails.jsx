@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react'
-import { apiRequest } from "../commonMethod/common.js";
+import Common from "../commonMethod/Common.js";
 import '../Styles/product-details.css'
 
 
 const ProductDetails = () => {
+    const { apiRequest } = Common()
     const { id } = useParams()
     const [product, setProduct] = useState(null)
     const [count, setCount] = useState(1)

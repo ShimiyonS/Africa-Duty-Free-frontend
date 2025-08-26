@@ -1,5 +1,7 @@
 const firstLetterCapital = (text) => text.charAt(0).toUpperCase() + text.slice(1);
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const api = axios.create({
     baseURL: "https://dummyjson.com",
@@ -33,4 +35,11 @@ const apiRequest = async (method, url, data = {}, headers = {}) => {
     }
 };
 
-export { firstLetterCapital, apiRequest }
+const Common = () => {
+    const dispatch = useDispatch();
+    const viewCart = useSelector(
+        (state) => state.viewCart
+    );
+    return { dispatch, viewCart ,firstLetterCapital, apiRequest}
+}
+export default Common;

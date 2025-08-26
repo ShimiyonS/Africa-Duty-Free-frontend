@@ -9,16 +9,17 @@ import OfferProduct1 from "../assets/categoryimage1.jpg"
 import OfferProduct2 from "../assets/categoryimage5.jpg"
 import NewProducts from "../components/commonComponents/NewProducts"
 import { useEffect, useState } from "react"
-import { apiRequest } from "../commonMethod/common"
+import Common from "../commonMethod/Common"
 import DiscountComponent from "../components/commonComponents/DiscountComponent"
 import BestBuy from "../components/commonComponents/BestBuy"
 import Banner from "../components/commonComponents/Banner"
 
 const Home = () => {
+    const { apiRequest } = Common()
   const [products, setProducts] = useState([])
   useEffect(() => {
     const fetchProducts = async () => {
-      const data = await apiRequest("GET", "/products", { page: 1 });
+      const data = await apiRequest("GET", "/products");
       setProducts(data?.products)
     };
     fetchProducts();
