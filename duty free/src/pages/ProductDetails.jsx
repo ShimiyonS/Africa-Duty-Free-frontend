@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useRef } from 'react'
-import { apiRequest } from "../commonMethod/common.js";
+import { useEffect, useState ,useRef} from 'react'
+import Common from "../commonMethod/Common.js";
 import '../Styles/product-details.css'
 import { Rating } from 'react-simple-star-rating'
 import { CiHeart } from "react-icons/ci";
@@ -25,6 +25,7 @@ import { saveAs } from 'file-saver';
 import Products from '../components/commonComponents/Products'
 
 const ProductDetails = () => {
+    const { apiRequest } = Common()
     const { id } = useParams()
     const [product, setProduct] = useState(null)
     const [count, setCount] = useState(1)

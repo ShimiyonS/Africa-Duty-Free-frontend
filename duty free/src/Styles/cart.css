@@ -7,6 +7,11 @@
     text-transform: uppercase;
     color: #AAA;
     font-weight: 600;
+    font-family: "JustusProRegular", Sans-serif;
+}
+
+.cart-table-title.right-total {
+    color: var(--text-color-primary);
 }
 
 .table-box {
@@ -45,4 +50,96 @@
 
 .cart-number::-webkit-outer-spin-button {
     display: block;
+}
+
+.cart-heading {
+    font-family: "JustusProMedium", Sans-serif;
+}
+
+.delivery-type {
+    font-family: "JustusProRegular", Sans-serif;
+}
+
+.order-box {
+    background-color: var(--checkbox-label-color);
+}
+
+.proceed-button {
+    background-color: var(--text-color-primary);
+    padding: 20px 20px;
+    font-family: "JustusProMedium", Sans-serif;
+    color: var(--text-color-secondary) !important;
+    text-transform: uppercase;
+}
+
+.coupon-input {
+    background-color: #F1F1F1;
+    color: #aaa;
+}
+
+.apply-coupon-button {
+    background-color: #AAAAAA;
+    top: 0;
+    right: 0;
+    font-family: "JustusProMedium", Sans-serif;
+}
+
+.apply-coupon-button:hover {
+    background-color: var(--text-color-primary);
+    color: var(--text-color-secondary);
+}
+
+.update-cart {
+    padding: 15px 25px;
+    font-family: "JustusProMedium", Sans-serif;
+    color: #AAAAAA;
+    border: 1px solid #AAA;
+}
+
+.update-cart:hover {
+    color: var(--text-color-primary);
+}
+
+/* modal style */
+.card-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: #060505ad;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.card-box {
+    position: relative;
+    background-color: var(--text-color-secondary);
+    border-radius: 15px;
+    padding: 30px;
+    width: 60%;
+}
+
+.alert-btn {
+    background-color: var(--text-color-secondary);
+    top: -13px;
+    right: -13px;
+    width: 40px;
+    border-radius: 30px;
+    padding: 8px;
+    height: 40px;
+}
+
+.popup-cart-heading {
+    font-size: 22px;
+    font-weight: 600;
+    font-family: "JustusProMedium", Sans-serif;
+
+}
+
+@media screen and (max-width:425px) {
+    .table-box {
+        padding: 10px 15px;
+    }
+
 }

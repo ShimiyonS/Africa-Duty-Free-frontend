@@ -7,7 +7,6 @@ import { CiSearch } from "react-icons/ci";
 import "./Header.css"
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { apiRequest } from '../../../commonMethod/common'
 
 const Header = ({ togglemenu, togglesidebar }) => {
   const navigate = useNavigate();
