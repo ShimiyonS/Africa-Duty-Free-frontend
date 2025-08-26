@@ -28,7 +28,7 @@ const Products = ({ data, headingText }) => {
         <div>
             <div className='container'>
                 <p className='mb-5 linear-bg px-3 py-2 secondary-text-color'>
-                    {firstLetterCapital(slug || headingText)}
+                    {firstLetterCapital(slug ?? headingText ?? "")}
                 </p>
                 {currentData?.length ? <><div className='product-grid'>
                     {currentData?.map((item, idx) => (
