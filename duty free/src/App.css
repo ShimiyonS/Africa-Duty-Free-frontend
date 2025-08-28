@@ -233,6 +233,24 @@ input:focus {
     color: var(--checkbox-label-color);
 }
 
+.scroll-top {
+    position: fixed;
+    bottom: 20px;
+    right: 4%;
+    border: 1px solid var(--text-color-danger);
+    background-color: var(--bg-color-primary);
+    border-radius: 30px;
+}
+
+.scroll-wrapper {
+    width: 40px;
+    height: 40px;
+}
+
+.scroll-top:hover svg {
+    color: red !important;
+}
+
 @media (max-width:426px) {
     .contact-us-form {
         margin-top: 50px;

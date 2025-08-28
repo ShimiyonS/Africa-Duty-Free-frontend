@@ -257,40 +257,47 @@
 }
 
 .whishilist-button {
-  text-decoration: none;
-  padding: 20px 35px;
-  font-size: 13px;
-  font-weight: 700;
-  border: 1px solid var(--border-color2);
-  transition: all 450ms;
-  background: var(--border-color2);
-  color: var(--border-color2);
-  width: 100%;
-  overflow: hidden;
-  position: relative;
+    text-decoration: none;
+    padding: 20px 35px;
+    font-size: 13px;
+    font-weight: 700;
+    border: 1px solid var(--border-color2);
+    transition: all 450ms;
+    background: var(--border-color2);
+    color: var(--border-color2);
+    width: 100%;
+    overflow: hidden;
+    position: relative;
 }
 
-.whishilist-button .button-overlay,.whishilist-button .button-overlay-reverse {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background-color: var(--black-color, rgba(0, 0, 0, 0.6));
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: all 0.6s ease;
-  z-index: 0;
+.whishilist-button .button-overlay,
+.whishilist-button .button-overlay-reverse,
+.scroll-top .button-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background-color: var(--black-color, rgba(0, 0, 0, 0.6));
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.6s ease;
+    z-index: 0;
 }
 
-.whishilist-button:hover .button-overlay ,.whishilist-button:hover .button-overlay-reverse{
-  width: 300px;   /* equal size */
-  height: 300px;  /* equal size */
+.whishilist-button:hover .button-overlay,
+.whishilist-button:hover .button-overlay-reverse,
+.scroll-top:hover .button-overlay {
+    width: 300px;
+    /* equal size */
+    height: 300px;
+    /* equal size */
 }
 
 .whishilist-button span {
-  position: relative;
-  z-index: 1; /* keep text above overlay */
+    position: relative;
+    z-index: 1;
+    /* keep text above overlay */
 }
 
 
@@ -306,4 +313,3 @@
     background: var(--border-color2);
     color: var(--white-color);
 }
-
