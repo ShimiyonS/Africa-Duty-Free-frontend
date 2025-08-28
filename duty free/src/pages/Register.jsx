@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom';
 
 const Register = () => {
-    const [username, setUsername] = useState("");
-    const [firstname, setFirstname] = useState("");
-    const [lastname, setLastname] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [form, setForm] = useState({})
+    const handleInput = (e) => {
+        const { name, type, value, checked } = e.target
+        setForm((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
 
     const handleRegister = (e) => {
         e.preventDefault();
-        alert(`Register with: ${email}, ${password}, Remember: ${remember}`);
+        alert(`Register with: ${form?.email}, ${form?.password}, Remember: ${form?.remember}`);
     };
     return (
         <>
@@ -26,8 +29,9 @@ const Register = () => {
                                 type="text"
                                 className="form-control custom-auth-input"
                                 id="username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                name="username"
+                                value={form?.username}
+                                onChange={(e) => handleInput(e)}
                                 required
                             />
                         </div>
@@ -39,8 +43,9 @@ const Register = () => {
                                 type="text"
                                 className="form-control custom-auth-input"
                                 id="firstname"
-                                value={firstname}
-                                onChange={(e) => setFirstname(e.target.value)}
+                                name='firstname'
+                                value={form?.firstname}
+                                onChange={(e) => handleInput(e)}
                                 required
                             />
                         </div>
@@ -52,8 +57,9 @@ const Register = () => {
                                 type="text"
                                 className="form-control custom-auth-input"
                                 id="lastname"
-                                value={lastname}
-                                onChange={(e) => setLastname(e.target.value)}
+                                value={form?.lastname}
+                                name={"lastname"}
+                                onChange={(e) => handleInput(e)}
                                 required
                             />
                         </div>
@@ -65,8 +71,9 @@ const Register = () => {
                                 type="email"
                                 className="form-control custom-auth-input"
                                 id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                name='email'
+                                value={form?.email}
+                                onChange={(e) => handleInput(e)}
                                 required
                             />
                         </div>
@@ -78,23 +85,25 @@ const Register = () => {
                                 type="password"
                                 className="form-control custom-auth-input"
                                 id="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                name="password"
+                                value={form?.password}
+                                onChange={(e) => handleInput(e)}
                                 required
                             />
                         </div>
 
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label fw-bold">
-                               Confirm Password
+                                Confirm Password
                             </label>
                             <input
                                 type="password"
                                 className="form-control custom-auth-input"
                                 id="password"
+                                name="confirmpassword"
+                                value={form?.confirmpassword}
+                                onChange={(e) => handleInput(e)}
                                 placeholder='Confirm Password'
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
                         </div>
@@ -110,7 +119,7 @@ const Register = () => {
                     </form>
                 </div>
             </div>
-             
+
         </>
     )
 }

@@ -8,6 +8,8 @@ import "./Header.css"
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Common from '../../../commonMethod/Common'
+import { IoClose } from "react-icons/io5";
+import { IoIosClose } from "react-icons/io";
 
 const Header = ({ togglemenu, togglesidebar }) => {
   const navigate = useNavigate();
@@ -125,12 +127,12 @@ const Header = ({ togglemenu, togglesidebar }) => {
                 </div>
 
                 <div className="row col-12 mb-4">
-                  <label htmlFor="destination">destination</label>
+                  <label htmlFor="destination">Destination</label>
                   <input type="text" className='duty-popup-inputs' />
                 </div>
 
                 <div className="row col-12 mb-4">
-                  <textarea name="message" className='duty-popup-textarea' id="" rows={10} cols={4} placeholder='Your message here' ></textarea>
+                  <textarea name="message" className='duty-popup-textarea' id="" rows={10} cols={4} placeholder='Your Message Here' ></textarea>
                 </div>
 
                 <div className="d-flex justify-content-end">
@@ -152,10 +154,13 @@ const Header = ({ togglemenu, togglesidebar }) => {
               <div className="p-0 p-0 d-flex align-items-center justify-content-end">
                 <button
                   type="button"
-                  className="btn-close p-0"
+                  className=" p-0 sign-popup-btn bg-transparent border-0 outline-0"
                   data-bs-dismiss="modal"
                   aria-label="Close"
-                ></button>
+
+                >
+                  <IoClose />
+                </button>
               </div>
               <div className="d-flex justify-content-around">
                 <button
@@ -166,14 +171,14 @@ const Header = ({ togglemenu, togglesidebar }) => {
                     navigate("/login");
                   }}
                 >
-                  Sign up
+                  Sign in
                 </button>
                 <button
                   className="popup-login login-popup2"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                   onClick={() => {
-                    navigate("/login");
+                    navigate("/register");
                   }}
                 >
                   Sign up
@@ -197,26 +202,32 @@ const Header = ({ togglemenu, togglesidebar }) => {
           <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div className="offcanvas-body">
-          {cart.length > 0 ?<>
-          <div className='whishlist-content'>
-            {cart?.map((item, index) => {
-              return (
-                <div className='d-flex align-items-center gap-3 p-2'>
-                  <img src={item?.thumbnail} className='header-cart-image' />
-                  <div>
-                    <button onClick={() => { navigate(`/product/${item.id}`) }} className='text-decoration-none header-cart-product-link' type='button' data-bs-dismiss="offcanvas" aria-label="Close">{item.title}</button>
-                    <p><span className='fs-6'>{item?.minimumOrderQuantity} X</span> <span className='fw-bold'>${item?.price}</span></p>
+          {cart.length > 0 ? <>
+            <div className='whishlist-content'>
+              {cart?.map((item, index) => {
+                return (
+                  <div className='d-flex align-items-center gap-3 p-2'>
+                    <img src={item?.thumbnail} className='header-cart-image' />
+                    <div>
+                      <button onClick={() => { navigate(`/product/${item.id}`) }} className='text-decoration-none header-cart-product-link' type='button' data-bs-dismiss="offcanvas" aria-label="Close">{item.title}</button>
+                      <p><span className='fs-6'>{item?.minimumOrderQuantity} </span><IoIosClose style={{ width: "15px", height: "15px" }} /> <span className='fw-bold text-break'>${item?.price}</span></p>
+                    </div>
                   </div>
+                )
+              })}
+            </div>
+            <p className='p-2 fw-bold'><span className='fs-6'>Subtotal: </span><span className='fs-5'>${cart?.reduce((acc, item, i) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</span></p>
+            <div className='d-flex flex-column text-center'>
+              <button onClick={() => { navigate("/cart") }} className='position-relative whishilist-button header-cart-link mb-3' type='button' data-bs-dismiss="offcanvas" aria-label="Close">
+                <span>VIEW CART</span>
+                <div className='button-overlay'>
                 </div>
-              )
-            })}
-          </div>
-          <p className='p-2 fw-bold'><span className='fs-6'>subtotal:</span><span className='fs-5'>${cart?.reduce((acc, item, i) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</span></p>
-          <div className='d-flex flex-column text-center'>
-            <button onClick={() => { navigate("/cart") }} className='whishilist-button header-cart-link mb-3' type='button' data-bs-dismiss="offcanvas" aria-label="Close">VIEW CART</button>
-            <button onClick={() => { navigate("/checkout") }} className='whishilist-button header-checkout-link' type='button' data-bs-dismiss="offcanvas" aria-label="Close">PROCEED TO CHECKOUT</button>
-          </div>
-          </>:<p className='text-center'>No products in the cart.</p>}
+              </button>
+              <button onClick={() => { navigate("/checkout") }} className='whishilist-button header-checkout-link' type='button' data-bs-dismiss="offcanvas" aria-label="Close"><span>PROCEED TO CHECKOUT </span>
+                <div className='button-overlay-reverse'>
+                </div></button>
+            </div>
+          </> : <p className='text-center'>No products in the cart.</p>}
         </div>
       </div>
     </div>

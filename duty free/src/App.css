@@ -16,8 +16,7 @@
     --secondary-color: #AE9962;
     --button-color: #B4462A;
     --navigation-color: #5E5E5E;
-    --text-color-secondary: #fff;
-    --text-color-primary: #000;
+
     --bg-color-primary: #fff;
     --bg-color-secondary: #000;
     --shadow: 0px 0px 0px #000;
@@ -33,45 +32,93 @@
     --button-bg-color-secondary: #1691aa;
     --iconic-color: #ae9962;
     --alert-color: #1ecf6f;
+
+
+    --button-bg-primary: #f0b32c;
+    --button-bg-danger: #ff4823;
+    --button-bg-success: #23c337;
+
+    --text-color-primary: #000;
+    --text-color-secondary: #fff;
+    --text-color-danger: #b63f21;
+    --text-color-gold: #a49764;
+
 }
 
+/* common button class start */
+.button-bg-primary {
+    background-color: var(--button-bg-primary);
+}
+
+.button-bg-danger {
+    background-color: var(--button-bg-danger);
+}
+
+.button-bg-success {
+    background-color: var(--button-bg-success);
+}
+
+/* common button class end */
+
+
+/* common text class start */
+.text-color-primary {
+    color: var(--text-color-primary);
+}
+
+.text-color-secondary {
+    color: var(--text-color-secondary);
+}
+
+.text-color-danger {
+    color: var(--text-color-danger);
+}
+
+.text-color-gold {
+    color: var(--text-color-gold);
+}
+
+
+/* common text class end */
+
+/* common font class */
 .justuspro-medium {
     font-family: "JustusProMedium", Sans-serif;
 }
 
-.justuspro-medium-italic{
+.justuspro-medium-italic {
     font-family: "JustusProMediumIt", Sans-serif;
 }
 
-.justuspro-bold{
+.justuspro-bold {
     font-family: "JustusProBold", Sans-serif;
 }
 
-.justuspro-bold-italic{
+.justuspro-bold-italic {
     font-family: "JustusProBoldIt", Sans-serif;
 }
 
-.justuspro-italic{
+.justuspro-italic {
     font-family: "JustusProItalic", Sans-serif;
 }
 
-.justuspro-light{
+.justuspro-light {
     font-family: "JustusProLight", Sans-serif;
 }
 
-.justuspro-light-italic{
+.justuspro-light-italic {
     font-family: "JustusProLightIt", Sans-serif;
 }
 
-.justuspro-regular{
+.justuspro-regular {
     font-family: "JustusProRegular", Sans-serif;
 }
 
-.justuspro-thin{
+.justuspro-thin {
     font-family: "JustusProTh", Sans-serif;
 }
 
-.justuspro-thin-italic{
+.justuspro-thin-italic {
     font-family: "JustusProThinIt", Sans-serif;
 }
 
@@ -84,26 +131,12 @@
     background-color: var(--bg-color-secondary);
 }
 
-.primary-text-color {
-    color: var(--text-color-primary);
-}
-
-.secondary-text-color {
-    color: var(--text-color-secondary);
-}
-
 .linear-bg {
     background: #27242B;
     background: linear-gradient(90deg, rgba(39, 36, 43, 1) 19%, rgba(125, 46, 32, 1) 42%, rgba(184, 66, 33, 1) 68%, rgba(173, 154, 101, 1) 89%);
 }
 
-.primary-text-color {
-    color: var(--text-color-primary);
-}
 
-.secondary-text-color {
-    color: var(--text-color-secondary);
-}
 
 .alertsuccess {
     background-color: var(--alert-color);
@@ -123,6 +156,18 @@
 
 .placeholder-custom::placeholder {
     color: #aaa;
+}
+
+.input-hide-arrow::-webkit-outer-spin-button,
+.input-hide-arrow::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* common classed end */
+input:focus {
+    border: none !important;
+    outline: none !important;
 }
 
 .alert-wrapper {

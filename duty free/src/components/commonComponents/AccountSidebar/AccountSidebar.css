@@ -7,9 +7,15 @@
     width: 60%;
 }
 
-.account-update label, input, button,
-.privacy-form p , input, button,
-.account-delete-form label, input, button,
+.account-update label,
+.account-update input,
+.account-update button,
+.privacy-form p,
+.privacy-form input,
+.privacy-form button,
+.account-delete-form label,
+.account-delete-form input,
+.account-delete-form button,
 .delete-label,
 .navigator-name {
     font-family: "JustusProRegular";
@@ -64,7 +70,7 @@
     width: 60%;
 }
 
-.privacy-page-icon{
+.privacy-page-icon {
     font-size: 20px;
 }
 

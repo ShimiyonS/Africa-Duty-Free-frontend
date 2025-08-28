@@ -96,6 +96,14 @@
     margin-top: 1rem;
 }
 
+.sign-popup-btn {
+    color: red;
+    font-size: 22px;
+    position: absolute;
+    top: -4px;
+    right: 0;
+}
+
 /* ---------------------------------------------------------------------- */
 
 /* duty-popup-css */
@@ -210,7 +218,10 @@
     position: absolute;
     top: -5px;
     left: 25px;
-    font-size: 14px;
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    font-weight: bold;
     padding: 3px;
     background-color: var(--secondary-color);
     color: var(--white-color);
@@ -246,15 +257,42 @@
 }
 
 .whishilist-button {
-    text-decoration: none;
-    padding: 20px 35px;
-    font-size: 0.8125em;
-    font-weight: 700;
-    border: 1px solid var(--border-color2);
-    transition: all 450ms;
-    background: var(--border-color2);
-    color: var(--border-color2);
+  text-decoration: none;
+  padding: 20px 35px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid var(--border-color2);
+  transition: all 450ms;
+  background: var(--border-color2);
+  color: var(--border-color2);
+  width: 100%;
+  overflow: hidden;
+  position: relative;
 }
+
+.whishilist-button .button-overlay,.whishilist-button .button-overlay-reverse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: var(--black-color, rgba(0, 0, 0, 0.6));
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.6s ease;
+  z-index: 0;
+}
+
+.whishilist-button:hover .button-overlay ,.whishilist-button:hover .button-overlay-reverse{
+  width: 300px;   /* equal size */
+  height: 300px;  /* equal size */
+}
+
+.whishilist-button span {
+  position: relative;
+  z-index: 1; /* keep text above overlay */
+}
+
 
 .header-cart-link {
     background-color: var(--white-color);
@@ -269,7 +307,3 @@
     color: var(--white-color);
 }
 
-.header-checkout-link:hover {
-    color: var(--border-color2);
-    background-color: var(--white-color);
-}
