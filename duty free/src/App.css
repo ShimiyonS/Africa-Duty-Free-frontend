@@ -35,6 +35,47 @@
     --alert-color: #1ecf6f;
 }
 
+.justuspro-medium {
+    font-family: "JustusProMedium", Sans-serif;
+}
+
+.justuspro-medium-italic{
+    font-family: "JustusProMediumIt", Sans-serif;
+}
+
+.justuspro-bold{
+    font-family: "JustusProBold", Sans-serif;
+}
+
+.justuspro-bold-italic{
+    font-family: "JustusProBoldIt", Sans-serif;
+}
+
+.justuspro-italic{
+    font-family: "JustusProItalic", Sans-serif;
+}
+
+.justuspro-light{
+    font-family: "JustusProLight", Sans-serif;
+}
+
+.justuspro-light-italic{
+    font-family: "JustusProLightIt", Sans-serif;
+}
+
+.justuspro-regular{
+    font-family: "JustusProRegular", Sans-serif;
+}
+
+.justuspro-thin{
+    font-family: "JustusProTh", Sans-serif;
+}
+
+.justuspro-thin-italic{
+    font-family: "JustusProThinIt", Sans-serif;
+}
+
+
 .primay-bg {
     background-color: var(--bg-color-primary);
 }
@@ -64,11 +105,11 @@
     color: var(--text-color-secondary);
 }
 
-.alertsuccess{
+.alertsuccess {
     background-color: var(--alert-color);
 }
 
-.alertfail{
+.alertfail {
     background-color: var(--color-red);
 }
 
