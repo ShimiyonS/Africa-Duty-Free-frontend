@@ -7,9 +7,11 @@ import { CiSearch } from "react-icons/ci";
 import "./Header.css"
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import Common from '../../../commonMethod/Common'
 
 const Header = ({ togglemenu, togglesidebar }) => {
   const navigate = useNavigate();
+  const { apiRequest } = Common()
   const [cart, setCart] = useState([])
   useEffect(() => {
     const fetchCart = async () => {
