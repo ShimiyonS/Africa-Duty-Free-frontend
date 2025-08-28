@@ -5,9 +5,9 @@ import Bag from "../../../assets/bag.svg"
 import Wishlist from "../../../assets/wishlist.svg"
 import { CiSearch } from "react-icons/ci";
 import "./Header.css"
-import Common from "../../../commonMethod/common"
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import Common from '../../../commonMethod/Common'
 
 const Header = ({ togglemenu, togglesidebar }) => {
   const navigate = useNavigate();

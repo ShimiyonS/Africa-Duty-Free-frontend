@@ -18,6 +18,8 @@
     --navigation-color: #5E5E5E;
     --text-color-secondary: #fff;
     --text-color-primary: #000;
+    --bg-color-primary: #fff;
+    --bg-color-secondary: #000;
     --shadow: 0px 0px 0px #000;
     --border-color: rgba(34, 34, 34, 0.1);
     --border-color2: #3D3D3D;
@@ -31,6 +33,22 @@
     --button-bg-color-secondary: #1691aa;
     --iconic-color: #ae9962;
     --alert-color: #1ecf6f;
+}
+
+.primay-bg {
+    background-color: var(--bg-color-primary);
+}
+
+.secondary-bg {
+    background-color: var(--bg-color-secondary);
+}
+
+.primary-text-color {
+    color: var(--text-color-primary);
+}
+
+.secondary-text-color {
+    color: var(--text-color-secondary);
 }
 
 .linear-bg {
@@ -74,7 +92,7 @@
     left: 20px;
     max-width: 500px;
     width: 100%;
-    z-index: 999;
+    z-index: 1001;
     position: fixed;
     color: var(--text-color-secondary);
 }
@@ -91,6 +109,7 @@
     width: 130px;
     text-align: center;
 }
+
 /* conatct-us-form css */
 
 .contact-us-form {

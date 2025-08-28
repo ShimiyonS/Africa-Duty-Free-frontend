@@ -183,8 +183,10 @@
     background-color: transparent;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+.contact-us input[type=number]::-webkit-inner-spin-button,
+.contact-us input[type=number]::-webkit-outer-spin-button,
+.duty-popup-inputs::-webkit-outer-spin-button,
+.duty-popup-inputs::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
