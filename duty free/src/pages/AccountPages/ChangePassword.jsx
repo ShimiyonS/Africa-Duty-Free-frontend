@@ -6,7 +6,7 @@ const ChangePassword = () => {
   const [showMessage, setShowMessage] = useState(false)
   const [responseStatus, setResponseStatus] = useState(false)
   const [responseMessage, setResponseMessage] = useState("")
-  const [formdata, setFormdata] = useState({ currentpassword: "", newpassword: "", confirmpassword: ""})
+  const [formdata, setFormdata] = useState({ currentpassword: "", newpassword: "", confirmpassword: "" })
 
   const handleResponseClose = () => {
     setShowMessage(false)
@@ -25,10 +25,13 @@ const ChangePassword = () => {
   return (
     <div>
       {showMessage ? <Message handleclose={handleResponseClose} responseStatus={responseStatus} message={responseMessage} /> : ""}
-      <h5><span className="px-3"><FaAsterisk /></span>Change Password</h5>
+      <div className="d-flex align-items-center mb-4">
+        <span className="me-2 fs-5"><FaAsterisk /></span>
+        <h5 className="m-0 fw-bold navigator-name">Change Password</h5>
+      </div>
       <form onSubmit={handleChangePassword} className='account-update'>
         <div className="mb-3">
-          <label htmlFor="currentPassword" className="form-label fw-bold">
+          <label htmlFor="currentPassword" className="form-label mb-3 fw-bold">
             Current Password
           </label>
           <input
@@ -41,7 +44,7 @@ const ChangePassword = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="newPassword" className="form-label fw-bold">
+          <label htmlFor="newPassword" className="form-label mb-3 fw-bold">
             New Password
           </label>
           <input
@@ -54,7 +57,7 @@ const ChangePassword = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="confirmPassword" className="form-label fw-bold">
+          <label htmlFor="confirmPassword" className="form-label mb-3 fw-bold">
             Confirm Password
           </label>
           <input
@@ -66,7 +69,7 @@ const ChangePassword = () => {
             required
           />
         </div>
-      
+
         <div className="d-flex gap-2">
           <button type="submit" className="border-0 auth-btns auth-btn-1">
             Update Password

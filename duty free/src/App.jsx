@@ -17,6 +17,7 @@ import AccountRoutes from './routes/AccountRoutes';
 import Checkout from './pages/Checkout';
 import MainPage from './pages/MainPage';
 import MyProvider from './Provider/CommonProvider';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 function App() {
 
@@ -37,7 +38,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/account/*" element={<AccountRoutes />} />
+            <Route element={<ProtectedRoute />}><Route path="/account/*" element={<AccountRoutes />} /></Route>
             <Route path="/checkout" element={<Checkout />} />
             <Route path="*" element={<NoPage />} />
           </Route>

@@ -5,9 +5,9 @@ import AccountSidebar from '../components/commonComponents/AccountSidebar/Accoun
 const AccountLayout = () => {
     return (
         <>
-            <div className='row container mx-auto contact-us-form'>
+            <div className='row container mx-auto account-controls'>
                 <AccountSidebar />
-                <div className="col-6">
+                <div className="p-4 p-md-0 col-12 col-md-6 col-lg-7">
                     <Outlet />
                 </div>
             </div>

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { MdDelete } from "react-icons/md";
+import { AiFillDelete } from "react-icons/ai";
 import Message from "../../components/Message";
 
 const DeleteAccount = () => {
   const [showMessage, setShowMessage] = useState(false)
   const [responseStatus, setResponseStatus] = useState(false)
   const [responseMessage, setResponseMessage] = useState("")
-  const [formdata, setFormdata] = useState({ password: ""})
+  const [formdata, setFormdata] = useState({ password: "" })
 
   const handleResponseClose = () => {
     setShowMessage(false)
@@ -25,11 +25,14 @@ const DeleteAccount = () => {
   return (
     <div>
       {showMessage ? <Message handleclose={handleResponseClose} responseStatus={responseStatus} message={responseMessage} /> : ""}
-      <h5><span className="px-3"><MdDelete /></span>Delete Account</h5>
-      <p>Are you sure you want to delete your account? This will erase all of your account data from the site. To delete your account enter your password below.</p>
-      <form onSubmit={handleProfileDelete} className='account-update'>
+      <div className="d-flex align-items-center mb-4">
+        <span className="me-2 fs-5"><AiFillDelete /></span>
+        <h5 className="m-0 navigator-name fw-bold">Delete Account</h5>
+      </div>
+      <p className="delete-label">Are you sure you want to delete your account? This will erase all of your account data from the site. To delete your account enter your password below.</p>
+      <form onSubmit={handleProfileDelete} className='account-delete-form'>
         <div className="mb-3">
-          <label htmlFor="Password" className="form-label fw-bold">
+          <label htmlFor="Password" className="form-label mb-3 fw-bold">
             Password
           </label>
           <input
@@ -43,7 +46,7 @@ const DeleteAccount = () => {
         </div>
 
         <div className="d-flex gap-2">
-          <button type="submit" className="border-0 auth-btns auth-btn-1">
+          <button type="submit" className="border-0 p-2 rounded-2 auth-btn-1">
             Delete Account
           </button>
         </div>

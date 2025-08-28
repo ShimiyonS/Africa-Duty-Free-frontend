@@ -7,20 +7,22 @@ import { Link } from "react-router-dom";
 
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const token = localStorage.getItem("LoginToken")
+    const [formData,setFormData] = useState({email:"",password:""})
+    const [token, setToken] = useState(localStorage.getItem("LoginToken"))
     console.log(token);
 
 
     const handleLogin = (e) => {
         e.preventDefault();
-        alert(`Login with: ${email}, ${password}`);
-        localStorage.setItem("LoginToken", "1234567890")
+        alert(`Login with: ${formData.password}`);
+        const updateToken = "1234567890"
+        localStorage.setItem("LoginToken", updateToken)
+        setToken(updateToken)
     };
 
     const handleLogout = () => {
         localStorage.removeItem("LoginToken")
+        setToken(null)
     }
 
     return (
@@ -39,8 +41,8 @@ const Login = () => {
                                     type="email"
                                     className="form-control custom-auth-input"
                                     id="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({...formData, email:e.target.value})}
                                     required
                                 />
                             </div>
@@ -52,8 +54,8 @@ const Login = () => {
                                     type="password"
                                     className="form-control custom-auth-input"
                                     id="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({...formData, password:e.target.value})}
                                     required
                                 />
                             </div>

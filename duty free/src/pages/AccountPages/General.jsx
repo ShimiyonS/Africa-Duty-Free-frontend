@@ -25,11 +25,14 @@ const General = () => {
   };
   return (
     <div>
-      {showMessage?<Message handleclose={handleResponseClose} responseStatus={responseStatus} message={responseMessage} />:""}
-      <h5><span className='px-3'><FaUser /></span>Account</h5>
+      {showMessage ? <Message handleclose={handleResponseClose} responseStatus={responseStatus} message={responseMessage} /> : ""}
+      <div className="d-flex align-items-center mb-4">
+        <span className="me-2 fs-5"><FaUser /></span>
+        <h5 className="m-0 navigator-name fw-bold">Account</h5>
+      </div>
       <form onSubmit={handleProfileUpdate} className='account-update'>
         <div className="mb-3">
-          <label htmlFor="email" className="form-label fw-bold">
+          <label htmlFor="email" className="form-label mb-3 fw-bold">
             Username
           </label>
           <input
@@ -42,7 +45,7 @@ const General = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="firstname" className="form-label fw-bold">
+          <label htmlFor="firstname" className="form-label mb-3 fw-bold">
             First Name
           </label>
           <input
@@ -55,7 +58,7 @@ const General = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="lastname" className="form-label fw-bold">
+          <label htmlFor="lastname" className="form-label mb-3 fw-bold">
             Last Name
           </label>
           <input
@@ -68,7 +71,7 @@ const General = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="email" className="form-label fw-bold">
+          <label htmlFor="email" className="form-label mb-3 fw-bold">
             Email Address
           </label>
           <input

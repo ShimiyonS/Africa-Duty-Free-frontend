@@ -5,11 +5,13 @@ import Bag from "../../../assets/bag.svg"
 import Wishlist from "../../../assets/wishlist.svg"
 import { CiSearch } from "react-icons/ci";
 import "./Header.css"
+import Common from "../../../commonMethod/common"
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
 const Header = ({ togglemenu, togglesidebar }) => {
   const navigate = useNavigate();
+  const { apiRequest } = Common()
   const [cart, setCart] = useState([])
   useEffect(() => {
     const fetchCart = async () => {
@@ -212,7 +214,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
           <p className='p-2 fw-bold'><span className='fs-6'>subtotal:</span><span className='fs-5'>${cart?.reduce((acc, item, i) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</span></p>
           <div className='d-flex flex-column text-center'>
             <button onClick={() => { navigate("/cart") }} className='whishilist-button header-cart-link mb-3' type='button' data-bs-dismiss="offcanvas" aria-label="Close">VIEW CART</button>
-            <button onClick={() => { navigate("/cart") }} className='whishilist-button header-checkout-link' type='button' data-bs-dismiss="offcanvas" aria-label="Close">PROCEED TO CHECKOUT</button>
+            <button onClick={() => { navigate("/checkout") }} className='whishilist-button header-checkout-link' type='button' data-bs-dismiss="offcanvas" aria-label="Close">PROCEED TO CHECKOUT</button>
           </div>
           </>:<p className='text-center'>No products in the cart.</p>}
         </div>
