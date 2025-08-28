@@ -1,0 +1,93 @@
+.account-controls {
+    margin-top: 60px;
+    margin-bottom: 100px;
+}
+
+.account-update {
+    width: 60%;
+}
+
+.account-update label, input, button,
+.privacy-form p , input, button,
+.account-delete-form label, input, button,
+.delete-label,
+.navigator-name {
+    font-family: "JustusProRegular";
+    color: #555;
+}
+
+.account-links {
+    position: relative;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-color: #eee;
+    color: var(--navigation-color);
+}
+
+.account-links:hover {
+    background-color: #ddd;
+}
+
+.side-bar-links .active .sidebar-icons {
+    color: var(--button-bg-color-secondary);
+}
+
+.side-bar-links .active span {
+    color: var(--border-color2);
+}
+
+.account-links>span:nth-child(2) {
+    position: relative;
+    font-size: 14px;
+}
+
+.account-links>span:nth-child(2)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--navigation-color);
+    width: 1px;
+}
+
+.tooltip-icons {
+    color: var(--checkbox-label-color);
+}
+
+.tooltip-icons:hover {
+    color: var(--border-color2);
+}
+
+.privacy-form .custom-auth-input,
+.account-delete-form .custom-auth-input {
+    width: 60%;
+}
+
+.privacy-page-icon{
+    font-size: 20px;
+}
+
+.privacy-page-icon .checked {
+    display: none;
+    color: var(--button-bg-color-secondary);
+}
+
+input:checked+.privacy-page-icon .checked {
+    display: inline;
+}
+
+input:checked+.privacy-page-icon .unchecked {
+    display: none;
+}
+
+@media (max-width:769px) {
+    .account-update {
+        width: 100%;
+    }
+
+    .privacy-form .custom-auth-input,
+    .account-delete-form .custom-auth-input {
+        width: 100%;
+    }
+}

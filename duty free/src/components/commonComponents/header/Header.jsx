@@ -197,6 +197,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
           <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div className="offcanvas-body">
+          {cart.length > 0 ?<>
           <div className='whishlist-content'>
             {cart?.map((item, index) => {
               return (
@@ -213,8 +214,9 @@ const Header = ({ togglemenu, togglesidebar }) => {
           <p className='p-2 fw-bold'><span className='fs-6'>subtotal:</span><span className='fs-5'>${cart?.reduce((acc, item, i) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</span></p>
           <div className='d-flex flex-column text-center'>
             <button onClick={() => { navigate("/cart") }} className='whishilist-button header-cart-link mb-3' type='button' data-bs-dismiss="offcanvas" aria-label="Close">VIEW CART</button>
-            <button onClick={() => { navigate("/cart") }} className='whishilist-button header-checkout-link' type='button' data-bs-dismiss="offcanvas" aria-label="Close">PROCEED TO CHECKOUT</button>
+            <button onClick={() => { navigate("/checkout") }} className='whishilist-button header-checkout-link' type='button' data-bs-dismiss="offcanvas" aria-label="Close">PROCEED TO CHECKOUT</button>
           </div>
+          </>:<p className='text-center'>No products in the cart.</p>}
         </div>
       </div>
     </div>

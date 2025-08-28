@@ -64,6 +64,14 @@
     color: var(--text-color-secondary);
 }
 
+.alertsuccess{
+    background-color: var(--alert-color);
+}
+
+.alertfail{
+    background-color: var(--color-red);
+}
+
 .link-custom {
     color: var(--button-color) !important;
 }

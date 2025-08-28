@@ -80,3 +80,27 @@
 .forgot-password:hover {
     text-decoration: underline;
 }
+
+/* ------------------------------------------------------------------------------------ */
+
+.user-control {
+    width: 250px;
+}
+
+.user-control .img-section {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.user-control .img-section p {
+    font-family: "JustusProRegular";
+    color: var(--navigation-color);
+}
+
+.user-default-img {
+    display: block;
+    margin: 0 auto;
+}
+
+.controls-section ul li::marker{
+    color: var(--navigation-color);
+}
