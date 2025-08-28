@@ -13,8 +13,12 @@ import BrandDetails from './pages/BrandDetails';
 import CategoryDetails from './pages/CategoryDetails';
 import ShopDetails from './pages/ShopDetails';
 import Cart from './pages/Cart';
+import AccountRoutes from './routes/AccountRoutes';
 import Checkout from './pages/Checkout';
 import MainPage from './pages/MainPage';
+import MyProvider from './Provider/CommonProvider';
+import ProtectedRoute from './routes/ProtectedRoute';
+import MyAccountRoutes from './routes/MyAccountRoutes';
 
 function App() {
 
@@ -35,8 +39,9 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/cart" element={<Cart />} />
+            <Route element={<ProtectedRoute />}><Route path="/account/*" element={<AccountRoutes />} /></Route>
+            <Route element={<ProtectedRoute />}><Route path="/my-account/*" element={<MyAccountRoutes />} /></Route>
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="*" element={<NoPage />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>
