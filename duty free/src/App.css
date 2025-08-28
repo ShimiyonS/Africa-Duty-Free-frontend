@@ -34,7 +34,7 @@
     --iconic-color: #ae9962;
     --alert-color: #1ecf6f;
 }
-
+/* custom color start */
 .primay-bg {
     background-color: var(--bg-color-primary);
 }
@@ -64,6 +64,7 @@
     color: var(--text-color-secondary);
 }
 
+/* custom color end */
 .link-custom {
     color: var(--button-color) !important;
 }
