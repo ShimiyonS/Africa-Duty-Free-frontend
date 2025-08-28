@@ -6,7 +6,7 @@ import { useMyContext } from "../../Provider/CommonProvider";
 import { viewCart } from "../../store/slice/viewCartSlice";
 import Common from "../../commonMethod/Common";
 
-const ProductCard = ({ data, hideWishlist, hidePopTool }) => {
+const ProductCard = ({ data, hideWishlist, hidePopTool,hideCart,hideAddCartPop }) => {
     const { handleOpenAlert } = useMyContext()
     const { dispatch } = Common()
 
@@ -26,8 +26,8 @@ const ProductCard = ({ data, hideWishlist, hidePopTool }) => {
             <div className="position-relative overflow-hidden">
                 <img src={data?.thumbnail} className='p-2 product-image' />
                 {!hidePopTool && <div className="d-flex align-items-center gap-2 position-absolute justify-content-center pop-tool">
-                    <button className="border-0 px-3 py-2 rounded-1" onClick={() => handleAddTocart(data)}><FaShoppingCart /></button>
-                    <button className="border-0 px-3 py-2 rounded-1" onClick={() => handleOpenModal(data)}><FaEye /></button>
+                    {!hideCart && <button className="border-0 px-3 py-2 rounded-1" onClick={() => handleAddTocart(data)}><FaShoppingCart /></button>}
+                    {!hideAddCartPop && <button className="border-0 px-3 py-2 rounded-1" onClick={() => handleOpenModal(data)}><FaEye /></button>}
                 </div>}
             </div>
             <Link to={`/product/${data?.id}`} className='product-title d-block text-decoration-none mb-0 pt-3 pb-2'>{data?.title}</Link>

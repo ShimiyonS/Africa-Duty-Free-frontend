@@ -88,7 +88,8 @@
     color: var(--text-color-primary);
 }
 
-.most-popular .product-image {
+.most-popular .product-image,
+.most-popular .product-card>div {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
@@ -122,6 +123,28 @@
 
 .pop-tool button:hover svg {
     color: var(--text-color-secondary);
+}
+
+.main-page-category-link {
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 28px;
+}
+
+.main-page-category-link::after {
+    display: block;
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: var(--iconic-color);
+}
+
+.main-category-wrapper {
+    border-radius: 20px;
+}
+
+.main-category-image {
+    height: 200px;
 }
 
 @media screen and (max-width:760px) {
