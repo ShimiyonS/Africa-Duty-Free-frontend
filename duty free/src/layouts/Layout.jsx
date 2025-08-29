@@ -8,6 +8,7 @@ import CardModal from '../components/commonComponents/CardModal.jsx'
 import Common from '../commonMethod/Common.js'
 import DiscountComponent from '../components/commonComponents/DiscountComponent.jsx'
 import { clearCart } from '../store/slice/viewCartSlice.js'
+import ScrollToTop from '../components/commonComponents/ScrollToTop.jsx'
 
 const Layout = () => {
     const { getActiveCart, dispatch } = Common()
@@ -28,6 +29,7 @@ const Layout = () => {
             <Outlet />
             <DiscountComponent />
             <Footer />
+            <ScrollToTop />
         </>
 
     )

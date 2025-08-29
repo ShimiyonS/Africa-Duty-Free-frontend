@@ -2,9 +2,9 @@ import { FaLock } from "react-icons/fa";
 import { FaCreditCard } from "react-icons/fa6";
 import { FaDroplet } from "react-icons/fa6";
 import { MdOutlineWatch } from "react-icons/md";
-import Message from "../../components/Message";
 import { useEffect, useState } from "react";
 import { Tooltip } from "bootstrap";
+import Message from "../../components/commonComponents/Message";
 
 const Privacy = () => {
   const [showMessage, setShowMessage] = useState(false)

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import "../Styles/cart.css"
 import { IoMdClose } from 'react-icons/io';
-import DiscountComponent from '../components/commonComponents/DiscountComponent';
 import Common from '../commonMethod/Common';
 const Cart = () => {
     const { apiRequest } = Common()
@@ -84,7 +83,7 @@ const Cart = () => {
                                 <p className='cart-table-title right-total'> Shipping</p>
                                 <p className='delivery-type px-4 py-3'>Free shipping</p>
                                 <p className='cart-table-title right-total'>Shipping options will be updated during checkout.</p>
-                                <button onClick={null} className="dm-regular bg-transparent border-0 outline-0 p-0 link-custom"  >Calculate shipping</button>
+                                <button onClick={null} className=" dmsans-regular  bg-transparent border-0 outline-0 p-0 link-custom"  >Calculate shipping</button>
                             </div>
                         </div>
                         <div className='d-flex align-items-center flex-wrap table-box'>
@@ -102,7 +101,6 @@ const Cart = () => {
                 </div>
 
             }
-            <DiscountComponent />
         </div>
     )
 }
