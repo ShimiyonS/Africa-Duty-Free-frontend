@@ -8,7 +8,7 @@ const BreadCrumb = ({ navigation }) => {
                     const isLast = index === navigation.length - 1;
                     return (
                         <>
-                            <li><Link to={item?.nav} className='text-decoration-none bread-color'>{item?.key}</Link></li>
+                            <li><Link to={item?.nav} className='text-decoration-none text-color-muted'>{item?.key}</Link></li>
                             {!isLast && <li><IoIosArrowForward /></li>}
                         </>
                     )

@@ -4,7 +4,7 @@
 }
 
 .salebanner-content {
-    color: var(--white-color);
+    color: var(--text-color-secondary);
     word-spacing: 2px;
     padding: 10px;
     line-height: 1;

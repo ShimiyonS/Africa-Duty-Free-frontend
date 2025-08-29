@@ -1,0 +1,14 @@
+.admin-left-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 265px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.admin-right-wrapper {
+    width: calc(100% - 265px);
+    margin-left: auto;
+}
+
