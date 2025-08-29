@@ -4,7 +4,7 @@
     left: 0;
     width: 265px;
     height: 100vh;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 
 .admin-right-wrapper {
@@ -12,3 +12,21 @@
     margin-left: auto;
 }
 
+.admin-left-wrapper::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.admin-left-wrapper::-webkit-scrollbar-track {
+    background-color: var(--bg-color-primary);
+    border-radius: 10px;
+}
+
+.admin-left-wrapper::-webkit-scrollbar-thumb {
+    background-color: var(--bg-color-gold);
+    border-radius: 10px;
+}
+
+.admin-left-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+}
