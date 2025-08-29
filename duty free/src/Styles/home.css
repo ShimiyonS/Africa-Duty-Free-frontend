@@ -16,14 +16,10 @@
 .banner-heading:nth-child(1),
 .banner-heading:nth-child(3) {
     font-size: 35px;
-    color: var(--text-color-secondary);
 }
 
 .banner-right-heading {
-    font-family: 'JustusProTh';
-    color: var(--text-color-secondary);
     font-size: 35px;
-
 }
 
 .banner-heading:nth-child(3)>span {
@@ -32,22 +28,17 @@
 
 .banner-heading:nth-child(2) {
     font-size: 80px;
-    color: var(--text-color-secondary);
 }
 
 .shop-btn,
 .shop-left-btn {
     width: max-content;
-    background-color: var(--button-color-yellow);
-    font-family: "DMSansMedium", Sans-serif;
     font-size: 16px;
     font-weight: 600;
-    color: var(--black-color);
 }
 
 .wigited-buttons {
     bottom: -30px;
-    color: var(--white-color);
 }
 
 .wigited-box {
@@ -67,14 +58,7 @@
 }
 
 
-.offerbanner1 {
-    background-color: var(--secondary-color);
-    padding: 10px 10px 10px 20px;
-    font-family: "JustusProMedium";
-}
-
-.offerbanner2 {
-    background-color: var(--color-red);
+.offerbanner {
     padding: 10px 10px 10px 20px;
 }
 

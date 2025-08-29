@@ -2,23 +2,19 @@
     padding-left: 10px;
     padding-right: 10px;
     font-size: 14px;
-    border-bottom: 2px solid var(--white-color);
+    border-bottom: 2px solid var(--text-color-secondary);
 }
 
 .nav-header ul li .active {
-    border-bottom: 2px solid var(--button-color) !important;
+    border-bottom: 2px solid var(--text-color-danger) !important;
 }
 
 li .nav-link:hover {
-    border-bottom: 2px solid var(--button-color) !important;
+    border-bottom: 2px solid var(--text-color-danger) !important;
 }
 
 .sidebar {
     transition: 0.5s linear;
-}
-
-.sidebar .nav-link {
-    color: rgb(51, 51, 51);
 }
 
 .icon-close {
@@ -38,8 +34,6 @@ li .nav-link:hover {
         top: 0px;
         width: 250px;
         height: 100vh;
-        background-color: var(--white-color);
-        border-right: 4px solid var(--border-color);
     }
 
     .nav-link {

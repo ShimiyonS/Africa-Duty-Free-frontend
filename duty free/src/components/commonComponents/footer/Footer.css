@@ -4,8 +4,8 @@
 }
 .footer .nav-link:hover {
     cursor: pointer;
-    color: var(--secondary-color);
+    color: var(--text-color-gold);
 }
 .icon-link:hover{
-    color: var(--secondary-color);
+    color: var(--text-color-gold);
 }

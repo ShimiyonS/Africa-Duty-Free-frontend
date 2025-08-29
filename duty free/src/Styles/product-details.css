@@ -7,7 +7,7 @@
 }
 
 .product-price {
-    color: var(--button-color);
+    color: var(--text-color-danger);
     font-size: 17px;
 }
 

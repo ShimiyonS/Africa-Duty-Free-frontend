@@ -1,10 +1,5 @@
-.salebanner {
-    background: #27242B;
-    background: linear-gradient(90deg, rgba(39, 36, 43, 1) 19%, rgba(125, 46, 32, 1) 42%, rgba(184, 66, 33, 1) 68%, rgba(173, 154, 101, 1) 89%);
-}
 
 .salebanner-content {
-    color: var(--white-color);
     word-spacing: 2px;
     padding: 10px;
     line-height: 1;

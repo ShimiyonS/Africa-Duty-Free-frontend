@@ -5,14 +5,14 @@ import { IoSearchOutline } from "react-icons/io5";
 
 const NoPage = () => {
   return (
-    <div className='container mx-auto'>
-      <h2 className='404-text'>
+    <div className='container mx-auto mt-5'>
+      <h2 className='text-404'>
         404
       </h2>
       <div className="d-flex align-items-center gap-4">
         <img src={Errorimg} alt="404" />
         <div>
-          <h3>Oops! Page Not Found</h3>
+          <h3 className="fw-bold">Oops! Page Not Found</h3>
           <p>It seems we can’t find what you’re looking for. Perhaps searching can help.</p>
         </div>
       </div>
