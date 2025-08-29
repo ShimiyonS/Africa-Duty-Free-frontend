@@ -1,10 +1,8 @@
 .main-content {
     font-size: 50px;
     font-weight: 300;
-    font-family: JustusProMedium;
     text-transform: capitalize;
     line-height: 1em;
-    color: rgb(200, 63, 29);
     margin: 0px 0px 22px;
     max-width: 478px;
 }
@@ -14,7 +12,6 @@
 }
 
 .input-box {
-    background-color: #F0B13B;
     border: none;
     border-bottom-left-radius: 50px !important;
     border-top-left-radius: 50px !important;

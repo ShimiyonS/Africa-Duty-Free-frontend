@@ -6,7 +6,7 @@
 }
 
 .product-title {
-    font-size: 18px;
+    font-size: 13px;
 }
 
 .product-title:hover {
@@ -14,10 +14,7 @@
 }
 
 .product-price {
-    color: var(--button-bg-danger);
-    font-weight: bold;
     font-size: 22px;
-
 }
 
 .product-swiper .swiper-button-prev:after,

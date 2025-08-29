@@ -5,24 +5,20 @@
     line-height: 1.2em;
     margin: 0px 0px 44px 0px;
     max-width: 580px;
-    font-family: "JustusProMedium";
 }
 
 .why-choose {
     font-size: 20px;
     font-weight: 400;
-    font-family: "JustusProMedium";
-    text-transform: capitalize;
     line-height: 1.22em;
-    color: var(--text-color-gold);
     margin: 0px 0px 35px 0px;
 }
 
 .aux-modern-heading-divider {
     height: 1px;
     width: 165px;
-    background-color: #AE9962;
 }
+
 @media (max-width:1024px) {
     .about-main-img {
         height: 100% !important;
@@ -31,7 +27,7 @@
 }
 
 .border-right h4 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     line-height: 1.4em;
     letter-spacing: -0.2px;
