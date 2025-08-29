@@ -13,6 +13,9 @@
 .admin-menu-link.active {
     background-color: var(--button-bg-primary);
 }
-.logo-wrapper{
-    background-color: var();
+
+.logo-wrapper {
+    background-color: var(--bg-color-primary);
+    position: sticky;
+    top: 0;
 }
