@@ -8,14 +8,11 @@
 }
 
 .search-bar {
-    background-color: var(--text-color-secondary);
     gap: 1px;
 }
 
 .header-search,
 .header-submit {
-    background-color: var(--text-color-gold);
-    color: var(--text-color-secondary);
     font-size: 15px;
     height: 50px;
     border: none;
@@ -25,7 +22,6 @@
 .header-search {
     width: 350px;
     border-radius: 50px 0px 0px 50px;
-    font-family: "JustusProRegular";
 }
 
 .header-search:focus {
@@ -33,14 +29,13 @@
 }
 
 .header-submit {
-    border-color: var(--text-color-secondary);
+    font-size: 20px;
     border-radius: 0px 50px 50px 0px;
     border-left: 0px;
 }
 
 .header-menus {
     width: 250px;
-    background-color: var(--button-bg-danger);
 }
 
 .toggle-icon {
@@ -50,7 +45,7 @@
 .toggle-icon span {
     width: 35px;
     height: 2px;
-    background-color: var(--text-color-primary);
+    background-color: var(--bg-color-secondary);
     display: block;
     transition: 0.3s linear;
 }
@@ -74,20 +69,13 @@
 }
 
 .popup-login {
-    background-color: var(--button-bg-danger);
-    color: #fff;
     display: inline-block;
     font-size: 15px;
     line-height: 1;
     padding: 12px 18px;
-    fill: #fff;
     text-align: center;
     transition: all .3s;
     border: none;
-}
-
-.login-popup2 {
-    background-color: #F0B13B;
 }
 
 .popup-points {
@@ -97,7 +85,7 @@
 }
 
 .sign-popup-btn {
-    color: red;
+    color: var(--text-color-danger);
     font-size: 22px;
     position: absolute;
     top: -4px;
@@ -123,17 +111,7 @@
 .duty-popup-heading {
     text-align: center;
     font-weight: bold;
-    font-family: "JustusProMedium";
     font-size: 2.375em;
-}
-
-.duty-popup-form input,
-.duty-popup-form select,
-.duty-popup-form label,
-.duty-popup-form textarea,
-.duty-popup-form p,
-.duty-popup-form button {
-    font-family: "JustusProRegular";
 }
 
 .duty-popup-form label,
@@ -148,7 +126,7 @@
     -moz-appearance: none;
     width: 18px;
     height: 18px;
-    background-color: var(--border-color-primary);
+    background-color: var(--text-color-muted);
     border-radius: 3px;
     display: inline-block;
     position: relative;
@@ -157,12 +135,12 @@
 
 .custom-radio:checked {
     background-color: #007bff;
-    border-color: var(--border-color-primary);
+    border-color: var(--text-color-muted);
 }
 
 .custom-radio:checked::after {
     content: "✔";
-    color: white;
+    color: var(--text-color-secondary);
     font-size: 14px;
     position: absolute;
     top: -2px;
@@ -174,7 +152,7 @@
 }
 
 .duty-popup-textarea {
-    border: 1px solid var(--border-color-primary);
+    border: 1px solid var(--text-color-muted);
     border-radius: 20px;
     padding: 15px;
     outline: none;
@@ -183,12 +161,16 @@
 .duty-popup-inputs {
     width: 100%;
     outline: none;
-    border: 1px solid var(--border-color-primary);
+    border: 1px solid var(--text-color-muted);
     border-radius: 999px;
     padding: 18px 30px;
-    color: var(--text-color-primary);
+    color: var(--text-color-muted);
     line-height: 1;
     background-color: transparent;
+}
+
+.duty-popup-inputs:focus, .duty-popup-textarea:focus{
+    border: 1px solid  var(--text-color-gold);
 }
 
 .contact-us input[type=number]::-webkit-inner-spin-button,
@@ -200,8 +182,6 @@
 }
 
 .duty-popup-button {
-    background-color: var(--text-color-gold);
-    color: var(--text-color-secondary);
     border: none;
     padding: 15px 35px 15px 35px;
 }
@@ -223,8 +203,6 @@
     font-size: 10px;
     font-weight: bold;
     padding: 3px;
-    background-color: var(--text-color-gold);
-    color: var(--text-color-secondary);
     border-radius: 50%;
 }
 
@@ -233,7 +211,7 @@
 }
 
 .whishlist-content {
-    border-bottom: 1px solid var(--text-color-primary);
+    border-bottom: 1px solid var(--text-color-muted);
 }
 
 .header-cart-image {
@@ -242,7 +220,6 @@
 }
 
 .header-cart-product-link {
-    color: var(--button-bg-danger);
     font-size: 14px;
     outline: none;
     border: none;
@@ -252,19 +229,15 @@
     padding: 0px;
 }
 
-.header-cart-product-link:hover {
-    color: var(--login-btn-color);
-}
-
 .whishilist-button {
     text-decoration: none;
     padding: 20px 35px;
     font-size: 13px;
     font-weight: 700;
-    border: 1px solid var(--border-color-primary-secondary);
+    border: 1px solid var(--text-color-muted);
     transition: all 450ms;
-    background: var(--border-color-primary-secondary);
-    color: var(--border-color-primary-secondary);
+    background: var(--text-color-primary);
+    color: var(--text-color-secondary);
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -303,10 +276,6 @@
 
 .header-cart-link {
     background-color: var(--text-color-secondary);
-}
-
-.header-checkout-link {
-    color: var(--text-color-secondary);
 }
 
 .header-cart-link:hover {

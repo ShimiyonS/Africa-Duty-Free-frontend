@@ -6,19 +6,15 @@
 }
 
 .nav-header ul li .active {
-    border-bottom: 2px solid var(--button-bg-danger) !important;
+    border-bottom: 2px solid var(--text-color-danger) !important;
 }
 
 li .nav-link:hover {
-    border-bottom: 2px solid var(--button-bg-danger) !important;
+    border-bottom: 2px solid var(--text-color-danger) !important;
 }
 
 .sidebar {
     transition: 0.5s linear;
-}
-
-.sidebar .nav-link {
-    color: rgb(51, 51, 51);
 }
 
 .icon-close {
@@ -38,8 +34,6 @@ li .nav-link:hover {
         top: 0px;
         width: 250px;
         height: 100vh;
-        background-color: var(--text-color-secondary);
-        border-right: 4px solid var(--border-color-primary);
     }
 
     .nav-link {

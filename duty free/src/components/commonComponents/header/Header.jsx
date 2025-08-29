@@ -21,6 +21,25 @@ const Header = ({ togglemenu, togglesidebar }) => {
       setCart(data?.products)
     };
     fetchCart();
+    const offcanvasEl = document.getElementById("offcanvasRight");
+
+    const fixBackdrop = () => {
+      const backdrops = document.querySelectorAll(".offcanvas-backdrop");
+      if (backdrops.length > 1) {
+        // keep the last one, remove extras
+        backdrops.forEach((el, i) => {
+          if (i < backdrops.length - 1) el.remove();
+        });
+      }
+    };
+
+    offcanvasEl?.addEventListener("shown.bs.offcanvas", fixBackdrop);
+    offcanvasEl?.addEventListener("hidden.bs.offcanvas", fixBackdrop);
+
+    return () => {
+      offcanvasEl?.removeEventListener("shown.bs.offcanvas", fixBackdrop);
+      offcanvasEl?.removeEventListener("hidden.bs.offcanvas", fixBackdrop);
+    };
   }, [])
 
   return (
@@ -35,12 +54,12 @@ const Header = ({ togglemenu, togglesidebar }) => {
             <div className="d-none d-lg-block search-container">
               <form action="#">
                 <div className="search-bar d-flex align-items-center">
-                  <input type="text" id='search' className='header-search' placeholder='Hello! what are you looking for?' />
-                  <button type='submit' className='header-submit m-0 outline-0'><CiSearch /></button>
+                  <input type="text" id='search' className='header-search justuspro-regular text-color-secondary  bg-color-gold' placeholder='Hello! what are you looking for?' />
+                  <button type='submit' className='header-submit m-0 outline-0 text-color-secondary  bg-color-gold'><CiSearch /></button>
                 </div>
               </form>
             </div>
-            <div className="d-none p-2 d-lg-flex justify-content-evenly align-items-center rounded-pill header-menus">
+            <div className="d-none p-2 d-lg-flex justify-content-evenly align-items-center rounded-pill  bg-color-danger  header-menus">
               <button className='bg-transparent m-0 p-0 border-0' data-bs-toggle="modal" data-bs-target="#dutyPopup">
                 <img src={Airplane} width={40} height={40} alt="airplane" />
               </button>
@@ -49,7 +68,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
               </button>
               <button className='bg-transparent m-0 p-0 border-0 header-cart-toggle' type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                 <img src={Bag} width={40} height={40} alt="cart" />
-                <div className='header-cart-total'>{cart.length}</div>
+                <div className='header-cart-total text-color-secondary  bg-color-gold'>{cart.length}</div>
               </button>
               <img src={Wishlist} width={40} height={40} alt="whislist" />
             </div>
@@ -75,13 +94,13 @@ const Header = ({ togglemenu, togglesidebar }) => {
                   aria-label="Close"
                 ></button>
               </div>
-              <h2 className="duty-popup-heading">Buy From Us Duty Free</h2>
+              <h2 className="duty-popup-heading justuspro-medium">Buy From Us Duty Free</h2>
             </div>
             <div className="modal-body">
 
               <form action="" className='duty-popup-form'>
                 <div className="row col-12 mb-4">
-                  <label htmlFor="collection-point">Collection point:</label>
+                  <label className='text-color-primary' htmlFor="collection-point">Collection point:</label>
                   <select id="collection-point" name="airport" className='duty-popup-inputs'>
                     <option value="blantyre">Malawi - Blantyre Airport</option>
                     <option value="lilongwe">Malawi - Lilongwe Airport</option>
@@ -96,19 +115,19 @@ const Header = ({ togglemenu, togglesidebar }) => {
 
                 <div className="row col-12 mb-4">
                   <div className="col-12 col-md-6 ps-md-0 mb-4 mb-md-0">
-                    <input type="text" placeholder='Name' className='duty-popup-inputs' />
+                    <input type="text" placeholder='Name' id='name' name='name' className='duty-popup-inputs' />
                   </div>
                   <div className="col-12 col-md-6 pe-md-0 mb-4 mb-md-0">
-                    <input type="number" placeholder='Phone Number' className='duty-popup-inputs' />
+                    <input type="number" placeholder='Phone Number' id='phonenumber' name='phonenumber' className='duty-popup-inputs' />
                   </div>
                 </div>
 
                 <div className="row col-12 mb-4">
-                  <input type="email" name="" id="" placeholder='Your Email' className='duty-popup-inputs' />
+                  <input type="email" name="email" id="email" placeholder='Your Email' className='duty-popup-inputs' />
                 </div>
 
                 <div className="row col-12 mb-4">
-                  <p>Are you a</p>
+                  <p className='text-color-primary'>Are you a</p>
                   <div className='d-flex justify-content-evenly'>
                     <div className="radio-section">
                       <input type="radio" name="remember" className='custom-radio' />
@@ -127,8 +146,8 @@ const Header = ({ togglemenu, togglesidebar }) => {
                 </div>
 
                 <div className="row col-12 mb-4">
-                  <label htmlFor="destination">Destination</label>
-                  <input type="text" className='duty-popup-inputs' />
+                  <label className='text-color-primary' htmlFor="destination">Destination</label>
+                  <input type="text" id='destination' name='destination' className='duty-popup-inputs' />
                 </div>
 
                 <div className="row col-12 mb-4">
@@ -136,7 +155,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
                 </div>
 
                 <div className="d-flex justify-content-end">
-                  <button type='submit' className='duty-popup-button rounded-pill'>
+                  <button type='submit' className='duty-popup-button rounded-pill text-color-secondary  bg-color-gold'>
                     Request Now
                   </button>
                 </div>
@@ -164,7 +183,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
               </div>
               <div className="d-flex justify-content-around">
                 <button
-                  className="popup-login"
+                  className="popup-login  bg-color-danger  text-color-secondary"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                   onClick={() => {
@@ -174,7 +193,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
                   Sign in
                 </button>
                 <button
-                  className="popup-login login-popup2"
+                  className="popup-login button-bg-primary text-color-secondary"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                   onClick={() => {
@@ -209,7 +228,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
                   <div className='d-flex align-items-center gap-3 p-2'>
                     <img src={item?.thumbnail} className='header-cart-image' />
                     <div>
-                      <button onClick={() => { navigate(`/product/${item.id}`) }} className='text-decoration-none header-cart-product-link' type='button' data-bs-dismiss="offcanvas" aria-label="Close">{item.title}</button>
+                      <button onClick={() => { navigate(`/product/${item.id}`) }} className='text-decoration-none header-cart-product-link text-color-danger' type='button' data-bs-dismiss="offcanvas" aria-label="Close">{item.title}</button>
                       <p><span className='fs-6'>{item?.minimumOrderQuantity} </span><IoIosClose style={{ width: "15px", height: "15px" }} /> <span className='fw-bold text-break'>${item?.price}</span></p>
                     </div>
                   </div>
@@ -223,7 +242,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
                 <div className='button-overlay'>
                 </div>
               </button>
-              <button onClick={() => { navigate("/checkout") }} className='whishilist-button header-checkout-link' type='button' data-bs-dismiss="offcanvas" aria-label="Close"><span>PROCEED TO CHECKOUT </span>
+              <button onClick={() => { navigate("/checkout") }} className='whishilist-button header-checkout-link' type='button' data-bs-dismiss="offcanvas" aria-label="Close"><span className='text-color-secondary'>PROCEED TO CHECKOUT </span>
                 <div className='button-overlay-reverse'>
                 </div></button>
             </div>

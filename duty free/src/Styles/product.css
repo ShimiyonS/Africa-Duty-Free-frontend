@@ -1,22 +1,16 @@
 .product-image {
     width: 100%;
     height: 200px;
-    border: 1px solid var(--button-bg-danger);
+    border: 1px solid var(--text-color-danger);
     box-shadow: 0px 0px 8px 0px var(--text-color-primary);
 }
 
 .product-title {
     font-size: 18px;
-    font-family: "JustusProRegular", Sans-serif;
-    color: var(--text-color-primary);
 }
 
 .product-title:hover {
     color: var(--text-color-primary);
-}
-
-.product-wrapper-title {
-    font-family: "JustusProMedium";
 }
 
 .product-price {
@@ -28,7 +22,7 @@
 
 .product-swiper .swiper-button-prev:after,
 .product-swiper .swiper-button-next:after {
-    color: var(--button-bg-danger);
+    color: var(--text-color-danger);
     font-size: 22px;
     font-weight: bold;
 
@@ -118,7 +112,7 @@
 }
 
 .pop-tool button:hover {
-    background-color: var(--iconic-color);
+    background-color: var(--text-color-gold);
 }
 
 .pop-tool button:hover svg {
