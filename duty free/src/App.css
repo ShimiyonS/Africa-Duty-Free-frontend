@@ -204,3 +204,15 @@
 }
 
 /* ------------------------------------------------------------------- */
+
+/* 404 error page */
+.search-404 {
+    position: relative;
+}
+
+.search-404-btn {
+    font-size: 18px;
+    position: absolute;
+    top: 17%;
+    right: 10px;
+}
