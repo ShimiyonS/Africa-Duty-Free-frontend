@@ -158,6 +158,12 @@
     outline: none;
 }
 
+.duty-popup-textarea:focus,
+.duty-popup-inputs:focus {
+    border: 1px solid var(--text-color-gold) !important;
+}
+
+
 .duty-popup-inputs {
     width: 100%;
     outline: none;
