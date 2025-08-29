@@ -5,11 +5,16 @@ import MyAccountSidebar from '../components/commonComponents/MyAccountComponents
 const MyAccountLayout = () => {
     return (
         <>
-        <MyAccountBanner/>
-            <div className='row container-fluid account-controls'>
-                <MyAccountSidebar/>
-                <div className="p-4 p-md-0 col-12 col-md-6 col-lg-9">
-                    <Outlet />
+            <MyAccountBanner />
+            <div className='d-flex flex-wrap px-2 account-controls'>
+                <div className="col-12 col-md-3">
+                    <MyAccountSidebar />
+                </div>
+
+                <div className="col-12 col-md-9">
+                    <div className="col-12 col-md-9 mx-auto">
+                        <Outlet />
+                    </div>
                 </div>
             </div>
 
