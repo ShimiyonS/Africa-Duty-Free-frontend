@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { FaUser } from "react-icons/fa";
-import { IoCloseSharp } from "react-icons/io5";
-import Message from '../../components/Message';
+import Message from '../../components/commonComponents/Message';
+
 
 const General = () => {
   const [showMessage, setShowMessage] = useState(false)

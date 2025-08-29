@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
-import Message from "../../components/Message";
+import Message from "../../components/commonComponents/Message";
 
 const DeleteAccount = () => {
   const [showMessage, setShowMessage] = useState(false)

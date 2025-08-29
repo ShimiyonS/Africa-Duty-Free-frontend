@@ -1,5 +1,5 @@
 import { FaAsterisk } from "react-icons/fa"
-import Message from "../../components/Message"
+import Message from "../../components/commonComponents/Message"
 import { useState } from "react"
 
 const ChangePassword = () => {
