@@ -16,7 +16,6 @@ import { FaWhatsapp } from "react-icons/fa";
 import { FaGetPocket } from "react-icons/fa";
 import { BsEnvelopePaperFill } from "react-icons/bs";
 import { FaRegPaperPlane } from "react-icons/fa6";
-import ZoomImg from '../assets/zoom-dark.svg'
 import { IoIosShareAlt } from "react-icons/io";
 import { MdFullscreen } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
@@ -25,12 +24,13 @@ import { saveAs } from 'file-saver';
 import Products from '../components/commonComponents/Products'
 import Loader from "../components/commonComponents/loader/loader.jsx";
 import { GoZoomIn } from "react-icons/go";
+import { Link } from 'react-router-dom'
+
 
 const ProductDetails = () => {
     const { apiRequest } = Common()
     const { id } = useParams()
     const [product, setProduct] = useState(null)
-    const [count, setCount] = useState(1)
     const [activeTab, setActiveTab] = useState("description");
     const [rating, setRating] = useState(4)
     const [open, setOpen] = useState(false);
@@ -121,13 +121,13 @@ const ProductDetails = () => {
         if (type == "increment") {
             setProduct((prev) => ({
                 ...prev,
-                ["minimumOrderQuantity"]: prev?.minimumOrderQuantity + 1
+                ["minimumOrderQuantity"]: Number(prev?.minimumOrderQuantity) + 1
             }))
         }
         else {
             setProduct((prev) => ({
                 ...prev,
-                ["minimumOrderQuantity"]: prev?.minimumOrderQuantity - 1
+                ["minimumOrderQuantity"]: Number(prev?.minimumOrderQuantity) - 1
             }))
         }
 
@@ -150,30 +150,14 @@ const ProductDetails = () => {
                         {/* Fullscreen button */}
                         <div className="share-icon">
                             <IoIosShareAlt />
-                            <div className="share-tooltip">
-                                <a
-                                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                        `${BASEURL}/product/${product.title}`
-                                    )}`}
-                                    target="_blank"
-                                    className="share-facebook text-decoration-none p-2">
+                            <div className="share-tooltip bg-color-primary">
+                                <Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`} className="share-facebook text-decoration-none p-2">
                                     Share on Facebook
-                                </a>
-                                <a
-                                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(product.title)}&url=${encodeURIComponent(`${BASEURL}/product/${product.title}`)}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="share-twitter text-decoration-none p-2" >Tweet</a>
-                                <a
-                                    href={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(
-                                        `${BASEURL}/product/${product.title}`
-                                    )}&media=${encodeURIComponent(product.thumbnail)}&description=${encodeURIComponent(product.title)}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="share-pinterest text-decoration-none p-2"
-                                >
+                                </Link>
+                                <Link to={`https://twitter.com/intent/tweet?text=${encodeURIComponent(product?.title)}&url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`} className="share-twitter text-decoration-none p-2">                                    Tweet</Link>
+                                <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `} className="share-pinterest text-decoration-none p-2">
                                     Pin it
-                                </a>
+                                </Link>
                                 <p href="" target="_blank" className="share--download text-decoration-none p-2 text-black" onClick={handleDownload}>Download image</p>
                             </div>
                         </div>
@@ -185,11 +169,12 @@ const ProductDetails = () => {
                             <div className="popup-content">
                                 <img src={product?.images?.[0]} alt="pop-up-img" />
                             </div>
-                            <p className="pt-5 product-title-end text-center">{product?.title}</p>
+                            <p className="pt-5 text-color-secondary text-center">{product?.title}</p>
                         </div>
                     </div>
                 </div>
-            )}
+            )
+            }
             <>
                 {loading ?
                     <Loader /> :
@@ -200,22 +185,22 @@ const ProductDetails = () => {
                             </div>
                             <div className="col-12 col-md-4 col-lg-6">
                                 <div className="position-relative mb-3">
-                                    <h2 className="product-page-title  text-color-primary  justuspro-medium">{product?.title}</h2>
+                                    <h2 className="product-page-title justuspro-medium">{product?.title}</h2>
                                     <div className="position-absolute zoom-wrapper  " onClick={() => setOpen(true)}>
                                         <GoZoomIn className="zoom-img" />
                                     </div>
                                 </div>
-                                <p className="pb-2 product-price text-break justuspro-regular">${count * product?.price}</p>
+                                <p className="pb-2 product-single-price text-color-danger text-break dmsans-bold">${product?.price}</p>
                                 <p className="product-description text-break">{product?.description}</p>
                                 <div className="d-flex flex-wrap gap-3">
                                     <div className="d-flex rounded-5 increment-wrapper align-items-center flex-wrap ">
-                                        <button onClick={() => handleCount("increment")} className="decrement-btn border-0 text-center p-0 bg-transparent" disabled={count === 0}>-</button>
-                                        <input type="number" name="minimumOrderQuantity" onChange={(e) => { handleChange(e) }} min={"1"} className="border-0 text-center p-0 input-hide-arrow" value={product?.minimumOrderQuantity} />
-                                        <button onClick={() => handleCount("increment")} className="increment-btn border-0 text-center p-0 bg-transparent" >+</button>
+                                        <button onClick={() => handleCount("")} className=" border-0 text-center p-0 bg-transparent text-color-gold" disabled={product?.minimumOrderQuantity === 1}>-</button>
+                                        <input type="number" name="minimumOrderQuantity" onChange={(e) => { handleChange(e) }} min={1} className="border-0 text-center p-0 input-hide-arrow dmsans-bold" value={Number(product?.minimumOrderQuantity)} />
+                                        <button onClick={() => handleCount("increment")} className=" border-0 text-center p-0 bg-transparent text-color-gold" disabled={product?.minimumOrderQuantity === 100}>+</button>
                                     </div>
-                                    <div className="">
-                                        <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0 position-relative" >Add to cart</button>
-                                        <img src={Bag} alt="bag" className="product-bag" />
+                                    <div >
+                                        <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0 bg-color-gold justuspro-medium" ><span className="text-color-secondary pe-4">Add to cart</span>  <img src={Bag} alt="bag" className="product-bag " /></button>
+
                                     </div>
 
                                 </div>
@@ -223,17 +208,27 @@ const ProductDetails = () => {
 
                                 <div className="d-flex align-items-md-center flex-column flex-md-row pt-5 gap-3">
                                     <div className="rounded-5 wishlist p-2 d-flex justify-content-center align-items-center py-3">
-                                        <span type="submit" name="add-to-cart" className="add-wishlist rounded-5 border-0 px-4 py-2" >Add to wishlist</span> <CiHeart size={30} />
+                                        <span type="submit" name="add-to-cart" className="add-wishlist justuspro-medium rounded-5 border-0 px-4 py-2" >Add to wishlist</span> <CiHeart size={30} />
                                     </div>
                                     <div className="position-relative share-content" >
-                                        <div className="gap-3 share-emoji p-3 rounded-5"><SlSocialFacebook /><TfiTwitter /><FaGooglePlusG /><FaPinterestP /><FaLinkedinIn /><ImStumbleupon /><FaWhatsapp /><FaGetPocket /><BsEnvelopePaperFill /><FaRegPaperPlane /></div>
-                                        <span className="pe-2 ">Share</span>
+                                        <div className="gap-3 share-emoji  p-3 rounded-5"><Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}><SlSocialFacebook /></Link>
+                                            <Link to={`https://twitter.com/intent/tweet?text=${encodeURIComponent(product?.title)}&url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}><TfiTwitter /></Link>
+                                            <Link to={`https://plus.google.com/share?url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}> <FaGooglePlusG /></Link>
+                                            <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `}><FaPinterestP /></Link>
+                                            <Link to={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `}><FaLinkedinIn /></Link>
+                                            <Link to={`http://www.stumbleupon.com/submit?url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `}><ImStumbleupon /></Link>
+                                            <Link to={`whatsapp://send?text=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `}><FaWhatsapp /></Link>
+                                            <Link to={`https://getpocket.com/save?url${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `}><FaGetPocket /></Link>
+                                            <Link to={`mailto:?subject=${encodeURIComponent(product?.title)}&body=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}><BsEnvelopePaperFill /> </Link>
+                                            <Link to={`tg://msg?text=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}><FaRegPaperPlane /></Link>
+                                        </div>
+                                        <span className="pe-2   dmsans-medium">Share</span>
                                         <BsShare />
                                     </div>
                                 </div>
 
                                 <div className="d-flex gap-4  align-items-center pt-4 ">
-                                    <h4>Categories</h4>
+                                    <h4 className="justuspro-bold ">Categories</h4>
                                     <div className="d-flex align-items-center">
                                         {Array.isArray(product?.category) ? (
                                             product.category.map((cat, index) => (
@@ -247,23 +242,23 @@ const ProductDetails = () => {
                                     </div>
                                 </div>
                                 <div className="d-flex">
-                                    <span class="posted_in">Brand: <a href="" rel="tag" className="text-decoration-none brand-anker-tag">{product?.brand}</a></span>
+                                    <span class="posted_in">Brand: <a href="" rel="tag" className="text-decoration-none text-color-danger dmsans-bold">{product?.brand ? product?.brand : "no brand"}</a></span>
                                 </div>
                             </div>
 
                         </div>
                         <div className="container pt-5 ">
                             <div className="product-description-bottom rounded-5 overflow-hidden col-sm-12 col-md-12 col-lg-12">
-                                <div className="product-description-inner d-flex justify-content-center">
+                                <div className="bg-color-gold d-flex justify-content-center">
                                     <div className="d-flex gap-5">
                                         <h5
-                                            className={`py-3 review-and-description ${activeTab === "description" ? "fw-bold active-tab m-0" : ""}`}
+                                            className={`py-3 text-color-secondary ${activeTab === "description" ? "fw-bold active-tab m-0" : ""}`}
                                             onClick={() => setActiveTab("description")}
                                         >
                                             Description
                                         </h5>
                                         <h5
-                                            className={`py-3 review-and-description ${activeTab === "review" ? "fw-bold active-tab m-0" : ""}`}
+                                            className={`py-3 text-color-secondary ${activeTab === "review" ? "fw-bold active-tab m-0" : ""}`}
                                             onClick={() => setActiveTab("review")}
                                         >
                                             Review
@@ -274,11 +269,11 @@ const ProductDetails = () => {
                                 {activeTab === "review" &&
                                     <div className="text-center product-description-details p-5">
                                         <div className="pb-4 ">
-                                            <h2 className="review-header">Be the first to Review “Veuve Clicquot Yellow Label Brut White 0.75L”</h2>
-                                            <p className=" m-0 text-start product-email-content">Your email address will not be published. Required fields are marked *</p>
+                                            <h2 className="review-header justuspro-regular">Be the first to Review “Veuve Clicquot Yellow Label Brut White 0.75L”</h2>
+                                            <p className=" m-0 text-start product-email-content text-color-muted">Your email address will not be published. Required fields are marked *</p>
                                             <div className="d-flex pt-5 gap-3">
                                                 <p className="fw-bold text-start ">Your Rating</p>
-                                                <Rating onClick={handleRating} initialValue={rating} size={20} fillColor="var(--color-red)" />
+                                                <Rating onClick={handleRating} initialValue={rating} size={20} fillColor="var(  --text-color-danger)" />
                                             </div>
                                         </div>
 
@@ -316,7 +311,7 @@ const ProductDetails = () => {
                                                 <div className="text-end">
                                                     <button
                                                         type="submit"
-                                                        className="px-5 py-2 rounded-5 product-submit "
+                                                        className="px-5 py-2 rounded-5 product-submit text-color-secondary bg-color-gold "
                                                     >
                                                         Submit
                                                     </button>
@@ -333,7 +328,7 @@ const ProductDetails = () => {
                                     ) : (
                                         <div className=" ps-0 ps-md-5">
                                             <div >
-                                                <h3>Reviews</h3>
+                                                <h3 className="justuspro-bold">Reviews</h3>
                                                 {product?.reviews?.length > 0 ? (
                                                     product.reviews.map((rev, i) => (
                                                         <div key={i} className="pb-3">
@@ -352,7 +347,7 @@ const ProductDetails = () => {
                                 </div>
                             </div>
                         </div>
-                        <Products data={relatedData?.products} headingText="Related Products" className="pt-5" />
+                        <Products data={relatedData?.products} headingText="Related Products" paraClassName="justuspro-bold text-center related-single-post-heading" />
                     </>}
             </>
         </div >

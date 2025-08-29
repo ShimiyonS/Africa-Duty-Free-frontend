@@ -6,9 +6,7 @@
 }
 
 .product-title {
-    font-size: 18px;
-    font-family: "JustusProRegular", Sans-serif;
-    color: var(--text-color-primary);
+    font-size: 13px;
 }
 
 .product-title:hover {
@@ -20,10 +18,7 @@
 }
 
 .product-price {
-    color: var(--button-color);
-    font-weight: bold;
     font-size: 22px;
-
 }
 
 .product-swiper .swiper-button-prev:after,

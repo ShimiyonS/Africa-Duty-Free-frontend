@@ -6,7 +6,7 @@ import "../../Styles/product.css";
 import PaginationCommon from './PaginationCommon';
 import EmptyCustom from './EmptyCustom';
 
-const Products = ({ data, headingText }) => {
+const Products = ({ data, headingText, paraClassName }) => {
     const { slug } = useParams()
     const { firstLetterCapital } = Common()
     // pagination state
@@ -27,9 +27,9 @@ const Products = ({ data, headingText }) => {
     return (
         <div>
             <div className='container'>
-                <p className='mb-5 linear-bg px-3 py-2 secondary-text-color'>
+                <h3 className={`mb-5 linear-bg px-3 py-2 secondary-text-color ${paraClassName}`}>
                     {firstLetterCapital(slug ?? headingText ?? "")}
-                </p>
+                </h3>
                 {currentData?.length ? <><div className='product-grid'>
                     {currentData?.map((item, idx) => (
                         <div key={idx}>

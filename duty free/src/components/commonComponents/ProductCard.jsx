@@ -6,7 +6,7 @@ import { useMyContext } from "../../Provider/CommonProvider";
 import { viewCart } from "../../store/slice/viewCartSlice";
 import Common from "../../commonMethod/Common";
 
-const ProductCard = ({ data, hideWishlist, hidePopTool,hideCart,hideAddCartPop, titleclassname, priceclassname }) => {
+const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop, titleclassname, priceclassname }) => {
     const { handleOpenAlert } = useMyContext()
     const { dispatch } = Common()
 
@@ -30,8 +30,8 @@ const ProductCard = ({ data, hideWishlist, hidePopTool,hideCart,hideAddCartPop, 
                     {!hideAddCartPop && <button className="border-0 px-3 py-2 rounded-1" onClick={() => handleOpenModal(data)}><FaEye /></button>}
                 </div>}
             </div>
-            <Link to={`/product/${data?.id}`} className={`${titleclassname} product-title d-block text-decoration-none mb-0 pt-3 pb-2`}>{data?.title}</Link>
-            <p className={`${priceclassname} product-price`}>${data?.price}</p>
+            <Link to={`/product/${data?.id}`} className={`${titleclassname} product-title justuspro-bold text-color-primary d-block text-decoration-none mb-0 pt-3 pb-2`}>{data?.title}</Link>
+            <p className={`${priceclassname} product-price text-color-danger dmsans-bold `}>${data?.price}</p>
         </div>
     )
 }
