@@ -206,7 +206,7 @@ span {
 }
 
 .contact-us-header {
-    font-size: 45px;
+    font-size: 50px;
     font-weight: bold;
 }
 
@@ -226,11 +226,6 @@ span {
 
 .contact-us-icon {
     font-size: 20px;
-    color: var(--text-color-gold);
-}
-
-.contact-info-details a {
-    color: var(--text-color-muted);
 }
 
 .scroll-top {
