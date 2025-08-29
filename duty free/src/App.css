@@ -113,21 +113,9 @@ span {
     font-family: "JustusProBold", Sans-serif;
 }
 
-
-.justuspro-light {
-    font-family: "JustusProLight", Sans-serif;
-}
-
-
-
 .justuspro-regular {
     font-family: "JustusProRegular", Sans-serif;
 }
-
-.justuspro-thin {
-    font-family: "JustusProTh", Sans-serif;
-}
-
 
 .dmsans-regular {
     font-family: "DMSans-Regular", Sans-serif;
@@ -233,7 +221,7 @@ span {
     bottom: 20px;
     right: 4%;
     border: 1px solid var(--text-color-danger);
-    background-color: var(--bg-color-secondary);
+    background-color: var(--bg-color-primary);
     border-radius: 30px;
 }
 
@@ -276,3 +264,15 @@ span {
 }
 
 /* ------------------------------------------------------------------- */
+
+/* 404 error page */
+.search-404 {
+    position: relative;
+}
+
+.search-404-btn {
+    font-size: 18px;
+    position: absolute;
+    top: 17%;
+    right: 10px;
+}

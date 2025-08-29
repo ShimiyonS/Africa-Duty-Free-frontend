@@ -65,7 +65,7 @@
 }
 
 .proceed-button {
-    background-color: var(--text-color-primary);
+    background-color: var(--bg-color-secondary);
     padding: 20px 20px;
     font-family: "JustusProMedium", Sans-serif;
     color: var(--text-color-secondary) !important;
@@ -85,7 +85,7 @@
 }
 
 .apply-coupon-button:hover {
-    background-color: var(--text-color-primary);
+    background-color: var(--bg-color-secondary);
     color: var(--text-color-secondary);
 }
 
@@ -142,7 +142,7 @@
 }
 
 .pop-add-btn {
-    background-color: var(--text-color-primary);
+    background-color: var(--bg-color-secondary);
     font-size: 13px;
     padding: 18px 35px;
     color: var(--text-color-secondary);
