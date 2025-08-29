@@ -1,5 +1,5 @@
 .cart-link {
-    color: var(--button-color);
+    color: var(--button-bg-danger);
     font-weight: bold;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .cart-product-link {
-    color: var(--button-color);
+    color: var(--button-bg-danger);
 }
 
 .cart-number {
@@ -61,7 +61,7 @@
 }
 
 .order-box {
-    background-color: var(--checkbox-label-color);
+    background-color: var(--text-color-muted);
 }
 
 .proceed-button {
@@ -155,7 +155,7 @@
 }
 
 .card-count-wrapper {
-    border-bottom: 1px solid var(--checkbox-label-color);
+    border-bottom: 1px solid var(--text-color-muted);
 }
 
 @media screen and (max-width:425px) {

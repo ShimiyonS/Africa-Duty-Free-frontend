@@ -14,7 +14,7 @@
 }
 
 .product-price {
-    color: var(--button-color);
+    color: var(--button-bg-danger);
     font-weight: bold;
     font-size: 22px;
 
@@ -42,8 +42,8 @@
 }
 
 .pagination-button:hover {
-    background-color: var(--button-color) !important;
-    border-color: var(--button-color) !important;
+    background-color: var(--button-bg-danger) !important;
+    border-color: var(--button-bg-danger) !important;
     color: var(--text-color-secondary) !important;
 }
 
@@ -53,8 +53,8 @@
 }
 
 .pagination-item.active {
-    background-color: var(--button-color) !important;
-    border-color: var(--button-color) !important;
+    background-color: var(--button-bg-danger) !important;
+    border-color: var(--button-bg-danger) !important;
     color: var(--text-color-secondary) !important;
 }
 

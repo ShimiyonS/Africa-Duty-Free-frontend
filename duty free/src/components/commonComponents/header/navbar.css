@@ -43,7 +43,7 @@ li .nav-link:hover {
     }
 
     li .nav-link:hover {
-        border-bottom: 4px solid var(--black-color) !important;
+        border-bottom: 4px solid var(--text-color-primary) !important;
     }
 
     .sidebartoggle-active {

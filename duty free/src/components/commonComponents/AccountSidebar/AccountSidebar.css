@@ -27,7 +27,7 @@
     padding-top: 6px;
     padding-bottom: 6px;
     background-color: #eee;
-    color: var(--navigation-color);
+    color: var(--text-color-muted);
 }
 
 .account-links:hover {
@@ -39,7 +39,7 @@
 }
 
 .side-bar-links .active span {
-    color: var(--border-color2);
+    color: var(--border-color-primary-secondary);
 }
 
 .account-links>span:nth-child(2) {
@@ -53,16 +53,16 @@
     top: 0;
     left: 0;
     height: 100%;
-    background-color: var(--navigation-color);
+    background-color: var(--text-color-muted);
     width: 1px;
 }
 
 .tooltip-icons {
-    color: var(--checkbox-label-color);
+    color: var(--text-color-muted);
 }
 
 .tooltip-icons:hover {
-    color: var(--border-color2);
+    color: var(--border-color-primary-secondary);
 }
 
 .privacy-form .custom-auth-input,

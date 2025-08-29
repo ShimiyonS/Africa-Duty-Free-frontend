@@ -45,7 +45,7 @@
 .toggle-icon span {
     width: 35px;
     height: 2px;
-    background-color: var(--bg-color-primary);
+    background-color: var(--bg-color-secondary);
     display: block;
     transition: 0.3s linear;
 }
@@ -148,7 +148,7 @@
 }
 
 .radio-section label {
-    color: var(--black-color);
+    color: var(--text-color-primary);
 }
 
 .duty-popup-textarea {
@@ -251,7 +251,7 @@
     left: 50%;
     width: 0;
     height: 0;
-    background-color: var(--black-color, rgba(0, 0, 0, 0.6));
+    background-color: var(--text-color-primary, rgba(0, 0, 0, 0.6));
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.6s ease;
@@ -279,6 +279,6 @@
 }
 
 .header-cart-link:hover {
-    background: var(--border-color2);
-    color: var(--white-color);
+    background: var(--border-color-primary-secondary);
+    color: var(--text-color-secondary);
 }

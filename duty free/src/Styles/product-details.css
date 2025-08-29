@@ -31,8 +31,8 @@
 .add-cart {
     width: 220px;
     height: 56px;
-    background-color: var(--secondary-color);
-    color: var(--white-color)
+    background-color: var(--text-color-gold);
+    color: var(--text-color-secondary)
 }
 
 .wishlist {
@@ -41,7 +41,7 @@
     max-width: 220px;
     border: 1px solid grey;
     border-radius: 10px;
-    color: var(--black-color)
+    color: var(--text-color-primary)
 }
 
 .share-emoji svg {
@@ -68,11 +68,11 @@
 }
 
 .zoom-wrapper:hover {
-    background-color: var(--black-color);
+    background-color: var(--text-color-primary);
 }
 
 .zoom-wrapper:hover .zoom-img {
-    color: var(--white-color);
+    color: var(--text-color-secondary);
 }
 
 .zoom-img {
@@ -109,9 +109,9 @@
 .product-submit {
     width: 140px;
     height: 56px;
-    background-color: var(--secondary-color);
+    background-color: var(--text-color-gold);
     border: none;
-    color: var(--white-color)
+    color: var(--text-color-secondary)
 }
 
 .count-div {
@@ -120,11 +120,11 @@
     max-width: 110px;
     border: 1px solid grey;
     border-radius: 10px;
-    color: var(--black-color)
+    color: var(--text-color-primary)
 }
 
 .product-email-content {
-    color: var(--text-muted)
+    color: var(--text-color-muted)
 }
 
 .product-page-title {
@@ -141,7 +141,7 @@
 }
 
 .product-category {
-    color: var(--text-muted)
+    color: var(--text-color-muted)
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -158,7 +158,7 @@
 
 
 .brand-anker-tag {
-    color: var(--button-color);
+    color: var(--button-bg-danger);
 }
 
 .product-description-inner {
@@ -189,7 +189,7 @@
 }
 
 .review-and-description {
-    color: var(--white-color)
+    color: var(--text-color-secondary)
 }
 
 .active-tab {
@@ -330,7 +330,7 @@
 }
 
 .product-title-end {
-    color: var(--white-color)
+    color: var(--text-color-secondary)
 }
 
 @media (max-width:426px) {
