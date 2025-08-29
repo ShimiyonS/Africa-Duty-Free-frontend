@@ -278,7 +278,7 @@ const ProductDetails = () => {
                                             <p className=" m-0 text-start product-email-content">Your email address will not be published. Required fields are marked *</p>
                                             <div className="d-flex pt-5 gap-3">
                                                 <p className="fw-bold text-start ">Your Rating</p>
-                                                <Rating onClick={handleRating} initialValue={rating} size={20} fillColor="var(--color-red)" />
+                                                <Rating onClick={handleRating} initialValue={rating} size={20} fillColor="var(--text-color-danger)" />
                                             </div>
                                         </div>
 

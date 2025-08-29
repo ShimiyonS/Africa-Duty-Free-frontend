@@ -14,7 +14,7 @@
     font-family: "JustusProMedium";
     text-transform: capitalize;
     line-height: 1.22em;
-    color: var(--secondary-color);
+    color: var(--text-color-gold);
     margin: 0px 0px 35px 0px;
 }
 

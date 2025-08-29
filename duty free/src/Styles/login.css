@@ -27,7 +27,7 @@
 
 .auth-btn-1 {
     background-color: var(--login-btn-color);
-    color: var(--white-color);
+    color: var(--text-color-secondary);
 }
 
 .auth-btn-1:hover {
@@ -37,7 +37,7 @@
 .auth-btn-2 {
     text-decoration: none;
     background-color: var(--register-btn-color);
-    color: var(--checkbox-label-color);
+    color: var(--text-color-muted);
 }
 
 .auth-btn-2:hover {
@@ -69,11 +69,11 @@
 }
 
 .input-checkbox-label {
-    color: var(--checkbox-label-color);
+    color: var(--text-color-muted);
 }
 
 .forgot-password, .forgot-password-message {
-    color: var(--checkbox-label-color);
+    color: var(--text-color-muted);
     text-decoration: none;
 }
 
@@ -88,12 +88,12 @@
 }
 
 .user-control .img-section {
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color-primary);
 }
 
 .user-control .img-section p {
     font-family: "JustusProRegular";
-    color: var(--navigation-color);
+    color: var(--text-color-muted);
 }
 
 .user-default-img {
@@ -102,5 +102,5 @@
 }
 
 .controls-section ul li::marker{
-    color: var(--navigation-color);
+    color: var(--text-color-muted);
 }

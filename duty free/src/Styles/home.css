@@ -38,16 +38,16 @@
 .shop-btn,
 .shop-left-btn {
     width: max-content;
-    background-color: var(--button-color-yellow);
+    background-color: var(--button-bg-danger-yellow);
     font-family: "DMSansMedium", Sans-serif;
     font-size: 16px;
     font-weight: 600;
-    color: var(--black-color);
+    color: var(--text-color-primary);
 }
 
 .wigited-buttons {
     bottom: -30px;
-    color: var(--white-color);
+    color: var(--text-color-secondary);
 }
 
 .wigited-box {
@@ -63,18 +63,18 @@
     font-size: 20px;
     font-weight: 400;
     line-height: 25px;
-    color: var(--white-color);
+    color: var(--text-color-secondary);
 }
 
 
 .offerbanner1 {
-    background-color: var(--secondary-color);
+    background-color: var(--text-color-gold);
     padding: 10px 10px 10px 20px;
     font-family: "JustusProMedium";
 }
 
 .offerbanner2 {
-    background-color: var(--color-red);
+    background-color: var(--text-color-danger);
     padding: 10px 10px 10px 20px;
 }
 
