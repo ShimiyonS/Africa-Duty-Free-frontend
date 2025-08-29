@@ -1,13 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import url("./Styles/font.css");
 
 * {
-    font-family: "DMSansRegular", Sans-serif;
-}
-
-.dm-regular {
-    font-family: "DMSansRegular", Sans-serif;
-    font-weight: 600;
+    font-family: "DMSans-Regular", Sans-serif;
 }
 
 :root {
@@ -43,6 +37,17 @@
     --text-color-danger: #b63f21;
     --text-color-gold: #a49764;
 
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+    color: var(--text-color-primary);
 }
 
 /* common button class start */
@@ -81,34 +86,21 @@
 
 /* common text class end */
 
-/* common font class */
+/* common font class start */
 .justuspro-medium {
     font-family: "JustusProMedium", Sans-serif;
-}
-
-.justuspro-medium-italic {
-    font-family: "JustusProMediumIt", Sans-serif;
 }
 
 .justuspro-bold {
     font-family: "JustusProBold", Sans-serif;
 }
 
-.justuspro-bold-italic {
-    font-family: "JustusProBoldIt", Sans-serif;
-}
-
-.justuspro-italic {
-    font-family: "JustusProItalic", Sans-serif;
-}
 
 .justuspro-light {
     font-family: "JustusProLight", Sans-serif;
 }
 
-.justuspro-light-italic {
-    font-family: "JustusProLightIt", Sans-serif;
-}
+
 
 .justuspro-regular {
     font-family: "JustusProRegular", Sans-serif;
@@ -118,24 +110,20 @@
     font-family: "JustusProTh", Sans-serif;
 }
 
-.justuspro-thin-italic {
-    font-family: "JustusProThinIt", Sans-serif;
+
+.dmsans-regular {
+    font-family: "DMSans-Regular", Sans-serif;
 }
 
-
-.primay-bg {
-    background-color: var(--bg-color-primary);
+.dmsans-medium {
+    font-family: "DMSans-Medium", Sans-serif;
 }
 
-.secondary-bg {
-    background-color: var(--bg-color-secondary);
+.dmsans-bold {
+    font-family: "DMSans-Bold", Sans-serif;
 }
 
-.linear-bg {
-    background: #27242B;
-    background: linear-gradient(90deg, rgba(39, 36, 43, 1) 19%, rgba(125, 46, 32, 1) 42%, rgba(184, 66, 33, 1) 68%, rgba(173, 154, 101, 1) 89%);
-}
-
+/* common font class end */
 
 
 .alertsuccess {

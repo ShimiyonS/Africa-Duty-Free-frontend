@@ -48,7 +48,7 @@ const CategoryDetails = () => {
                         <button type='button' className='sub-category-button text-color-secondary  button-bg-success border-0'>{subslug} for him</button>
                     </div>
                     <div>
-                        <p className='filter-wrapper-heading dm-regular text-color-danger' onClick={() => handleOpenFilter()}>show filters</p>
+                        <p className='filter-wrapper-heading  dmsans-regular  text-color-danger' onClick={() => handleOpenFilter()}>show filters</p>
 
                         <div className='d-flex flex-wrap position-relative filter-wrapper'>
                             <div className={`col-12 col-sm-3 col-md-3 filter-left ${filterOpen ? "active" : "inactive"}`}>

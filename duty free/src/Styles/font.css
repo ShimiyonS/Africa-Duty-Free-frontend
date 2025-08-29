@@ -4,33 +4,13 @@
 }
 
 @font-face {
-    font-family: 'JustusProBoldIt';
-    src: url('../font/JustusProBoldIt.TTF') format('truetype');
-}
-
-@font-face {
-    font-family: 'JustusProItalic';
-    src: url('../font/JustusProItalic.TTF') format('truetype');
-}
-
-@font-face {
     font-family: 'JustusProLight';
     src: url('../font/JustusProLight.TTF') format('truetype');
 }
 
 @font-face {
-    font-family: 'JustusProLightIt';
-    src: url('../font/JustusProLightIt.TTF') format('truetype');
-}
-
-@font-face {
     font-family: 'JustusProMedium';
     src: url('../font/JustusProMedium.TTF') format('truetype');
-}
-
-@font-face {
-    font-family: 'JustusProMediumIt';
-    src: url('../font/JustusProMediumIt.TTF') format('truetype');
 }
 
 @font-face {
@@ -46,4 +26,19 @@
 @font-face {
     font-family: 'JustusProThinIt';
     src: url('../font/JustusProThinIt.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'DMSans-Regular';
+    src: url('../font/DMSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'DMSans-Medium';
+    src: url('../font/DMSans-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'DMSans-Bold';
+    src: url('../font/DMSans-Bold.ttf') format('truetype');
 }
