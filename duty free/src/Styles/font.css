@@ -4,11 +4,6 @@
 }
 
 @font-face {
-    font-family: 'JustusProLight';
-    src: url('../font/JustusProLight.TTF') format('truetype');
-}
-
-@font-face {
     font-family: 'JustusProMedium';
     src: url('../font/JustusProMedium.TTF') format('truetype');
 }
@@ -16,16 +11,6 @@
 @font-face {
     font-family: 'JustusProRegular';
     src: url('../font/JustusProRegular.TTF') format('truetype');
-}
-
-@font-face {
-    font-family: 'JustusProTh';
-    src: url('../font/JustusProTh.TTF') format('truetype');
-}
-
-@font-face {
-    font-family: 'JustusProThinIt';
-    src: url('../font/JustusProThinIt.TTF') format('truetype');
 }
 
 @font-face {
