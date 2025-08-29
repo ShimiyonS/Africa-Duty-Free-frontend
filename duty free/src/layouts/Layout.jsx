@@ -3,7 +3,7 @@ import SaleBanner from '../components/commonComponents/header/SaleBanner.jsx'
 import Header from '../components/commonComponents/header/Header.jsx'
 import NavBar from '../components/commonComponents/header/navbar.jsx'
 import Footer from '../components/commonComponents/footer/Footer.jsx'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Fragment } from 'react'
 import CardModal from '../components/commonComponents/CardModal.jsx'
 import Common from '../commonMethod/Common.js'
 import DiscountComponent from '../components/commonComponents/DiscountComponent.jsx'
@@ -12,26 +12,43 @@ import ScrollToTop from '../components/commonComponents/ScrollToTop.jsx'
 
 const Layout = () => {
     const { getActiveCart, dispatch } = Common()
-
     const location = useLocation()
-    const [togglesidebar, setTooglesidebar] = useState(false)
-    function togglemenu(payload) {
-        setTooglesidebar(!payload)
-    }
 
-    useEffect(() => { dispatch(clearCart()) }, [location])
+    const [toggleSidebar, setToggleSidebar] = useState(false)
+    const toggleMenu = (payload) => setToggleSidebar(!payload)
+
+    // Hide layout only on /siteadmin (and its nested routes)
+    const isAdminRoute = location.pathname.startsWith("/siteadmin")
+
+    useEffect(() => {
+        dispatch(clearCart())
+    }, [location])
+
     return (
         <>
-            {getActiveCart?.data && Object.keys(getActiveCart?.data).length > 0 ? <CardModal /> : ""}
-            <SaleBanner content={"Shop - 30 % less vs high street prices - that is Real Value Duty Free Retail."} />
-            <Header togglemenu={togglemenu} togglesidebar={togglesidebar} />
-            <NavBar condition={togglesidebar} togglemenu={togglemenu} />
-            <Outlet />
-            <DiscountComponent />
-            <Footer />
-            <ScrollToTop />
-        </>
+            {getActiveCart?.data && Object.keys(getActiveCart.data).length > 0 && <CardModal />}
 
+            {/* Public layout (hide for admin) */}
+            {!isAdminRoute && (
+                <Fragment>
+                    <SaleBanner content="Shop - 30 % less vs high street prices - that is Real Value Duty Free Retail." />
+                    <Header togglemenu={toggleMenu} togglesidebar={toggleSidebar} />
+                    <NavBar condition={toggleSidebar} togglemenu={toggleMenu} />
+                </Fragment>
+            )}
+
+            {/* Page Content */}
+            <Outlet />
+
+            {/* Footer part (hide for admin) */}
+            {!isAdminRoute && (
+                <Fragment>
+                    <DiscountComponent />
+                    <Footer />
+                    <ScrollToTop />
+                </Fragment>
+            )}
+        </>
     )
 }
 

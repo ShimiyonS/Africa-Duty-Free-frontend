@@ -2,15 +2,15 @@
     padding-left: 10px;
     padding-right: 10px;
     font-size: 14px;
-    border-bottom: 2px solid var(--white-color);
+    border-bottom: 2px solid var(--text-color-secondary);
 }
 
 .nav-header ul li .active {
-    border-bottom: 2px solid var(--button-color) !important;
+    border-bottom: 2px solid var(--button-bg-danger) !important;
 }
 
 li .nav-link:hover {
-    border-bottom: 2px solid var(--button-color) !important;
+    border-bottom: 2px solid var(--button-bg-danger) !important;
 }
 
 .sidebar {
@@ -38,8 +38,8 @@ li .nav-link:hover {
         top: 0px;
         width: 250px;
         height: 100vh;
-        background-color: var(--white-color);
-        border-right: 4px solid var(--border-color);
+        background-color: var(--text-color-secondary);
+        border-right: 4px solid var(--border-color-primary);
     }
 
     .nav-link {
@@ -49,7 +49,7 @@ li .nav-link:hover {
     }
 
     li .nav-link:hover {
-        border-bottom: 4px solid var(--black-color) !important;
+        border-bottom: 4px solid var(--text-color-primary) !important;
     }
 
     .sidebartoggle-active {

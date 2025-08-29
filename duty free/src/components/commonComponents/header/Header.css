@@ -4,18 +4,18 @@
 }
 
 .header-search::placeholder {
-    color: var(--white-color);
+    color: var(--text-color-secondary);
 }
 
 .search-bar {
-    background-color: var(--white-color);
+    background-color: var(--text-color-secondary);
     gap: 1px;
 }
 
 .header-search,
 .header-submit {
-    background-color: var(--secondary-color);
-    color: var(--white-color);
+    background-color: var(--text-color-gold);
+    color: var(--text-color-secondary);
     font-size: 15px;
     height: 50px;
     border: none;
@@ -33,14 +33,14 @@
 }
 
 .header-submit {
-    border-color: var(--white-color);
+    border-color: var(--text-color-secondary);
     border-radius: 0px 50px 50px 0px;
     border-left: 0px;
 }
 
 .header-menus {
     width: 250px;
-    background-color: var(--button-color);
+    background-color: var(--button-bg-danger);
 }
 
 .toggle-icon {
@@ -50,7 +50,7 @@
 .toggle-icon span {
     width: 35px;
     height: 2px;
-    background-color: var(--black-color);
+    background-color: var(--text-color-primary);
     display: block;
     transition: 0.3s linear;
 }
@@ -74,7 +74,7 @@
 }
 
 .popup-login {
-    background-color: var(--button-color);
+    background-color: var(--button-bg-danger);
     color: #fff;
     display: inline-block;
     font-size: 15px;
@@ -148,7 +148,7 @@
     -moz-appearance: none;
     width: 18px;
     height: 18px;
-    background-color: var(--border-color);
+    background-color: var(--border-color-primary);
     border-radius: 3px;
     display: inline-block;
     position: relative;
@@ -157,7 +157,7 @@
 
 .custom-radio:checked {
     background-color: #007bff;
-    border-color: var(--border-color);
+    border-color: var(--border-color-primary);
 }
 
 .custom-radio:checked::after {
@@ -170,11 +170,11 @@
 }
 
 .radio-section label {
-    color: var(--black-color);
+    color: var(--text-color-primary);
 }
 
 .duty-popup-textarea {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color-primary);
     border-radius: 20px;
     padding: 15px;
     outline: none;
@@ -183,10 +183,10 @@
 .duty-popup-inputs {
     width: 100%;
     outline: none;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color-primary);
     border-radius: 999px;
     padding: 18px 30px;
-    color: var(--black-color);
+    color: var(--text-color-primary);
     line-height: 1;
     background-color: transparent;
 }
@@ -200,8 +200,8 @@
 }
 
 .duty-popup-button {
-    background-color: var(--secondary-color);
-    color: var(--white-color);
+    background-color: var(--text-color-gold);
+    color: var(--text-color-secondary);
     border: none;
     padding: 15px 35px 15px 35px;
 }
@@ -223,8 +223,8 @@
     font-size: 10px;
     font-weight: bold;
     padding: 3px;
-    background-color: var(--secondary-color);
-    color: var(--white-color);
+    background-color: var(--text-color-gold);
+    color: var(--text-color-secondary);
     border-radius: 50%;
 }
 
@@ -233,7 +233,7 @@
 }
 
 .whishlist-content {
-    border-bottom: 1px solid var(--black-color);
+    border-bottom: 1px solid var(--text-color-primary);
 }
 
 .header-cart-image {
@@ -242,7 +242,7 @@
 }
 
 .header-cart-product-link {
-    color: var(--button-color);
+    color: var(--button-bg-danger);
     font-size: 14px;
     outline: none;
     border: none;
@@ -261,10 +261,10 @@
     padding: 20px 35px;
     font-size: 13px;
     font-weight: 700;
-    border: 1px solid var(--border-color2);
+    border: 1px solid var(--border-color-primary-secondary);
     transition: all 450ms;
-    background: var(--border-color2);
-    color: var(--border-color2);
+    background: var(--border-color-primary-secondary);
+    color: var(--border-color-primary-secondary);
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -278,7 +278,7 @@
     left: 50%;
     width: 0;
     height: 0;
-    background-color: var(--black-color, rgba(0, 0, 0, 0.6));
+    background-color: var(--text-color-primary, rgba(0, 0, 0, 0.6));
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.6s ease;
@@ -302,14 +302,14 @@
 
 
 .header-cart-link {
-    background-color: var(--white-color);
+    background-color: var(--text-color-secondary);
 }
 
 .header-checkout-link {
-    color: var(--white-color);
+    color: var(--text-color-secondary);
 }
 
 .header-cart-link:hover {
-    background: var(--border-color2);
-    color: var(--white-color);
+    background: var(--border-color-primary-secondary);
+    color: var(--text-color-secondary);
 }

@@ -16,9 +16,10 @@ import Cart from './pages/Cart';
 import AccountRoutes from './routes/AccountRoutes';
 import Checkout from './pages/Checkout';
 import MainPage from './pages/MainPage';
-import MyProvider from './Provider/CommonProvider';
 import ProtectedRoute from './routes/ProtectedRoute';
 import MyAccountRoutes from './routes/MyAccountRoutes';
+import AdminRoutes from './routes/AdminRoutes';
+import ProtectedAdminRoute from './routes/ProtectedAdminRoute';
 
 function App() {
 
@@ -40,9 +41,10 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/cart" element={<Cart />} />
-          <Route element={<ProtectedRoute />}><Route path="/account/*" element={<AccountRoutes />} /></Route>
-          <Route element={<ProtectedRoute />}><Route path="/my-account/*" element={<MyAccountRoutes />} /></Route>
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="account/*" element={<ProtectedRoute ><AccountRoutes /></ProtectedRoute >} />
+          <Route path="my-account/*" element={<ProtectedRoute ><MyAccountRoutes /></ProtectedRoute>} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="siteadmin/*" element={<ProtectedAdminRoute><AdminRoutes /></ProtectedAdminRoute>} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
