@@ -175,8 +175,9 @@
     background-color: transparent;
 }
 
-.duty-popup-inputs:focus, .duty-popup-textarea:focus{
-    border: 1px solid  var(--text-color-gold);
+.duty-popup-inputs:focus,
+.duty-popup-textarea:focus {
+    border: 1px solid var(--text-color-gold);
 }
 
 .contact-us input[type=number]::-webkit-inner-spin-button,
@@ -242,8 +243,6 @@
     font-weight: 700;
     border: 1px solid var(--text-color-muted);
     transition: all 450ms;
-    background: var(--text-color-primary);
-    color: var(--text-color-secondary);
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -279,10 +278,10 @@
     /* keep text above overlay */
 }
 
-
-.header-cart-link {
-    background-color: var(--text-color-secondary);
+.whishilist-button:hover span {
+    color: var(--text-color-secondary)
 }
+
 
 .header-cart-link:hover {
     background: var(--border-color-primary-secondary);

@@ -88,11 +88,6 @@
 .most-popular .product-price {
     color: var(--iconic-color);
 }
-
-.gold-color {
-    color: var(--iconic-color);
-}
-
 .pop-tool {
     bottom: -130px;
     width: 200px;
@@ -118,7 +113,6 @@
 
 .main-page-category-link {
     font-size: 12px;
-    font-weight: bold;
     line-height: 28px;
 }
 
@@ -127,7 +121,7 @@
     content: "";
     width: 100%;
     height: 2px;
-    background-color: var(--iconic-color);
+    background-color: var(--bg-color-gold);
 }
 
 .main-category-wrapper {

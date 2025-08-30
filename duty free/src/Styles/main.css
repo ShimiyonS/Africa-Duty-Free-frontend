@@ -1,8 +1,5 @@
 .main-offer-heading {
     font-size: 60px;
-    font-weight: bold;
-    color: #434343;
-    font-family: "JustusProMedium", Sans-serif;
 }
 
 .main-offer-sub-heading {
@@ -26,15 +23,12 @@
     font-size: 23px;
     margin-left: 25%;
     padding-bottom: 26px;
-    border-bottom: 2px dashed var(--iconic-color);
-    font-family: "JustusProRegular", Sans-serif;
+    border-bottom: 2px dashed var(--bg-color-gold);
 }
 
 .offer-link {
-    background-color: #C83F1DB5;
-    border: 2px solid #C83F1DF5;
+    border: 2px solid var(--bg-color-danger);
     padding: 12px 25px 12px 25px;
-    font-weight: bold;
     font-size: 19px;
 }
 
@@ -49,15 +43,12 @@
 
 .our-style {
     font-size: 22px;
-    font-weight: bold;
-    font-family: "JustusProMedium", Sans-serif;
 }
 
 .our-style-sub {
     font-size: 16px;
     padding-top: 5px;
     font-weight: 500;
-    color: #000000B3
 }
 
 .our-wrapper {
@@ -99,8 +90,7 @@
 }
 
 .main-banner-heading {
-    font-size: 22px;
-    font-family: "JustusProMedium", Sans-serif;
+    font-size: 25px;
 }
 
 
@@ -116,14 +106,17 @@
     top: 40%;
     left: 10%;
 }
+
 .zoom-fade:nth-child(2) {
     top: 50%;
     left: 30%;
 }
+
 .zoom-fade:nth-child(3) {
     top: 30%;
     left: 60%;
 }
+
 .zoom-fade:nth-child(4) {
     top: 10%;
     left: 70%;

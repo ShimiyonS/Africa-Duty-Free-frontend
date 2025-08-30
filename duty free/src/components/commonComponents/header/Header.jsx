@@ -183,7 +183,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
               </div>
               <div className="d-flex justify-content-around">
                 <button
-                  className="popup-login  bg-color-danger  text-color-secondary"
+                  className="popup-login  bg-color-danger  text-color-secondary dmsans-bold"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                   onClick={() => {
@@ -193,7 +193,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
                   Sign in
                 </button>
                 <button
-                  className="popup-login button-bg-primary text-color-secondary"
+                  className="popup-login button-bg-primary text-color-secondary dmsans-bold"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                   onClick={() => {
@@ -237,12 +237,12 @@ const Header = ({ togglemenu, togglesidebar }) => {
             </div>
             <p className='p-2 fw-bold'><span className='fs-6'>Subtotal: </span><span className='fs-5'>${cart?.reduce((acc, item, i) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</span></p>
             <div className='d-flex flex-column text-center'>
-              <button onClick={() => { navigate("/cart") }} className='position-relative whishilist-button header-cart-link mb-3' type='button' data-bs-dismiss="offcanvas" aria-label="Close">
-                <span>VIEW CART</span>
+              <button onClick={() => { navigate("/cart") }} className='position-relative whishilist-button header-cart-link bg-color-primary mb-3' type='button' data-bs-dismiss="offcanvas" aria-label="Close">
+                <span className="dmsans-bold">VIEW CART</span>
                 <div className='button-overlay'>
                 </div>
               </button>
-              <button onClick={() => { navigate("/checkout") }} className='whishilist-button header-checkout-link' type='button' data-bs-dismiss="offcanvas" aria-label="Close"><span className='text-color-secondary'>PROCEED TO CHECKOUT </span>
+              <button onClick={() => { navigate("/checkout") }} className='whishilist-button header-checkout-link bg-color-secondary' type='button' data-bs-dismiss="offcanvas" aria-label="Close"><span className='text-color-secondary dmsans-bold'>PROCEED TO CHECKOUT </span>
                 <div className='button-overlay-reverse'>
                 </div></button>
             </div>

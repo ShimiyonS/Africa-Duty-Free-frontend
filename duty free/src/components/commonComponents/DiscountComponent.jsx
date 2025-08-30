@@ -16,7 +16,7 @@ const DiscountComponent = () => {
                             <div>
                                 <form className="form-input ">
                                     <input type="text" placeholder="Enter Your Email" className="input-box button-bg-primary" />
-                                    <input className="subscribe_mail" type="submit" value="" />
+                                    <input className="subscribe_mail bg-color-gold" type="submit" value="" />
                                 </form>
                             </div>
                         </div>
