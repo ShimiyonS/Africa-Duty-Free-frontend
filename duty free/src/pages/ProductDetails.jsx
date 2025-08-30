@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from 'react'
 import Common from "../commonMethod/Common.js";
 import '../Styles/product-details.css'
-import { Rating } from 'react-simple-star-rating'
 import { CiHeart } from "react-icons/ci";
 import Bag from '../assets/product-bag.png'
 import { BsShare } from "react-icons/bs";
@@ -20,27 +19,25 @@ import { IoIosShareAlt } from "react-icons/io";
 import { MdFullscreen } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { FiMinimize } from "react-icons/fi";
-import { saveAs } from 'file-saver';
 import Products from '../components/commonComponents/Products'
 import Loader from "../components/commonComponents/loader/loader.jsx";
 import { GoZoomIn } from "react-icons/go";
 import { Link } from 'react-router-dom'
-
+import { IoStarOutline } from "react-icons/io5";
+import { IoStar } from "react-icons/io5";
 
 const ProductDetails = () => {
     const { apiRequest } = Common()
     const { id } = useParams()
     const [product, setProduct] = useState(null)
     const [activeTab, setActiveTab] = useState("description");
-    const [rating, setRating] = useState(4)
     const [open, setOpen] = useState(false);
     const imgRef = useRef(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [relatedData, setRelatedData] = useState(null)
     const [loading, setLoading] = useState(false)
     const BASEURL = import.meta.env.VITE_APP_BASE_URL;
-    const imageUrl = product?.images?.[0]
-    const fileName = 'my-downloaded-image.jpg';
+    const [rating, setRating] = useState(false)
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -61,11 +58,6 @@ const ProductDetails = () => {
         fetchProduct();
     }, [id])
     console.log(product)
-
-    //for rating star 
-    const handleRating = (rate) => {
-        setRating(rate)
-    }
 
     // Fullscreen function
     const handleFullscreen = () => {
@@ -112,10 +104,6 @@ const ProductDetails = () => {
         };
     }, []);
 
-    // download img function
-    const handleDownload = () => {
-        saveAs(imageUrl, fileName);
-    };
 
     const handleCount = (type) => {
         if (type == "increment") {
@@ -185,7 +173,7 @@ const ProductDetails = () => {
                             </div>
                             <div className="col-12 col-md-4 col-lg-6">
                                 <div className="position-relative mb-3">
-                                    <h2 className="product-page-title justuspro-medium">{product?.title}</h2>
+                                    <h2 className="product-page-title justuspro-bold">{product?.title}</h2>
                                     <div className="position-absolute zoom-wrapper  " onClick={() => setOpen(true)}>
                                         <GoZoomIn className="zoom-img" />
                                     </div>
@@ -199,7 +187,7 @@ const ProductDetails = () => {
                                         <button onClick={() => handleCount("increment")} className=" border-0 text-center p-0 bg-transparent text-color-gold" disabled={product?.minimumOrderQuantity === 100}>+</button>
                                     </div>
                                     <div >
-                                        <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0 bg-color-gold justuspro-medium" ><span className="text-color-secondary pe-4">Add to cart</span>  <img src={Bag} alt="bag" className="product-bag " /></button>
+                                        <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0 bg-color-gold " ><span className="text-color-secondary pe-4 dmsans-bold">Add to cart</span>  <img src={Bag} alt="bag" className="product-bag " /></button>
 
                                     </div>
 
@@ -208,7 +196,7 @@ const ProductDetails = () => {
 
                                 <div className="d-flex align-items-md-center flex-column flex-md-row pt-5 gap-3">
                                     <div className="rounded-5 wishlist p-2 d-flex justify-content-center align-items-center py-3">
-                                        <span type="submit" name="add-to-cart" className="add-wishlist justuspro-medium rounded-5 border-0 px-4 py-2" >Add to wishlist</span> <CiHeart size={30} />
+                                        <span type="submit" name="add-to-cart" className="add-wishlist rounded-5 border-0 px-4 py-2 dmsans-bold" >Add to wishlist</span> <CiHeart size={30} />
                                     </div>
                                     <div className="position-relative share-content" >
                                         <div className="gap-3 share-emoji  p-3 rounded-5"><Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}><SlSocialFacebook /></Link>
@@ -222,7 +210,7 @@ const ProductDetails = () => {
                                             <Link to={`mailto:?subject=${encodeURIComponent(product?.title)}&body=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}><BsEnvelopePaperFill /> </Link>
                                             <Link to={`tg://msg?text=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}><FaRegPaperPlane /></Link>
                                         </div>
-                                        <span className="pe-2   dmsans-medium">Share</span>
+                                        <span className="pe-2 dmsans-bold">Share</span>
                                         <BsShare />
                                     </div>
                                 </div>
@@ -237,7 +225,7 @@ const ProductDetails = () => {
                                                 </span>
                                             ))
                                         ) : (
-                                            <span className="product-category">{product?.category}</span>
+                                            <span className=" text-color-muted">{product?.category}</span>
                                         )}
                                     </div>
                                 </div>
@@ -252,13 +240,13 @@ const ProductDetails = () => {
                                 <div className="bg-color-gold d-flex justify-content-center">
                                     <div className="d-flex gap-5">
                                         <h5
-                                            className={`py-3 text-color-secondary ${activeTab === "description" ? "fw-bold active-tab m-0" : ""}`}
+                                            className={`py-3 text-color-secondary justuspro-regular ${activeTab === "description" ? " active-tab m-0" : ""}`}
                                             onClick={() => setActiveTab("description")}
                                         >
                                             Description
                                         </h5>
                                         <h5
-                                            className={`py-3 text-color-secondary ${activeTab === "review" ? "fw-bold active-tab m-0" : ""}`}
+                                            className={`py-3 text-color-secondary justuspro-regular${activeTab === "review" ? " active-tab m-0" : ""}`}
                                             onClick={() => setActiveTab("review")}
                                         >
                                             Review
@@ -269,11 +257,21 @@ const ProductDetails = () => {
                                 {activeTab === "review" &&
                                     <div className="text-center product-description-details p-5">
                                         <div className="pb-4 ">
-                                            <h2 className="review-header justuspro-regular">Be the first to Review “Veuve Clicquot Yellow Label Brut White 0.75L”</h2>
+                                            <h2 className="review-header justuspro-medium">Be the first to Review “Veuve Clicquot Yellow Label Brut White 0.75L”</h2>
                                             <p className=" m-0 text-start product-email-content text-color-muted">Your email address will not be published. Required fields are marked *</p>
                                             <div className="d-flex pt-5 gap-3">
-                                                <p className="fw-bold text-start ">Your Rating</p>
-                                                <Rating onClick={handleRating} initialValue={rating} size={20} fillColor="var(  --text-color-danger)" />
+                                                <p className="text-start dmsans-bold ">Your Rating</p>
+                                                <div className="flex gap-2 text-2xl">
+                                                    {[1, 2, 3, 4, 5].map((num) => (
+                                                        <span key={num} onClick={() => setRating(num)}>
+                                                            {num <= rating ? (
+                                                                <IoStar className="text-color-danger" />
+                                                            ) : (
+                                                                <IoStarOutline className="text-color-danger" />
+                                                            )}
+                                                        </span>
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
 
@@ -311,7 +309,7 @@ const ProductDetails = () => {
                                                 <div className="text-end">
                                                     <button
                                                         type="submit"
-                                                        className="px-5 py-2 rounded-5 product-submit text-color-secondary bg-color-gold "
+                                                        className="px-5 py-2 rounded-5 product-submit text-color-secondary bg-color-gold dmsans-bold"
                                                     >
                                                         Submit
                                                     </button>

@@ -1,4 +1,6 @@
-import { BrowserRouter as Router, Routes, Route, BrowserRouter, } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
+import { useEffect } from 'react'
 import './App.css'
 import Layout from './layouts/Layout';
 import Home from './pages/Home';
@@ -23,7 +25,18 @@ import ProtectedAdminRoute from './routes/ProtectedAdminRoute';
 import Search from './pages/Search';
 
 function App() {
-
+  const location = useLocation()
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.scrollY > 20) {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    };
+    toggleVisibility();
+  }, [location]);
   return (
     <>
       <Routes>

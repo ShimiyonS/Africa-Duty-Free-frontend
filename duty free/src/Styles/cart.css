@@ -117,7 +117,18 @@
     background-color: var(--text-color-secondary);
     border-radius: 15px;
     padding: 30px;
-    width: 60%;
+}
+
+@media (max-width:426px) {
+    .card-box {
+        overflow: scroll;
+        height: 90%;
+    }
+
+    .alert-btn {
+        top: 0 !important;
+        right: 0 !important;
+    }
 }
 
 .alert-btn {
@@ -133,25 +144,19 @@
 .popup-cart-heading {
     font-size: 25px;
     font-weight: 600;
-    font-family: "JustusProMedium", Sans-serif;
 }
 
 .price-tag {
     font-size: 15px;
-    font-weight: bold;
 }
 
 .pop-add-btn {
-    background-color: var(--bg-color-secondary);
     font-size: 13px;
     padding: 18px 35px;
-    color: var(--text-color-secondary);
-    font-family: "JustusProMedium", Sans-serif;
 }
 
 .popup-count-input {
     border: 1px solid var(--text-color-primary);
-    padding: 16px 35px;
 }
 
 .card-count-wrapper {

@@ -35,7 +35,8 @@ const HoverZoomImage = ({
 
     const styles = {
         wrapper: {
-            width,
+           maxWidth: width,
+           width:"100%",
             height,
             overflow: "hidden",
             borderRadius: typeof radius === "number" ? `${radius}px` : radius,

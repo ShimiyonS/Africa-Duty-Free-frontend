@@ -50,8 +50,6 @@
 }
 
 .myaccountaddress-button {
-    background-color: #3D3D3D;
-    color: var(--button-bg-color-secondary);
     font-size: 12px;
     font-weight: 600;
     padding: 10px 20px;

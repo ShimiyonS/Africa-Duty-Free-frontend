@@ -44,8 +44,8 @@ const MainPage = () => {
                 <div class="d-flex flex-wrap h-100 align-items-center">
                     <div className="col-12 col-md-4 col-lg-4 p-3 p-lg-5 h-100 d-flex main-banner-item align-items-start">
                         <div>
-                            <p className=' text-color-secondary main-banner-heading'>30% vs high street prices shop duty free & pick up at our airport locations</p>
-                            <Link to="/shop" className='d-inline-block text-decoration-none d-md-none  mt-3 offer-link mt-5  text-color-secondary rounded-5'>Shop Now</Link>
+                            <p className=' text-color-secondary main-banner-heading justuspro-regular'>30% vs high street prices shop duty free & pick up at our airport locations</p>
+                            <Link to="/shop" className='d-inline-block text-decoration-none d-md-none  mt-3 offer-link  mt-5  text-color-secondary rounded-5'>Shop Now</Link>
                         </div>
                     </div>
                     <div className="col-12 col-md-4 col-lg-4 h-100 main-banner-item d-flex align-items-end ">
@@ -53,8 +53,8 @@ const MainPage = () => {
                     </div>
                     <div className="col-12 col-md-4 col-lg-4  h-100  main-banner-item d-flex align-items-end p-3 p-lg-5">
                         <div>
-                            <p className=' text-color-secondary  main-banner-heading'>30% vs high street prices shop duty free & pick up at our airport locations</p>
-                            <Link to="/shop" className='d-inline-block text-decoration-none mt-3 offer-link mt-5  text-color-secondary rounded-5'>Shop Now</Link>
+                            <p className=' text-color-secondary  main-banner-heading justuspro-regular'>30% vs high street prices shop duty free & pick up at our airport locations</p>
+                            <Link to="/shop" className='d-inline-block text-decoration-none mt-3 offer-link bg-color-danger dmsans-bold mt-5  text-color-secondary rounded-5'>Shop Now</Link>
                         </div>
                     </div>
                 </div>
@@ -63,32 +63,32 @@ const MainPage = () => {
             <NewProducts hideWishlist heading={"Most Popular"} productsdata={products} parentClassName={"mt-5"} headingClassName={"product-heading"} swiperClassName="product-swiper  rounded-5 most-popular" priceclassname="text-color-gold" />
             <div className='d-flex flex-wrap align-items-center col-12 col-lg-7 mx-auto my-5 '>
                 <div className='col-12 col-md-6 col-lg-4 p-2 '>
-                    <div className='secondary-bg main-category-wrapper overflow-hidden'>
+                    <div className='bg-color-secondary main-category-wrapper overflow-hidden'>
                         <img src={Banner1} className='w-100 main-category-image' />
                         <div className='p-4'>
-                            <p className='main-home-category secondary-text-color'>Discover Scents That Elevate Your Journey.</p>
-                            <h4 className=' text-color-secondary main-home-category-heading'>Fragrances</h4>
-                            <Link to="/africa-best-buy/product-category/fragrances" className='text-decoration-none  d-inline-block  text-color-secondary main-page-category-link'>Shop now</Link>
+                            <p className='main-home-category text-color-secondary'>Discover Scents That Elevate Your Journey.</p>
+                            <h4 className=' main-home-category-heading justuspro-medium text-color-secondary'>Fragrances</h4>
+                            <Link to="/africa-best-buy/product-category/fragrances" className='text-decoration-none  d-inline-block  text-color-secondary main-page-category-link dmsans-bold'>Shop now</Link>
                         </div>
                     </div>
                 </div>
                 <div className='col-12 col-md-6 col-lg-4 p-2'>
-                    <div className='secondary-bg main-category-wrapper overflow-hidden'>
+                    <div className='bg-color-secondary main-category-wrapper overflow-hidden'>
                         <img src={Banner2} className='w-100 main-category-image' />
                         <div className='p-4'>
-                            <p className='main-home-category secondary-text-color'>Radiance Redefined with Duty-Free Cosmetics.</p>
-                            <h4 className=' text-color-secondary main-home-category-heading'>Cosmetics</h4>
-                            <Link to="/africa-best-buy/product-category/cosmetics" className='text-decoration-none  d-inline-block  text-color-secondary main-page-category-link'>Shop now</Link>
+                            <p className='main-home-category text-color-secondary'>Radiance Redefined with Duty-Free Cosmetics.</p>
+                            <h4 className=' main-home-category-heading justuspro-medium text-color-secondary'>Cosmetics</h4>
+                            <Link to="/africa-best-buy/product-category/cosmetics" className='text-decoration-none  d-inline-block  text-color-secondary main-page-category-link dmsans-bold'>Shop now</Link>
                         </div>
                     </div>
                 </div>
                 <div className='col-12 col-md-6 col-lg-4 p-2 '>
-                    <div className='secondary-bg main-category-wrapper overflow-hidden'>
+                    <div className='bg-color-secondary main-category-wrapper overflow-hidden'>
                         <img src={Banner3} className='w-100 main-category-image' />
                         <div className='p-4'>
-                            <p className='main-home-category secondary-text-color'>Indulge in your favorite spirits with exclusive duty-free.</p>
-                            <h4 className=' text-color-secondary main-home-category-heading'>Liqueur</h4>
-                            <Link to="/africa-best-buy/product-category/liqueur" className='text-decoration-none  d-inline-block  text-color-secondary main-page-category-link'>Shop now</Link>
+                            <p className='main-home-category text-color-secondary'>Indulge in your favorite spirits with exclusive duty-free.</p>
+                            <h4 className='  main-home-category-heading justuspro-medium text-color-secondary'>Liqueur</h4>
+                            <Link to="/africa-best-buy/product-category/liqueur" className='text-decoration-none  d-inline-block  text-color-secondary main-page-category-link dmsans-bold'>Shop now</Link>
                         </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@ const MainPage = () => {
                 <div className='d-flex mt-5 flex-wrap align-items-center'>
                     <div className="col-12 col-md-6 col-lg-6 ">
                         <div className=''>
-                            <h1 className='px-3 pt-5 main-offer-heading '>Great value offers</h1>
+                            <h1 className='px-3 pt-5 main-offer-heading justuspro-bold  '>Great value offers</h1>
                             <p className='px-3 main-offer-sub-heading'>Shop your favourite brands at great prices</p>
                             <img src={AdBanner1} className=' w-100 main-offer-image-left' />
                         </div>
@@ -116,7 +116,7 @@ const MainPage = () => {
                         <div className=''>
                             <p className='main-page-ad-right border-0 m-0' >Up to 20% off Sunglasses</p>
                             <p className='main-page-ad-right border-0 m-0' >Enjoy great savings vs the RRP on a range of designer shades including Ray-Ban, Oakley and Prada.</p>
-                            <Link to="/product-category/accessories" className='text-decoration-none offer-link mt-5  text-color-secondary rounded-5'>Shop Savings</Link>
+                            <Link to="/product-category/accessories" className='text-decoration-none offer-link mt-5  text-color-secondary bg-color-danger dmsans-bold rounded-5'>Shop Savings</Link>
                         </div>
                     </div>
                     <div className="col-12 col-md-6 col-lg-6 ">
@@ -129,25 +129,25 @@ const MainPage = () => {
                 <div className='d-flex align-items-center flex-wrap '>
                     <div className="col-12 col-lg-3 col-md-6 py-2 d-flex justify-content-md-center align-items-center our-wrapper  ">
                         <div className=' '>
-                            <p className='our-style mb-0  text-start  text-color-primary '>Secure Payment</p>
+                            <p className='our-style mb-0  text-start  text-color-primary justuspro-bold'>Secure Payment</p>
                             <p className='our-style-sub mb-0 text-start '>All Cards Accepted</p>
                         </div>
                     </div>
                     <div className="col-12 col-lg-3 col-md-6 py-2 d-flex justify-content-md-center align-items-center our-wrapper   ">
                         <div className=' '>
-                            <p className='our-style mb-0  text-start  text-color-primary '>Collect</p>
+                            <p className='our-style mb-0  text-start  text-color-primary justuspro-bold'>Collect</p>
                             <p className='our-style-sub mb-0 text-start' >On All Orders</p>
                         </div>
                     </div>
                     <div className="col-12 col-lg-3 col-md-6 py-2 d-flex  justify-content-md-center align-items-center our-wrapper   ">
                         <div className=' '>
-                            <p className='our-style mb-0 text-start  text-color-primary '>Online Support</p>
+                            <p className='our-style mb-0 text-start  text-color-primary justuspro-bold'>Online Support</p>
                             <p className='our-style-sub mb-0 text-start '>Technical 24/7</p>
                         </div>
                     </div>
                     <div className="col-12 col-lg-3 col-md-6 py-2 d-flex justify-content-md-center align-items-center our-wrapper   ">
                         <div className=' '>
-                            <p className='our-style mb-0  text-start  text-color-primary '>Big Saving</p>
+                            <p className='our-style mb-0  text-start  text-color-primary justuspro-bold'>Big Saving</p>
                             <p className='our-style-sub mb-0 text-start'>Weekend Sales</p>
                         </div>
                     </div>
