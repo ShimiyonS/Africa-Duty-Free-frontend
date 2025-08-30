@@ -60,7 +60,7 @@ const MainPage = () => {
                 </div>
             </div>
 
-            <NewProducts hideWishlist heading={"Most Popular"} productsdata={products} parentClassName={"mt-5"} headingClassName={"product-heading"} swiperClassName="product-swiper  rounded-5 most-popular" />
+            <NewProducts hideWishlist heading={"Most Popular"} productsdata={products} parentClassName={"mt-5"} headingClassName={"product-heading"} swiperClassName="product-swiper  rounded-5 most-popular" priceclassname="text-color-gold" />
             <div className='d-flex flex-wrap align-items-center col-12 col-lg-7 mx-auto my-5 '>
                 <div className='col-12 col-md-6 col-lg-4 p-2 '>
                     <div className='bg-color-secondary main-category-wrapper overflow-hidden'>

@@ -7,7 +7,16 @@ const General = () => {
   const [showMessage, setShowMessage] = useState(false)
   const [responseStatus, setResponseStatus] = useState(false)
   const [responseMessage, setResponseMessage] = useState("")
-  const [formdata, setFormdata] = useState({ username: "ganesh", firstname: "ganesh", lastname: "Kumar", email: "ganesh1861997@gmail.com" })
+  const [formdata, setFormdata] = useState({ username: "", firstname: "", lastname: "", email: "" })
+
+  const handlechange = (e) => {
+    const { name, type, checked, value } = e.target
+    setFormdata((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+
+  }
 
   const handleResponseClose = () => {
     setShowMessage(false)
@@ -36,11 +45,12 @@ const General = () => {
             Username
           </label>
           <input
-            type="email"
+            type="text"
             className="form-control custom-auth-input"
-            id="email"
+            id="username"
+            name='username'
             value={formdata.username}
-            readOnly
+            onChange={(e) => { handlechange(e) }}
             required
           />
         </div>
@@ -52,8 +62,9 @@ const General = () => {
             type="text"
             className="form-control custom-auth-input"
             id="firstname"
-            value={formdata.username}
-            onChange={(e) => setFormdata(e.target.value)}
+            name='firstname'
+            value={formdata.firstname}
+            onChange={(e) => { handlechange(e) }}
             required
           />
         </div>
@@ -65,8 +76,9 @@ const General = () => {
             type="text"
             className="form-control custom-auth-input"
             id="lastname"
-            value={formdata.email}
-            onChange={(e) => setFormdata(e.target.value)}
+            name='lastname'
+            value={formdata.lastname}
+            onChange={(e) => { handlechange(e) }}
             required
           />
         </div>
@@ -78,14 +90,15 @@ const General = () => {
             type="email"
             className="form-control custom-auth-input"
             id="email"
+            name='email'
             value={formdata.email}
-            onChange={(e) => setFormdata(e.target.value)}
+            onChange={(e) => { handlechange(e) }}
             required
           />
         </div>
 
         <div className="d-flex gap-2">
-          <button type="submit" className="border-0 auth-btns auth-btn-1">
+          <button type="submit" className="border-0 auth-btns  button-bg-primary button-text-primary">
             Update Account
           </button>
         </div>

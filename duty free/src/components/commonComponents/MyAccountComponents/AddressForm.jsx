@@ -41,7 +41,7 @@ const AddressForm = () => {
                 <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
                 <label className='checkout-form-label required '>Phone</label>
                 <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                <button className='auth-btn-1 border-0 px-4 py-2 rounded-2'>Save address</button>
+                <button className='button-text-primary button-bg-primary border-0 px-4 py-2 rounded-2'>Save address</button>
             </div>
         </div>
     )

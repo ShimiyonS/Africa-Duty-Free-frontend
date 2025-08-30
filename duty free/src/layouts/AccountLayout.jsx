@@ -6,7 +6,9 @@ const AccountLayout = () => {
     return (
         <>
             <div className='row container mx-auto account-controls'>
-                <AccountSidebar />
+                <div className="col-12 col-md-6 col-lg-4">
+                    <AccountSidebar />
+                </div>
                 <div className="p-4 p-md-0 col-12 col-md-6 col-lg-7">
                     <Outlet />
                 </div>

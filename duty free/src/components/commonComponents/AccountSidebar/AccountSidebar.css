@@ -7,7 +7,7 @@
     width: 60%;
 }
 
-.account-update label,
+/* .account-update label,
 .account-update input,
 .account-update button,
 .privacy-form p,
@@ -20,14 +20,13 @@
 .navigator-name {
     font-family: "JustusProRegular";
     color: #555;
-}
+} */
 
 .account-links {
     position: relative;
     padding-top: 6px;
     padding-bottom: 6px;
     background-color: #eee;
-    color: var(--text-color-muted);
 }
 
 .account-links:hover {
@@ -35,7 +34,7 @@
 }
 
 .side-bar-links .active .sidebar-icons {
-    color: var(--button-bg-color-secondary);
+    color: var(--button-bg-color-primary);
 }
 
 .side-bar-links .active span {
@@ -76,7 +75,7 @@
 
 .privacy-page-icon .checked {
     display: none;
-    color: var(--button-bg-color-secondary);
+    color: var(--button-bg-primary);
 }
 
 input:checked+.privacy-page-icon .checked {

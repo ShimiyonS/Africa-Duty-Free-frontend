@@ -14,8 +14,11 @@
     --iconic-color: #ae9962;
    
     --button-bg-primary: #f0b32c;
-    --button-bg-danger: #ff4823;
+    --button-bg-danger: #b63f21;
     --button-bg-success: #23c337;
+
+    --button-text-primary : #fff;
+    --button-text-secondary : #000;
 
     --text-color-primary: #000;
     --text-color-secondary: #fff;
@@ -40,7 +43,8 @@ h4,
 h5,
 h6,
 p,
-span {
+span,
+label {
     color: var(--text-color-primary);
 }
 
@@ -55,6 +59,14 @@ span {
 
 .button-bg-success {
     background-color: var(--button-bg-success);
+}
+
+.button-text-primary{
+    color: var(--button-text-primary);
+}
+
+.button-text-secondary{
+    color: var(--button-text-secondary);
 }
 
 /* common button class end */

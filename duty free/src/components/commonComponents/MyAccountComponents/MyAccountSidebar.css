@@ -15,16 +15,14 @@
 .myaccount-links:hover,
 .side-bar-links .active {
     background-color: #ddd;
-    color: var(--button-bg-color-secondary);
+    color: var(--button-bg-primary);
 }
 
 /* ------------------------------------------------------------- */
 
 /* dashboard css */
 .dashboard-icon-section {
-    background-color: var(--text-color-gold);
     padding: 15px;
-    color: var(--text-color-secondary);
     border-radius: 50%;
 }
 
@@ -41,7 +39,6 @@
 
 .dashboard-link {
     font-size: 1.50rem;
-    color: var(--text-primary-color);
     font-weight: bold;
 }
 
