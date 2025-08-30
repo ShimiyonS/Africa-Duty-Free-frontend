@@ -61,11 +61,11 @@ const Login = () => {
                             </div>
                             <div className="mb-3 custom-login-checkbox">
                                 <input type="checkbox" id="remember" />
-                                <label htmlFor="remember" className="input-checkbox-label">
-                                    <span className="icon unchecked">
+                                <label htmlFor="remember">
+                                    <span className="icon unchecked text-color-muted">
                                         <HiEmojiSad size={25} />
                                     </span>
-                                    <span className="icon checked">
+                                    <span className="icon checked text-color-muted">
                                         <IoShieldCheckmarkSharp size={25} />
                                     </span>
                                     Keep me signed in
@@ -73,17 +73,17 @@ const Login = () => {
                             </div>
 
                             <div className="d-flex gap-2">
-                                <button type="submit" className="border-0 auth-btns auth-btn-1">
+                                <button type="submit" className="border-0 auth-btns button-text-primary button-bg-primary">
                                     Login
                                 </button>
-                                <Link to="/register" className="auth-btns auth-btn-2">
+                                <Link to="/register" className="text-decoration-none auth-btns button-text-primary button-bg-danger">
                                     Register
                                 </Link>
                             </div>
                         </form>
 
                         <div className="text-center mt-4">
-                            <Link to="/password-reset" className="forgot-password">
+                            <Link to="/password-reset" className="forgot-password text-color-muted">
                                 Forgot your password?
                             </Link>
                         </div>

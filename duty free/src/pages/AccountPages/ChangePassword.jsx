@@ -8,6 +8,14 @@ const ChangePassword = () => {
   const [responseMessage, setResponseMessage] = useState("")
   const [formdata, setFormdata] = useState({ currentpassword: "", newpassword: "", confirmpassword: "" })
 
+  const handleformchange = (e) => {
+    const { name, type, checked, value } = e.target
+    setFormdata((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
   const handleResponseClose = () => {
     setShowMessage(false)
   }
@@ -31,47 +39,50 @@ const ChangePassword = () => {
       </div>
       <form onSubmit={handleChangePassword} className='account-update'>
         <div className="mb-3">
-          <label htmlFor="currentPassword" className="form-label mb-3 fw-bold">
+          <label htmlFor="currentpassword" className="form-label mb-3 fw-bold">
             Current Password
           </label>
           <input
             type="password"
             className="form-control custom-auth-input"
-            id="currentPassword"
+            id="currentpassword"
+            name="currentpassword"
             value={formdata.currentpassword}
-            onChange={(e) => setFormdata(e.target.value)}
+            onChange={(e) => handleformchange(e)}
             required
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="newPassword" className="form-label mb-3 fw-bold">
+          <label htmlFor="newpassword" className="form-label mb-3 fw-bold">
             New Password
           </label>
           <input
             type="password"
             className="form-control custom-auth-input"
-            id="newPassword"
+            id="newpassword"
+            name="newpassword"
             value={formdata.newpassword}
-            onChange={(e) => setFormdata(e.target.value)}
+            onChange={(e) => handleformchange(e)}
             required
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="confirmPassword" className="form-label mb-3 fw-bold">
+          <label htmlFor="confirmpassword" className="form-label mb-3 fw-bold">
             Confirm Password
           </label>
           <input
             type="password"
             className="form-control custom-auth-input"
-            id="confirmPassword"
-            value={formdata.email}
-            onChange={(e) => setFormdata(e.target.value)}
+            id="confirmpassword"
+            name="confirmpassword"
+            value={formdata.confirmpassword}
+            onChange={(e) => handleformchange(e)}
             required
           />
         </div>
 
         <div className="d-flex gap-2">
-          <button type="submit" className="border-0 auth-btns auth-btn-1">
+          <button type="submit" className="border-0 auth-btns  button-bg-primary button-text-primary">
             Update Password
           </button>
         </div>

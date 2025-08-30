@@ -13,6 +13,7 @@ import { IoIosClose } from "react-icons/io";
 
 const Header = ({ togglemenu, togglesidebar }) => {
   const navigate = useNavigate();
+  const [searchText, setSearchText] = useState();
   const { apiRequest } = Common()
   const [cart, setCart] = useState([])
   useEffect(() => {
@@ -42,6 +43,13 @@ const Header = ({ togglemenu, togglesidebar }) => {
     };
   }, [])
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchText !== "") {
+      navigate(`/search?q=${searchText}`)
+    }
+  }
+
   return (
 
     <div className='container'>
@@ -52,9 +60,9 @@ const Header = ({ togglemenu, togglesidebar }) => {
         <div className='col-6 col-lg-7 pt-2'>
           <div className='d-flex align-items-center justify-content-end justify-content-lg-between '>
             <div className="d-none d-lg-block search-container">
-              <form action="#">
+              <form onSubmit={handleSearch}>
                 <div className="search-bar d-flex align-items-center">
-                  <input type="text" id='search' className='header-search justuspro-regular text-color-secondary  bg-color-gold' placeholder='Hello! what are you looking for?' />
+                  <input type="text" id='search' value={searchText} onChange={(e) => setSearchText(e.target.value)} className='header-search justuspro-regular text-color-secondary  bg-color-gold' placeholder='Hello! what are you looking for?' required />
                   <button type='submit' className='header-submit m-0 outline-0 text-color-secondary  bg-color-gold'><CiSearch /></button>
                 </div>
               </form>
@@ -155,7 +163,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
                 </div>
 
                 <div className="d-flex justify-content-end">
-                  <button type='submit' className='duty-popup-button rounded-pill text-color-secondary  bg-color-gold'>
+                  <button type='submit' className='duty-popup-button rounded-pill button-bg-primary button-text-primary'>
                     Request Now
                   </button>
                 </div>

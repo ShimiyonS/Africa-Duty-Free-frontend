@@ -46,7 +46,7 @@ const DeleteAccount = () => {
         </div>
 
         <div className="d-flex gap-2">
-          <button type="submit" className="border-0 p-2 rounded-2 auth-btn-1">
+          <button type="submit" className="border-0 p-2 rounded-2  button-bg-primary button-text-primary">
             Delete Account
           </button>
         </div>

@@ -11,7 +11,7 @@ const Banner = () => {
                         <h3 className='text-start banner-heading justuspro-regular text-color-secondary'>duty free</h3>
                         <h3 className='text-start banner-heading justuspro-regular text-color-secondary'>30%</h3>
                         <h3 className='text-start banner-heading justuspro-regular text-color-secondary'>less <span className='text-color-secondary'>on high street prices</span></h3>
-                        <Link to="/shop" className="rounded-5 text-decoration-none text-color-primary mt-3 border-0 px-4 py-2 shop-left-btn d-none button-bg-primary dmsans-medium">Shop Now</Link>
+                        <Link to="/shop" className="rounded-5 text-decoration-none button-text-secondary mt-3 border-0 px-4 py-2 shop-left-btn d-none button-bg-primary dmsans-medium">Shop Now</Link>
                         <img src={HomeBanner2} width={200} height={200} alt="homebanner" className='home-banner-image' />
                     </div>
                 </div>
@@ -20,7 +20,7 @@ const Banner = () => {
                         <h3 className='banner-right-heading text-color-secondary justuspro-regular'>the good life</h3>
                         <h3 className='banner-right-heading text-color-secondary justuspro-regular'>the best brands</h3>
                         <h3 className='banner-right-heading text-color-secondary justuspro-regular'>real value duty free</h3>
-                        <Link to="/shop" className="rounded-5 text-decoration-none text-color-primary  mt-3 border-0 px-4 py-2 shop-btn button-bg-primary dmsans-medium">Shop Now</Link>
+                        <Link to="/shop" className="rounded-5 text-decoration-none button-text-secondary  mt-3 border-0 px-4 py-2 shop-btn button-bg-primary dmsans-medium">Shop Now</Link>
                     </div>
                 </div>
             </div>
