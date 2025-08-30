@@ -26,12 +26,12 @@ const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop
             <div className="position-relative overflow-hidden">
                 <img src={data?.thumbnail} className='p-2 product-image' />
                 {!hidePopTool && <div className="d-flex align-items-center gap-2 position-absolute justify-content-center pop-tool">
-                    {!hideCart && <button className="border-0 px-3 py-2 rounded-1" onClick={() => handleAddTocart(data)}><FaShoppingCart /></button>}
-                    {!hideAddCartPop && <button className="border-0 px-3 py-2 rounded-1" onClick={() => handleOpenModal(data)}><FaEye /></button>}
+                    {!hideCart && <button className="border-0 px-3 py-2 rounded-1 bg-color-primary text-color-primary" onClick={() => handleAddTocart(data)}><FaShoppingCart /></button>}
+                    {!hideAddCartPop && <button className="border-0 px-3 py-2 rounded-1 bg-color-primary text-color-primary" onClick={() => handleOpenModal(data)}><FaEye /></button>}
                 </div>}
             </div>
-            <Link to={`/product/${data?.id}`} className={`${titleclassname} product-title justuspro-bold text-color-primary d-block text-decoration-none mb-0 pt-3 pb-2`}>{data?.title}</Link>
-            <p className={`${priceclassname} product-price text-color-danger dmsans-bold `}>${data?.price}</p>
+            <Link to={`/product/${data?.id}`} className={`${titleclassname} product-title dmsans-bold d-block text-decoration-none mb-0 pt-3 pb-2`}>{data?.title}</Link>
+            <p className={`${priceclassname} product-price dmsans-bold `}>${data?.price}</p>
         </div>
     )
 }

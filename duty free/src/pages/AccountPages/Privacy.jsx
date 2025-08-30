@@ -105,7 +105,7 @@ const Privacy = () => {
             onChange={(e) => setFormdata(e.target.value)}
             required
           />
-          <button className="border-0 p-2 rounded-2 auth-btn-1">Request data</button>
+          <button className="border-0 p-2 rounded-2  button-bg-primary button-text-primary">Request data</button>
 
         </div>
 
@@ -124,12 +124,12 @@ const Privacy = () => {
             onChange={(e) => setFormdata(e.target.value)}
             required
           />
-          <button className="border-0 p-2 rounded-2 auth-btn-1">Request data erase</button>
+          <button className="border-0 p-2 rounded-2  button-bg-primary button-text-primary">Request data erase</button>
         </div>
 
 
         <div className="d-flex">
-          <button type="submit" className="border-0 px-2 py-2 rounded-2 auth-btn-1">
+          <button type="submit" className="border-0 px-2 py-2 rounded-2  button-bg-primary button-text-primary">
             Update Privacy
           </button>
         </div>

@@ -109,10 +109,10 @@ const Register = () => {
                         </div>
 
                         <div className="mt-4 d-flex gap-2 gap-md-4">
-                            <button type="submit" className="border-0 auth-btns auth-btn-1">
+                            <button type="submit" className="border-0 auth-btns button-text-primary button-bg-primary">
                                 Register
                             </button>
-                            <Link to="/login" className="auth-btns auth-btn-2">
+                            <Link to="/login" className="text-decoration-none auth-btns button-text-primary button-bg-danger">
                                 Login
                             </Link>
                         </div>

@@ -45,7 +45,7 @@ const MyaccountDetails = () => {
           </button>
         </div>
 
-        <button type='submit' className='auth-btn-1 border-0 px-4 py-2 rounded-2'>Save changes</button>
+        <button type='submit' className='button-text-primary button-bg-primary border-0 px-4 py-2 rounded-2'>Save changes</button>
       </div>
     </div>
   )

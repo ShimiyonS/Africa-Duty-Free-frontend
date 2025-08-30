@@ -6,11 +6,7 @@
 }
 
 .product-title {
-    font-size: 13px;
-}
-
-.product-title:hover {
-    color: var(--text-color-primary);
+    font-size: 17px;
 }
 
 .product-price {
@@ -85,7 +81,7 @@
     border-top-right-radius: 20px;
 }
 
-.most-popular .product-price {
+.most-popular {
     color: var(--iconic-color);
 }
 
@@ -102,10 +98,6 @@
 
 .product-card:hover .pop-tool {
     bottom: 30px;
-}
-
-.pop-tool button {
-    background-color: var(--text-color-secondary);
 }
 
 .pop-tool button:hover {

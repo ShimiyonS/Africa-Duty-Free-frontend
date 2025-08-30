@@ -28,7 +28,7 @@ const ForgotPassword = () => {
                             </div>
 
                             <div className="d-flex justify-content-center mt-4">
-                                <button type="submit" className="border-0 auth-btns auth-btn-1">
+                                <button type="submit" className="border-0 auth-btns  button-bg-primary button-text-primary">
                                     Reset Password
                                 </button>
                             </div>

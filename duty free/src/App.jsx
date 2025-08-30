@@ -20,6 +20,7 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import MyAccountRoutes from './routes/MyAccountRoutes';
 import AdminRoutes from './routes/AdminRoutes';
 import ProtectedAdminRoute from './routes/ProtectedAdminRoute';
+import Search from './pages/Search';
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="account/*" element={<ProtectedRoute ><AccountRoutes /></ProtectedRoute >} />
           <Route path="my-account/*" element={<ProtectedRoute ><MyAccountRoutes /></ProtectedRoute>} />
           <Route path="checkout" element={<Checkout />} />
+           <Route path="search" element={<Search />} />
           <Route path="siteadmin/*" element={<ProtectedAdminRoute><AdminRoutes /></ProtectedAdminRoute>} />
           <Route path="*" element={<NoPage />} />
         </Route>

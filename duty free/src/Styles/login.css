@@ -10,11 +10,12 @@
 
 .custom-auth-input {
     border-radius: 0 !important;
+    border: 1px solid var(--border-color-primary-primary) !important;
 }
 
 .custom-auth-input:focus {
     box-shadow: none !important;
-    border: 1px solid #bbb !important;
+    border: 1px solid var(--border-color-primary-secondary) !important;
 }
 
 .auth-btns {
@@ -25,24 +26,6 @@
     border-radius: 5px;
 }
 
-.auth-btn-1 {
-    background-color: var(--login-btn-color);
-    color: var(--text-color-secondary);
-}
-
-.auth-btn-1:hover {
-    background-color: #44b0ec;
-}
-
-.auth-btn-2 {
-    text-decoration: none;
-    background-color: var(--register-btn-color);
-    color: var(--text-color-muted);
-}
-
-.auth-btn-2:hover {
-    background-color: #e5e5e5;
-}
 /* ---------------------------------------------------------------------------------- */
 
 /* login form css */
@@ -68,12 +51,7 @@
     display: inline-block;
 }
 
-.input-checkbox-label {
-    color: var(--text-color-muted);
-}
-
-.forgot-password, .forgot-password-message {
-    color: var(--text-color-muted);
+.forgot-password {
     text-decoration: none;
 }
 
