@@ -31,7 +31,7 @@ const BrandDetails = () => {
             <BestBuy />
             <Products data={brand} />
             <SaleCard data={0} imageClass={"small-image"} />
-            <NewProducts />
+            <NewProducts heading={"New Products"} productsdata={brand} hidePopTool={true} />
             <SaleCard data={1} headingClass={"text-center"} imageClass={"big-image"} />
         </div>
     )

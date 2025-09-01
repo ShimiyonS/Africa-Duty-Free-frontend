@@ -29,7 +29,7 @@ const ShopDetails = () => {
             <BestBuy />
             <Products data={shop} headingText={"Welcome to Our Shop"} />
             <SaleCard data={0} imageClass={"small-image"} />
-            <NewProducts />
+            <NewProducts heading={"New Products"} productsdata={shop} hidePopTool={true} />
             <SaleCard data={1} headingClass={"text-center"} imageClass={"big-image"} />
         </div>
     )
