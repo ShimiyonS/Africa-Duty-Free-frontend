@@ -32,6 +32,13 @@
     background: #0056b3;
 }
 
+.star-icon::after {
+    content: "*";
+    color: red;
+    font-weight: bold;
+    position: absolute;
+
+}
 
 /* add and edit product css */
 .adminform-heading {
