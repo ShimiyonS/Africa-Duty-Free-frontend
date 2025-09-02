@@ -2,8 +2,10 @@ import { Link, NavLink } from "react-router-dom"
 import "../Styles/adminmenu.css"
 import logo from "../assets/LOGO-Africa-Duty-free-def-WEB.png"
 import { RxDashboard } from "react-icons/rx";
-import { GiDrinkMe } from "react-icons/gi";
-import { MdCategory } from "react-icons/md";
+import { LuUserRound } from "react-icons/lu";
+import { GiDrinkMe } from 'react-icons/gi';
+import { MdCategory } from 'react-icons/md';
+
 
 const AdminMenuBar = () => {
     return (
@@ -12,12 +14,11 @@ const AdminMenuBar = () => {
             <div className=" px-3 py-2 admin-menu-wrapper">
                 <NavLink to="/siteadmin" end className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <RxDashboard style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Dashboard</span></NavLink>
                 <NavLink to="/siteadmin/products" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <GiDrinkMe style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Products</span></NavLink>
-                <NavLink to="/siteadmin/addcategory" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular"> Add Categories</span></NavLink>
-                <NavLink to="/siteadmin/categories" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">List All Category</span></NavLink>
-                <NavLink to="/siteadmin/addsubcategory" end className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Add Sub Category</span></NavLink>
-                <NavLink to="/siteadmin/subcategories" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">List All Sub Category</span></NavLink>
-                <NavLink to="/siteadmin/addbrand" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Add Brand</span></NavLink>
-                <NavLink to="/siteadmin/brands" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">List Brand</span></NavLink>
+                <NavLink to="/siteadmin/categories" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Category</span></NavLink>
+                <NavLink to="/siteadmin/subcategories" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Sub Category</span></NavLink>
+                <NavLink to="/siteadmin/brands" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Brands</span></NavLink>
+                <NavLink to="/siteadmin/users" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <LuUserRound style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">users</span></NavLink>
+
             </div>
         </div>
     )

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import Common from '../../commonMethod/common'
+import Pagination from '../../components/commonComponents/Pagination';
+import Common from '../../commonMethod/common';
 import { Link } from 'react-router-dom'
 import { BsThreeDotsVertical } from "react-icons/bs";
-import Pagination from '../../components/commonComponents/Pagination';
 import DeletePopup from '../../components/commonComponents/DeletePopup';
 
-const ViewProduct = () => {
+const ViewUsers = () => {
     const { apiRequest } = Common()
     const [search, setSearch] = useState("")
-    const [product, setProduct] = useState([])
+    const [users, setUsers] = useState([])
     const [openMenuId, setOpenMenuId] = useState(null)
     const [deleteDetails, setDeleteDetails] = useState(null);
     const [loading, setLoading] = useState(false)
@@ -18,11 +18,14 @@ const ViewProduct = () => {
     const [pageSize, setPageSize] = useState(5)
     const [totalPages, setTotalPages] = useState(1)
 
-    const closePopup = () =>{
+    console.log(users);
+    
+
+    const closePopup = () => {
         setDeleteDetails(null)
     }
 
-    const openPopup = (data) =>{        
+    const openPopup = (data) => {
         setDeleteDetails(data)
     }
 
@@ -39,35 +42,35 @@ const ViewProduct = () => {
     }
 
     useEffect(() => {
-        const fetchProduct = async () => {
+        const fetchUsers = async () => {
             try {
                 const skip = (page - 1) * pageSize
                 const endpoint = search
-                    ? `/products/search?q=${search}&limit=${pageSize}&skip=${skip}`
-                    : `/products?limit=${pageSize}&skip=${skip}`;
+                    ? `/users/search?q=${search}&limit=${pageSize}&skip=${skip}`
+                    : `/users?limit=${pageSize}&skip=${skip}`;
 
                 const data = await apiRequest("GET", endpoint);
 
-                setProduct(data.products || [])
+                setUsers(data.users || [])
                 setTotalPages(Math.ceil(data.total / pageSize)) // ✅ fix: based on API total
             } catch (error) {
                 console.error(error)
             }
         }
-        fetchProduct();
+        fetchUsers();
     }, [search, page, pageSize])
 
     return (
         <div className='table-responsive'>
-            <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
+            <h2 className="adminform-heading justuspro-medium mb-3">Users List</h2>
             <div className='table-conatiner table-responsive'>
-                
+
                 {/* 🔍 Search box */}
                 <div className='m-3 col-12 col-md-6 col-xl-4'>
                     <input
                         type="text"
                         className='mb-3 admin-input'
-                        placeholder='search product'
+                        placeholder='search Users'
                         value={search}
                         onChange={(e) => {
                             setSearch(e.target.value);
@@ -80,20 +83,20 @@ const ViewProduct = () => {
                 <table className='container table-responsive'>
                     <thead>
                         <tr>
-                            <th>Product Id</th>
-                            <th>Product Details</th>
-                            <th>Product Price</th>
+                            <th>User Id</th>
+                            <th>User Details</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {product.map((item, index) => (
+                        {users.map((item, index) => (
                             <tr key={item.id || index}>
                                 <td>{item.id}</td>
                                 <td>
                                     <div className='d-flex align-items-center justify-content-center'>
-                                        <img src={item.images[0]} className='admin-product-view' alt="product-img" />
-                                        <p className='m-0 ms-3 product-title'>{item.title}</p>
+                                        <img src={item.image} className='admin-product-view' alt="product-img" />
+                                        <p className='m-0 ms-3'>{item.username}</p>
                                     </div>
                                 </td>
                                 <td>{item.price}</td>
@@ -138,11 +141,11 @@ const ViewProduct = () => {
             </div>
 
             {/* ❌ Delete confirmation popup */}
-            {deleteDetails !==null  && (
-                <DeletePopup handleDelete={() =>handleDelete(deleteDetails.id)} data={deleteDetails} handleclose={closePopup}/>
+            {deleteDetails !== null && (
+                <DeletePopup handleDelete={() => handleDelete(deleteDetails.id)} data={deleteDetails} handleclose={closePopup} />
             )}
         </div>
     )
 }
 
-export default ViewProduct
+export default ViewUsers
