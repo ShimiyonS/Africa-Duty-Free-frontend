@@ -7,12 +7,13 @@ import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { TiExportOutline } from "react-icons/ti";
 
-const ListAllCategories = () => {
+const ListAllSubCategories = () => {
     const [data, setData] = useState([])
     const { apiRequest } = Common()
     const [confirmDeleteId, setConfirmDeleteId] = useState(null)
     const token = localStorage.getItem("token")
     const [hideBtn, setHideBtn] = useState(false)
+
 
     // list all data
     const fetchData = async () => {
@@ -49,7 +50,7 @@ const ListAllCategories = () => {
     }
     return (
         <div>
-            <h1 className="justuspro-bold pb-4">All Categories</h1>
+            <h1 className="justuspro-bold pb-4">All Sub Categories</h1>
             <div>
                 {confirmDeleteId && (
                     <div className="custom-popup-overlay">
@@ -89,20 +90,19 @@ const ListAllCategories = () => {
                                     <BsThreeDotsVertical className="threeDot" />
 
                                     <div className="position-absolute hidebtn">
-                                        <FaEdit className="" />
-                                        <Link
-                                            to={`/siteadmin/editcategory/${item.id}`}
-                                            className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold"
-                                        >
 
+                                        <Link
+                                            to={`/siteadmin/editsubcategory/${item.id}`}
+                                            className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold d-block w-100"
+                                        >
+                                            <FaEdit className="me-2" />
                                             Edit
                                         </Link>
-                                        <br />
                                         <button
                                             onClick={() => handleDeleteClick(item.id)}
-                                            className="dmsans-bold border-0 rounded-2 mt-3 bg-transparent  p-0"
+                                            className="dmsans-bold border-0 rounded-2 mt-2 bg-transparent  p-0"
                                         >
-                                            <RiDeleteBin6Line className="" />
+                                            <RiDeleteBin6Line className="me-2" />
                                             Delete
                                         </button>
                                     </div>
@@ -116,4 +116,4 @@ const ListAllCategories = () => {
     )
 }
 
-export default ListAllCategories
+export default ListAllSubCategories

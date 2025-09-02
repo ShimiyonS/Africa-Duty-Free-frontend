@@ -6,6 +6,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { TiExportOutline } from "react-icons/ti";
+import defaultImage from '../../assets/user-default-profile.jpg'
 
 const ListAllCategories = () => {
     const [data, setData] = useState([])
@@ -49,7 +50,7 @@ const ListAllCategories = () => {
     }
     return (
         <div>
-            <h1 className="justuspro-bold pb-4">All Categories</h1>
+            <h1 className="justuspro-bold pb-4">All Brands</h1>
             <div>
                 {confirmDeleteId && (
                     <div className="custom-popup-overlay">
@@ -71,7 +72,7 @@ const ListAllCategories = () => {
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Brand</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -79,11 +80,20 @@ const ListAllCategories = () => {
                         {data.map((item, index) => (
                             <tr key={item.id}>
                                 <th scope="row">{item.id}</th>
-                                <td>
-                                    <Link to={`/product/${item.id}`} target="_self" className="text-decoration-none text-color-primary dmsans-bold">
-                                        {item.title}
-                                        <TiExportOutline />
-                                    </Link>
+                                <td className="d-flex gap-3">
+                                    {item.images ? (
+                                        <div className="d-flex gap-4">
+                                            <img src={item.images} alt="categoryimg" className="uploadImage" />
+                                        </div>
+                                    ) : (
+                                        <img src={defaultImage} alt={item.title} className="categoryImg" />
+                                    )}
+                                    <div className="texthide">
+                                        <Link to={`/product/${item.id}`} target="_self" className="text-decoration-none text-color-primary dmsans-bold">
+                                            {item.title}
+                                            <TiExportOutline />
+                                        </Link>
+                                    </div>
                                 </td>
                                 <td className="position-relative action-cell">
                                     <BsThreeDotsVertical className="threeDot" />
@@ -91,7 +101,7 @@ const ListAllCategories = () => {
                                     <div className="position-absolute hidebtn">
                                         <FaEdit className="" />
                                         <Link
-                                            to={`/siteadmin/editcategory/${item.id}`}
+                                            to={`/siteadmin/editbrand/${item.id}`}
                                             className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold"
                                         >
 
