@@ -7,6 +7,7 @@ import AddAndEditSubCategory from '../pages/AdminPages/addAndEditSubCategory'
 import ListCategories from '../pages/AdminPages/listAllCategories'
 import AddEditProducts from '../pages/AdminPages/AddEditProducts'
 import ViewProduct from '../pages/AdminPages/ViewProduct'
+import ViewUsers from '../pages/AdminPages/ViewUsers';
 import ListSubCategory from '../pages/AdminPages/ListAllSubCategories'
 import AddAndEditBrand from '../pages/AdminPages/AddAndEditBrand'
 import ListAllBrands from '../pages/AdminPages/ListAllBrands'
@@ -27,10 +28,10 @@ const AdminRoutes = () => {
                     <Route path="/addbrand" element={<AddAndEditBrand />} />
                     <Route path="/editbrand/:id" element={<AddAndEditBrand />} />
                     <Route path="/listallbrand" element={<ListAllBrands />} />
-                    <Route index path="/products" element={<p>vicky</p>} />
                     <Route index path="/add-product" element={<AddEditProducts />} />
                     <Route index path="/edit-product/:id" element={<AddEditProducts />} />
-                    <Route index path="/view-product" element={<ViewProduct />} />
+                    <Route index path="/products" element={<ViewProduct />} />
+                    <Route index path="/users" element={<ViewUsers />} />
 
                 </Route>
             </Routes >
