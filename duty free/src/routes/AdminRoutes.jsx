@@ -22,11 +22,11 @@ const AdminRoutes = () => {
                     <Route path="/editcategory/:id" element={<AddAndEditCategory />} />
                     <Route path="/addsubcategory" element={<AddAndEditSubCategory />} />
                     <Route path="/editsubcategory/:id" element={<AddAndEditSubCategory />} />
-                    <Route path="/listallcategories" element={<ListCategories />} />
-                    <Route path="/listallsubcategories" element={<ListSubCategory />} />
+                    <Route path="/categories" element={<ListCategories />} />
+                    <Route path="/subcategories" element={<ListSubCategory />} />
                     <Route path="/addbrand" element={<AddAndEditBrand />} />
                     <Route path="/editbrand/:id" element={<AddAndEditBrand />} />
-                    <Route path="/listallbrand" element={<ListAllBrands />} />
+                    <Route path="/brands" element={<ListAllBrands />} />
                     <Route index path="/products" element={<p>vicky</p>} />
                     <Route index path="/add-product" element={<AddEditProducts />} />
                     <Route index path="/edit-product/:id" element={<AddEditProducts />} />

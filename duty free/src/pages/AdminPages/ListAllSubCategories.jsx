@@ -50,7 +50,10 @@ const ListAllSubCategories = () => {
     }
     return (
         <div>
-            <h1 className="justuspro-bold pb-4">All Sub Categories</h1>
+            <div className="d-flex justify-content-between">
+                <h1 className="justuspro-bold pb-4">All Sub Categories</h1>
+                <Link to="/siteadmin/addsubcategory" className="addLink dmsans-bold py-0 py-sm-2">Add Brand</Link>
+            </div>
             <div>
                 {confirmDeleteId && (
                     <div className="custom-popup-overlay">

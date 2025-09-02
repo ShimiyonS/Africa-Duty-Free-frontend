@@ -49,7 +49,10 @@ const ListAllCategories = () => {
     }
     return (
         <div>
-            <h1 className="justuspro-bold pb-4">All Categories</h1>
+            <div className="d-flex justify-content-between">
+                <h1 className="justuspro-bold pb-4 text-center">All Categories</h1>
+                <Link to="/siteadmin/addcategory" className="addLink dmsans-bold py-0 py-sm-2">Add Category</Link>
+            </div>
             <div>
                 {confirmDeleteId && (
                     <div className="custom-popup-overlay">
@@ -89,20 +92,18 @@ const ListAllCategories = () => {
                                     <BsThreeDotsVertical className="threeDot" />
 
                                     <div className="position-absolute hidebtn">
-                                        <FaEdit className="" />
                                         <Link
                                             to={`/siteadmin/editcategory/${item.id}`}
-                                            className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold"
+                                            className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold d-block w-100"
                                         >
-
+                                            <FaEdit className="me-2" />
                                             Edit
                                         </Link>
-                                        <br />
                                         <button
                                             onClick={() => handleDeleteClick(item.id)}
                                             className="dmsans-bold border-0 rounded-2 mt-3 bg-transparent  p-0"
                                         >
-                                            <RiDeleteBin6Line className="" />
+                                            <RiDeleteBin6Line className="me-2" />
                                             Delete
                                         </button>
                                     </div>

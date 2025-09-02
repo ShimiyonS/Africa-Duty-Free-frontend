@@ -89,7 +89,6 @@
     height: 100px;
     display: flex;
     flex-direction: column;
-    /* display: none; */
     left: -163px;
     top: 0;
     position: absolute;
@@ -102,7 +101,6 @@
 .custom-popup-overlay {
     position: fixed;
     top: 0;
-    left: 0;
     width: 100%;
     height: 100vh;
     background: rgba(0, 0, 0, 0.6);
@@ -132,7 +130,6 @@
     display: none;
     background-color: white;
     padding: 9px;
-    /* border: 1px solid #ddd; */
     border-radius: 8px;
     z-index: 10;
     left: -141px;
@@ -152,4 +149,14 @@
 
 .uploadImage {
     width: 80px;
+}
+
+.addLink {
+    text-decoration: none;
+    color: var(--text-color-primary);
+    background-color: var(--bg-color-gold);
+    border-radius: 5px;
+    height: 45px;
+    padding: 8px 16px;
+    margin: 4px;
 }

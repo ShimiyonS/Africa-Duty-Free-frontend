@@ -50,8 +50,12 @@ const ListAllCategories = () => {
     }
     return (
         <div>
-            <h1 className="justuspro-bold pb-4">All Brands</h1>
-            <div>
+
+            <div className="d-flex justify-content-between">
+                <h1 className="justuspro-bold pb-4 ">All Brands</h1>
+                <Link to="/siteadmin/addbrand" className="addLink dmsans-bold ">Add Brand</Link>
+            </div>
+            <div className="col-md-12">
                 {confirmDeleteId && (
                     <div className="custom-popup-overlay">
                         <div className="custom-popup">
@@ -99,20 +103,18 @@ const ListAllCategories = () => {
                                     <BsThreeDotsVertical className="threeDot" />
 
                                     <div className="position-absolute hidebtn">
-                                        <FaEdit className="" />
                                         <Link
                                             to={`/siteadmin/editbrand/${item.id}`}
-                                            className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold"
+                                            className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold d-block w-100"
                                         >
-
+                                            <FaEdit className="me-2" />
                                             Edit
                                         </Link>
-                                        <br />
                                         <button
                                             onClick={() => handleDeleteClick(item.id)}
-                                            className="dmsans-bold border-0 rounded-2 mt-3 bg-transparent  p-0"
+                                            className="dmsans-bold border-0 rounded-2 mt-2 bg-transparent  p-0"
                                         >
-                                            <RiDeleteBin6Line className="" />
+                                            <RiDeleteBin6Line className="me-2" />
                                             Delete
                                         </button>
                                     </div>
