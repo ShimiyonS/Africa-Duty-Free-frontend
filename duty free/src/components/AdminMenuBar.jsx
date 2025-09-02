@@ -3,6 +3,7 @@ import "../Styles/adminmenu.css"
 import logo from "../assets/LOGO-Africa-Duty-free-def-WEB.png"
 import { RxDashboard } from "react-icons/rx";
 import { GiDrinkMe } from "react-icons/gi";
+import { MdCategory } from "react-icons/md";
 
 const AdminMenuBar = () => {
     return (
@@ -11,6 +12,11 @@ const AdminMenuBar = () => {
             <div className=" px-3 py-2 admin-menu-wrapper">
                 <NavLink to="/siteadmin" end className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <RxDashboard style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Dashboard</span></NavLink>
                 <NavLink to="/siteadmin/products" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <GiDrinkMe style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Products</span></NavLink>
+                <NavLink to="/siteadmin/addcategory" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular"> Add Categories</span></NavLink>
+                <NavLink to="/siteadmin/editcategory/:id" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular"> Edit Categories</span></NavLink>
+                <NavLink to="/siteadmin/addsubcategory" end className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Add Sub Category</span></NavLink>
+                <NavLink to="/siteadmin/editsubcategory/:id" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Edit Sub Category</span></NavLink>
+                <NavLink to="/siteadmin/listallcategories" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">List All Category</span></NavLink>
             </div>
         </div>
     )
