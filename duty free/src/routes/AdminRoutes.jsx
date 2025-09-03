@@ -11,6 +11,7 @@ import ViewUsers from '../pages/AdminPages/ViewUsers';
 import ListSubCategory from '../pages/AdminPages/ListAllSubCategories'
 import AddAndEditBrand from '../pages/AdminPages/AddAndEditBrand'
 import ListAllBrands from '../pages/AdminPages/ListAllBrands'
+import AddEditUsers from '../pages/AdminPages/AddEditUsers';
 
 const AdminRoutes = () => {
     return (
@@ -32,6 +33,8 @@ const AdminRoutes = () => {
                     <Route index path="/add-product" element={<AddEditProducts />} />
                     <Route index path="/edit-product/:id" element={<AddEditProducts />} />
                     <Route index path="/products" element={<ViewProduct />} />
+                    <Route index path="/add-user" element={<AddEditUsers />} />
+                    <Route index path="/edit-user/:id" element={<AddEditUsers />} />
                     <Route index path="/users" element={<ViewUsers />} />
 
                 </Route>
