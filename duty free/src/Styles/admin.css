@@ -185,7 +185,18 @@
 }
 
 .table-conatiner .admin-input {
-    padding-left: 25px;
+    padding-left: 35px;
+}
+
+.search-box {
+    position: relative;
+}
+
+.data-search-icon {
+    position: absolute;
+    top: 9px;
+    left: 7px;
+    font-size: 25px;
 }
 
 

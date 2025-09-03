@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Common from '../../commonMethod/common'
 import { Link } from 'react-router-dom'
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdOutlineAdd } from "react-icons/md";
+import { MdManageSearch } from "react-icons/md";
 import Pagination from '../../components/commonComponents/Pagination';
 import DeletePopup from '../../components/commonComponents/DeletePopup';
 
@@ -18,11 +20,11 @@ const ViewProduct = () => {
     const [pageSize, setPageSize] = useState(5)
     const [totalPages, setTotalPages] = useState(1)
 
-    const closePopup = () =>{
+    const closePopup = () => {
         setDeleteDetails(null)
     }
 
-    const openPopup = (data) =>{        
+    const openPopup = (data) => {
         setDeleteDetails(data)
     }
 
@@ -59,11 +61,16 @@ const ViewProduct = () => {
 
     return (
         <div className='table-responsive'>
-            <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
+            <div className='d-flex align-items-center justify-content-between'>
+                <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
+                <Link className='text-decoration-none px-3 py-2 text-color-secondary button-bg-primary rounded-2' to={`/siteadmin/add-product`}><MdOutlineAdd /> Add Product</Link>
+            </div>
+
             <div className='table-conatiner table-responsive'>
-                
+
                 {/* 🔍 Search box */}
-                <div className='m-3 col-12 col-md-6 col-xl-4'>
+                <div className='m-3 col-12 col-md-6 col-xl-4 search-box'>
+                    <MdManageSearch className='data-search-icon' />
                     <input
                         type="text"
                         className='mb-3 admin-input'
@@ -123,7 +130,7 @@ const ViewProduct = () => {
                 </table>
 
                 {/* 📄 Pagination */}
-                <div className="my-3">
+                <div className="m-3">
                     <Pagination
                         currentPage={page}
                         pageSize={pageSize}
@@ -138,8 +145,8 @@ const ViewProduct = () => {
             </div>
 
             {/* ❌ Delete confirmation popup */}
-            {deleteDetails !==null  && (
-                <DeletePopup handleDelete={() =>handleDelete(deleteDetails.id)} data={deleteDetails} handleclose={closePopup}/>
+            {deleteDetails !== null && (
+                <DeletePopup alertmessage={"Are you sure want to delete this product?"} handleDelete={() => handleDelete(deleteDetails.id)} data={deleteDetails} handleclose={closePopup} />
             )}
         </div>
     )

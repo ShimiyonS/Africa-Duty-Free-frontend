@@ -3,6 +3,8 @@ import Pagination from '../../components/commonComponents/Pagination';
 import Common from '../../commonMethod/common';
 import { Link } from 'react-router-dom'
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdOutlineAdd } from "react-icons/md";
+import { MdManageSearch } from "react-icons/md";
 import DeletePopup from '../../components/commonComponents/DeletePopup';
 
 const ViewUsers = () => {
@@ -19,7 +21,7 @@ const ViewUsers = () => {
     const [totalPages, setTotalPages] = useState(1)
 
     console.log(users);
-    
+
 
     const closePopup = () => {
         setDeleteDetails(null)
@@ -62,15 +64,19 @@ const ViewUsers = () => {
 
     return (
         <div className='table-responsive'>
-            <h2 className="adminform-heading justuspro-medium mb-3">Users List</h2>
+            <div className='d-flex align-items-center justify-content-between'>
+                <h2 className="adminform-heading justuspro-medium mb-3">View Users List</h2>
+                <Link className='text-decoration-none px-3 py-2 text-color-secondary button-bg-primary rounded-2' to={`/siteadmin/add-user`}><MdOutlineAdd /> Add Users</Link>
+            </div>
             <div className='table-conatiner table-responsive'>
 
                 {/* 🔍 Search box */}
-                <div className='m-3 col-12 col-md-6 col-xl-4'>
+                <div className='m-3 col-12 col-md-6 col-xl-4 search-box'>
+                    <MdManageSearch className='data-search-icon' />
                     <input
                         type="text"
                         className='mb-3 admin-input'
-                        placeholder='search Users'
+                        placeholder='search product'
                         value={search}
                         onChange={(e) => {
                             setSearch(e.target.value);
@@ -85,6 +91,7 @@ const ViewUsers = () => {
                         <tr>
                             <th>User Id</th>
                             <th>User Details</th>
+                            <th>User Email</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -99,7 +106,13 @@ const ViewUsers = () => {
                                         <p className='m-0 ms-3'>{item.username}</p>
                                     </div>
                                 </td>
-                                <td>{item.price}</td>
+                                <td>{item.email}</td>
+                                <td>
+                                    <div className="form-check form-switch d-flex justify-content-center gap-2">
+                                        <input className="form-check-input" type="checkbox" id="flexSwitchCheckChecked" defaultChecked></input>
+                                        <label htmlFor="flexSwitchCheckChecked">Active</label>
+                                    </div>
+                                </td>
                                 <td>
                                     <div
                                         className='admin-action'
@@ -114,7 +127,7 @@ const ViewUsers = () => {
 
                                         {openMenuId === item.id && (
                                             <div className='admin-product-action'>
-                                                <Link to={`/siteadmin/edit-product/${item.id}`} className='text-color-primary'>Edit</Link>
+                                                <Link to={`/siteadmin/edit-user/${item.id}`} className='text-color-primary'>Edit</Link>
                                                 <button onClick={() => openPopup(item)}>Delete</button>
                                             </div>
                                         )}
@@ -126,7 +139,7 @@ const ViewUsers = () => {
                 </table>
 
                 {/* 📄 Pagination */}
-                <div className="my-3">
+                <div className="m-3">
                     <Pagination
                         currentPage={page}
                         pageSize={pageSize}
@@ -142,7 +155,7 @@ const ViewUsers = () => {
 
             {/* ❌ Delete confirmation popup */}
             {deleteDetails !== null && (
-                <DeletePopup handleDelete={() => handleDelete(deleteDetails.id)} data={deleteDetails} handleclose={closePopup} />
+                <DeletePopup alertmessage={"Are you sure want to delete this User?"} handleDelete={() => handleDelete(deleteDetails.id)} data={deleteDetails} handleclose={closePopup} />
             )}
         </div>
     )
