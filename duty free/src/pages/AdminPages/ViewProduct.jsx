@@ -100,7 +100,7 @@ const ViewProduct = () => {
                                 <td>
                                     <div className='d-flex align-items-center justify-content-center'>
                                         <img src={item.images[0]} className='admin-product-view' alt="product-img" />
-                                        <p className='m-0 ms-3 product-title'>{item.title}</p>
+                                        <p className='m-0 ms-3 product-table-title'>{item.title}</p>
                                     </div>
                                 </td>
                                 <td>{item.price}</td>

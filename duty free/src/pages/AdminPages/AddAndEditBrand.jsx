@@ -83,7 +83,7 @@ const AddAndEditBrand = () => {
             <BackButton />
             <div className="d-flex justify-content-between mt-4">
                 <h1 className="justuspro-bold ">{id ? "Edit" : "Add"} Brand</h1>
-                <button type="submit" className="rounded-2 text-color-secondary h-25 border-0 bg-color-gold dmsans-bold me-3 py-1 px-3 " onClick={handleSubmit}>Submit</button>
+                <button type="submit" className="rounded-2 text-color-secondary h-25 border-0  bg-color-warning  dmsans-bold me-3 py-1 px-3 " onClick={handleSubmit}>Submit</button>
             </div>
             <form className="d-flex flex-column col-6 mt-4" onSubmit={handleSubmit}>
                 <h3 className="dmsans-bold pb-2">{id ? "Edit" : "Create"} Brand</h3>
@@ -117,7 +117,7 @@ const AddAndEditBrand = () => {
                         <input type="file" id="uploadImg" className="d-none" accept="image/png, image/gif, image/jpeg" onChange={handleChangeImage} />
                     </div>
                 </div>
-                <button type="submit" className="w-25 mt-5 dmsans-bold bg-color-gold border-0 rounded-3">
+                <button type="submit" className="w-25 mt-5 dmsans-bold  bg-color-warning  border-0 rounded-3">
                     {id ? "update  " : "Submit"}
                 </button>
             </form>

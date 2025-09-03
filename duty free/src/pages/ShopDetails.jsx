@@ -27,7 +27,7 @@ const ShopDetails = () => {
             <CategoryBanner bannerDetails={bannerDetails} />
             <BrandSwiper />
             <BestBuy />
-            <Products data={shop} headingText={"Welcome to Our Shop"} />
+            <Products data={shop} headingText={"Welcome to Our Shop"} paraClassName={'ps-4 linear-bg-heading text-color-secondary'} gridplacement={"product-grid"} imageheight={300} hidePopTool={true} />
             <SaleCard data={0} imageClass={"small-image"} />
             <NewProducts heading={"New Products"} productsdata={shop} hidePopTool={true} />
             <SaleCard data={1} headingClass={"text-center"} imageClass={"big-image"} />

@@ -57,7 +57,6 @@ const ProductDetails = () => {
         }
         fetchProduct();
     }, [id])
-    console.log(product)
 
     // Fullscreen function
     const handleFullscreen = () => {
@@ -187,7 +186,7 @@ const ProductDetails = () => {
                                         <button onClick={() => handleCount("increment")} className=" border-0 text-center p-0 bg-transparent text-color-gold" disabled={product?.minimumOrderQuantity === 100}>+</button>
                                     </div>
                                     <div >
-                                        <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0 bg-color-gold " ><span className="text-color-secondary pe-4 dmsans-bold">Add to cart</span>  <img src={Bag} alt="bag" className="product-bag " /></button>
+                                        <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0  bg-color-gold" ><span className="text-color-secondary pe-4 dmsans-bold">Add to cart</span>  <img src={Bag} alt="bag" className="product-bag " /></button>
 
                                     </div>
 
@@ -220,24 +219,24 @@ const ProductDetails = () => {
                                     <div className="d-flex align-items-center">
                                         {Array.isArray(product?.category) ? (
                                             product.category.map((cat, index) => (
-                                                <span key={index}>
+                                                <Link to={`/product-category/${product?.category}`} className="text-decoration-none" key={index}>
                                                     {cat}{index !== product.category.length - 1 && ", "}
-                                                </span>
+                                                </Link>
                                             ))
                                         ) : (
-                                            <span className=" text-color-muted">{product?.category}</span>
+                                            <Link to={`/product-category/${product?.category}`} className="text-decoration-none text-color-muted">{product?.category}</Link>
                                         )}
                                     </div>
                                 </div>
-                                <div className="d-flex">
-                                    <span class="posted_in">Brand: <a href="" rel="tag" className="text-decoration-none text-color-danger dmsans-bold">{product?.brand ? product?.brand : "no brand"}</a></span>
+                                <div className="d-flex gap-1">
+                                    <span class="posted_in">Brand:</span> <Link to={`/brand/${product?.brand}`} className="text-decoration-none text-color-danger dmsans-bold">{product?.brand ? product?.brand : "no brand"}</Link>
                                 </div>
                             </div>
 
                         </div>
                         <div className="container pt-5 ">
                             <div className="product-description-bottom rounded-5 overflow-hidden col-sm-12 col-md-12 col-lg-12">
-                                <div className="bg-color-gold d-flex justify-content-center">
+                                <div className=" bg-color-gold  d-flex justify-content-center">
                                     <div className="d-flex gap-5">
                                         <h5
                                             className={`py-3 text-color-secondary justuspro-regular ${activeTab === "description" ? " active-tab m-0" : ""}`}
@@ -309,7 +308,7 @@ const ProductDetails = () => {
                                                 <div className="text-end">
                                                     <button
                                                         type="submit"
-                                                        className="px-5 py-2 rounded-5 product-submit text-color-secondary bg-color-gold dmsans-bold"
+                                                        className="px-5 py-2 rounded-5 product-submit text-color-secondary button-bg-gold  dmsans-bold"
                                                     >
                                                         Submit
                                                     </button>
@@ -345,7 +344,9 @@ const ProductDetails = () => {
                                 </div>
                             </div>
                         </div>
-                        <Products data={relatedData?.products} headingText="Related Products" paraClassName="justuspro-bold text-center related-single-post-heading" />
+                        <div className="mb-5">
+                            <Products data={relatedData?.products?.slice(0, 4)} hidePagnation={true} headingText="Related Products" paraClassName="justuspro-bold text-center text-color-primary related-single-post-heading" gridplacement="product-grid-4" imageheight={325} hidePopTool={true} />
+                        </div>
                     </>}
             </>
         </div >

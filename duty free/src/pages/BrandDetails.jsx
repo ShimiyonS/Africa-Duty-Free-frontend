@@ -29,7 +29,7 @@ const BrandDetails = () => {
             <CategoryBanner bannerDetails={bannerDetails} />
             <BrandSwiper />
             <BestBuy />
-            <Products data={brand} />
+            <Products data={brand} paraClassName={'ps-4 linear-bg text-color-secondary'} gridplacement={"product-grid"} imageheight={300} hidePopTool={true} />
             <SaleCard data={0} imageClass={"small-image"} />
             <NewProducts heading={"New Products"} productsdata={brand} hidePopTool={true} />
             <SaleCard data={1} headingClass={"text-center"} imageClass={"big-image"} />

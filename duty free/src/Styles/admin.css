@@ -26,7 +26,7 @@
 }
 
 .admin-left-wrapper::-webkit-scrollbar-thumb {
-    background-color: var(--bg-color-gold);
+    background-color: var(--bg-color-warning);
     border-radius: 10px;
 }
 
@@ -177,7 +177,7 @@
     background: #fafafa;
 }
 
-.product-title {
+.product-table-title {
     width: 250px;
     white-space: nowrap;
     overflow: hidden;

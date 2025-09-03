@@ -11,8 +11,8 @@ const NavBar = ({ condition,togglemenu }) => {
               <TfiClose />
             </button>
           </li>
-          <li><NavLink to="/product-category/fragrances" className="nav-link pb-2">BEAUTY</NavLink></li>
-          <li><NavLink to="/product-category/liqueur" className="nav-link pb-2">SPIRITS</NavLink></li>
+          <li><NavLink to="/product-category/beauty" className="nav-link pb-2">BEAUTY</NavLink></li>
+          <li><NavLink to="/product-category/spirits" className="nav-link pb-2">SPIRITS</NavLink></li>
           <li><NavLink to="/product-category/accessories" className="nav-link pb-2">ACCESSORIES</NavLink></li>
           <li><NavLink to="/product-category/travelers" className="nav-link pb-2">TRAVELLERS EXCLUSIVES</NavLink></li>
           <li><NavLink to="/product-category/special-offers" className="nav-link pb-2">SPECIAL OFFERS</NavLink></li>

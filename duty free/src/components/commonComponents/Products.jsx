@@ -6,7 +6,7 @@ import "../../Styles/product.css";
 import PaginationCommon from './PaginationCommon';
 import EmptyCustom from './EmptyCustom';
 
-const Products = ({ data, headingText, paraClassName }) => {
+const Products = ({ data, headingText, paraClassName, gridplacement, hidePagnation, imageheight, hidePopTool }) => {
     const { slug } = useParams()
     const { firstLetterCapital } = Common()
     // pagination state
@@ -27,24 +27,24 @@ const Products = ({ data, headingText, paraClassName }) => {
     return (
         <div>
             <div className='container'>
-                <h3 className={`mb-5 linear-bg px-3 py-2 secondary-text-color ${paraClassName}`}>
+                <p className={`mb-4 px-3 py-2 justuspro-medium ${paraClassName}`}>
                     {firstLetterCapital(slug ?? headingText ?? "")}
-                </h3>
-                {currentData?.length ? <><div className='product-grid'>
+                </p>
+                {currentData?.length ? <><div className={`${gridplacement}`}>
                     {currentData?.map((item, idx) => (
                         <div key={idx}>
-                            <ProductCard data={item} />
+                            <ProductCard data={item} imageheight={imageheight} hidePopTool={hidePopTool} />
                         </div>
                     ))}
 
                 </div>
-                    <PaginationCommon
+                    {!hidePagnation && <PaginationCommon
                         data={data}
                         handlePage={handlePage}
                         currentPage={currentPage}
                         visibleLength={itemsPerPage}
                         parentClass={"pt-2 mb-5"}
-                    />
+                    />}
                 </>
                     : <EmptyCustom />}
 
