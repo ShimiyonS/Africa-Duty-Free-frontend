@@ -146,7 +146,7 @@ const ProductDetails = () => {
                                 <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `} className="share-pinterest text-decoration-none p-2">
                                     Pin it
                                 </Link>
-                                <p href="" target="_blank" className="share--download text-decoration-none p-2 text-black" onClick={handleDownload}>Download image</p>
+                                <p className="share--download text-decoration-none p-2 text-black" >Download image</p>
                             </div>
                         </div>
                         <button className="fullscreen-btn" onClick={isFullscreen ? handleExitFullscreen : handleFullscreen}>

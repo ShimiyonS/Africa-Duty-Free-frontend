@@ -87,37 +87,43 @@ const ListAllCategories = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((item, index) => (
-                                <tr key={item.id}>
-                                    <th scope="row">{item.id}</th>
-                                    <td>
-                                        <Link to={`/product/${item.id}`} target="_self" className="text-decoration-none text-color-primary dmsans-bold">
-                                            {item.title}
-                                            <TiExportOutline />
-                                        </Link>
-                                    </td>
-                                    <td className="position-relative action-cell">
-                                        <BsThreeDotsVertical className="threeDot" />
-
-                                        <div className="position-absolute hidebtn">
-                                            <Link
-                                                to={`/siteadmin/editcategory/${item.id}`}
-                                                className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold d-block w-100"
-                                            >
-                                                <FaEdit className="me-2" />
-                                                Edit
+                            {data.length === 0 ? <><tr>
+                                <td colSpan="3" className="text-center">
+                                    No Sub Categories Found
+                                </td>
+                            </tr></> : <>
+                                {data.map((item, index) => (
+                                    <tr key={item.id}>
+                                        <th scope="row">{item.id}</th>
+                                        <td>
+                                            <Link to={`/product/${item.id}`} target="_self" className="text-decoration-none text-color-primary dmsans-bold">
+                                                {item.title}
+                                                <TiExportOutline />
                                             </Link>
-                                            <button
-                                                onClick={() => handleDeleteClick(item.id)}
-                                                className="dmsans-bold border-0 rounded-2 mt-3 bg-transparent  p-0"
-                                            >
-                                                <RiDeleteBin6Line className="me-2" />
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
+                                        </td>
+                                        <td className="position-relative action-cell">
+                                            <BsThreeDotsVertical className="threeDot" />
+
+                                            <div className="position-absolute hidebtn">
+                                                <Link
+                                                    to={`/siteadmin/editcategory/${item.id}`}
+                                                    className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold d-block w-100"
+                                                >
+                                                    <FaEdit className="me-2" />
+                                                    Edit
+                                                </Link>
+                                                <button
+                                                    onClick={() => handleDeleteClick(item.id)}
+                                                    className="dmsans-bold border-0 rounded-2 mt-3 bg-transparent  p-0"
+                                                >
+                                                    <RiDeleteBin6Line className="me-2" />
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </>}
                         </tbody>
                     </table>
                 </>}

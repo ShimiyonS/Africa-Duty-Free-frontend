@@ -7,7 +7,7 @@ import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { TiExportOutline } from "react-icons/ti";
 import Loader from '../../components/commonComponents/loader/loader'
-import SmallLoader from '../../components/commonComponents/loader/smallLoader'
+
 
 const ListAllSubCategories = () => {
     const [data, setData] = useState([])
@@ -20,7 +20,7 @@ const ListAllSubCategories = () => {
     const fetchData = async () => {
         try {
             setStatus(true)
-            const res = await apiRequest("GET", `/prdoducts`)
+            const res = await apiRequest("GET", `/products`)
             setData(res.products)
         }
         catch (error) {
@@ -84,7 +84,6 @@ const ListAllSubCategories = () => {
                 :
                 <>
                     <table className="table">
-
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
@@ -101,7 +100,6 @@ const ListAllSubCategories = () => {
                                             No Sub Categories Found
                                         </td>
                                     </tr>
-                                    <SmallLoader />
                                 </> :
                                 <>
                                     {data.map((item) => (
