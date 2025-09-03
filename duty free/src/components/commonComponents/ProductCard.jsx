@@ -33,7 +33,7 @@ const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop
         <div className='p-2 position-relative product-card'>
             {!hideWishlist && <button type="button" onClick={() => handleAddTowishlist(data)} className="bg-transparent border-0 heart-btn position-absolute"> <IoMdHeartEmpty /> </button>}
             <div className="position-relative overflow-hidden">
-                <img src={data?.thumbnail} height={imageheight} className='p-2 product-image' />
+                <Link to={`/product/${data.id}`}><img src={data?.thumbnail} height={imageheight} className='p-2 product-image' /></Link>
                 {!hidePopTool && <div className="d-flex align-items-center gap-2 position-absolute justify-content-center pop-tool">
                     {!hideCart && <button className="border-0 px-3 py-2 rounded-1 bg-color-primary text-color-gold shadow" onClick={() => handleAddTocart(data)}><FaShoppingCart /></button>}
                     {!hideAddCartPop && <button className="border-0 px-3 py-2 rounded-1 bg-color-primary text-color-gold shadow" onClick={() => handleOpenModal(data)}><FaEye /></button>}
