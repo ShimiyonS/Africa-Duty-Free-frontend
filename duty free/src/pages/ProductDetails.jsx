@@ -186,7 +186,7 @@ const ProductDetails = () => {
                                         <button onClick={() => handleCount("increment")} className=" border-0 text-center p-0 bg-transparent text-color-gold" disabled={product?.minimumOrderQuantity === 100}>+</button>
                                     </div>
                                     <div >
-                                        <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0  bg-color-gold" ><span className="text-color-secondary pe-4 dmsans-bold">Add to cart</span>  <img src={Bag} alt="bag" className="product-bag " /></button>
+                                        <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0 button-bg-gold d-flex justify-content-center align-items-center" ><span className="text-color-secondary pe-4 dmsans-bold">Add to cart</span>  <img src={Bag} alt="bag" className="product-bag " /></button>
 
                                     </div>
 

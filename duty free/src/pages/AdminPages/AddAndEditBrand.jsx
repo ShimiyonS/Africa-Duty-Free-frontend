@@ -81,46 +81,45 @@ const AddAndEditBrand = () => {
     return (
         <div className="mt-4">
             <BackButton />
-            <div className="d-flex justify-content-between mt-4">
-                <h1 className="justuspro-bold ">{id ? "Edit" : "Add"} Brand</h1>
-                <button type="submit" className="rounded-2 text-color-secondary h-25 border-0  bg-color-warning  dmsans-bold me-3 py-1 px-3 " onClick={handleSubmit}>Submit</button>
-            </div>
-            <form className="d-flex flex-column col-6 mt-4" onSubmit={handleSubmit}>
-                <h3 className="dmsans-bold pb-2">{id ? "Edit" : "Create"} Brand</h3>
-                <label className="star-icon pb-2 position-relative dmsans-bold">Name</label>
-                <input type="text" className="admin-input" name="name" value={formData.name} onChange={handleChange}
-                    onBlur={() => slugChange("name")} ></input>
-                <label className="py-2 dmsans-bold ">Slug</label>
-                <input type="text" className="admin-input" name="slug" value={formData.slug}
-                    onChange={handleChange} onBlur={() => slugChange("slug")}></input>
-
-                <div className="form-group d-flex">
-                    <div>
-                        <label htmlFor="uploadImg">
-                            <p>upload Image</p>
-                            <img src={uploadImage} alt="categoryImg" className="uploadImage " />
-                            {id &&
-                                <img
-                                    src={formData.image}
-                                    alt="no image"
-                                    className="uploadImage d-block"
-                                />
-                            }
-                        </label>
-                    </div>
-                    <div className="ms-5">
-                        <p>&nbsp;</p>
-                        {imageState && (<div >
-                            <img src={URL.createObjectURL(imageState)} alt="categoryImg" className="uploadImage" />
-                            <span><button type="button" onClick={handleRemove} >x</button></span>
-                        </div>)}
-                        <input type="file" id="uploadImg" className="d-none" accept="image/png, image/gif, image/jpeg" onChange={handleChangeImage} />
-                    </div>
+            <div className="d-flex flex-column">
+                <div className="d-flex mt-4">
+                    <h1 className="justuspro-bold ">{id ? "Edit" : "Add"} Brand</h1>
                 </div>
-                <button type="submit" className="w-25 mt-5 dmsans-bold  bg-color-warning  border-0 rounded-3">
-                    {id ? "update  " : "Submit"}
-                </button>
-            </form>
+                <form className="d-flex flex-column col-6 mt-4" onSubmit={handleSubmit}>
+                    <h3 className="dmsans-bold pb-2">{id ? "Edit" : "Create"} Brand</h3>
+                    <label className="star-icon pb-2 position-relative dmsans-bold">Name</label>
+                    <input type="text" className="admin-input" name="name" value={formData.name} onChange={handleChange}
+                        onBlur={() => slugChange("name")} ></input>
+                    <label className="py-2 dmsans-bold ">Slug</label>
+                    <input type="text" className="admin-input" name="slug" value={formData.slug}
+                        onChange={handleChange} onBlur={() => slugChange("slug")}></input>
+
+                    <div className="form-group d-flex">
+                        <div>
+                            <label htmlFor="uploadImg">
+                                <p>upload Image</p>
+                                <img src={uploadImage} alt="categoryImg" className="uploadImage " />
+                                {id &&
+                                    <img
+                                        src={formData.image}
+                                        alt="no image"
+                                        className="uploadImage d-block"
+                                    />
+                                }
+                            </label>
+                        </div>
+                        <div className="ms-5">
+                            <p>&nbsp;</p>
+                            {imageState && (<div >
+                                <img src={URL.createObjectURL(imageState)} alt="categoryImg" className="uploadImage" />
+                                <span><button type="button" onClick={handleRemove} >x</button></span>
+                            </div>)}
+                            <input type="file" id="uploadImg" className="d-none" accept="image/png, image/gif, image/jpeg" onChange={handleChangeImage} />
+                        </div>
+                    </div>
+                </form>
+                <button type="submit" className="mt-5 rounded-2 text-color-secondary h-25 border-0 bg-color-gold dmsans-bold me-3 py-1 px-3 admin-submit-btn" onClick={handleSubmit}> {id ? "update  " : "Submit"}</button>
+            </div>
         </div>
     )
 }

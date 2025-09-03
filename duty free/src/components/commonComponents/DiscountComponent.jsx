@@ -1,4 +1,5 @@
 import "../../css/discount.css"
+import { LuSend } from "react-icons/lu";
 
 const DiscountComponent = () => {
     return (
@@ -15,8 +16,10 @@ const DiscountComponent = () => {
                             <div className="content-div"><p>Be the first to know about special discounts, offers, and product launches from our airport shops. Sign up now!</p></div>
                             <div>
                                 <form className="form-input ">
-                                    <input type="text" placeholder="Enter Your Email" className="input-box button-bg-primary" />
-                                    <input className="subscribe_mail  bg-color-warning " type="submit" value="" />
+                                    <input type="text" placeholder="Enter Your Email" className="input-box button-bg-primary text-color-primary" />
+                                    <button type="submit" className="bg-color-gold p-2 rounded subscribe_mail rotate-180 position-relative">
+                                        <LuSend className="text-white text-xl position-absolute send-emoji " />
+                                    </button>
                                 </form>
                             </div>
                         </div>
