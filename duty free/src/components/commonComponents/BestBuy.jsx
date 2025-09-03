@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom"
 import categoryimage1 from "../../assets/categoryimage1.jpg"
 import categoryimage2 from "../../assets/categoryimage2.jpg"
 import categoryimage3 from "../../assets/categoryimage3.jpg"
@@ -26,12 +27,13 @@ const bestBuyDefault = [
     }
 ]
 const BestBuy = ({ data = bestBuyDefault, itemClassName }) => {
+    const { slug, subslug } = useParams();
     return (
         <div className='d-flex align-items-center flex-wrap container'>
             {data?.map((item) => {
                 return (
                     <div className={`${itemClassName ? itemClassName : "p-5 col-12 col-md-6 col-lg-3"}`}>
-                        <CategoryCard image={item.image} text={item?.name} link={item?.link} />
+                        <CategoryCard image={item.image} text={item?.name} link={slug ? slug+"/"+item?.link : item?.link} />
                     </div>
                 )
             })}
