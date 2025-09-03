@@ -81,7 +81,7 @@ const AddAndEditBrand = () => {
     return (
         <div className="mt-4">
             <BackButton />
-            <div className="d-flex justify-content-center align-items-center flex-column">
+            <div className="d-flex flex-column">
                 <div className="d-flex mt-4">
                     <h1 className="justuspro-bold ">{id ? "Edit" : "Add"} Brand</h1>
                 </div>
@@ -118,7 +118,7 @@ const AddAndEditBrand = () => {
                         </div>
                     </div>
                 </form>
-                <button type="submit" className="mt-5 rounded-2 text-color-secondary h-25 border-0 bg-color-gold dmsans-bold me-3 py-1 px-3 " onClick={handleSubmit}> {id ? "update  " : "Submit"}</button>
+                <button type="submit" className="mt-5 rounded-2 text-color-secondary h-25 border-0 bg-color-gold dmsans-bold me-3 py-1 px-3 admin-submit-btn" onClick={handleSubmit}> {id ? "update  " : "Submit"}</button>
             </div>
         </div>
     )

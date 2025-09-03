@@ -9,9 +9,10 @@
 
 .admin-right-wrapper {
     width: calc(100% - 265px);
-    height: 100vh;
+    height: 100%;
     margin-left: auto;
     padding: 20px;
+    min-height: 100vh;
     background: #f5f6f8;
 }
 
@@ -309,6 +310,8 @@
 
 .uploadImage {
     width: 80px;
+    height: 80px;
+    border-radius: 5px;
 }
 
 .addLink {
@@ -319,4 +322,14 @@
     height: 45px;
     padding: 8px 16px;
     margin: 4px;
+}
+
+.admin-submit-btn {
+    width: 90px;
+}
+
+.table-covered {
+    padding: 25px;
+    background-color: white;
+    border-radius: 10px;
 }

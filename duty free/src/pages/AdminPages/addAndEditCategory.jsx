@@ -69,7 +69,7 @@ const AddAndEditCategory = () => {
     return (
         <div className="mt-4">
             <BackButton />
-            <div className="d-flex justify-content-center align-items-center flex-column">
+            <div className="d-flex flex-column">
                 <div className="d-flex mt-4">
                     <h1 className="justuspro-bold ">{id ? "Edit" : "Add"} Category</h1>
                 </div >
@@ -83,7 +83,7 @@ const AddAndEditCategory = () => {
                         onChange={handleChange} onBlur={() => slugChange("slug")}></input>
                     <label className="py-2 dmsans-bold">Sub-Category</label>
                 </form>
-                <button type="submit" className="mt-5 rounded-2 text-color-secondary h-25 border-0 bg-color-gold dmsans-bold me-3 py-1 px-3 " onClick={handleSubmit}>Submit</button>
+                <button type="submit" className="mt-5 rounded-2 text-color-secondary h-25 border-0 bg-color-gold dmsans-bold me-3 py-1 px-3 admin-submit-btn" onClick={handleSubmit}>Submit</button>
             </div>
 
         </div>
