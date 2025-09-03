@@ -12,5 +12,7 @@ export const banner = [
     { name: 'travelers', image: Banner4, description: "Travelers" },
     { name: 'special-offers', image: Banner5, description: "Special" },
     { name: 'shop', image: Banner1, description: "Shop" },
+    { name: 'beauty', image: Banner1, description: "Discover your signature beauty" },
+    { name: 'spirits', image: Banner2, description: "spirits" }
 
 ]

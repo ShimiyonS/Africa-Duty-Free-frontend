@@ -23,7 +23,7 @@
     font-size: 23px;
     margin-left: 25%;
     padding-bottom: 26px;
-    border-bottom: 2px dashed var(--bg-color-gold);
+    border-bottom: 2px dashed var(--bg-color-warning);
 }
 
 .offer-link {

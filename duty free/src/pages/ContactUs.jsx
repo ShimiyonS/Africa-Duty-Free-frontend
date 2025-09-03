@@ -52,7 +52,7 @@ const ContactUs = () => {
             </div>
 
             <div className="d-flex justify-content-end">
-              <button type='submit' className='duty-popup-button rounded-pill bg-color-gold text-color-secondary dmsans-bold'>
+              <button type='submit' className='duty-popup-button rounded-pill  bg-color-gold  text-color-secondary dmsans-bold'>
                 Send
               </button>
             </div>

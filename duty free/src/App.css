@@ -16,6 +16,7 @@
     --button-bg-primary: #f0b32c;
     --button-bg-danger: #b63f21;
     --button-bg-success: #23c337;
+    --button-bg-gold: #ae9962;
 
     --button-text-primary: #fff;
     --button-text-secondary: #000;
@@ -28,7 +29,8 @@
 
     --bg-color-primary: #fff;
     --bg-color-secondary: #000;
-    --bg-color-gold: #f0b32c;
+    --bg-color-warning: #f0b32c;
+    --bg-color-gold: #ae9962;
     --bg-color-danger: #b63f21;
 
     --border-color-primary-primary: rgba(34, 34, 34, 0.1);
@@ -59,6 +61,10 @@ label {
 
 .button-bg-success {
     background-color: var(--button-bg-success);
+}
+
+.button-bg-gold {
+    background-color: var(--button-bg-gold);
 }
 
 .button-text-primary {
@@ -103,6 +109,10 @@ label {
 
 .bg-color-secondary {
     background-color: var(--bg-color-secondary);
+}
+
+.bg-color-warning {
+    background-color: var(--bg-color-warning);
 }
 
 .bg-color-gold {

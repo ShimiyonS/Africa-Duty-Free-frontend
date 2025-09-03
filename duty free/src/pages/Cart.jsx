@@ -48,7 +48,7 @@ const Cart = () => {
                                             <div className='d-flex align-items-center gap-3 p-2'>
                                                 <button className='bg-transparent border-0' onClick={() => Remove(item?.id)} ><IoMdClose /></button>
                                                 <img src={item?.thumbnail} className='cart-image' />
-                                                <Link to={`/product/${item.title}`} className='text-decoration-none cart-product-link'>{item.title}</Link>
+                                                <Link to={`/product/${item.id}`} className='text-decoration-none cart-product-link'>{item.title}</Link>
                                             </div>
                                         </div>
                                         <div className='col-2 cart-table-item'>${item?.price}</div>
