@@ -11,13 +11,13 @@ const NavBar = ({ condition,togglemenu }) => {
               <TfiClose />
             </button>
           </li>
-          <li><NavLink to="/product-category/beauty" className="nav-link pb-2">BEAUTY</NavLink></li>
-          <li><NavLink to="/product-category/spirits" className="nav-link pb-2">SPIRITS</NavLink></li>
-          <li><NavLink to="/product-category/accessories" className="nav-link pb-2">ACCESSORIES</NavLink></li>
-          <li><NavLink to="/product-category/travelers" className="nav-link pb-2">TRAVELLERS EXCLUSIVES</NavLink></li>
-          <li><NavLink to="/product-category/special-offers" className="nav-link pb-2">SPECIAL OFFERS</NavLink></li>
-          <li><NavLink to="/about" className="nav-link pb-2">ABOUT</NavLink></li>
-          <li><NavLink to="/shop" className="nav-link pb-2">SHOP</NavLink></li>
+          <li><NavLink to="/product-category/beauty" className="nav-link px-3 pb-1 fw-bold">BEAUTY</NavLink></li>
+          <li><NavLink to="/product-category/spirits" className="nav-link px-3 pb-1 fw-bold">SPIRITS</NavLink></li>
+          <li><NavLink to="/product-category/accessories" className="nav-link px-3 pb-1 fw-bold">ACCESSORIES</NavLink></li>
+          <li><NavLink to="/product-category/travelers" className="nav-link px-3 pb-1 fw-bold">TRAVELLERS EXCLUSIVES</NavLink></li>
+          <li><NavLink to="/product-category/special-offers" className="nav-link px-3 pb-1 fw-bold">SPECIAL OFFERS</NavLink></li>
+          <li><NavLink to="/about" className="nav-link px-3 pb-1 fw-bold">ABOUT</NavLink></li>
+          <li><NavLink to="/shop" className="nav-link px-3 pb-1 fw-bold">SHOP</NavLink></li>
         </ul>
       </nav>
     </div>

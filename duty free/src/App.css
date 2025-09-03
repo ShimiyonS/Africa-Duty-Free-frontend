@@ -195,10 +195,6 @@ label {
     color: var(--text-color-secondary);
 }
 
-.alert-text {
-    font-family: "JustusProMedium", Sans-serif;
-}
-
 .alert-link {
     font-size: 12px;
     padding: 7px 13px;

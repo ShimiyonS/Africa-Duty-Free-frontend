@@ -54,7 +54,7 @@ const Home = () => {
       <NewProducts heading={"Most Popular"} productsdata={products} parentClassName={"mt-5"} hidePopTool={true} />
       <div className="container py-4 row justify-content-center gap-5">
         <div className="d-flex p-0 col-12 col-xl-4 col-lg-5 col-md-6 col-sm-12 offers">
-          <div className="col-6 offerbanner   bg-color-warning ">
+          <div className="col-6 offerbanner bg-color-gold">
             <p className="text-color-secondary justuspro-regular">This week only beverage.</p>
             <p className="mb-0 text-color-secondary justuspro-regular">Pommery</p>
             <p className="text-color-secondary justuspro-regular"><span className="text-decoration-line-through fs-6 text-color-secondary justuspro-regular">$30</span> $20</p>
@@ -64,7 +64,7 @@ const Home = () => {
           </div>
         </div>
         <div className="d-flex p-0 col-12 col-xl-4 col-lg-5 col-md-6 col-sm-12 offers">
-          <div className="col-6 offerbanner  bg-color-danger ">
+          <div className="col-6 offerbanner bg-color-danger">
             <p className="text-color-secondary justuspro-regular">This week only beverage.</p>
             <p className="mb-0 text-color-secondary justuspro-regular">Pommery</p>
             <p className="text-color-secondary justuspro-regular"><span className="text-decoration-line-through fs-6 text-color-secondary justuspro-regular">$30</span> $20</p>
