@@ -297,34 +297,35 @@ label {
 .swipper-paragraph {
     max-width: 300px;
 }
+
 /* ------------------------------------------------------------------- */
-.swiper-button-prev:after,
-.swiper-rtl .swiper-button-next:after,
-.swiper-button-next:after,
-.swiper-rtl .swiper-button-prev:after {
+.new-swipper .swiper-button-prev:after,
+.new-swipper .swiper-rtl .swiper-button-next:after,
+.new-swipper .swiper-button-next:after,
+.new-swipper .swiper-rtl .swiper-button-prev:after {
     color: var(--bg-color-danger);
     font-size: 25px !important;
     font-weight: bold;
 }
 
-.slider-main-image {
+.new-swipper .slider-main-image {
     width: 80% !important;
 }
 
-.swiper-button-prev,
+.new-swipper .swiper-button-prev,
 .swiper-rtl .swiper-button-next,
 .swiper-button-next,
 .swiper-rtl .swiper-button-prev {
     top: 108px !important;
 }
 
-.swiper-button-prev,
+.new-swipper .swiper-button-prev,
 .swiper-rtl .swiper-button-next {
     left: var(--swiper-navigation-sides-offset, 0px) !important;
     right: auto;
 }
 
-.swiper-button-next,
+.new-swipper .swiper-button-next,
 .swiper-rtl .swiper-button-prev {
     right: var(--swiper-navigation-sides-offset, 0px) !important;
     left: auto;
@@ -332,7 +333,7 @@ label {
 
 @media (width:768px) {
 
-    .swiper-button-prev,
+    .new-swipper .swiper-button-prev,
     .swiper-rtl .swiper-button-next,
     .swiper-button-next,
     .swiper-rtl .swiper-button-prev {

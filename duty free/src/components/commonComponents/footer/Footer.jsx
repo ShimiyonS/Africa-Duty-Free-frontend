@@ -36,8 +36,8 @@ const Footer = () => {
                 </div>
                 <div className="col-12 col-sm-6 col-md-3 pt-3">
                     <p className='fw-bold'>Contact</p>
-                    <Link to="/mailto:info@africat-duty-free.com" className="nav-link pb-2">sales@africat-duty-free.com</Link>
-                    <Link to="/mailto:sales@africat-duty-free.com" className="nav-link pb-2">info@africat-duty-free.com</Link>
+                    <Link to="mailto:info@africat-duty-free.com" className="nav-link pb-2">sales@africat-duty-free.com</Link>
+                    <Link to="mailto:sales@africat-duty-free.com" className="nav-link pb-2">info@africat-duty-free.com</Link>
 
                 </div>
             </div>

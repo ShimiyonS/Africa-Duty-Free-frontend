@@ -23,13 +23,13 @@ const SwiperComponent = () => {
         { img: swipperImg7, heading: "Gift from Helena Rubinstein", para: "exclusive festive offers & receive a 5-pc exclusive festive gift set * when you spend S$1,850 or more", stock: "While stock" }]
 
     return (
-        <div>
+        <div className="container mt-5">
             <div className="d-flex justify-content-between mb-3">
                 <h3 className="justuspro-medium">Special offers</h3>
                 <h3 className="justuspro-medium">Special Billing Beauty Product</h3>
 
             </div>
-            <div>
+            <div className="new-swipper">
                 <Swiper
                     slidesPerView={3}
                     spaceBetween={10}
@@ -55,7 +55,7 @@ const SwiperComponent = () => {
                     freeMode={true}
                     navigation={true}
                     modules={[Autoplay, FreeMode, Navigation]}
-                    className="brand-swiper"
+                    className=""
                 >
                     {brands.map((item) => {
                         return (
