@@ -1,27 +1,13 @@
 import { useEffect, useState } from "react"
 import { toast } from 'react-toastify';
 import Common from '../../commonMethod/common'
-import Select from 'react-select';
 import { useParams } from "react-router-dom";
 
-const AddEditProducts = () => {
+
+const AddEditUsers = () => {
     const { apiRequest } = Common()
     const { id } = useParams()
-    const [category, setCategory] = useState([])
-    const [subCategory, setSubCategory] = useState([])
     const [formdata, setFormdata] = useState({ productname: "", productslug: "", productprice: "", productimage: "", productcatagories: 1, productsubcatagories: [], productdescription: "" })
-
-    // for slug generating with hyphen
-    const slugChange = (field) => {
-        setFormdata(prev => ({
-            ...prev,
-            productslug: (field === "productslug" ? prev.productslug : prev.productname)
-                .trim()
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, "-")
-                .replace(/^-+|-+$/g, "")
-        }))
-    }
 
     const handleChange = (e) => {
         const { name, type, checked, value } = e.target
@@ -35,11 +21,11 @@ const AddEditProducts = () => {
         e.preventDefault();
         try {
             if (id) {
-                const data = await apiRequest("PUT", `/products/${id}`, formdata)
-                toast.success("product Updated successfully")
+                const data = await apiRequest("PUT", `/users/${id}`, formdata)
+                toast.success("User Updated successfully")
             } else {
-                const data = await apiRequest("POST", "/products/add", formdata)
-                toast.success("product added successfully")
+                const data = await apiRequest("POST", "/users/add", formdata)
+                toast.success("user added successfully")
                 setFormdata({ productname: "", productslug: "", productprice: "", productimage: "", productcatagories: 1, productsubcatagories: [], productdescription: "" })
             }
 
@@ -51,43 +37,22 @@ const AddEditProducts = () => {
     }
 
     useEffect(() => {
-        const fetchCategory = async () => {
+        const fetchUser = async () => {
             try {
-                const data = await apiRequest("GET", "/products/categories");
-                setCategory([{ name: "whirpool", Id: 1 }, { name: "Sumsang", Id: 2 }, { name: "LG", Id: 3 }, { name: "Realme", Id: 4 }])
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        const fetchSubCategory = async () => {
-            try {
-                const data = await apiRequest("GET", "/products/categories");
-                setSubCategory([{ name: "Mobile", id: 1 }, { name: "Laptop", id: 2 }, { name: "Tablet", id: 3 }, { name: "Ac", id: 4 }])
-            } catch (err) {
-                console.error(err);
-            }
-        }
-
-        const fetchproduct = async () => {
-            try {
-                const data = await apiRequest("GET", `/products/${id}`);
+                const data = await apiRequest("GET", `/users/${id}`);
                 setFormdata({ productname: "Testproduct", productslug: "Testproductslug", productprice: "200", productimage: "", productcatagories: { value: 1, label: "Whirpool" }, productsubcatagories: [{ value: 2, label: "Laptop" }, { value: 3, label: "Tablet" }], productdescription: "test description" })
             } catch (err) {
                 console.error(err);
             }
         }
         if (id) {
-            fetchproduct()
+            fetchUser()
         }
-        fetchCategory();
-        fetchSubCategory();
     }, [])
-
-
     return (
         <div>
             <>
-                <h2 className="adminform-heading justuspro-medium mb-3">{id ? "Edit Product" : "Add Product"}</h2>
+                <h2 className="adminform-heading justuspro-medium mb-3">{id ? "Edit User" : "Add User"}</h2>
                 <form className='container' onSubmit={handleSubmit}>
                     <div className='row mb-3'>
                         <div className="col-12 col-md-6">
@@ -111,41 +76,6 @@ const AddEditProducts = () => {
                     </div>
                     <div className='row mb-3'>
                         <div className="col-12 col-md-6">
-                            <label htmlFor="Catagories" className='admin-label required'>Catagories</label>
-                            <Select
-                                value={formdata.productcatagories}
-                                name="productcatagories"
-                                options={category.map((Item, Index) => ({ label: Item.name, value: Item.Id }))}
-                                className="admin-select"
-                                onChange={(selectedOption) =>
-                                    setFormdata((prev) => ({
-                                        ...prev,
-                                        productcatagories: selectedOption,
-                                        selectedcatagories: selectedOption.value
-
-                                    }))
-                                }
-                            />
-                        </div>
-                        <div className="col-12 col-md-6 mt-3 mt-md-0">
-                            <label htmlFor="SubCatagories" className='admin-label required'>Sub-Catagories</label>
-                            <Select
-                                value={formdata.productsubcatagories}
-                                isMulti
-                                name="productsubcatagories"
-                                options={subCategory.map((Item, Index) => ({ label: Item.name, value: Item.id }))}
-                                onChange={(selectedOptions) =>
-                                    setFormdata((prev) => ({
-                                        ...prev,
-                                        productsubcatagories: selectedOptions,
-                                        selectedsubcategories: selectedOptions.map((item) => item.value)
-                                    }))
-                                }
-                            />
-                        </div>
-                    </div>
-                    <div className='row mb-3'>
-                        <div className="col-12 col-md-6">
                             <label htmlFor="productDescription" className='admin-label required'>Product Description</label>
                             <textarea type="text" className='admin-input' id="ProductDescription" name="productdescription" value={formdata.productdescription} onChange={(e) => { handleChange(e) }} />
                         </div>
@@ -159,4 +89,4 @@ const AddEditProducts = () => {
     )
 }
 
-export default AddEditProducts
+export default AddEditUsers
