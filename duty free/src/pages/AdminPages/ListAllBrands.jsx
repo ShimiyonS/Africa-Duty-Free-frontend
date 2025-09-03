@@ -7,22 +7,29 @@ import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { TiExportOutline } from "react-icons/ti";
 import defaultImage from '../../assets/user-default-profile.jpg'
+import Loader from '../../components/commonComponents/loader/loader'
 
 const ListAllCategories = () => {
     const [data, setData] = useState([])
     const { apiRequest } = Common()
     const [confirmDeleteId, setConfirmDeleteId] = useState(null)
     const token = localStorage.getItem("token")
-    const [hideBtn, setHideBtn] = useState(false)
+    const [status, setStatus] = useState(false)
 
     // list all data
     const fetchData = async () => {
         try {
+            setStatus(true)
             const res = await apiRequest("GET", `/products`)
             setData(res.products)
+            setStatus(false)
         }
         catch (error) {
             console.error("api fetching error", error);
+            setStatus(false)
+        }
+        finally {
+            setStatus(false)
         }
     }
     useEffect(() => {
@@ -49,9 +56,15 @@ const ListAllCategories = () => {
         }
     }
     return (
+
+
         <div>
-            <h1 className="justuspro-bold pb-4">All Brands</h1>
-            <div>
+
+            <div className="d-flex justify-content-between">
+                <h1 className="justuspro-bold pb-4 ">All Brands</h1>
+                <Link to="/siteadmin/addbrand" className="addLink dmsans-bold ">Add Brand</Link>
+            </div>
+            <div className="col-md-12">
                 {confirmDeleteId && (
                     <div className="custom-popup-overlay">
                         <div className="custom-popup">
@@ -68,61 +81,67 @@ const ListAllCategories = () => {
                         </div>
                     </div>
                 )}
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Brand</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((item, index) => (
-                            <tr key={item.id}>
-                                <th scope="row">{item.id}</th>
-                                <td className="d-flex gap-3">
-                                    {item.images ? (
-                                        <div className="d-flex gap-4">
-                                            <img src={item.images} alt="categoryimg" className="uploadImage" />
-                                        </div>
-                                    ) : (
-                                        <img src={defaultImage} alt={item.title} className="categoryImg" />
-                                    )}
-                                    <div className="texthide">
-                                        <Link to={`/product/${item.id}`} target="_self" className="text-decoration-none text-color-primary dmsans-bold">
-                                            {item.title}
-                                            <TiExportOutline />
-                                        </Link>
-                                    </div>
-                                </td>
-                                <td className="position-relative action-cell">
-                                    <BsThreeDotsVertical className="threeDot" />
+                {status ? <Loader /> :
+                    <>
+                        <div className="table-covered">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Brand</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.map((item, index) => (
+                                        <tr key={item.id}>
+                                            <th scope="row" className="all-brand-td">{item.id}</th>
+                                            <td className="d-flex gap-3">
+                                                {item.images ? (
+                                                    <div className="d-flex gap-4">
+                                                        <img src={item.images} alt="categoryimg" className="uploadImage" />
+                                                    </div>
+                                                ) : (
+                                                    <img src={defaultImage} alt={item.title} className="categoryImg" />
+                                                )}
+                                                <div className="texthide">
+                                                    <Link to={`/product/${item.id}`} target="_self" className="text-decoration-none text-color-primary dmsans-bold ">
+                                                        {item.title}
+                                                        <TiExportOutline />
+                                                    </Link>
+                                                </div>
+                                            </td>
+                                            <td className="position-relative action-cell">
+                                                <BsThreeDotsVertical className="threeDot" />
 
-                                    <div className="position-absolute hidebtn">
-                                        <FaEdit className="" />
-                                        <Link
-                                            to={`/siteadmin/editbrand/${item.id}`}
-                                            className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold"
-                                        >
-
-                                            Edit
-                                        </Link>
-                                        <br />
-                                        <button
-                                            onClick={() => handleDeleteClick(item.id)}
-                                            className="dmsans-bold border-0 rounded-2 mt-3 bg-transparent  p-0"
-                                        >
-                                            <RiDeleteBin6Line className="" />
-                                            Delete
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                                                <div className="position-absolute hidebtn">
+                                                    <Link
+                                                        to={`/siteadmin/editbrand/${item.id}`}
+                                                        className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold d-block w-100"
+                                                    >
+                                                        <FaEdit className="me-2" />
+                                                        Edit
+                                                    </Link>
+                                                    <button
+                                                        onClick={() => handleDeleteClick(item.id)}
+                                                        className="dmsans-bold border-0 rounded-2 mt-2 bg-transparent  p-0"
+                                                    >
+                                                        <RiDeleteBin6Line className="me-2" />
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </>
+                }
             </div>
-        </div>
+
+        </div >
+
     )
 }
 

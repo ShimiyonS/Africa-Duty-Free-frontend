@@ -9,10 +9,13 @@ import Common from '../commonMethod/Common.js'
 import DiscountComponent from '../components/commonComponents/DiscountComponent.jsx'
 import { clearCart } from '../store/slice/viewCartSlice.js'
 import ScrollToTop from '../components/commonComponents/ScrollToTop.jsx'
+import SwiperComponent from '../components/commonComponents/swiperComponent'
+
 
 const Layout = () => {
     const { getActiveCart, dispatch } = Common()
     const location = useLocation()
+    const slug = location.pathname.split("/").pop();
 
     const [toggleSidebar, setToggleSidebar] = useState(false)
     const toggleMenu = (payload) => setToggleSidebar(!payload)
@@ -44,8 +47,13 @@ const Layout = () => {
             {!isAdminRoute && (
                 <Fragment>
                     <DiscountComponent />
+                    {slug === "home" && <>
+                        <SwiperComponent />
+                    </>}
                     <Footer />
                     <ScrollToTop />
+
+
                 </Fragment>
             )}
         </>

@@ -19,8 +19,14 @@
     padding: 13px 16px;
 }
 
+.send-emoji {
+    left: 10px;
+    top: 6px;
+    transform: rotate(20deg);
+}
+
 .input-box::placeholder {
-    color: black;
+    color: var(--text-color-secondary);
 }
 
 .input-box:focus {
@@ -31,18 +37,19 @@
 .form-input {
     display: flex;
     max-width: 400px;
+    height: 50px;
 }
 
 .subscribe_mail {
     border: none;
     width: 56px;
-    border-left: 1px solid var(--bg-color-secondary);
-    background-image: url(../assets/sned_email.png);
+    border-left: 1px solid var(--bg-color-primary);
     background-repeat: no-repeat;
     background-size: 88% 80%;
     background-position: center;
     border-bottom-right-radius: 50px !important;
     border-top-right-radius: 50px !important;
+    font-size: 34px;
 }
 
 .discount-main-component {
@@ -74,6 +81,7 @@
     .discount-main-component::before {
         content: "";
         position: absolute;
+        z-index: 1;
         inset: 0;
         background-color: rgba(0, 0, 0, 0.6);
         pointer-events: none;
