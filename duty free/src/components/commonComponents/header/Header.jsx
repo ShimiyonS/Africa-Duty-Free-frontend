@@ -62,8 +62,8 @@ const Header = ({ togglemenu, togglesidebar }) => {
             <div className="d-none d-lg-block search-container">
               <form onSubmit={handleSearch}>
                 <div className="search-bar d-flex align-items-center">
-                  <input type="text" id='search' value={searchText} onChange={(e) => setSearchText(e.target.value)} className='header-search justuspro-regular text-color-secondary  bg-color-gold' placeholder='Hello! what are you looking for?' required />
-                  <button type='submit' className='header-submit m-0 outline-0 text-color-secondary  bg-color-gold'><CiSearch /></button>
+                  <input type="text" id='search' value={searchText} onChange={(e) => setSearchText(e.target.value)} className='header-search justuspro-regular text-color-secondary bg-color-gold' placeholder='Hello! what are you looking for?' required />
+                  <button type='submit' className='header-submit m-0 outline-0 text-color-secondary bg-color-gold'><CiSearch /></button>
                 </div>
               </form>
             </div>
@@ -76,7 +76,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
               </button>
               <button className='bg-transparent m-0 p-0 border-0 header-cart-toggle' type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                 <img src={Bag} width={40} height={40} alt="cart" />
-                <div className='header-cart-total text-color-secondary  bg-color-gold'>{cart.length}</div>
+                <div className='header-cart-total text-color-secondary bg-color-gold'>{cart.length}</div>
               </button>
               <img src={Wishlist} width={40} height={40} alt="whislist" />
             </div>
@@ -163,7 +163,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
                 </div>
 
                 <div className="d-flex justify-content-end">
-                  <button type='submit' className='duty-popup-button rounded-pill button-bg-primary button-text-primary'>
+                  <button type='submit' className='duty-popup-button rounded-pill button-bg-gold button-text-primary'>
                     Request Now
                   </button>
                 </div>

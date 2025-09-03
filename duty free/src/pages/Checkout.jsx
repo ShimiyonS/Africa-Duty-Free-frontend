@@ -84,7 +84,7 @@ const Checkout = () => {
                                         <div className='d-flex align-items-center flex-wrap gap-3 p-2'>
                                             <img src={item?.thumbnail} className='checkout-item-image' />
                                             <div>
-                                                <Link to={`/product/${item.title}`} className='text-decoration-none cart-product-link'>{item.title} * {item?.minimumOrderQuantity}</Link>
+                                                <Link to={`/product/${item.id}`} className='text-decoration-none cart-product-link'>{item.title} * {item?.minimumOrderQuantity}</Link>
                                             </div>
                                         </div>
                                     </div>

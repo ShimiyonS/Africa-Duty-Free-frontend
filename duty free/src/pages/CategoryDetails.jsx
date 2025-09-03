@@ -37,9 +37,9 @@ const CategoryDetails = () => {
             <CategoryBanner bannerDetails={bannerDetails} />
             {!subslug ? <> <BrandSwiper />
                 <BestBuy />
-                <Products data={products} />
+                <Products data={products} paraClassName={"ps-4 linear-bg-heading text-color-secondary"} gridplacement={"product-grid"} imageheight={300} hidePopTool={true} />
                 <SaleCard data={0} imageClass={"small-image"} />
-                <NewProducts heading={"New Product"} productsdata={products} />
+                <NewProducts heading={"New Product"} productsdata={products} hidePopTool={true} />
                 <SaleCard data={1} headingClass={"text-center"} imageClass={"big-image"} />
             </> :
                 <div className='container'>

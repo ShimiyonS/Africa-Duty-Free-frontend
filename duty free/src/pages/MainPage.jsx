@@ -68,7 +68,7 @@ const MainPage = () => {
                         <div className='p-4'>
                             <p className='main-home-category text-color-secondary'>Discover Scents That Elevate Your Journey.</p>
                             <h4 className=' main-home-category-heading justuspro-medium text-color-secondary'>Fragrances</h4>
-                            <Link to="/africa-best-buy/product-category/fragrances" className='text-decoration-none  d-inline-block  text-color-secondary main-page-category-link dmsans-bold'>Shop now</Link>
+                            <Link to="/product-category/fragrances" className='text-decoration-none  d-inline-block  text-color-secondary main-page-category-link dmsans-bold'>Shop now</Link>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@ const MainPage = () => {
                         <div className='p-4'>
                             <p className='main-home-category text-color-secondary'>Radiance Redefined with Duty-Free Cosmetics.</p>
                             <h4 className=' main-home-category-heading justuspro-medium text-color-secondary'>Cosmetics</h4>
-                            <Link to="/africa-best-buy/product-category/cosmetics" className='text-decoration-none  d-inline-block  text-color-secondary main-page-category-link dmsans-bold'>Shop now</Link>
+                            <Link to="/product-category/cosmetics" className='text-decoration-none  d-inline-block  text-color-secondary main-page-category-link dmsans-bold'>Shop now</Link>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@ const MainPage = () => {
                         <div className='p-4'>
                             <p className='main-home-category text-color-secondary'>Indulge in your favorite spirits with exclusive duty-free.</p>
                             <h4 className='  main-home-category-heading justuspro-medium text-color-secondary'>Liqueur</h4>
-                            <Link to="/africa-best-buy/product-category/liqueur" className='text-decoration-none  d-inline-block  text-color-secondary main-page-category-link dmsans-bold'>Shop now</Link>
+                            <Link to="/product-category/liqueur" className='text-decoration-none  d-inline-block  text-color-secondary main-page-category-link dmsans-bold'>Shop now</Link>
                         </div>
                     </div>
                 </div>
