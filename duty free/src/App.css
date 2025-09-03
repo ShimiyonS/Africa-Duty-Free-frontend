@@ -8,17 +8,17 @@
     --shadow: 0px 0px 0px #000;
     --login-btn-color: #3ba1da;
     --register-btn-color: #eeeeee;
-  
+
     --button-bg-danger-yellow: #ECA203;
     --button-bg-color-secondary: #1691aa;
     --iconic-color: #ae9962;
-   
+
     --button-bg-primary: #f0b32c;
     --button-bg-danger: #b63f21;
     --button-bg-success: #23c337;
 
-    --button-text-primary : #fff;
-    --button-text-secondary : #000;
+    --button-text-primary: #fff;
+    --button-text-secondary: #000;
 
     --text-color-primary: #000;
     --text-color-secondary: #fff;
@@ -32,7 +32,7 @@
     --bg-color-danger: #b63f21;
 
     --border-color-primary-primary: rgba(34, 34, 34, 0.1);
-    --border-color-primary-secondary:#3D3D3D;
+    --border-color-primary-secondary: #3D3D3D;
 
 }
 
@@ -61,11 +61,11 @@ label {
     background-color: var(--button-bg-success);
 }
 
-.button-text-primary{
+.button-text-primary {
     color: var(--button-text-primary);
 }
 
-.button-text-secondary{
+.button-text-secondary {
     color: var(--button-text-secondary);
 }
 
@@ -287,4 +287,55 @@ label {
     position: absolute;
     top: 17%;
     right: 10px;
+}
+
+
+.stock-font {
+    font-size: 10px;
+}
+
+.swipper-paragraph {
+    max-width: 300px;
+}
+/* ------------------------------------------------------------------- */
+.swiper-button-prev:after,
+.swiper-rtl .swiper-button-next:after,
+.swiper-button-next:after,
+.swiper-rtl .swiper-button-prev:after {
+    color: var(--bg-color-danger);
+    font-size: 25px !important;
+    font-weight: bold;
+}
+
+.slider-main-image {
+    width: 80% !important;
+}
+
+.swiper-button-prev,
+.swiper-rtl .swiper-button-next,
+.swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+    top: 108px !important;
+}
+
+.swiper-button-prev,
+.swiper-rtl .swiper-button-next {
+    left: var(--swiper-navigation-sides-offset, 0px) !important;
+    right: auto;
+}
+
+.swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+    right: var(--swiper-navigation-sides-offset, 0px) !important;
+    left: auto;
+}
+
+@media (width:768px) {
+
+    .swiper-button-prev,
+    .swiper-rtl .swiper-button-next,
+    .swiper-button-next,
+    .swiper-rtl .swiper-button-prev {
+        top: 58px !important;
+    }
 }

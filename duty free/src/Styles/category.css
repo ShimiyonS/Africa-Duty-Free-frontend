@@ -29,7 +29,7 @@
 .category-image {
     border-radius: 20px;
     height: 230px;
-    border: 1px solid red;
+    border: 1px solid var(--text-color-danger);
 
 }
 
