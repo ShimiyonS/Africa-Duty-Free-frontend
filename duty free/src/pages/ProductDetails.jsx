@@ -127,6 +127,22 @@ const ProductDetails = () => {
             [name]: value
         }))
     }
+    //download image 
+    const handleDownloadImage = () => {
+        const imageUrl = product?.images?.[0];
+        if (!imageUrl) return;
+
+        fetch(imageUrl)
+            .then((res) => res.blob())
+            .then((blob) => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `${product?.title || "product-image"}.png`;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            });
+    };
 
     return (
         <div className="container">
@@ -145,7 +161,9 @@ const ProductDetails = () => {
                                 <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `} className="share-pinterest text-decoration-none p-2">
                                     Pin it
                                 </Link>
-                                <p className="share--download text-decoration-none p-2 text-black" >Download image</p>
+                                <p className="share--download text-decoration-none p-2 text-black" onClick={handleDownloadImage} >
+                                    Download image
+                                </p>
                             </div>
                         </div>
                         <button className="fullscreen-btn" onClick={isFullscreen ? handleExitFullscreen : handleFullscreen}>

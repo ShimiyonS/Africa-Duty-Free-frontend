@@ -17,7 +17,7 @@ const DiscountComponent = () => {
                             <div>
                                 <form className="form-input ">
                                     <input type="text" placeholder="Enter Your Email" className="input-box button-bg-primary text-color-primary" />
-                                    <button type="submit" className="button-bg-warning p-2 rounded subscribe_mail rotate-180 position-relative">
+                                    <button type="submit" className="button-bg-primary p-2 rounded subscribe_mail position-relative">
                                         <LuSend className="text-white text-xl position-absolute send-emoji " />
                                     </button>
                                 </form>
