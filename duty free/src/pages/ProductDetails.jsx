@@ -127,7 +127,7 @@ const ProductDetails = () => {
             [name]: value
         }))
     }
-    //download image 
+    //download image in popup
     const handleDownloadImage = () => {
         const imageUrl = product?.images?.[0];
         if (!imageUrl) return;
