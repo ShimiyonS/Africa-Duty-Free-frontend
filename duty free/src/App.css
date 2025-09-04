@@ -325,6 +325,7 @@ label {
 .new-swipper .swiper-button-prev,
 .swiper-rtl .swiper-button-next,
 .swiper-button-next,
+.swiper-button-prev,
 .swiper-rtl .swiper-button-prev {
     top: 108px !important;
 }
@@ -340,7 +341,9 @@ label {
     right: var(--swiper-navigation-sides-offset, 0px) !important;
     left: auto;
 }
-
+.swiper{
+    padding: 0 32px !important;
+}
 @media (width:768px) {
 
     .new-swipper .swiper-button-prev,

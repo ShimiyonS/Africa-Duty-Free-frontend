@@ -14,7 +14,7 @@ import BestBuy from "../components/commonComponents/BestBuy"
 import Banner from "../components/commonComponents/Banner"
 
 const Home = () => {
-    const { apiRequest } = Common()
+  const { apiRequest } = Common()
   const [products, setProducts] = useState([])
   useEffect(() => {
     const fetchProducts = async () => {
@@ -50,8 +50,7 @@ const Home = () => {
     <div className="container">
       <Banner />
       <BrandSwiper />
-      <BestBuy data={bestBuy} itemClassName={`p-3 col-12 col-md-6 col-lg-3`}/>
-      <NewProducts heading={"Most Popular"} productsdata={products} parentClassName={"mt-5"} hidePopTool={true} />
+      <NewProducts heading={"Most Popular"} productsdata={products} parentClassName={"mt-2"} hidePopTool={true} />
       <div className="container py-4 row justify-content-center gap-5">
         <div className="d-flex p-0 col-12 col-xl-4 col-lg-5 col-md-6 col-sm-12 offers">
           <div className="col-6 offerbanner   bg-color-warning ">
@@ -74,8 +73,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <NewProducts heading={"Great value offers"} productsdata={products} hidePopTool={true} />
-       
+      <BestBuy data={bestBuy} itemClassName={`p-3 col-12 col-md-6 col-lg-3`} />
+      {/* <NewProducts heading={"Great value offers"} productsdata={products} hidePopTool={true} /> */}
     </div>
   )
 }

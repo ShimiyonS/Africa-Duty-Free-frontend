@@ -47,13 +47,9 @@ const Layout = () => {
             {!isAdminRoute && (
                 <Fragment>
                     <DiscountComponent />
-                    {slug === "home" && <>
-                        <SwiperComponent />
-                    </>}
+                    {slug === "home" && <SwiperComponent />}
                     <Footer />
                     <ScrollToTop />
-
-
                 </Fragment>
             )}
         </>

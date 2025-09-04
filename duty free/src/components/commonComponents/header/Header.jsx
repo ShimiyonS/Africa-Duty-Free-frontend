@@ -53,32 +53,32 @@ const Header = ({ togglemenu, togglesidebar }) => {
   return (
 
     <div className='container'>
-      <div className='d-flex justify-content-lg-around flex-wrap py-2'>
+      <div className='d-flex justify-content-lg-around flex-wrap py-3'>
         <div className='col-6 col-lg-5'>
           <Link to="/" className='text-decoration-none '><img src={Headerimg} alt="logo" className='header-img' /></Link>
         </div>
-        <div className='col-6 col-lg-7 pt-2'>
+        <div className='col-6 col-lg-7'>
           <div className='d-flex align-items-center justify-content-end justify-content-lg-between '>
             <div className="d-none d-lg-block search-container">
               <form onSubmit={handleSearch}>
                 <div className="search-bar d-flex align-items-center">
                   <input type="text" id='search' value={searchText} onChange={(e) => setSearchText(e.target.value)} className='header-search justuspro-regular text-color-secondary bg-color-gold' placeholder='Hello! what are you looking for?' required />
-                  <button type='submit' className='header-submit m-0 outline-0 text-color-secondary bg-color-gold'><CiSearch /></button>
+                  <button type='submit' className='header-submit m-0 outline-0 text-color-secondary bg-color-gold d-flex align-items-center'><CiSearch /></button>
                 </div>
               </form>
             </div>
             <div className="d-none p-2 d-lg-flex justify-content-evenly align-items-center rounded-pill  bg-color-danger  header-menus">
               <button className='bg-transparent m-0 p-0 border-0' data-bs-toggle="modal" data-bs-target="#dutyPopup">
-                <img src={Airplane} width={40} height={40} alt="airplane" />
+                <img src={Airplane} style={{ width: "34px" }} alt="airplane" />
               </button>
               <button className='bg-transparent m-0 p-0 border-0' data-bs-toggle="modal" data-bs-target="#customPopup">
-                <img src={User} width={40} height={40} alt="user" />
+                <img src={User} style={{ width: "34px" }} alt="user" />
               </button>
               <button className='bg-transparent m-0 p-0 border-0 header-cart-toggle' type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                <img src={Bag} width={40} height={40} alt="cart" />
+                <img src={Bag} style={{ width: "34px" }} alt="cart" />
                 <div className='header-cart-total text-color-secondary bg-color-gold'>{cart.length}</div>
               </button>
-              <img src={Wishlist} width={40} height={40} alt="whislist" />
+              <img src={Wishlist} style={{ width: "34px" }} alt="whislist" />
             </div>
             <button className={`${togglesidebar ? "toggle-icon-active" : ""} d-lg-none bg-transparent border-0 rounded-0 d-flex gap-3 flex-column toggle-icon`} onClick={() => togglemenu(togglesidebar)}>
               <span className="start-line"></span>
@@ -233,7 +233,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
             <div className='whishlist-content'>
               {cart?.map((item, index) => {
                 return (
-                  <div className='d-flex align-items-center gap-3 p-2'>
+                  <div className='d-flex align-items-center gap-3 p-2' key={index}>
                     <img src={item?.thumbnail} className='header-cart-image' />
                     <div>
                       <button onClick={() => { navigate(`/product/${item.id}`) }} className='text-decoration-none header-cart-product-link text-color-danger' type='button' data-bs-dismiss="offcanvas" aria-label="Close">{item.title}</button>
@@ -243,7 +243,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
                 )
               })}
             </div>
-            <p className='p-2 fw-bold'><span className='fs-6'>Subtotal: </span><span className='fs-5'>${cart?.reduce((acc, item, i) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</span></p>
+            <p className='p-2 fw-bold'><span className='fs-6'>Subtotal: </span><span className='fs-5'>${cart?.reduce((acc, item,) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</span></p>
             <div className='d-flex flex-column text-center'>
               <button onClick={() => { navigate("/cart") }} className='position-relative whishilist-button header-cart-link bg-color-primary mb-3' type='button' data-bs-dismiss="offcanvas" aria-label="Close">
                 <span className="dmsans-bold">VIEW CART</span>

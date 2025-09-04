@@ -1,3 +1,8 @@
+.container {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
 .home-banner {
     width: 100%;
     height: calc(100vh - 200px);

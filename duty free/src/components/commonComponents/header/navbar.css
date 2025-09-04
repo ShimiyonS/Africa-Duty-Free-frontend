@@ -2,6 +2,7 @@
     padding-left: 10px;
     padding-right: 10px;
     font-size: 14px;
+    font-weight: 700;
     border-bottom: 2px solid var(--text-color-secondary);
 }
 

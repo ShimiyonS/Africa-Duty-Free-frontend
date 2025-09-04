@@ -39,7 +39,7 @@ const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop
                     {!hideAddCartPop && <button className="border-0 px-3 py-2 rounded-1 bg-color-primary text-color-gold shadow" onClick={() => handleOpenModal(data)}><FaEye /></button>}
                 </div>}
             </div>
-            <Link to={`/product/${data?.id}`} className={`${titleclassname} product-title dmsans-bold d-block text-decoration-none mb-0 pt-3 pb-2`}>{data?.title}</Link>
+            <Link to={`/product/${data?.id}`} className={`${titleclassname} product-title dmsans-bold d-block text-decoration-none mb-0 pt-2 pb-1`}>{data?.title}</Link>
             <p className={`${priceclassname} product-price dmsans-bold `}>${data?.price}</p>
         </div>
     )
