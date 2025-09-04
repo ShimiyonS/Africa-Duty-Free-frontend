@@ -1,20 +1,3 @@
-.product-wrapper {
-    height: 600px;
-}
-
-@media (max-width:426px) {
-    .product-wrapper {
-        height: auto;
-    }
-}
-
-@media (max-width:769px) {
-    .zoom-wrapper {
-        top: 71% !important;
-        right: -5% !important;
-    }
-}
-
 .product-img {
     height: 100%;
 }
@@ -74,7 +57,7 @@
 }
 
 .zoom-wrapper {
-    top: -85%;
+    top: 0%;
     right: 6%;
     padding: 15px 18px;
 }
