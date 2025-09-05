@@ -14,7 +14,7 @@ import BestBuy from "../components/commonComponents/BestBuy"
 import Banner from "../components/commonComponents/Banner"
 
 const Home = () => {
-    const { apiRequest } = Common()
+  const { apiRequest } = Common()
   const [products, setProducts] = useState([])
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,56 +26,60 @@ const Home = () => {
 
   const bestBuy = [
     {
-      name: "Fragrance",
-      link: "liqueur",
-      image: categoryimage1
+      name: "Liquor",
+      link: "liquor",
+      image: categoryimage1,
+      desc: "Indulge in your favorite spirits with exclusive duty-free."
     },
     {
-      name: "Skincare",
+      name: "fragrances",
       link: "fragrances",
-      image: categoryimage2
+      image: categoryimage2,
+      desc: "Discover Scents That Elevate Your Journey."
     },
     {
-      name: "Gift Sets",
+      name: "cosmetics",
       link: "cosmetics",
-      image: categoryimage3
+      image: categoryimage3,
+      desc: "Indulge in your favorite spirits with exclusive duty-free."
     },
     {
-      name: "Accesoires",
-      link: "cosmetics",
-      image: categoryimage4
+      name: "accesoires",
+      link: "accesoires",
+      image: categoryimage4,
+      desc: "Indulge in your favorite spirits with exclusive duty-free."
     }
   ]
   return (
     <div className="container">
       <Banner />
       <BrandSwiper />
-      <BestBuy data={bestBuy} itemClassName={`p-3 col-12 col-md-6 col-lg-3`}/>
+      <BestBuy data={bestBuy} itemClassName={`p-4 col-12 col-md-6 col-lg-3`} />
       <NewProducts heading={"Most Popular"} productsdata={products} parentClassName={"mt-5"} hidePopTool={true} />
       <div className="container py-4 row justify-content-center gap-5">
         <div className="d-flex p-0 col-12 col-xl-4 col-lg-5 col-md-6 col-sm-12 offers">
           <div className="col-6 offerbanner bg-color-gold">
-            <p className="text-color-secondary justuspro-regular">This week only beverage.</p>
-            <p className="mb-0 text-color-secondary justuspro-regular">Pommery</p>
-            <p className="text-color-secondary justuspro-regular"><span className="text-decoration-line-through fs-6 text-color-secondary justuspro-regular">$30</span> $20</p>
+            <p className="text-color-secondary justuspro-regular">This week only fragrances</p>
+            <p className="mb-0 text-color-secondary justuspro-regular">Dolce Gabana</p>
+            <p className="text-color-secondary justuspro-regular"><span className="text-decoration-line-through fs-6 text-color-secondary justuspro-regular">$33</span> $28</p>
           </div>
           <div className="col-6">
-            <img width={"100%"} height={"172"} src={OfferProduct1}></img>
+            <img width={"100%"} height={"172"} src={OfferProduct1} alt="offerbanner"/>
           </div>
         </div>
         <div className="d-flex p-0 col-12 col-xl-4 col-lg-5 col-md-6 col-sm-12 offers">
           <div className="col-6 offerbanner bg-color-danger">
-            <p className="text-color-secondary justuspro-regular">This week only beverage.</p>
+            <p className="text-color-secondary justuspro-regular">This week only beverage</p>
             <p className="mb-0 text-color-secondary justuspro-regular">Pommery</p>
-            <p className="text-color-secondary justuspro-regular"><span className="text-decoration-line-through fs-6 text-color-secondary justuspro-regular">$30</span> $20</p>
+            <p className="text-color-secondary justuspro-regular"><span className="text-decoration-line-through fs-6 text-color-secondary justuspro-regular">$33</span> $28</p>
           </div>
           <div className="col-6">
-            <img width={"100%"} height={"172"} src={OfferProduct2} alt="" />
+            <img width={"100%"} height={"172"} src={OfferProduct2} alt="offerbanner" />
           </div>
         </div>
       </div>
       <NewProducts heading={"Great value offers"} productsdata={products} hidePopTool={true} />
-       
+
     </div>
   )
 }

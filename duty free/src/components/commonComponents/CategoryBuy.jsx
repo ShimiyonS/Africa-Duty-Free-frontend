@@ -10,7 +10,7 @@ import Brandy from "../../assets/blinkbottle.png"
 import brand from "../../assets/blinkbottlelarge.png"
 const bestBuyDefault = [
     {
-        category:'beauty',
+        category: 'beauty',
         subcategory: "Fragrance",
         link: "Fragrance",
         image: categoryimage1,
@@ -19,7 +19,7 @@ const bestBuyDefault = [
         productid: 1
     },
     {
-        category:'beauty',
+        category: 'beauty',
         subcategory: "Skincare",
         link: "fragrances",
         image: categoryimage2,
@@ -28,7 +28,7 @@ const bestBuyDefault = [
         productid: 2
     },
     {
-        category:'beauty',
+        category: 'beauty',
         subcategory: "Cosmetics",
         link: "cosmetics",
         image: categoryimage3,
@@ -37,7 +37,7 @@ const bestBuyDefault = [
         productid: 3
     },
     {
-        category:'beauty',
+        category: 'beauty',
         subcategory: "Gift Sets",
         link: "cosmetics",
         image: categoryimage4,
@@ -46,7 +46,7 @@ const bestBuyDefault = [
         productid: 4
     },
     {
-        category:'beauty',
+        category: 'beauty',
         subcategory: "Mens grooming",
         link: "cosmetics",
         image: categoryimage5,
@@ -55,7 +55,7 @@ const bestBuyDefault = [
         productid: 5
     },
     {
-        category:'spirits',
+        category: 'spirits',
         subcategory: "Brandy",
         link: "liqueur",
         image: brand,
@@ -64,7 +64,7 @@ const bestBuyDefault = [
         productid: 1
     },
     {
-        category:'spirits',
+        category: 'spirits',
         subcategory: "Wisky",
         link: "fragrances",
         image: Wisky,
@@ -73,7 +73,7 @@ const bestBuyDefault = [
         productid: 2
     },
     {
-        category:'spirits',
+        category: 'spirits',
         subcategory: "Whine",
         link: "cosmetics",
         image: categoryimage3,
@@ -82,7 +82,7 @@ const bestBuyDefault = [
         productid: 3
     },
     {
-        category:'spirits',
+        category: 'spirits',
         subcategory: "Bacardi",
         link: "cosmetics",
         image: Brandy,
@@ -91,7 +91,7 @@ const bestBuyDefault = [
         productid: 4
     },
     {
-        category:'spirits',
+        category: 'spirits',
         subcategory: "Bacardi",
         link: "cosmetics",
         image: Bagadi,
@@ -100,7 +100,7 @@ const bestBuyDefault = [
         productid: 5
     },
     {
-        category:'accessories',
+        category: 'accessories',
         subcategory: "Bags",
         link: "liqueur",
         image: categoryimage1,
@@ -109,7 +109,7 @@ const bestBuyDefault = [
         productid: 1
     },
     {
-        category:'accessories',
+        category: 'accessories',
         subcategory: "Glasses",
         link: "fragrances",
         image: Wisky,
@@ -118,7 +118,7 @@ const bestBuyDefault = [
         productid: 2
     },
     {
-        category:'accessories',
+        category: 'accessories',
         subcategory: "Watch",
         link: "cosmetics",
         image: categoryimage3,
@@ -127,7 +127,7 @@ const bestBuyDefault = [
         productid: 3
     },
     {
-        category:'accessories',
+        category: 'accessories',
         subcategory: "Shoes",
         link: "cosmetics",
         image: Brandy,
@@ -136,7 +136,7 @@ const bestBuyDefault = [
         productid: 4
     },
     {
-        category:'accessories',
+        category: 'accessories',
         subcategory: "Jewels",
         link: "cosmetics",
         image: Bagadi,
@@ -145,7 +145,7 @@ const bestBuyDefault = [
         productid: 5
     },
     {
-        category:'travelers',
+        category: 'travelers',
         subcategory: "Brandy",
         link: "liqueur",
         image: categoryimage1,
@@ -154,7 +154,7 @@ const bestBuyDefault = [
         productid: 1
     },
     {
-        category:'travelers',
+        category: 'travelers',
         subcategory: "Wisky",
         link: "fragrances",
         image: Wisky,
@@ -163,7 +163,7 @@ const bestBuyDefault = [
         productid: 2
     },
     {
-        category:'travelers',
+        category: 'travelers',
         subcategory: "Whine",
         link: "cosmetics",
         image: categoryimage3,
@@ -172,7 +172,7 @@ const bestBuyDefault = [
         productid: 3
     },
     {
-        category:'travelers',
+        category: 'travelers',
         subcategory: "Bacardi",
         link: "cosmetics",
         image: Brandy,
@@ -181,7 +181,7 @@ const bestBuyDefault = [
         productid: 4
     },
     {
-        category:'travelers',
+        category: 'travelers',
         subcategory: "Bacardi",
         link: "cosmetics",
         image: Bagadi,
@@ -194,7 +194,7 @@ const CategoryBuy = ({ data = bestBuyDefault, itemClassName }) => {
     const { slug, subslug } = useParams();
     return (
         <div className='d-flex align-items-center justify-content-evenly flex-wrap container'>
-            {data?.filter(item=>item.category===slug).map((item) => {
+            {data?.filter(item => item.category === slug).map((item) => {
                 return (
                     <div className={`${itemClassName ? itemClassName : "p-2 col-6 col-md-4 col-lg-2"}`}>
                         <div className=''>
@@ -202,7 +202,7 @@ const CategoryBuy = ({ data = bestBuyDefault, itemClassName }) => {
                             <Link to={`/product/${item.productid}`}><img src={item.image} className='w-100 category-sub-img' /></Link>
                         </div>
                         <div>
-                            <p className="mt-2 mb-0 dmsans-medium category-sub-textsize">{item.productname}</p>
+                            <Link to={`/product/${item.productid}`} className="mt-2 mb-0 dmsans-medium category-sub-textsize text-decoration-none d-block text-color-primary"> {item.productname} </Link>
                             <p className="dmsans-bold text-color-danger category-sub-textsize">$ {item.productprice}</p>
                         </div>
                     </div>
