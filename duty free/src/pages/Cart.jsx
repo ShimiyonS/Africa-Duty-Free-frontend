@@ -33,63 +33,90 @@ const Cart = () => {
             {cart.length ?
                 <div className='d-flex  flex-wrap py-5 '>
                     <div className='col-lg-8 p-3'>
-                        <h1 className='fw-bold mb-4 cart-heading'>Shopping bag</h1>
-                        <div className='d-flex align-items-center table-box'>
-                            <div className='col-6 cart-table-title'>Product</div>
-                            <div className='col-2 cart-table-title'>Price</div>
-                            <div className='col-2 cart-table-title'>Quantity</div>
-                            <div className='col-2 cart-table-title'>Subtotal</div>
+                        <h1 className='mb-4 cart-heading justuspro-bold'>Shopping bag</h1>
+
+                        <div className="main-wrapper">
+                            <div className="table-responsive cart-wrapper">
+                                <table className="table table-cart table-bordered  align-middle ">
+                                    <thead className="table-light ">
+                                        <tr>
+                                            <th className="col-6 justuspro-bold text-color-muted-cart ">PRODUCT</th>
+                                            <th className="col-2 justuspro-bold text-color-muted-cart ">PRICE</th>
+                                            <th className="col-2 justuspro-bold text-color-muted-cart">QUANTITY</th>
+                                            <th className="col-2 justuspro-bold text-color-muted-cart">SUBTOTAL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {cart?.slice(0, 3).map((item, index) => (
+                                            <tr key={item?.id}>
+                                                <td>
+                                                    <div className="d-flex flex-wrap align-items-center p-2">
+                                                        <button
+                                                            className="bg-transparent border-0 col-1"
+                                                            onClick={() => Remove(item?.id)}
+                                                        >
+                                                            <IoMdClose />
+                                                        </button>
+                                                        <img src={item?.thumbnail} alt={item?.title} className="cart-image col-6" />
+                                                        <Link
+                                                            to={`/product/${item.id}`}
+                                                            className="text-decoration-none text-color-danger dmsans-bold col-5"
+                                                        >
+                                                            {item.title}
+                                                        </Link>
+                                                    </div>
+                                                </td>
+                                                <td className="text-color-primary-cart dmsans-bold ">${item?.price}</td>
+                                                <td>
+                                                    <input
+                                                        type="number"
+                                                        name="minimumOrderQuantity"
+                                                        onChange={(e) => handleInput(e, index)}
+                                                        value={item?.minimumOrderQuantity}
+                                                        className="form-control text-center rounded-5"
+                                                        style={{ width: "80px" }}
+                                                    />
+                                                </td>
+                                                <td className="text-color-primary-cart dmsans-bold ">
+                                                    {Number(item?.minimumOrderQuantity * item?.price).toFixed(2)}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        {
-                            cart?.slice(0, 3).map((item, index) => {
-                                return (
-                                    <div className='d-flex align-items-center table-box-list'>
-                                        <div className='col-6 cart-table-item'>
-                                            <div className='d-flex align-items-center gap-3 p-2'>
-                                                <button className='bg-transparent border-0' onClick={() => Remove(item?.id)} ><IoMdClose /></button>
-                                                <img src={item?.thumbnail} className='cart-image' />
-                                                <Link to={`/product/${item.id}`} className='text-decoration-none cart-product-link'>{item.title}</Link>
-                                            </div>
-                                        </div>
-                                        <div className='col-2 cart-table-item'>${item?.price}</div>
-                                        <div className='col-2 cart-table-item'>
-                                            <input type="number" name='minimumOrderQuantity' onChange={(e) => handleInput(e, index)} value={item?.minimumOrderQuantity} className='cart-number text-center' />
-                                        </div>
-                                        <div className='col-2 cart-table-item text-break'>{item?.minimumOrderQuantity * item?.price}</div>
-                                    </div>
-                                )
-                            })
-                        }
+
                         <div className='d-flex align-items-center flex-wrap my-4'>
                             <div className='col-lg-6'>
                                 <div className='position-relative'>
-                                    <input type='text' placeholder='Coupon code' className='w-100 coupon-input border-0 px-5 py-4' />
-                                    <button className='position-absolute apply-coupon-button p-3 border-0'>APPLY COUPON</button>
+                                    <input type='text' placeholder='Coupon code' className='w-100 coupon-input border-0 px-5 py-4 text-color-primary-cart' />
+                                    <button className='position-absolute apply-coupon-button p-3 border-0 justuspro-medium'>APPLY COUPON</button>
                                 </div>
                             </div>
-                            <div className='col-lg-6 text-end'>
-                                <button className='bg-transparent update-cart '>UPDATE CART</button>
+                            <div className='col-lg-6 text-end ps-md-5 pt-5 pt-md-0'>
+                                <button className='bg-transparent update-cart  justuspro-medium'>UPDATE CART</button>
                             </div>
                         </div>
                     </div>
                     <div className='col-lg-4 p-3'>
-                        <h1 className='fw-bold mb-4 cart-heading'>Cart Totals</h1>
+                        <h1 className='justuspro-bold mb-4'>Cart Totals</h1>
                         <div className='d-flex align-items-center table-box'>
-                            <div className='col-6 cart-table-title right-total'>Subtotal</div>
-                            <div className='col-2 cart-table-title right-total'> ${cart?.reduce((acc, item, i) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</div>
+                            <div className='col-6  right-total justuspro-bold'>SUBTOTAL</div>
+                            <div className='col-2  right-total dmsans-bold'> ${cart?.reduce((acc, item, i) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</div>
                         </div>
                         <div className='d-flex align-items-center table-box-list'>
-                            <div className='col-12 cart-table-title right-total p-4'>
-                                <p className='cart-table-title right-total'> Shipping</p>
-                                <p className='delivery-type px-4 py-3'>Free shipping</p>
-                                <p className='cart-table-title right-total'>Shipping options will be updated during checkout.</p>
-                                <button onClick={null} className=" dmsans-regular  bg-transparent border-0 outline-0 p-0 link-custom"  >Calculate shipping</button>
+                            <div className='col-12  right-total p-4'>
+                                <p className=' right-total justuspro-bold'> SHIPPING</p>
+                                <p className='delivery-type px-4 py-3 justuspro-bold'>FREE SHIPPING</p>
+                                <p className=' right-total justuspro-bold'>SHIPPING OPTIONS WILL BE UPDATED DURING CHECKOUT.</p>
+                                <button onClick={null} className=" dmsans-regular  bg-transparent border-0 outline-0 p-0 link-custom text-color-danger"  >Calculate shipping</button>
                             </div>
                         </div>
                         <div className='d-flex align-items-center flex-wrap table-box'>
-                            <div className='col-6 cart-table-title right-total'>Total</div>
-                            <div className='col-6 cart-table-title right-total'> ${cart?.reduce((acc, item, i) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</div>
-                            <Link to={"/checkout"} className='proceed-button col-12 mt-3 mb-5 text-decoration-none d-block text-center '>Proceed to checkout</Link>
+                            <div className='col-6  right-total justuspro-bold'>TOTAL</div>
+                            <div className='col-6  right-total dmsans-bold'> ${cart?.reduce((acc, item, i) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</div>
+                            <Link to={"/checkout"} className='proceed-button col-12 mt-3 mb-5 text-decoration-none d-block text-center text-color-secondary justuspro-medium bg-color-secondary'>PROCEED TO CHECKOUT</Link>
                             <Link to={"/checkout"} className='col-12 text-decoration-none d-block text-center '>Proceed to checkout</Link>
 
                         </div>

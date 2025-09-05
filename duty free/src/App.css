@@ -123,6 +123,8 @@ label {
     background-color: var(--bg-color-danger);
 }
 
+
+
 /* common bg class end */
 
 
@@ -162,9 +164,6 @@ label {
     background-color: var(--text-color-danger);
 }
 
-.link-custom {
-    color: var(--button-bg-danger) !important;
-}
 
 .link-custom:hover {
     color: var(--button-bg-color-secondary) !important;
