@@ -56,10 +56,7 @@ const ListAllCategories = () => {
         }
     }
     return (
-
-
         <div>
-
             <div className="d-flex justify-content-between">
                 <h1 className="justuspro-bold pb-4 ">All Brands</h1>
                 <Link to="/siteadmin/addbrand" className="addLink dmsans-bold ">Add Brand</Link>
@@ -93,46 +90,55 @@ const ListAllCategories = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data.map((item, index) => (
-                                        <tr key={item.id}>
-                                            <th scope="row" className="all-brand-td">{item.id}</th>
-                                            <td className="d-flex gap-3">
-                                                {item.images ? (
-                                                    <div className="d-flex gap-4">
-                                                        <img src={item.images} alt="categoryimg" className="uploadImage" />
-                                                    </div>
-                                                ) : (
-                                                    <img src={defaultImage} alt={item.title} className="categoryImg" />
-                                                )}
-                                                <div className="texthide">
-                                                    <Link to={`/product/${item.id}`} target="_self" className="text-decoration-none text-color-primary dmsans-bold ">
-                                                        {item.title}
-                                                        <TiExportOutline />
-                                                    </Link>
-                                                </div>
-                                            </td>
-                                            <td className="position-relative action-cell">
-                                                <BsThreeDotsVertical className="threeDot" />
-
-                                                <div className="position-absolute hidebtn">
-                                                    <Link
-                                                        to={`/siteadmin/editbrand/${item.id}`}
-                                                        className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold d-block w-100"
-                                                    >
-                                                        <FaEdit className="me-2" />
-                                                        Edit
-                                                    </Link>
-                                                    <button
-                                                        onClick={() => handleDeleteClick(item.id)}
-                                                        className="dmsans-bold border-0 rounded-2 mt-2 bg-transparent  p-0"
-                                                    >
-                                                        <RiDeleteBin6Line className="me-2" />
-                                                        Delete
-                                                    </button>
-                                                </div>
+                                    {data.length === 0 ? <>
+                                        <tr>
+                                            <td colSpan="3" className="text-center">
+                                                No Sub Categories Found
                                             </td>
                                         </tr>
-                                    ))}
+                                    </> :
+                                        <>
+                                            {data.map((item, index) => (
+                                                <tr key={item.id}>
+                                                    <th scope="row" className="all-brand-td">{item.id}</th>
+                                                    <td className="d-flex gap-3">
+                                                        {item.images ? (
+                                                            <div className="d-flex gap-4">
+                                                                <img src={item.images} alt="categoryimg" className="uploadImage" />
+                                                            </div>
+                                                        ) : (
+                                                            <img src={defaultImage} alt={item.title} className="categoryImg" />
+                                                        )}
+                                                        <div className="texthide">
+                                                            <Link to={`/product/${item.id}`} target="_self" className="text-decoration-none text-color-primary dmsans-bold ">
+                                                                {item.title}
+                                                                <TiExportOutline />
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                    <td className="position-relative action-cell">
+                                                        <BsThreeDotsVertical className="threeDot" />
+
+                                                        <div className="position-absolute hidebtn">
+                                                            <Link
+                                                                to={`/siteadmin/editbrand/${item.id}`}
+                                                                className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold d-block w-100"
+                                                            >
+                                                                <FaEdit className="me-2" />
+                                                                Edit
+                                                            </Link>
+                                                            <button
+                                                                onClick={() => handleDeleteClick(item.id)}
+                                                                className="dmsans-bold border-0 rounded-2 mt-2 bg-transparent  p-0"
+                                                            >
+                                                                <RiDeleteBin6Line className="me-2" />
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </>}
                                 </tbody>
                             </table>
                         </div>

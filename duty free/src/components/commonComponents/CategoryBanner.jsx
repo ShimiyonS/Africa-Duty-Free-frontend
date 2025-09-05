@@ -9,8 +9,9 @@ const CategoryBanner = ({ bannerDetails }) => {
     const category = segments[segments.length - 1];
     return (
         <div className='container'>
-            <h1 className='mid-heading my-3'>{firstLetterCapital(category)}</h1>
+            <h1 className='mid-heading my-1'>{firstLetterCapital(category)}</h1>
             <div className='category-banner' style={{ backgroundImage: `url(${bannerDetails?.image})` }}>
+                <img src='' alt='' />
                 <p className='banner-des'>{bannerDetails?.description}</p>
             </div>
         </div>

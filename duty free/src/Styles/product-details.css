@@ -278,7 +278,8 @@
 }
 
 .share--download:hover {
-    background-color: #DDDDDD
+    background-color: #DDDDDD;
+    cursor: pointer;
 }
 
 .popup-content {

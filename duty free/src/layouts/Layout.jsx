@@ -46,8 +46,7 @@ const Layout = () => {
             {/* Footer part (hide for admin) */}
             {!isAdminRoute && (
                 <Fragment>
-                    <DiscountComponent />
-                    {slug === "home" && <SwiperComponent />}
+                    
                     <Footer />
                     <ScrollToTop />
                 </Fragment>

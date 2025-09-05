@@ -7,14 +7,13 @@
 }
 
 .main-offer-image-left {
-    border-top-right-radius: 60%;
-    height: 400px;
+    border-top-right-radius: 40%;
     object-fit: cover;
 }
 
 .main-offer-image-right {
-    border-bottom-left-radius: 60%;
-    height: 400px;
+    border-bottom-left-radius: 40%;
+    height: 600px;
     object-fit: cover;
 }
 

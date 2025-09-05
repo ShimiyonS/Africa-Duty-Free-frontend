@@ -29,7 +29,7 @@ const AdminRoutes = () => {
                     <Route path="/addbrand" element={<AddAndEditBrand />} />
                     <Route path="/editbrand/:id" element={<AddAndEditBrand />} />
                     <Route path="/brands" element={<ListAllBrands />} />
-                    <Route index path="/products" element={<p>vicky</p>} />
+                    {/* <Route index path="/products" element={<p></p>} /> */}
                     <Route index path="/add-product" element={<AddEditProducts />} />
                     <Route index path="/edit-product/:id" element={<AddEditProducts />} />
                     <Route index path="/products" element={<ViewProduct />} />

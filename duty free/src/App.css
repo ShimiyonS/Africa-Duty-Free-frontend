@@ -8,7 +8,7 @@
     --shadow: 0px 0px 0px #000;
     --login-btn-color: #3ba1da;
     --register-btn-color: #eeeeee;
-
+    --header-text-color: #C4310C; 
     --button-bg-danger-yellow: #ECA203;
     --button-bg-color-secondary: #1691aa;
     --iconic-color: #ae9962;
@@ -341,9 +341,11 @@ label {
     right: var(--swiper-navigation-sides-offset, 0px) !important;
     left: auto;
 }
-.swiper{
+
+.swiper {
     padding: 0 32px !important;
 }
+
 @media (width:768px) {
 
     .new-swipper .swiper-button-prev,
