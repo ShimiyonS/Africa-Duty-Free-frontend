@@ -19,15 +19,11 @@
 }
 
 .order-btn {
-    background-color: #eee;
-    color: var(--text-color-primary);
     padding: 20px 20px;
-    font-family: "JustusProMedium", Sans-serif;
 }
 
 .checkout-form-label {
     font-size: 19px;
-    font-weight: 600;
     position: relative;
     margin-bottom: 30px;
 }
@@ -39,4 +35,12 @@
     font-weight: bold;
     right: -12px;
     position: absolute;
+}
+
+.cart-product-link {
+    font-size: 19px;
+}
+
+.cart-table-title {
+    font-size: 22px;
 }

@@ -6,8 +6,12 @@ import { MdOutlineAdd } from "react-icons/md";
 import { MdManageSearch } from "react-icons/md";
 import Pagination from '../../components/commonComponents/Pagination';
 import DeletePopup from '../../components/commonComponents/DeletePopup';
+import { Button, Drawer } from 'antd';
+import AddAndEditDrawer from './AddAndEditProductDrawer'
+import { FaTimes } from "react-icons/fa";
 
 const ViewProduct = () => {
+
     const { apiRequest } = Common()
     const [search, setSearch] = useState("")
     const [product, setProduct] = useState([])
@@ -19,6 +23,13 @@ const ViewProduct = () => {
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(5)
     const [totalPages, setTotalPages] = useState(1)
+    //popup state
+    const [open, setOpen] = useState(false);
+    const [childrenDrawer, setChildrenDrawer] = useState(false);
+
+    // "add" or "edit"
+    const [drawerMode, setDrawerMode] = useState("add");
+    const [editData, setEditData] = useState(null);
 
     const closePopup = () => {
         setDeleteDetails(null)
@@ -27,6 +38,23 @@ const ViewProduct = () => {
     const openPopup = (data) => {
         setDeleteDetails(data)
     }
+
+    // drawer functions
+    const showDrawer = () => {
+        setOpen(true);
+    };
+
+    const onClose = () => {
+        setOpen(false);
+    };
+
+    const showChildrenDrawer = () => {
+        setChildrenDrawer(true);
+    };
+    const onChildrenDrawerClose = () => {
+        setChildrenDrawer(false);
+    };
+    // end of drawer functions
 
     const handleDelete = async (id) => {
         try {
@@ -63,7 +91,56 @@ const ViewProduct = () => {
         <div className='table-responsive'>
             <div className='d-flex align-items-center justify-content-between'>
                 <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
-                <Link className='text-decoration-none px-3 py-2 text-color-secondary button-bg-primary rounded-2' to={`/siteadmin/add-product`}><MdOutlineAdd /> Add Product</Link>
+                {/* drawer popup  */}
+                <>
+
+                    <Button
+                        type="primary"
+                        onClick={() => {
+                            setDrawerMode("add");
+                            setEditData(null);
+                            showDrawer();
+                        }}
+                        className="text-color-secondary"
+                    >
+                        Add Product
+                    </Button>
+
+                    <Drawer title={
+                        <div className="d-flex align-items-center justify-content-between w-100">
+                            <div className="d-flex align-items-center gap-2">
+                                <Button type="text" onClick={onClose} icon={<FaTimes />} />
+                                <span className="justuspro-bold">{drawerMode === "add" ? "Add Product" : "Edit Product"}</span>
+                            </div>
+
+                            <div>
+                                <Button type="primary" onClick={showChildrenDrawer}>
+                                    Add Category
+                                </Button>
+                            </div>
+                        </div>
+
+                    } className="justuspro-bold" width={800} closable={false} onClose={onClose} open={open}>
+
+                        <div>
+                            <div className="d-flex justify-content-between ">
+                            </div>
+                            {/* its coming from AddAndEdit Product drawer */}
+                            <AddAndEditDrawer mode={drawerMode} productData={editData} />
+                        </div>
+                        {/* second drawer */}
+                        <Drawer
+                            title="Two-level Drawer"
+                            width={800}
+                            closable={false}
+                            onClose={onChildrenDrawerClose}
+                            open={childrenDrawer}
+                        >
+                            This is two-level drawer
+                        </Drawer>
+                    </Drawer>
+
+                </>
             </div>
 
             <div className='table-conatiner table-responsive'>
@@ -91,6 +168,7 @@ const ViewProduct = () => {
                             <th>Product Details</th>
                             <th>Product Price</th>
                             <th>Action</th>
+                            <th>edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -124,6 +202,9 @@ const ViewProduct = () => {
                                         )}
                                     </div>
                                 </td>
+                                <td><Button type="primary" className="button-bg-primary popup-hover" onClick={() => { setDrawerMode("edit"); setEditData(item); showDrawer() }}>
+                                    Edit product
+                                </Button></td>
                             </tr>
                         ))}
                     </tbody>

@@ -3,20 +3,11 @@
     font-weight: bold;
 }
 
-.cart-table-title {
-    text-transform: uppercase;
-    color: #AAA;
-    font-weight: 600;
-    font-family: "JustusProRegular", Sans-serif;
-}
-
-.cart-table-title.right-total {
-    color: var(--text-color-primary);
-}
-
 .table-box {
+    font-size: 18px;
     border: 1px solid #AAA;
-    padding: 17px 35px
+    padding: 17px 35px;
+    line-height: 190%;
 }
 
 .table-box-list {
@@ -26,7 +17,6 @@
 }
 
 .cart-table-item {
-    color: var(--text-color-primary);
     font-weight: bold;
     padding: 0px 10px;
 }
@@ -36,9 +26,6 @@
     height: 150px;
 }
 
-.cart-product-link {
-    color: var(--button-bg-danger);
-}
 
 .cart-number {
     width: 100%;
@@ -52,24 +39,13 @@
     display: block;
 }
 
-.cart-heading {
-    font-family: "JustusProMedium", Sans-serif;
-}
-
-.delivery-type {
-    font-family: "JustusProRegular", Sans-serif;
-}
 
 .order-box {
     background-color: var(--text-color-muted);
 }
 
 .proceed-button {
-    background-color: var(--bg-color-secondary);
     padding: 20px 20px;
-    font-family: "JustusProMedium", Sans-serif;
-    color: var(--text-color-secondary) !important;
-    text-transform: uppercase;
 }
 
 .coupon-input {
@@ -81,7 +57,6 @@
     background-color: #AAAAAA;
     top: 0;
     right: 0;
-    font-family: "JustusProMedium", Sans-serif;
 }
 
 .apply-coupon-button:hover {
@@ -91,9 +66,11 @@
 
 .update-cart {
     padding: 15px 25px;
-    font-family: "JustusProMedium", Sans-serif;
-    color: #AAAAAA;
     border: 1px solid #AAA;
+}
+
+.update-cart {
+    color: var(--text-color-muted)
 }
 
 .update-cart:hover {
@@ -168,4 +145,52 @@
         padding: 10px 15px;
     }
 
+}
+
+.text-color-muted-cart {
+    color: #5E5E5E !important;
+    background-color: white !important;
+    padding: 17px !important;
+}
+
+.text-color-primary-cart {
+    color: #000 !important;
+}
+
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+    border-style: solid;
+    border-width: 0;
+}
+
+table,
+th,
+td {
+    border: none;
+    border-collapse: collapse;
+}
+
+.table-cart {
+    border-left: 1px solid #C6C7C8;
+    border-right: 1px solid #C6C7C8;
+}
+
+@media (max-width: 426px) {
+    .main-wrapper {
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    .cart-wrapper {
+        width: 300px;
+    }
+
+    .cart-image {
+        width: 60px !important;
+        height: 60px !important;
+    }
 }
