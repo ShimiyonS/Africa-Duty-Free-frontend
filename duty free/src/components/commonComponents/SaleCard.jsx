@@ -31,13 +31,13 @@ const SaleCard = ({ data, imageClass, headingClass }) => {
   const finalData = data == 1 ? saleSecond : saleFirst
   return (
     <div className='container'>
-      <div className='d-flex flex-wrap my-4 justify-content-center'>
+      <div className='d-flex flex-wrap gap-4 my-4 justify-content-center'>
         {finalData?.map((item) => {
           return (<>
-            <div className='col-12 col-md-5 p-3'>
+            <div className='col-12 col-md-4 p-3 '>
               <img src={item.image} className={`w-100 ${imageClass}`} />
-              <p className={`sale-banner-heading mb-0 ${headingClass}`}>{item?.text}</p>
-              <p className='sale-banner-des'>{item?.des}</p>
+              <p className={`sale-banner-heading justuspro-medium mb-0 ${headingClass}`}>{item?.text}</p>
+              <p className='sale-banner-des justuspro-regular'>{item?.des}</p>
             </div>
           </>)
         })}
