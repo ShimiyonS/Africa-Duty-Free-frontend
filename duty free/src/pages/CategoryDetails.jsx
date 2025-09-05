@@ -3,7 +3,7 @@ import BreadCrumb from '../components/commonComponents/BreadCrumb'
 import CategoryBanner from '../components/commonComponents/CategoryBanner'
 import BrandSwiper from '../components/commonComponents/BrandSwiper'
 import NewProducts from '../components/commonComponents/NewProducts'
-import Products from '../components/commonComponents/Products'
+// import Products from '../components/commonComponents/Products'
 import Common from '../commonMethod/Common'
 import SaleCard from '../components/commonComponents/SaleCard'
 import BestBuy from '../components/commonComponents/BestBuy'
@@ -15,6 +15,7 @@ import SubCategory from '../components/SubCategory'
 // image 
 import DolceGabana from "../assets/categoryimage1.jpg";
 import TitleComponent from '../components/TitleComponent'
+import CategoryBuy from '../components/commonComponents/CategoryBuy'
 const CategoryDetails = () => {
     const { slug, subslug } = useParams();
     const { apiRequest } = Common()
@@ -237,10 +238,10 @@ const CategoryDetails = () => {
                                                     <p className={`$ product-price dmsans-bold `}>${product?.price}</p>
                                                 </div>
                                                 {/* <div className='col-12 col-sm-6 col-md-6 col-lg-3'>
-                                                <img src={item?.thumbnail} className='filter-image' />
-                                                <p className='filter-title text-color-primary mb-1 justuspro-medium'>{item?.title}</p>
-                                                <p className='filter-title text-color-danger mb-0 justuspro-medium'>${item?.price}</p>
-                                            </div> */}
+                                                    <img src={item?.thumbnail} className='filter-image' />
+                                                    <p className='filter-title text-color-primary mb-1 justuspro-medium'>{item?.title}</p>
+                                                    <p className='filter-title text-color-danger mb-0 justuspro-medium'>${item?.price}</p>
+                                                </div> */}
                                             </>
                                         )
                                     })}
@@ -251,7 +252,6 @@ const CategoryDetails = () => {
                     </div>
                 </div>
             }
-
         </div>
     )
 }

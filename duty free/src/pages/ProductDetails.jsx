@@ -38,6 +38,7 @@ const ProductDetails = () => {
     const [loading, setLoading] = useState(false)
     const BASEURL = import.meta.env.VITE_APP_BASE_URL;
     const [rating, setRating] = useState(false)
+    const [mainImg, setMainImg] = useState('')
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -47,6 +48,7 @@ const ProductDetails = () => {
                 const related = await apiRequest("GET", `products`)
                 setRelatedData(related)
                 setProduct(data);
+                setMainImg(data.images[0])
                 setLoading(false)
             } catch (error) {
                 console.error("api fetching error", error)
@@ -57,6 +59,10 @@ const ProductDetails = () => {
         }
         fetchProduct();
     }, [id])
+
+    const handleMainimgChange = (img) => {
+        setMainImg(img)
+    }
 
     // Fullscreen function
     const handleFullscreen = () => {
@@ -128,11 +134,9 @@ const ProductDetails = () => {
         }))
     }
     //download image in popup
-    const handleDownloadImage = () => {
-        const imageUrl = product?.images?.[0];
-        if (!imageUrl) return;
-
-        fetch(imageUrl)
+    const handleDownloadImage = (downloadImage) => {
+        if (!downloadImage) return;
+        fetch(downloadImage)
             .then((res) => res.blob())
             .then((blob) => {
                 const url = window.URL.createObjectURL(blob);
@@ -154,14 +158,14 @@ const ProductDetails = () => {
                         <div className="share-icon">
                             <IoIosShareAlt />
                             <div className="share-tooltip bg-color-primary">
-                                <Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`} className="share-facebook text-decoration-none p-2">
+                                <Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`} className="share-facebook text-decoration-none p-2">
                                     Share on Facebook
                                 </Link>
-                                <Link to={`https://twitter.com/intent/tweet?text=${encodeURIComponent(product?.title)}&url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`} className="share-twitter text-decoration-none p-2">                                    Tweet</Link>
-                                <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `} className="share-pinterest text-decoration-none p-2">
+                                <Link to={`https://twitter.com/intent/tweet?text=${encodeURIComponent(product?.id)}&url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`} className="share-twitter text-decoration-none p-2">                                    Tweet</Link>
+                                <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `} className="share-pinterest text-decoration-none p-2">
                                     Pin it
                                 </Link>
-                                <p className="share--download text-decoration-none p-2 text-black" onClick={handleDownloadImage} >
+                                <p className="share--download text-decoration-none p-2 text-black" onClick={()=>handleDownloadImage(mainImg)} >
                                     Download image
                                 </p>
                             </div>
@@ -172,7 +176,7 @@ const ProductDetails = () => {
                         <button className="close-btn" onClick={() => setOpen(false)}><IoMdClose /></button>
                         <div className="popup-wrapper" >
                             <div className="popup-content">
-                                <img src={product?.images?.[0]} alt="pop-up-img" />
+                                <img src={mainImg} alt="pop-up-img" />
                             </div>
                             <p className="pt-5 text-color-secondary text-center">{product?.title}</p>
                         </div>
@@ -185,15 +189,22 @@ const ProductDetails = () => {
                     <Loader /> :
                     <>
                         <div className="d-flex flex-wrap align-items-center justify-content-center product-wrapper pb-5 ">
-                            <div className="col-12 col-md-8 col-lg-6 position-relative" >
-                                <img src={product?.thumbnail} alt={product?.title} className="product-img w-100" />
-                            </div>
-                            <div className="col-12 col-md-4 col-lg-6">
-                                <div className="position-relative mb-3">
-                                    <h2 className="product-page-title justuspro-bold">{product?.title}</h2>
+                            <div className="col-12 col-md-8 col-lg-6 d-flex flex-column" >
+                                <div className="position-relative">
+                                    <img src={mainImg} alt={product?.title} className="product-img w-100" />
                                     <div className="position-absolute zoom-wrapper  " onClick={() => setOpen(true)}>
                                         <GoZoomIn className="zoom-img" />
                                     </div>
+                                </div>
+                                <div className="d-flex flex-wrap">
+                                    {product?.images?.map((item, index) => (
+                                        <div className="col-3"><img onClick={() => handleMainimgChange(item)} src={item} alt={product?.title} className="product-gallary-img w-100" /></div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="col-12 col-md-4 col-lg-6">
+                                <div className="mb-3">
+                                    <h2 className="product-page-title justuspro-bold">{product?.title}</h2>
                                 </div>
                                 <p className="pb-2 product-single-price text-color-danger text-break dmsans-bold">${product?.price}</p>
                                 <p className="product-description text-break">{product?.description}</p>
@@ -216,16 +227,16 @@ const ProductDetails = () => {
                                         <span type="submit" name="add-to-cart" className="add-wishlist rounded-5 border-0 px-4 py-2 dmsans-bold" >Add to wishlist</span> <CiHeart size={30} />
                                     </div>
                                     <div className="position-relative share-content" >
-                                        <div className="gap-3 share-emoji  p-3 rounded-5"><Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}><SlSocialFacebook /></Link>
-                                            <Link to={`https://twitter.com/intent/tweet?text=${encodeURIComponent(product?.title)}&url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}><TfiTwitter /></Link>
-                                            <Link to={`https://plus.google.com/share?url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}> <FaGooglePlusG /></Link>
-                                            <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `}><FaPinterestP /></Link>
-                                            <Link to={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `}><FaLinkedinIn /></Link>
-                                            <Link to={`http://www.stumbleupon.com/submit?url=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `}><ImStumbleupon /></Link>
-                                            <Link to={`whatsapp://send?text=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `}><FaWhatsapp /></Link>
-                                            <Link to={`https://getpocket.com/save?url${encodeURIComponent(`${BASEURL}/product/${product?.title}`)} `}><FaGetPocket /></Link>
-                                            <Link to={`mailto:?subject=${encodeURIComponent(product?.title)}&body=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}><BsEnvelopePaperFill /> </Link>
-                                            <Link to={`tg://msg?text=${encodeURIComponent(`${BASEURL}/product/${product?.title}`)}`}><FaRegPaperPlane /></Link>
+                                        <div className="gap-3 share-emoji  p-3 rounded-5"><Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`}><SlSocialFacebook /></Link>
+                                            <Link to={`https://twitter.com/intent/tweet?text=${encodeURIComponent(product?.id)}&url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`}><TfiTwitter /></Link>
+                                            <Link to={`https://plus.google.com/share?url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`}> <FaGooglePlusG /></Link>
+                                            <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `}><FaPinterestP /></Link>
+                                            <Link to={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `}><FaLinkedinIn /></Link>
+                                            <Link to={`http://www.stumbleupon.com/submit?url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `}><ImStumbleupon /></Link>
+                                            <Link to={`whatsapp://send?text=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `}><FaWhatsapp /></Link>
+                                            <Link to={`https://getpocket.com/save?url${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `}><FaGetPocket /></Link>
+                                            <Link to={`mailto:?subject=${encodeURIComponent(product?.id)}&body=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`}><BsEnvelopePaperFill /> </Link>
+                                            <Link to={`tg://msg?text=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`}><FaRegPaperPlane /></Link>
                                         </div>
                                         <span className="pe-2 dmsans-bold">Share</span>
                                         <BsShare />

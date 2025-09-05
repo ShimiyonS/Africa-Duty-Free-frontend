@@ -63,8 +63,11 @@ const Home = () => {
     <div className="container">
       <Banner />
       <BrandSwiper />
-      <TitleComponent heading={"Most Popular"} />
+      <div>
+        <BestBuy data={bestBuy} itemClassName={`p-3 col-12 col-md-6 col-lg-3`} />
+      </div>
       <div className="pagebody">
+        <TitleComponent heading={"Most Popular"} />
         <NewProducts heading={"Most Popular"} productsdata={products} parentClassName={"mt-2"} hidePopTool={true} />
         <div className="container py-4 row justify-content-center gap-5">
           <div className="d-flex p-0 col-12 col-xl-4 col-lg-5 col-md-6 col-sm-12 offers">
@@ -88,10 +91,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div>
-          <div className="px-3 fw-bold ">Products</div>
-          <BestBuy data={bestBuy} itemClassName={`p-3 col-12 col-md-6 col-lg-3`} />
-        </div>
+
         <DiscountComponent />
         {slug === "" && <SwiperComponent />}
       </div>

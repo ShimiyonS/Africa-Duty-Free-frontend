@@ -7,6 +7,7 @@
     height: 180px;
     background-repeat: repeat;
     padding: 30px 0px 30px 80px;
+    padding: 30px 0px 30px 80px;
 }
 
 .banner-des {
@@ -40,6 +41,19 @@
 
 }
 
+.category-sub-img{
+    height: 220px;
+    box-shadow: 4px 5px 8px 0px rgba(0, 0, 0, 0.35);
+}
+
+.category-sub-title{
+    font-size: 20px;
+}
+
+.category-sub-textsize{
+    font-size: 18px;
+}
+
 .category-nav {
     color: var(--text-color-secondary);
     font-size: 22px;
@@ -54,18 +68,18 @@
 
 .small-image {
     height: 200px;
-    box-shadow: 0px 0px 8px 0px var(--text-color-primary);
+    box-shadow: 4px 5px 8px 0px rgba(0, 0, 0, 0.35);
 }
 
 .big-image {
     height: 272px;
     border-radius: 26px;
     object-fit: cover;
-    box-shadow: 0px 0px 8px 0px var(--text-color-primary);
+    box-shadow: 4px 5px 8px 0px rgba(0, 0, 0, 0.35);
 }
 
 .sale-banner-heading {
-    font-weight: bold;
+    font-size: 20px;
 }
 
 /* sub category start*/

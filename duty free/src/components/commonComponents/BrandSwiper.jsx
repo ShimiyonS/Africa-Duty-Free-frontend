@@ -49,8 +49,8 @@ const BrandSwiper = () => {
                         spaceBetween: 40,
                     },
                     1024: {
-                        slidesPerView: 6,
-                        spaceBetween: 50,
+                        slidesPerView: 8,
+                        spaceBetween: 2,
                     },
                 }}
                 freeMode={true}

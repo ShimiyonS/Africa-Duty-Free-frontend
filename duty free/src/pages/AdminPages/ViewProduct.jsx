@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import "./adminProduct.css"
 import Common from '../../commonMethod/common'
 import { Link } from 'react-router-dom'
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -6,6 +7,7 @@ import { MdOutlineAdd } from "react-icons/md";
 import { MdManageSearch } from "react-icons/md";
 import Pagination from '../../components/commonComponents/Pagination';
 import DeletePopup from '../../components/commonComponents/DeletePopup';
+import AddProduct from './AddProduct';
 
 const ViewProduct = () => {
     const { apiRequest } = Common()
@@ -59,11 +61,59 @@ const ViewProduct = () => {
         fetchProduct();
     }, [search, page, pageSize])
 
+
+
+
+
+
+    const [refresh, setRefresh] = useState(false);
+
+    const handleRefresh = useCallback(() => {
+        setRefresh((prevRefresh) => !prevRefresh);
+    }, []);
+
+    useEffect(() => {
+
+    }, [refresh]);
+
     return (
         <div className='table-responsive'>
-            <div className='d-flex align-items-center justify-content-between'>
-                <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
-                <Link className='text-decoration-none px-3 py-2 text-color-secondary button-bg-primary rounded-2' to={`/siteadmin/add-product`}><MdOutlineAdd /> Add Product</Link>
+            <div className="admin_page_header">
+                <div className="admin_page_header_title_wrp">
+                    {/* {backButton && (
+                        <Button
+                            icon={<ArrowLeftOutlined />}
+                            onClick={() => history.go(-1)}
+                            style={{ marginRight: "10px" }}
+                            danger
+                            type="primary"
+                        />
+                    )} */}
+                    {/* <span className="admin_page_header_icon">{icon}</span> */}
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div className="admin_page_header_title">
+                            <b>Products</b>
+                        </div>
+                        <div className="admin_page_header_description"></div>
+                    </div>
+                </div>
+                <div className="admin_page_header_extra_wrp">
+                    <AddProduct handleRefresh={handleRefresh} />
+                    {/* <Avatar
+                        style={{
+                            background:
+                                user?.user_type === "channel partner owner" ||
+                                    user?.user_type === "channel partner"
+                                    ? "#007541"
+                                    : "#5e17eb",
+                            height: "52px",
+                            width: "52px",
+                        }}
+                        onClick={() => navigate("/profile-setting")}
+                    >
+                        {_.toUpper(user.firstName[0])}
+                    </Avatar> */}
+                </div>
             </div>
 
             <div className='table-conatiner table-responsive'>
