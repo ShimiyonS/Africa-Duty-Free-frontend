@@ -6,6 +6,68 @@ import { toast } from "react-toastify";
 
 
 const AddProductDrawer = ({ mode, productData }) => {
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [subCategories, setSubCategories] = useState([]);
+    const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+
+    const category = [
+        {
+            id: 1,
+            name: "Beauty",
+            slug: "beauty",
+            subCategorys: [
+                {
+                    id: 3,
+                    name: "Fragrances",
+                    slug: "fragrances",
+                    products: [{
+                        name: "Dolce Gabana",
+                        price: 33,
+                        // productImage: DolceGabana,
+                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
+                    },
+
+                    ]
+                }
+            ]
+        },
+        {
+            id: 2,
+            name: "dress",
+            slug: "dress",
+            subCategorys: [
+                {
+                    id: 1,
+                    name: "belt",
+                    slug: "fragrances",
+                    products: [{
+                        name: "Dolce Gabana",
+                        price: 33,
+                        // productImage: DolceGabana,
+                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
+                    },
+                    {
+                        name: "Dolce Gabana",
+                        price: 33,
+                        // productImage: DolceGabana
+                    },
+                    ]
+                }, {
+                    id: 2,
+                    name: "watch",
+                    slug: "fragrances",
+                    products: [{
+                        name: " Gabana",
+                        price: 33,
+                        // productImage: DolceGabana,
+                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
+                    },
+                    ]
+                }
+            ]
+        }
+    ]
+
     const { Option } = Select;
     const { apiRequest } = Common()
     const [form] = Form.useForm();
@@ -31,17 +93,52 @@ const AddProductDrawer = ({ mode, productData }) => {
     };
 
     const handleSubmit = async (values) => {
-        try {
 
+        try {
             const data = await apiRequest("POST", "/products/add", values)
             toast.success("Product added successfully");
             form.resetFields();
+
+            // Find the category by ID
+            const matchedCategory = category.find(cat => cat.id === values.categories);
+            if (!matchedCategory) {
+                console.error("Category not found");
+                return;
+            }
+
+            values.subCategories.forEach(subCatId => {
+                const matchedSubCategory = matchedCategory.subCategorys.find(sub => sub.id === subCatId);
+                if (matchedSubCategory) {
+                    matchedSubCategory.products.push({
+                        name: values.Product,
+                        price: values.ProductPrice,
+                        slug: values.ProductSlug,
+                        image: values.UploadImage,
+                        Description: values.description
+                    });
+                }
+            });
+            console.log("updated category", category);
+            console.log(values);
+
+
+
         } catch (error) {
             console.error(error);
             toast.error("Something went wrong");
         }
     }
+
+    const handleCategoryChange = (value) => {
+        setSelectedCategory(value);
+        const selected = category.find((cat) => cat.id === value);
+        setSubCategories(selected?.subCategorys || []);
+        setSelectedSubCategory(null);
+        form.setFieldsValue({ subCategories: [] });
+    };
+
     useEffect(() => {
+        console.log(category);
         if (mode === "edit" && productData) {
             form.setFieldsValue({
                 Product: productData?.title,
@@ -109,7 +206,7 @@ const AddProductDrawer = ({ mode, productData }) => {
                                         }
                                     }}
                                 >
-                                    <Button icon={<UploadOutlined />} style={{ width: "100%" }}>
+                                    <Button icon={<UploadOutlined />} style={{ width: "100%" }} type="primary">
                                         Click to Upload
                                     </Button>
                                 </Upload>
@@ -120,25 +217,41 @@ const AddProductDrawer = ({ mode, productData }) => {
                         <Col span={12}>
                             <Form.Item
                                 name="categories"
-                                label={mode === "edit" ? "Edit Categories" : "categories"}
-                                rules={[{ required: true, message: 'Please choose the approver' }]}
+                                label={mode === "edit" ? "Edit Categories" : "Categories"}
+                                rules={[{ required: true, message: 'Please choose the categories' }]}
                             >
-                                <Select placeholder="Please choose the categories">
-                                    <Option value="jack">Jack Ma</Option>
-                                    <Option value="tom">Tom Liu</Option>
+                                <Select
+                                    placeholder="Select Category"
+                                    value={selectedCategory}
+                                    onChange={handleCategoryChange}
+                                >
+                                    {category.map((cat) => (
+                                        <Option key={cat.id} value={cat.id}>
+                                            {cat.name}
+                                        </Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item
                                 name="subCategories"
-                                label={mode === "edit" ? "Edit Sub Categories" : "sub Categories"}
-                                rules={[{ required: true, message: 'Please choose the approver' }]}
+                                label="Sub Categories"
+                                rules={[{ required: true, message: 'Please choose the sub categories' }]}
                             >
-                                <Select placeholder="Please choose the sub categories">
-                                    <Option value="jack">Jack Ma</Option>
-                                    <Option value="tom">Tom Liu</Option>
+                                <Select
+                                    placeholder="Select Subcategory"
+                                    value={selectedSubCategory}
+                                    onChange={(value) => setSelectedSubCategory(value)}
+                                    disabled={!subCategories.length} mode="multiple"
+                                >
+                                    {subCategories.map((sub) => (
+                                        <Option key={sub.id} value={sub.id}>
+                                            {sub.name}
+                                        </Option>
+                                    ))}
                                 </Select>
+
                             </Form.Item>
                         </Col>
                     </Row>
@@ -158,9 +271,11 @@ const AddProductDrawer = ({ mode, productData }) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
+                    <div className="d-flex justify-content-end">
+                        <Button type="primary" htmlType="submit" >
+                            Submit
+                        </Button>
+                    </div>
                 </Form>
             </>
         </div>
