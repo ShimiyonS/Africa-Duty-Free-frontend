@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const BreadCrumb = ({ navigation }) => {
     return (
         <div className='container'>
-            <ul className='d-flex align-items-center gap-3 list-unstyled mt-3'>
+            <ul className='d-flex align-items-center gap-1 list-unstyled mt-3 mb-1'>
                 {navigation?.map((item, index) => {
                     const isLast = index === navigation.length - 1;
                     return (
