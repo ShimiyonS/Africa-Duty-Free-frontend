@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
-import Common from '../../commonMethod/Common.js'
+import Common from '../../commonMethod/common.js'
 import { toast } from 'react-toastify';
 import { Link } from "react-router-dom"
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaEdit } from "react-icons/fa";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { Button } from 'antd';
+import { MdDelete } from "react-icons/md";
 import { TiExportOutline } from "react-icons/ti";
 import Loader from '../../components/commonComponents/loader/loader'
-
+import AddEditSubCategory from './AddEditSubCategoryDrawer'
 
 const ListAllSubCategories = () => {
     const [data, setData] = useState([])
@@ -57,9 +57,7 @@ const ListAllSubCategories = () => {
         <div>
             <div className="d-flex justify-content-between">
                 <h1 className="justuspro-bold pb-4">All Sub Categories</h1>
-                <Link to="/siteadmin/addsubcategory" className="addLink dmsans-bold py-0 py-sm-2">
-                    Add Sub Category
-                </Link>
+                <AddEditSubCategory mode="add" subCategoryData={null} />
             </div>
 
             {confirmDeleteId && (
@@ -115,24 +113,18 @@ const ListAllSubCategories = () => {
                                                     <TiExportOutline />
                                                 </Link>
                                             </td>
-                                            <td className="position-relative action-cell">
-                                                <BsThreeDotsVertical className="threeDot" />
-                                                <div className="position-absolute hidebtn">
-                                                    <Link
-                                                        to={`/siteadmin/editsubcategory/${item.id}`}
-                                                        className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold d-block w-100"
-                                                    >
-                                                        <FaEdit className="me-2" />
-                                                        Edit
-                                                    </Link>
+                                            <td className="d-flex">
+                                                <div>
                                                     <button
                                                         onClick={() => handleDeleteClick(item.id)}
-                                                        className="dmsans-bold border-0 rounded-2 mt-2 bg-transparent p-0"
+                                                        className="dmsans-bold border-0 rounded-2  bg-transparent p-0"
                                                     >
-                                                        <RiDeleteBin6Line className="me-2" />
-                                                        Delete
+                                                        <MdDelete className="me-2" size={30} />
                                                     </button>
                                                 </div>
+                                                <Button type="primary">
+                                                    <AddEditSubCategory mode="edit" subCategoryData={item} />
+                                                </Button>
                                             </td>
                                         </tr>
                                     ))}
@@ -141,7 +133,7 @@ const ListAllSubCategories = () => {
                     </table>
                 </>
             }
-        </div>
+        </div >
     )
 }
 

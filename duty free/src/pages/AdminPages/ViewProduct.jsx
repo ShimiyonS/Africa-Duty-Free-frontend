@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import Common from '../../commonMethod/common'
-import { Link } from 'react-router-dom'
+import Common from '../../commonMethod/common.js'
+import { MdDelete } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { MdOutlineAdd } from "react-icons/md";
 import { MdManageSearch } from "react-icons/md";
 import Pagination from '../../components/commonComponents/Pagination';
 import DeletePopup from '../../components/commonComponents/DeletePopup';
-import { Button, Drawer } from 'antd';
-import AddAndEditDrawer from './AddAndEditProductDrawer'
-import { FaTimes } from "react-icons/fa";
+import { Button } from 'antd';
+import AddAndEditProductDrawer from './AddAndEditProductDrawer'
+
 
 const ViewProduct = () => {
 
@@ -25,11 +24,6 @@ const ViewProduct = () => {
     const [totalPages, setTotalPages] = useState(1)
     //popup state
     const [open, setOpen] = useState(false);
-    const [childrenDrawer, setChildrenDrawer] = useState(false);
-
-    // "add" or "edit"
-    const [drawerMode, setDrawerMode] = useState("add");
-    const [editData, setEditData] = useState(null);
 
     const closePopup = () => {
         setDeleteDetails(null)
@@ -38,23 +32,6 @@ const ViewProduct = () => {
     const openPopup = (data) => {
         setDeleteDetails(data)
     }
-
-    // drawer functions
-    const showDrawer = () => {
-        setOpen(true);
-    };
-
-    const onClose = () => {
-        setOpen(false);
-    };
-
-    const showChildrenDrawer = () => {
-        setChildrenDrawer(true);
-    };
-    const onChildrenDrawerClose = () => {
-        setChildrenDrawer(false);
-    };
-    // end of drawer functions
 
     const handleDelete = async (id) => {
         try {
@@ -93,53 +70,7 @@ const ViewProduct = () => {
                 <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
                 {/* drawer popup  */}
                 <>
-
-                    <Button
-                        type="primary"
-                        onClick={() => {
-                            setDrawerMode("add");
-                            setEditData(null);
-                            showDrawer();
-                        }}
-                        className="text-color-secondary"
-                    >
-                        Add Product
-                    </Button>
-
-                    <Drawer title={
-                        <div className="d-flex align-items-center justify-content-between w-100">
-                            <div className="d-flex align-items-center gap-2">
-                                <Button type="text" onClick={onClose} icon={<FaTimes />} />
-                                <span className="justuspro-bold">{drawerMode === "add" ? "Add Product" : "Edit Product"}</span>
-                            </div>
-
-                            <div>
-                                <Button type="primary" onClick={showChildrenDrawer}>
-                                    Add Category
-                                </Button>
-                            </div>
-                        </div>
-
-                    } className="justuspro-bold" width={800} closable={false} onClose={onClose} open={open}>
-
-                        <div>
-                            <div className="d-flex justify-content-between ">
-                            </div>
-                            {/* its coming from AddAndEdit Product drawer */}
-                            <AddAndEditDrawer mode={drawerMode} productData={editData} />
-                        </div>
-                        {/* second drawer */}
-                        <Drawer
-                            title="Two-level Drawer"
-                            width={800}
-                            closable={false}
-                            onClose={onChildrenDrawerClose}
-                            open={childrenDrawer}
-                        >
-                            This is two-level drawer
-                        </Drawer>
-                    </Drawer>
-
+                    <AddAndEditProductDrawer mode="add" productData={null} />
                 </>
             </div>
 
@@ -168,7 +99,6 @@ const ViewProduct = () => {
                             <th>Product Details</th>
                             <th>Product Price</th>
                             <th>Action</th>
-                            <th>edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -191,20 +121,19 @@ const ViewProduct = () => {
                                             className='btn border-0 bg-transparent p-0'
                                             onClick={() => setOpenMenuId(openMenuId === item.id ? null : item.id)}
                                         >
-                                            <BsThreeDotsVertical size={20} />
+                                             <MdDelete className="me-2" size={30} />
                                         </button>
 
                                         {openMenuId === item.id && (
                                             <div className='admin-product-action'>
-                                                <Link to={`/siteadmin/edit-product/${item.id}`} className='text-color-primary'>Edit</Link>
-                                                <button onClick={() => openPopup(item)}>Delete</button>
+                                                <button onClick={() => openPopup(item)}>  <MdDelete className="me-2" size={30} /></button>
                                             </div>
                                         )}
                                     </div>
+                                    <Button type="primary">
+                                        <AddAndEditProductDrawer mode="edit" productData={item} />
+                                    </Button>
                                 </td>
-                                <td><Button type="primary" className="button-bg-primary popup-hover" onClick={() => { setDrawerMode("edit"); setEditData(item); showDrawer() }}>
-                                    Edit product
-                                </Button></td>
                             </tr>
                         ))}
                     </tbody>
