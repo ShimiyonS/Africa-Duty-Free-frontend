@@ -156,7 +156,7 @@ const ViewProduct = () => {
             }
         }
         fetchProduct();
-    }, [search, page, pageSize])
+    }, [ page, pageSize])
 
     return (
         <>
