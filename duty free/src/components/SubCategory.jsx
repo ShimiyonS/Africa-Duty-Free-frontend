@@ -1,24 +1,23 @@
 import React from 'react'
-import { Link,  useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const SubCategory = ({ subCategorys }) => {
-    console.log("subcatory", subCategorys)
     const location = useNavigate()
     const categoryHandler = (slug) => {
         console.log(slug)
         location(`/product-category/beauty/${slug}`)
     }
     return (
-        <div className='container sub-category-page-container'>
+        <div className=' sub-category-page-container'>
             {subCategorys.map((subCategory, idex) =>
                 <div className='sub-category-container' key={idex}>
-                    <div onClick={() => categoryHandler(subCategory?.slug)} className='sub-category-name'>{subCategory.name}</div>
+                    <div onClick={() => categoryHandler(subCategory?.slug)} className='sub-category-name'>{subCategory?.subcategoryName}</div>
 
-                    <Link to={`/beauty/${subCategory?.slug}`} className="sub-category-image">
+                    {/* <Link to={`/beauty/${subCategory?.slug}`} className="sub-category-image">
                         <img src={subCategory.products[0]?.productImage} height={200} className=' product-image' />
                     </Link>
                     <Link to={`/beauty/${subCategory?.slug}`} className={`$ product-title dmsans-bold d-block text-decoration-none mb-0 pt-2`}>{subCategory?.products[0].name}</Link>
-                    <p className={`$ product-price dmsans-bold `}>${subCategory?.products[0]?.price}</p>
+                    <p className={`$ product-price dmsans-bold `}>${subCategory?.products[0]?.price}</p> */}
                 </div>
             )}
         </div>

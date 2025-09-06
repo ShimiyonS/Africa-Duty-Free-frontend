@@ -17,11 +17,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
   const { apiRequest } = Common()
   const [cart, setCart] = useState([])
   useEffect(() => {
-    const fetchCart = async () => {
-      const data = await apiRequest("GET", `/products`);
-      setCart(data?.products)
-    };
-    fetchCart();
+
     const offcanvasEl = document.getElementById("offcanvasRight");
 
     const fixBackdrop = () => {

@@ -41,16 +41,16 @@
 
 }
 
-.category-sub-img{
+.category-sub-img {
     height: 220px;
     box-shadow: 4px 5px 8px 0px rgba(0, 0, 0, 0.35);
 }
 
-.category-sub-title{
+.category-sub-title {
     font-size: 20px;
 }
 
-.category-sub-textsize{
+.category-sub-textsize {
     font-size: 18px;
 }
 
@@ -200,10 +200,33 @@
     color: #C4310C;
 }
 
-.product-filter-page{
+.product-filter-page {
     background-color: #FAFBFC;
     padding: 16px 16px 2rem 16px;
 }
-.remove-box-shadow img{
+
+.remove-box-shadow img {
     box-shadow: none !important;
+}
+
+
+.sales-cards-container {
+    width: 100%;
+    display: flex;
+    gap: 40px;
+}
+
+.sales-card {
+    width: 100%;
+}
+
+.image-container-salescard {
+    width: 500px;
+    height: 260px;
+}
+
+.image-container-salescard img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

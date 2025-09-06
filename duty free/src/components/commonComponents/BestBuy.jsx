@@ -34,8 +34,8 @@ const bestBuyDefault = [
         des: "Indulge in your favorite spirits with exclusive duty-free."
     }
 ]
-const BestBuy = ({ data = bestBuyDefault, itemClassName }) => {
-    const { slug, subslug } = useParams();
+const BestBuy = ({ data = bestBuyDefault, itemClassName, slug }) => {
+    // const { slug, subslug } = useParams();
     return (
         <div className='d-flex align-items-center flex-wrap container'>
             {data?.map((item, idx) => {

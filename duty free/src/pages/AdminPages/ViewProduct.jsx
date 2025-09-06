@@ -8,8 +8,10 @@ import { MdManageSearch } from "react-icons/md";
 import Pagination from '../../components/commonComponents/Pagination';
 import DeletePopup from '../../components/commonComponents/DeletePopup';
 import AddProduct from './AddProduct';
+import { Button } from 'antd';
 
 const ViewProduct = () => {
+
     const { apiRequest } = Common()
     const [search, setSearch] = useState("")
     const [product, setProduct] = useState([])
@@ -21,6 +23,13 @@ const ViewProduct = () => {
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(5)
     const [totalPages, setTotalPages] = useState(1)
+    //popup state
+    const [open, setOpen] = useState(false);
+    const [childrenDrawer, setChildrenDrawer] = useState(false);
+
+    // "add" or "edit"
+    const [drawerMode, setDrawerMode] = useState("add");
+    const [editData, setEditData] = useState(null);
 
     const closePopup = () => {
         setDeleteDetails(null)
@@ -29,6 +38,23 @@ const ViewProduct = () => {
     const openPopup = (data) => {
         setDeleteDetails(data)
     }
+
+    // drawer functions
+    const showDrawer = () => {
+        setOpen(true);
+    };
+
+    const onClose = () => {
+        setOpen(false);
+    };
+
+    const showChildrenDrawer = () => {
+        setChildrenDrawer(true);
+    };
+    const onChildrenDrawerClose = () => {
+        setChildrenDrawer(false);
+    };
+    // end of drawer functions
 
     const handleDelete = async (id) => {
         try {
@@ -141,6 +167,7 @@ const ViewProduct = () => {
                             <th>Product Details</th>
                             <th>Product Price</th>
                             <th>Action</th>
+                            <th>edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -174,6 +201,10 @@ const ViewProduct = () => {
                                         )}
                                     </div>
                                 </td>
+                                <td>
+                                <Button type="primary" className="button-bg-primary popup-hover" onClick={() => { setDrawerMode("edit"); setEditData(item); showDrawer() }}>
+                                    Edit product
+                                </Button></td>
                             </tr>
                         ))}
                     </tbody>

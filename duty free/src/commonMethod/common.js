@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 const api = axios.create({
-    baseURL: "https://dummyjson.com",
+    baseURL: import.meta.env.VITE_APP_API_URL,
     timeout: 10000,
 });
 
@@ -42,6 +42,6 @@ const Common = () => {
     const getActiveCart = useSelector(
         (state) => state.viewCart
     );
-    return { dispatch, getActiveCart ,firstLetterCapital, apiRequest}
+    return { dispatch, getActiveCart, firstLetterCapital, apiRequest }
 }
 export default Common;

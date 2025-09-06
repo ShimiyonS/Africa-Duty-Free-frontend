@@ -64,7 +64,7 @@ const Home = () => {
       <Banner />
       <BrandSwiper />
       <div>
-        <BestBuy data={bestBuy} itemClassName={`p-3 col-12 col-md-6 col-lg-3`} />
+        <BestBuy data={bestBuy} itemClassName={`p-3 col-12 col-md-6 col-lg-3`} slug={"beauty"} />
       </div>
       <div className="pagebody">
         <TitleComponent heading={"Most Popular"} />

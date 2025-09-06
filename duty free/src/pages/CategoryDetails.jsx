@@ -20,123 +20,44 @@ const CategoryDetails = () => {
     const { slug, subslug } = useParams();
     const { apiRequest } = Common()
     const [filterOpen, setFilterOpen] = useState(false)
-    const [products, setProducts] = useState([])
     const bannerDetails = banner?.find((item) => item?.name === slug);
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            const data = await apiRequest("GET", "/products");
-            setProducts(data?.products)
-
-        }
-        fetchProducts()
-    }, [])
+    const [subCategorys, setSubCategorys] = useState([])
+    const [products, setProducts] = useState([])
 
     const handleOpenFilter = () => {
         if (window.innerWidth <= 768) {
             setFilterOpen(!filterOpen)
         }
     }
-    const subCategorys = [
-        {
-            id: 1,
-            name: "Fragrances",
-            slug: "fragrances",
-            products: [{
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana,
-                Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
-            },
-            {
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            },
-            {
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            },
-            {
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            },
-            {
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            },
-            {
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            },
-            {
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            },
-            {
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            },
-            {
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            },
-            {
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            },]
-        },
-        {
-            id: 2,
-            name: "Skincare",
-            slug: "skincare",
-            products: [{
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            }]
-        },
-        {
-            id: 3,
-            name: "Cosmetics",
-            slug: "cosmetics",
-            products: [{
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            }]
-        },
-        {
-            id: 4,
-            name: "Grift Sets",
-            slug: "grift-sets",
-            products: [{
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            }]
-        },
-        {
-            id: 5,
-            slug: "men-grooming",
-            name: "Men’s grooming",
-            products: [{
-                name: "Dolce Gabana",
-                price: 33,
-                productImage: DolceGabana
-            }]
-        }
-    ]
 
-    const subCategory = subCategorys?.find((item) => item?.slug === subslug);
+    const fetchSubCategorys = async () => {
+        try {
+            const data = await apiRequest("GET", `/subcategory/${slug}`);
+            setSubCategorys(data?.subCategories)
+            console.log("data", data?.subCategories)
+        } catch (error) {
+            console.error("api fetching error", error)
+        }
+    }
+
+    const fetchProducts = async () => {
+        try {
+            const products = await apiRequest("GET", `/product/getproductsbysubcategory/${subslug}`)
+            setProducts(products?.subCategory?.products)
+            console.log(products?.subCategory?.products)
+        } catch (error) {
+            console.log("api fetching error ", error.message)
+        }
+    }
+    useEffect(() => {
+        if (slug) {
+            fetchSubCategorys()
+        } else if (subslug) {
+            fetchProducts()
+        }
+    }, [slug, subslug])
+
+
 
     return (
         <div className=''>
@@ -147,7 +68,7 @@ const CategoryDetails = () => {
                     <BrandSwiper />
                     <div className='container sub-calegory-body-container'>
                         <SubCategory subCategorys={subCategorys} />
-                        <SaleCard data={0} imageClass={"small-image"} />
+                        <SaleCard data={0}  />
                         <TitleComponent heading={"New products"} />
                         <NewProducts productsdata={products} hidePopTool={true} parentClassName={"mt-3"} />
                         <SaleCard data={1} headingClass={"text-center"} imageClass={"big-image"} />
@@ -227,7 +148,7 @@ const CategoryDetails = () => {
                             </div>
                             <div className='col-12 col-sm-9 col-md-9 '>
                                 <div className='d-flex gap-4 flex-wrap'>
-                                    {subCategory.products.map((product, idx) => {
+                                    {products.map((product, idx) => {
                                         return (
                                             <>
                                                 <div className='sub-category-container' key={idx}>

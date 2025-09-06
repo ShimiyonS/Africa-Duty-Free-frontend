@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Button } from 'antd'
+import { PlusOutlined, SaveFilled } from "@ant-design/icons";
+
 
 const AddSubCategory = () => {
+    const [open, setOpen] = useState(false);
     return (
-        <div>AddSubCategory</div>
+        <Button
+            type="primary"
+            onClick={() => setOpen(true)}
+            icon={<PlusOutlined />}
+        >
+            Add Sub Category
+        </Button>
     )
 }
 

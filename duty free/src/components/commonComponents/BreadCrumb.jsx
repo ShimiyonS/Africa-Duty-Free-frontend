@@ -7,12 +7,12 @@ const BreadCrumb = ({ navigation }) => {
                 {navigation?.map((item, index) => {
                     const isLast = index === navigation.length - 1;
                     return (
-                        <>
+                        <div className="breadcrum" key={index} >
                             <li>
                                 <Link to={item?.nav} className='text-decoration-none text-color-muted'>{item?.key}</Link>
                             </li>
                             {!isLast && <li><IoIosArrowForward /></li>}
-                        </>
+                        </div>
                     )
                 })}
             </ul>

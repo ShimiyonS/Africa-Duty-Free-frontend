@@ -5,7 +5,7 @@ const NavBar = ({ condition,togglemenu }) => {
   return (
     <div className={`${condition ? "sidebartoggle-active" : ""} sidebar bg-color-primary`}>
       <nav className="nav-header p-1">
-        <ul className="d-block d-lg-flex justify-content-center list-unstyled gap-4 m-0">
+        <ul className="d-block d-lg-flex justify-content-center list-unstyled gap-4 m-0 navbar-container">
           <li className="d-flex justify-content-end">
             <button className='d-lg-none bg-transparent border-0 p-3 icon-close' onClick={() => togglemenu(condition)}>
               <TfiClose />
