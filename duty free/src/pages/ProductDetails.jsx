@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from 'react'
+import 'swiper/css';
 import Common from "../commonMethod/Common.js";
 import '../Styles/product-details.css'
 import { CiHeart } from "react-icons/ci";
@@ -25,6 +26,9 @@ import { GoZoomIn } from "react-icons/go";
 import { Link } from 'react-router-dom'
 import { IoStarOutline } from "react-icons/io5";
 import { IoStar } from "react-icons/io5";
+import BreadCrumb from "../components/commonComponents/BreadCrumb.jsx";
+import { SwiperSlide, Swiper } from "swiper/react";
+import { FreeMode, Navigation } from "swiper/modules";
 
 const ProductDetails = () => {
     const { apiRequest } = Common()
@@ -165,7 +169,7 @@ const ProductDetails = () => {
                                 <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `} className="share-pinterest text-decoration-none p-2">
                                     Pin it
                                 </Link>
-                                <p className="share--download text-decoration-none p-2 text-black" onClick={()=>handleDownloadImage(mainImg)} >
+                                <p className="share--download text-decoration-none p-2 text-black" onClick={() => handleDownloadImage(mainImg)} >
                                     Download image
                                 </p>
                             </div>
@@ -188,7 +192,9 @@ const ProductDetails = () => {
                 {loading ?
                     <Loader /> :
                     <>
+                        <BreadCrumb navigation={[{ key: "home", nav: "/" }, { key: `${product?.category}`, nav: `/product-category/${product?.category}` }]} />
                         <div className="d-flex flex-wrap align-items-center justify-content-center product-wrapper pb-5 ">
+                            
                             <div className="col-12 col-md-8 col-lg-6 d-flex flex-column" >
                                 <div className="position-relative">
                                     <img src={mainImg} alt={product?.title} className="product-img w-100" />
@@ -196,12 +202,37 @@ const ProductDetails = () => {
                                         <GoZoomIn className="zoom-img" />
                                     </div>
                                 </div>
-                                <div className="d-flex flex-wrap">
-                                    {product?.images?.map((item, index) => (
-                                        <div className="col-3"><img onClick={() => handleMainimgChange(item)} src={item} alt={product?.title} className="product-gallary-img w-100" /></div>
-                                    ))}
-                                </div>
+
+                                {product?.images?.length > 4 ?
+                                    <div className="container mx-auto">
+                                        <Swiper
+                                            slidesPerView={4}
+
+                                            freeMode={true}
+                                            navigation={true}
+                                            modules={[FreeMode, Navigation]}
+                                            className={`${"product-swiper"}`}
+                                        >
+                                            {product?.images?.map((item, index) => {
+                                                return (
+                                                    <SwiperSlide>
+                                                        <div className=""><img onMouseEnter={() => handleMainimgChange(item)} src={item} alt={product?.title} className="product-gallary-img w-100" /></div>
+                                                    </SwiperSlide>
+                                                )
+                                            })}
+                                        </Swiper>
+                                    </div>
+                                    :
+                                    <>
+                                        <div className="d-flex flex-wrap">
+                                            {product?.images?.map((item, index) => (
+                                                <div className="col-3"><img onMouseEnter={() => handleMainimgChange(item)} src={item} alt={product?.title} className="product-gallary-img w-100" /></div>
+                                            ))}
+                                        </div>
+                                    </>
+                                }
                             </div>
+                            
                             <div className="col-12 col-md-4 col-lg-6">
                                 <div className="mb-3">
                                     <h2 className="product-page-title justuspro-bold">{product?.title}</h2>

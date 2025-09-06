@@ -23,6 +23,7 @@ import MyAccountRoutes from './routes/MyAccountRoutes';
 import AdminRoutes from './routes/AdminRoutes';
 import ProtectedAdminRoute from './routes/ProtectedAdminRoute';
 import Search from './pages/Search';
+import Wishlist from './pages/Wishlist';
 
 function App() {
   const location = useLocation()
@@ -50,6 +51,7 @@ function App() {
           <Route path="/product-category/:slug/:subslug" element={<CategoryDetails />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/brand/:slug" element={<BrandDetails />} />
+          <Route path="/wishlist" element={<Wishlist />} />
           {/* <Route path="/africa-best-buy/product-category/:slug" element={<BrandDetails />} /> */}
           <Route path="/shop" element={<ShopDetails />} />
           <Route path="/about" element={<About />} />

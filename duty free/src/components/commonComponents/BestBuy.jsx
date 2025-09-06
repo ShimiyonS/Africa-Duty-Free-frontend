@@ -8,22 +8,26 @@ const bestBuyDefault = [
     {
         name: "Fragrance",
         link: "liqueur",
-        image: categoryimage1
+        image: categoryimage1,
+        desc: "Indulge in your favorite spirits with exclusive duty-free."
     },
     {
         name: "Skincare",
         link: "fragrances",
-        image: categoryimage2
+        image: categoryimage2,
+        desc: "Indulge in your favorite spirits with exclusive duty-free."
     },
     {
         name: "Gift Sets",
         link: "cosmetics",
-        image: categoryimage3
+        image: categoryimage3,
+        desc: "Indulge in your favorite spirits with exclusive duty-free."
     },
     {
         name: "Accesoires",
         link: "cosmetics",
-        image: categoryimage4
+        image: categoryimage4,
+        desc: "Indulge in your favorite spirits with exclusive duty-free."
     }
 ]
 const BestBuy = ({ data = bestBuyDefault, itemClassName }) => {
@@ -33,7 +37,7 @@ const BestBuy = ({ data = bestBuyDefault, itemClassName }) => {
             {data?.map((item) => {
                 return (
                     <div className={`${itemClassName ? itemClassName : "p-5 col-12 col-md-6 col-lg-3"}`}>
-                        <CategoryCard image={item.image} text={item?.name} link={slug ? slug+"/"+item?.link : item?.link} />
+                        <CategoryCard image={item.image} text={item?.name} link={slug ? slug + "/" + item?.link : item?.link} desc={item.desc} />
                     </div>
                 )
             })}
