@@ -1,20 +1,23 @@
-import React, { useState } from 'react'
-import { Col, Dropdown, Flex, Form, Input, Menu, Row, Select, Space, Table } from "antd";
-import { Button, Drawer } from 'antd';
-import AddAndEditDrawer from './AddAndEditProductDrawer'
-import { FaTimes } from "react-icons/fa";
-import { MoreOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from 'react'
+import Common from '../../commonMethod/common.js'
+import { MdDelete } from "react-icons/md";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdManageSearch } from "react-icons/md";
+import Pagination from '../../components/commonComponents/Pagination';
+import DeletePopup from '../../components/commonComponents/DeletePopup';
+import { Button } from 'antd';
+import AddAndEditProductDrawer from './AddAndEditProductDrawer'
+
+
 const ViewProduct = () => {
+
     //filter state
-    const [selectedColumn, setSelectedColumn] = useState("");
+    const [selectedColumn, setSelectedColumn] = useState("productname");
     const [searchText, setSearchText] = useState("");
-    //popup stateopen
+
+    //popup state
     const [open, setOpen] = useState(false);
-    const [childrenDrawer, setChildrenDrawer] = useState(false);
-    // "add" or "edit"
-    const [drawerMode, setDrawerMode] = useState("add");
-    const [editData, setEditData] = useState(null);
-    const[drawerhandle, setDrawerhandle] = useState({})
+
     const categorys = [
         {
             id: 1,
@@ -47,6 +50,7 @@ const ViewProduct = () => {
             ]
         }
     ]
+
     const dataSource = categorys.flatMap((cat, catindex) =>
         cat.subCategorys.flatMap((subc, subcindex) =>
             subc.products.map((product, pindex) => ({
@@ -60,6 +64,7 @@ const ViewProduct = () => {
                 // address: item.name
             }))
         ))
+
     const columns = [
         {
             title: 'Id',
@@ -100,9 +105,9 @@ const ViewProduct = () => {
             render: (_, record) => {
                 const menu = (
                     <Menu>
-                        <Menu.Item key="edit" onClick={()=>setOpen(true)}>Edit</Menu.Item>
+                        <Menu.Item key="edit">✏️ Edit</Menu.Item>
                         <Menu.Item key="delete" danger>
-                             Delete
+                            🗑️ Delete
                         </Menu.Item>
                     </Menu>
                 );
@@ -114,101 +119,148 @@ const ViewProduct = () => {
             },
         },
     ];
+
     const filteredData = dataSource.filter((item) => {
         if (!searchText) return true; // If search box empty → show all
+
         const value = item[selectedColumn]?.toString().toLowerCase();
         return value?.includes(searchText.toLowerCase());
     });
-    // drawer functions
-    const showDrawer = () => {
-        setOpen(true);
-    };
-    const onClose = () => {
-        setOpen(false);
-    };
-    const showChildrenDrawer = () => {
-        setChildrenDrawer(true);
-    };
-    const onChildrenDrawerClose = () => {
-        setChildrenDrawer(false);
-    };
-    // end of drawer functions
+
+    const handleDelete = async (id) => {
+        try {
+            setLoading(true)
+            await apiRequest("DELETE", `/products/${id}`);
+            setProduct((prev) => prev.filter((p) => p.id !== id)); // remove locally
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const skip = (page - 1) * pageSize
+                const endpoint = search
+                    ? `/products/search?q=${search}&limit=${pageSize}&skip=${skip}`
+                    : `/products?limit=${pageSize}&skip=${skip}`;
+
+                const data = await apiRequest("GET", endpoint);
+
+                setProduct(data.products || [])
+                setTotalPages(Math.ceil(data.total / pageSize)) // ✅ fix: based on API total
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        fetchProduct();
+    }, [search, page, pageSize])
+
     return (
+        <>
+      
         <div className='table-responsive'>
             <div className='d-flex align-items-center justify-content-between'>
                 <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
                 {/* drawer popup  */}
                 <>
-                    <Button
-                        type="primary"
-                        onClick={() => {
-                            setDrawerMode("add");
-                            setEditData(null);
-                            showDrawer();
-                        }}
-                        className="text-color-secondary"
-                    >
-                        Add Product
-                    </Button>
-                    <Drawer title={
-                        <div className="d-flex align-items-center justify-content-between w-100">
-                            <div className="d-flex align-items-center gap-2">
-                                <Button type="text" onClick={onClose} icon={<FaTimes />} />
-                                <span className="justuspro-bold">{drawerMode === "add" ? "Add Product" : "Edit Product"}</span>
-                            </div>
-                            <div>
-                                <Button type="primary" onClick={showChildrenDrawer}>
-                                    Add Category
-                                </Button>
-                            </div>
-                        </div>
-                    } className="justuspro-bold" width={800} closable={true} onClose={onClose} open={open}>
-                        <div>
-                            <div className="d-flex justify-content-between ">
-                            </div>
-                            {/* its coming from AddAndEdit Product drawer */}
-                            <AddAndEditDrawer mode={drawerMode} productData={editData} />
-                        </div>
-                        {/* second drawer */}
-                        <Drawer
-                            title="Two-level Drawer"
-                            width={800}
-                            closable={false}
-                            onClose={onChildrenDrawerClose}
-                            open={childrenDrawer}
-                        >
-                            This is two-level drawer
-                        </Drawer>
-                    </Drawer>
+                    <AddAndEditProductDrawer mode="add" productData={null} />
                 </>
             </div>
-            <Row  justify={"space-between"}  style={{ marginTop: "24px", marginBottom: "24px" }}>
+            <Row style={{ marginTop: "24px", marginBottom: "24px" }}>
                 <Col span={6}>
-                    <Form.Item label="Filter option">
-                        <Select
-                            placeholder="Search..."
-                            onChange={(value) => setSelectedColumn(value)}
-                        >
-                            <Option value="productname">Product Name</Option>
-                            <Option value="productcatagory">Product Category</Option>
-                            <Option value="productsubcatagory">Product Sub Category</Option>
-                            <Option value="productbrand">Product Brand</Option>
-                        </Select>
-                    </Form.Item>
+                    <Select
+                        defaultValue="productname"
+                        style={{ width: 200 }}
+                        onChange={(value) => setSelectedColumn(value)} >
+                        <Option value="productname">Product Name</Option>
+                        <Option value="productcatagory">Product Category</Option>
+                        <Option value="productsubcatagory">Product Sub Category</Option>
+                        <Option value="productbrand">Product Brand</Option>
+                    </Select>
                 </Col>
+
                 <Col span={6}>
-                    <Form.Item label="Filter value">
-                        <Input
-                            placeholder="Search..."
-                            value={searchText}
-                            onChange={(e) => setSearchText(e.target.value)}
-                            disabled={!selectedColumn}
-                        />
-                    </Form.Item>
+                    <Input
+                        placeholder="Search..."
+                        style={{ width: 250 }}
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                    />
                 </Col>
             </Row>
-            <Table bordered dataSource={filteredData} columns={columns} />
-        </div>
+
+                {/* 📦 Products table */}
+                <table className='container table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>Product Id</th>
+                            <th>Product Details</th>
+                            <th>Product Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {product.map((item, index) => (
+                            <tr key={item.id || index}>
+                                <td>{item.id}</td>
+                                <td>
+                                    <div className='d-flex align-items-center justify-content-center'>
+                                        <img src={item.images[0]} className='admin-product-view' alt="product-img" />
+                                        <p className='m-0 ms-3 product-table-title'>{item.title}</p>
+                                    </div>
+                                </td>
+                                <td>{item.price}</td>
+                                <td>
+                                    <div
+                                        className='admin-action'
+                                        onMouseLeave={() => setOpenMenuId(null)}
+                                    >
+                                        <button
+                                            className='btn border-0 bg-transparent p-0'
+                                            onClick={() => setOpenMenuId(openMenuId === item.id ? null : item.id)}
+                                        >
+                                             <MdDelete className="me-2" size={30} />
+                                        </button>
+
+                                        {openMenuId === item.id && (
+                                            <div className='admin-product-action'>
+                                                <button onClick={() => openPopup(item)}>  <MdDelete className="me-2" size={30} /></button>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <Button type="primary">
+                                        <AddAndEditProductDrawer mode="edit" productData={item} />
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                {/* 📄 Pagination */}
+                <div className="m-3">
+                    <Pagination
+                        currentPage={page}
+                        pageSize={pageSize}
+                        totalPages={totalPages}
+                        onPageChange={setPage}
+                        onPageSizeChange={(newSize) => {
+                            setPageSize(newSize);
+                            setPage(1); // reset to page 1
+                        }}
+                    />
+                </div>
+            </div>
+
+            {/* ❌ Delete confirmation popup */}
+            {deleteDetails !== null && (
+                <DeletePopup alertmessage={"Are you sure want to delete this product?"} handleDelete={() => handleDelete(deleteDetails.id)} data={deleteDetails} handleclose={closePopup} />
+            )}
+     </>
     )
 }
+
 export default ViewProduct
