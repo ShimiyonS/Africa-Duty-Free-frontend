@@ -2,8 +2,8 @@ import { Route, Routes } from 'react-router-dom'
 import AdminLayout from '../layouts/AdminLayout'
 import NoPage from '../pages/NoPage'
 import { ToastContainer } from 'react-toastify';
-import ViewProduct from '../pages/AdminPages/ViewProduct'
-import ViewUsers from '../pages/AdminPages/ViewUsers';
+import ListAllProducts from '../pages/AdminPages/ListAllProducts'
+import ListAllUsers from '../pages/AdminPages/ListAllUsers';
 import ListAllBrands from '../pages/AdminPages/ListAllBrands'
 
 
@@ -15,8 +15,8 @@ const AdminRoutes = () => {
                     <Route index path="/" element={<p>vicky</p>} />
                     <Route path="*" element={<NoPage />} />
                     <Route path="/brands" element={<ListAllBrands />} />
-                    <Route index path="/products" element={<ViewProduct />} />
-                    <Route index path="/users" element={<ViewUsers />} />
+                    <Route index path="/products" element={<ListAllProducts />} />
+                    <Route index path="/users" element={<ListAllUsers />} />
 
                 </Route>
             </Routes >

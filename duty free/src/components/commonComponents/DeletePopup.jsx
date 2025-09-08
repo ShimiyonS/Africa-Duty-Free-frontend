@@ -1,26 +1,44 @@
-import React from 'react'
+import { useState } from 'react';
+import Common from '../../commonMethod/common'
+import { Button, Col, Modal, Row } from 'antd';
+import { MdDeleteOutline } from 'react-icons/md';
+const DeletePopup = ({ title, apiEndpoint, name, image }) => {
 
-const DeletePopup = ({ alertmessage, handleclose, handleDelete , data }) => {
+    const { apiRequest } = Common()
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const handleDelete = async () => {
+        try {
+            const res = await apiRequest("DELETE", apiEndpoint)
+            setModalOpen(false)
+        }
+        catch (error) {
+            console.error("api fetching error", error);
+        }
+    }
     return (
-        <div className='delete-popup'>
-            <div className='delete-popup-content'>
-                <p className='fw-bold'>{alertmessage}</p>
-                <img className='d-block mx-auto' src={data?.images?.[0] || data?.image} width={100} height={100} alt="deleting product" />
-                <button
-                    className='px-3 py-2 border-0 button-bg-primary text-color-secondary rounded-2'
-                    onClick={() => handleclose()}
-                >
-                    Cancel
-                </button>
-                <button
-                    className='ms-4 px-3 py-2 border-0 button-bg-danger text-color-secondary rounded-2'
-                    onClick={handleDelete}
-                >
-                    Delete
-                </button>
-            </div>
-        </div>
-    )
-}
+        <>
+            <Button type="link" danger onClick={() => setModalOpen(true)}>
+                <MdDeleteOutline size={19} />
+            </Button>
+            <Modal
+                title={title}
+                centered
+                open={modalOpen}
+                onOk={() => handleDelete()}
+                onCancel={() => setModalOpen(false)}
+            >
+                <Row justify={`center`}>
+                    <Col>
+                        <div>
+                            {image && <img src={image}></img>}
+                            <p className='text-center'>{name}</p>
+                        </div>
+                    </Col>
+                </Row>
 
-export default DeletePopup
+            </Modal>
+        </>
+    );
+};
+export default DeletePopup;

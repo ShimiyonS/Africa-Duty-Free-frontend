@@ -1,24 +1,14 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Col, Form, Input, Row, Select, Space, Table } from "antd";
-import { Button, Drawer } from 'antd';
-import { FaRegEdit } from "react-icons/fa";
-import { MdDeleteOutline } from "react-icons/md";
 import AddEditUsers from '../../components/AdminComponents/AddEditUsers';
+import DeletePopup from '../../components/commonComponents/DeletePopup'
 
-const ViewUsers = () => {
+const ListAllUsers = () => {
 
     //filter state
     const [selectedColumn, setSelectedColumn] = useState("");
     const [searchText, setSearchText] = useState("");
     const [headerdefine, setHeaderdefine] = useState(null)
-
-
-    //popup stateopen
-    // const [drawerState, setDrawerState] = useState({
-    //     mode: "add",
-    //     data: null,
-    //     open: false
-    // });
 
 
     const changeselect = (value) => {
@@ -291,13 +281,7 @@ const ViewUsers = () => {
             render: (_, record) => (
                 <Space>
                     <AddEditUsers mode={"edit"} userData={record} />
-                    <Button
-                        type="link"
-                        danger
-                        onClick={() => handleDelete(record)}
-                    >
-                        <MdDeleteOutline size={19} />
-                    </Button>
+                    <DeletePopup title={"Are you want to Delete this User?"} apiEndpoint={`/user/${record.id}`} name={record.username} image={record.image}/>
                 </Space>
             ),
         }
@@ -392,9 +376,9 @@ const ViewUsers = () => {
 
             </Row>
 
-            <Table bordered dataSource={filteredData} columns={columns} />
+            <Table dataSource={filteredData} columns={columns} />
         </div>
     )
 }
 
-export default ViewUsers
+export default ListAllUsers
