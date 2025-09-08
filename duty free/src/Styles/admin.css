@@ -35,6 +35,17 @@
     background: #0056b3;
 }
 
+@media (max-width:769px) {
+.admin-right-wrapper {
+    margin: 0;
+    width: 100%;
+}
+.admin-left-wrapper {
+    left: -100%;
+}
+
+}
+
 
 /* css for delete popup */
 .delete-ok-ant-btn,
