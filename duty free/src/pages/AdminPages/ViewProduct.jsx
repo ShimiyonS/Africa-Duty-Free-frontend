@@ -130,45 +130,46 @@ const ViewProduct = () => {
 
 
     return (
-        <div className='table-responsive'>
-            <div className='d-flex align-items-center justify-content-between'>
-                <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
-                {/* drawer popup  */}
-                <>
-                    <AddEditProducts mode="add" productData={null} />
-                </>
+        <>
+
+            <div className='table-responsive'>
+                <div className='d-flex align-items-center justify-content-between'>
+                    <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
+                    {/* drawer popup  */}
+                    <>
+                        <AddEditProducts mode="add" productData={null} />
+                    </>
+                </div>
+                <Row justify={"space-between"} style={{ marginTop: "24px", marginBottom: "24px" }}>
+                    <Col span={6}>
+                        <Form.Item label="Filter option">
+                            <Select
+                                placeholder="Search..."
+                                onChange={(value) => changeSearchField(value)}
+                            >
+                                <Option value="productname">Product Name</Option>
+                                <Option value="productcatagory">Product Category</Option>
+                                <Option value="productsubcatagory">Product Sub Category</Option>
+                                <Option value="productbrand">Product Brand</Option>
+                            </Select>
+                        </Form.Item>
+                    </Col>
+
+                    <Col span={6}>
+                        <Form.Item label="Filter value">
+                            <Input
+                                placeholder="Search..."
+                                value={searchText}
+                                onChange={(e) => setSearchText(e.target.value)}
+                                disabled={!searchField}
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
+
+                <Table bordered dataSource={filteredData} columns={columns} />
             </div>
-            <Row justify={"space-between"} style={{ marginTop: "24px", marginBottom: "24px" }}>
-                <Col span={6}>
-                    <Form.Item label="Filter option">
-                        <Select
-                            placeholder="Search..."
-                            onChange={(value) => changeSearchField(value)}
-                        >
-                            <Option value="productname">Product Name</Option>
-                            <Option value="productcatagory">Product Category</Option>
-                            <Option value="productsubcatagory">Product Sub Category</Option>
-                            <Option value="productbrand">Product Brand</Option>
-                        </Select>
-                    </Form.Item>
-                </Col>
-
-                <Col span={6}>
-                    <Form.Item label="Filter value">
-                        <Input
-                            placeholder="Search..."
-                            value={searchText}
-                            onChange={(e) => setSearchText(e.target.value)}
-                            disabled={!searchField}
-                        />
-                    </Form.Item>
-                </Col>
-            </Row>
-
-            <Table bordered dataSource={filteredData} columns={columns} />  
-
-
-        </div>
+        </>
     )
 }
 
