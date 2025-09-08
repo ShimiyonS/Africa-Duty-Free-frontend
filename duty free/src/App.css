@@ -24,6 +24,8 @@
     --text-color-primary: #000;
     --text-color-secondary: #fff;
     --text-color-danger: #b63f21;
+    --text-color-warning:#f0b32c;
+    --text-color-success:#23c337;
     --text-color-gold: #a49764;
     --text-color-muted: #5E5E5E;
 
@@ -85,6 +87,14 @@ label {
 
 .text-color-secondary,.antd-custom-btn span {
     color: var(--text-color-secondary);
+}
+
+.text-color-success{
+    color:var(--text-color-success)
+}
+
+.text-color-warning{
+    color:var(--text-color-warning)
 }
 
 .text-color-danger {
