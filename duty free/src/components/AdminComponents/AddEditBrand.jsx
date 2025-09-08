@@ -54,7 +54,7 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
     return (
         <div>
             <Button type={mode === "edit" ? "link" : "primary"} onClick={toggleDrawer} className="antd-custom-btn">
-                {mode === "edit" ? <FaRegEdit size={19} /> : "Add Brand"}
+                {mode === "edit" ? <FaRegEdit size={19} className="text-color-warning" /> : "Add Brand"}
             </Button>
             <>
                 <Drawer
@@ -96,7 +96,7 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
                                     label={mode === "edit" ? "Edit Image" : "Upload Image"}
                                     rules={[{ required: true, message: 'Please upload image' }]}
                                 >
-                                    <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" beforeUpload={(file) => { return false; }} className="antd-custom-btn">
+                                    <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" beforeUpload={() => { return false; }} className="antd-custom-btn">
                                         <Button icon={<UploadOutlined />} type="primary">Upload</Button>
                                     </Upload>
                                 </Form.Item>
