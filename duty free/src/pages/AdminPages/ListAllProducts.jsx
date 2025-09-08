@@ -107,7 +107,7 @@ const ListAllProducts = () => {
             render: (_, record) => (
                 <Space>
                     <AddEditProducts mode="edit" productData={record} />
-                    <DeletePopup title={"Are you want to Delete this Product?"} apiEndpoint={`/products/${record.id}`} name={record.productname} image={'njdvbdfvhbuh'} />
+                    <DeletePopup title={"Are you want to Delete this Product?"} apiEndpoint={`/products/${record.id}`} data={{id:record.id,image:"",name:record.productname}} />
                 </Space>
             )
         },

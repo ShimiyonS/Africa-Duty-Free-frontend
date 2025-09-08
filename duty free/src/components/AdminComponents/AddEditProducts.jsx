@@ -155,7 +155,7 @@ const AddEditProducts = ({ mode, productData }) => {
                 onClick={toggleDrawer}
                 className={`antd-custom-btn`}
             >
-                {mode === "edit" ? <FaRegEdit size={19} /> : "Add Product"}
+                {mode === "edit" ? <FaRegEdit size={19} className='text-color-warning' /> : "Add Product"}
             </Button>
             <>
                 <Drawer title={
