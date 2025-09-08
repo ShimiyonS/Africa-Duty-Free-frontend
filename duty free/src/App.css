@@ -83,7 +83,8 @@ label {
     color: var(--text-color-primary);
 }
 
-.text-color-secondary,.antd-custom-btn span {
+.text-color-secondary,
+.antd-custom-btn span {
     color: var(--text-color-secondary);
 }
 
@@ -344,4 +345,16 @@ label {
     .new-swipper .swiper-rtl .swiper-button-prev {
         top: 58px !important;
     }
+}
+
+.ant-upload-list-item-name {
+    color: var(--text-color-primary) !important
+}
+
+.ant-pagination-total-text {
+    margin-right: auto !important;
+}
+
+.ant-pagination-options {
+    margin-left: auto !important;
 }
