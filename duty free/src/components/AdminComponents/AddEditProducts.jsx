@@ -3,11 +3,11 @@ import { Button, Col, Drawer, Form, Input, Row, Select, Upload, message } from '
 import { UploadOutlined } from '@ant-design/icons';
 import Common from '../../commonMethod/common.js'
 import { toast } from "react-toastify";
-import AddEditCategoryDrawer from './AddEditCategoryDrawer'
-import AddEditSubCategoryDrawer from './AddEditSubCategoryDrawer'
-import { CiEdit } from "react-icons/ci";
+import { FaRegEdit } from 'react-icons/fa';
+import AddEditCategory from './AddEditCategory.jsx';
+import AddEditSubCategory from './AddEditSubCategory.jsx';
 
-const AddEditProductDrawer = ({ mode, productData }) => {
+const AddEditProducts = ({ mode, productData }) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [subCategories, setSubCategories] = useState([]);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
@@ -117,14 +117,14 @@ const AddEditProductDrawer = ({ mode, productData }) => {
 
     //for showing edit datas in input fields
     useEffect(() => {
-        if (mode === "edit" && productData) {
+        if (mode === "edit" && productData) { 
             form.setFieldsValue({
-                product: productData?.title,
-                ProductSlug: productData?.slug,
+                product: productData?.productname,
+                productSlug: productData?.productSlug,
                 productPrice: productData?.price,
                 uploadImage: productData?.images?.[0],
-                categories: productData?.category,
-                subCategories: productData?.subCategory,
+                categories: productData?.productcatagory,
+                subCategories: productData?.productsubcatagory,
                 description: productData?.description,
             });
         } else {
@@ -150,8 +150,12 @@ const AddEditProductDrawer = ({ mode, productData }) => {
 
     return (
         <div>
-            <Button type="primary" onClick={toggleDrawer} className={ `${mode === "edit" ? "p-0"  : ""} antd-custom-btn`} >
-                {mode === "edit" ? <CiEdit /> : "Add Product"}
+            <Button
+                type={mode === "edit" ? "link" : "primary"}
+                onClick={toggleDrawer}
+                className={`antd-custom-btn`}
+            >
+                {mode === "edit" ? <FaRegEdit size={19} /> : "Add Product"}
             </Button>
             <>
                 <Drawer title={
@@ -163,19 +167,18 @@ const AddEditProductDrawer = ({ mode, productData }) => {
                         <Row gutter={16}>
                             {/* calling component category and subCategory */}
                             <Col>
-                                <AddEditCategoryDrawer setShareValue={setShareValue} />
+                                <AddEditCategory setShareValue={setShareValue} />
                             </Col>
                             <Col>
-                                <AddEditSubCategoryDrawer />
+                                <AddEditSubCategory />
                             </Col>
                         </Row>
                     </div>
                 } open={childrenDrawer}
-                    onClose={toggleDrawer} className="justuspro-bold" width={800} closable={true}>
+                    onClose={toggleDrawer}
+                    className="justuspro-bold" width={800} closable={true}>
                     <div>
-                        <div className="d-flex justify-content-between ">
-                        </div>
-
+                       
                         <Form layout="vertical" form={form} onFinish={handleSubmit}>
                             <Row gutter={16}>
                                 <Col span={12}>
@@ -292,4 +295,4 @@ const AddEditProductDrawer = ({ mode, productData }) => {
     )
 }
 
-export default AddEditProductDrawer
+export default AddEditProducts

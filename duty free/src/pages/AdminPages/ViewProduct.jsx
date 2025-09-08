@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import Common from '../../commonMethod/common.js'
-import { MdDelete } from "react-icons/md";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { MdManageSearch } from "react-icons/md";
-import Pagination from '../../components/commonComponents/Pagination';
-import DeletePopup from '../../components/commonComponents/DeletePopup';
+import { useState } from 'react'
+import { Col, Form, Input, Row, Select, Space, Table } from "antd";
 import { Button } from 'antd';
-import AddAndEditProductDrawer from './AddAndEditProductDrawer'
-
+import AddEditProducts from '../../components/AdminComponents/AddEditProducts';
+import { MdDeleteOutline } from 'react-icons/md';
 
 const ViewProduct = () => {
 
     //filter state
-    const [selectedColumn, setSelectedColumn] = useState("productname");
+    const [searchField, setSearchField] = useState("");
     const [searchText, setSearchText] = useState("");
 
-    //popup state
-    const [open, setOpen] = useState(false);
+    const changeSearchField = (value) => {
+        setSearchField(value)
+        setSearchText("")
+    }
 
     const categorys = [
         {
@@ -32,6 +29,7 @@ const ViewProduct = () => {
                         productid: 1,
                         name: "Dolce Gabana",
                         price: 33,
+                        slug: "dolce-gabana",
                         // productImage: DolceGabana,
                         stock: 22,
                         brand: "LG",
@@ -41,9 +39,11 @@ const ViewProduct = () => {
                         productid: 2,
                         name: "Fog",
                         price: 50,
+                        slug: "fog",
                         // productImage: DolceGabana
                         stock: 27,
                         brand: "Samsung",
+                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
                     },
                     ]
                 }
@@ -61,6 +61,9 @@ const ViewProduct = () => {
                 productsubcatagory: subc.name,
                 productbrand: product.brand || "",
                 stock: product.stock || 0,
+                price: product.price,
+                description: product.Description,
+                productSlug: product.slug
                 // address: item.name
             }))
         ))
@@ -100,166 +103,73 @@ const ViewProduct = () => {
         {
             title: "Action",
             key: "operation",
+            align: "center",
             fixed: "right",
             width: 100,
-            render: (_, record) => {
-                const menu = (
-                    <Menu>
-                        <Menu.Item key="edit">✏️ Edit</Menu.Item>
-                        <Menu.Item key="delete" danger>
-                            🗑️ Delete
-                        </Menu.Item>
-                    </Menu>
-                );
-                return (
-                    <Dropdown overlay={menu} trigger={["click"]}>
-                        <MoreOutlined style={{ fontSize: 18, cursor: "pointer" }} />
-                    </Dropdown>
-                );
-            },
+            render: (_, record) => (
+                <Space>
+                    <AddEditProducts mode="edit" productData={record} />
+                    <Button
+                        type="link"
+                        danger
+                        onClick={() => handleDelete(record)}
+                    >
+                        <MdDeleteOutline size={19} />
+                    </Button>
+                </Space>
+            )
         },
     ];
 
-    const filteredData = dataSource.filter((item) => {
+    let filteredData = dataSource.filter((item) => {
         if (!searchText) return true; // If search box empty → show all
 
-        const value = item[selectedColumn]?.toString().toLowerCase();
+        const value = item[searchField]?.toString().toLowerCase();
         return value?.includes(searchText.toLowerCase());
     });
 
-    const handleDelete = async (id) => {
-        try {
-            setLoading(true)
-            await apiRequest("DELETE", `/products/${id}`);
-            setProduct((prev) => prev.filter((p) => p.id !== id)); // remove locally
-        } catch (error) {
-            console.error(error)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                const skip = (page - 1) * pageSize
-                const endpoint = search
-                    ? `/products/search?q=${search}&limit=${pageSize}&skip=${skip}`
-                    : `/products?limit=${pageSize}&skip=${skip}`;
-
-                const data = await apiRequest("GET", endpoint);
-
-                setProduct(data.products || [])
-                setTotalPages(Math.ceil(data.total / pageSize)) // ✅ fix: based on API total
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        fetchProduct();
-    }, [ page, pageSize])
 
     return (
         <>
-      
-        <div className='table-responsive'>
-            <div className='d-flex align-items-center justify-content-between'>
-                <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
-                {/* drawer popup  */}
-                <>
-                    <AddAndEditProductDrawer mode="add" productData={null} />
-                </>
-            </div>
-            <Row style={{ marginTop: "24px", marginBottom: "24px" }}>
-                <Col span={6}>
-                    <Select
-                        defaultValue="productname"
-                        style={{ width: 200 }}
-                        onChange={(value) => setSelectedColumn(value)} >
-                        <Option value="productname">Product Name</Option>
-                        <Option value="productcatagory">Product Category</Option>
-                        <Option value="productsubcatagory">Product Sub Category</Option>
-                        <Option value="productbrand">Product Brand</Option>
-                    </Select>
-                </Col>
 
-                <Col span={6}>
-                    <Input
-                        placeholder="Search..."
-                        style={{ width: 250 }}
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                    />
-                </Col>
-            </Row>
-
-                {/* 📦 Products table */}
-                <table className='container table-responsive'>
-                    <thead>
-                        <tr>
-                            <th>Product Id</th>
-                            <th>Product Details</th>
-                            <th>Product Price</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {product.map((item, index) => (
-                            <tr key={item.id || index}>
-                                <td>{item.id}</td>
-                                <td>
-                                    <div className='d-flex align-items-center justify-content-center'>
-                                        <img src={item.images[0]} className='admin-product-view' alt="product-img" />
-                                        <p className='m-0 ms-3 product-table-title'>{item.title}</p>
-                                    </div>
-                                </td>
-                                <td>{item.price}</td>
-                                <td>
-                                    <div
-                                        className='admin-action'
-                                        onMouseLeave={() => setOpenMenuId(null)}
-                                    >
-                                        <button
-                                            className='btn border-0 bg-transparent p-0'
-                                            onClick={() => setOpenMenuId(openMenuId === item.id ? null : item.id)}
-                                        >
-                                             <MdDelete className="me-2" size={30} />
-                                        </button>
-
-                                        {openMenuId === item.id && (
-                                            <div className='admin-product-action'>
-                                                <button onClick={() => openPopup(item)}>  <MdDelete className="me-2" size={30} /></button>
-                                            </div>
-                                        )}
-                                    </div>
-                                    <Button type="primary">
-                                        <AddAndEditProductDrawer mode="edit" productData={item} />
-                                    </Button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-
-                {/* 📄 Pagination */}
-                <div className="m-3">
-                    <Pagination
-                        currentPage={page}
-                        pageSize={pageSize}
-                        totalPages={totalPages}
-                        onPageChange={setPage}
-                        onPageSizeChange={(newSize) => {
-                            setPageSize(newSize);
-                            setPage(1); // reset to page 1
-                        }}
-                    />
+            <div className='table-responsive'>
+                <div className='d-flex align-items-center justify-content-between'>
+                    <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
+                    {/* drawer popup  */}
+                    <>
+                        <AddEditProducts mode="add" productData={null} />
+                    </>
                 </div>
-            </div>
+                <Row justify={"space-between"} style={{ marginTop: "24px", marginBottom: "24px" }}>
+                    <Col span={6}>
+                        <Form.Item label="Filter option">
+                            <Select
+                                placeholder="Search..."
+                                onChange={(value) => changeSearchField(value)}
+                            >
+                                <Option value="productname">Product Name</Option>
+                                <Option value="productcatagory">Product Category</Option>
+                                <Option value="productsubcatagory">Product Sub Category</Option>
+                                <Option value="productbrand">Product Brand</Option>
+                            </Select>
+                        </Form.Item>
+                    </Col>
 
-            {/* ❌ Delete confirmation popup */}
-            {deleteDetails !== null && (
-                <DeletePopup alertmessage={"Are you sure want to delete this product?"} handleDelete={() => handleDelete(deleteDetails.id)} data={deleteDetails} handleclose={closePopup} />
-            )}
-     </>
+                    <Col span={6}>
+                        <Form.Item label="Filter value">
+                            <Input
+                                placeholder="Search..."
+                                value={searchText}
+                                onChange={(e) => setSearchText(e.target.value)}
+                                disabled={!searchField}
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
+
+                <Table bordered dataSource={filteredData} columns={columns} />
+            </div>
+        </>
     )
 }
 
