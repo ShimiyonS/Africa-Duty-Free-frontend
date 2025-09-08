@@ -1,23 +1,19 @@
-import React, { useState } from 'react'
-import { Col, Dropdown, Flex, Input, Menu, Row, Select, Space, Table } from "antd";
-import { Button, Drawer } from 'antd';
-import AddAndEditDrawer from './AddAndEditProductDrawer'
-import { FaTimes } from "react-icons/fa";
-import { MoreOutlined } from "@ant-design/icons";
+import { useState } from 'react'
+import { Col, Form, Input, Row, Select, Space, Table } from "antd";
+import { Button } from 'antd';
+import AddEditProducts from '../../components/AdminComponents/AddEditProducts';
+import { MdDeleteOutline } from 'react-icons/md';
 
 const ViewProduct = () => {
 
     //filter state
-    const [selectedColumn, setSelectedColumn] = useState("productname");
+    const [searchField, setSearchField] = useState("");
     const [searchText, setSearchText] = useState("");
 
-    //popup state
-    const [open, setOpen] = useState(false);
-    const [childrenDrawer, setChildrenDrawer] = useState(false);
-
-    // "add" or "edit"
-    const [drawerMode, setDrawerMode] = useState("add");
-    const [editData, setEditData] = useState(null);
+    const changeSearchField = (value) => {
+        setSearchField(value)
+        setSearchText("")
+    }
 
     const categorys = [
         {
@@ -33,6 +29,7 @@ const ViewProduct = () => {
                         productid: 1,
                         name: "Dolce Gabana",
                         price: 33,
+                        slug: "dolce-gabana",
                         // productImage: DolceGabana,
                         stock: 22,
                         brand: "LG",
@@ -42,9 +39,11 @@ const ViewProduct = () => {
                         productid: 2,
                         name: "Fog",
                         price: 50,
+                        slug: "fog",
                         // productImage: DolceGabana
                         stock: 27,
                         brand: "Samsung",
+                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
                     },
                     ]
                 }
@@ -62,6 +61,9 @@ const ViewProduct = () => {
                 productsubcatagory: subc.name,
                 productbrand: product.brand || "",
                 stock: product.stock || 0,
+                price: product.price,
+                description: product.Description,
+                productSlug: product.slug
                 // address: item.name
             }))
         ))
@@ -101,49 +103,31 @@ const ViewProduct = () => {
         {
             title: "Action",
             key: "operation",
+            align: "center",
             fixed: "right",
             width: 100,
-            render: (_, record) => {
-                const menu = (
-                    <Menu>
-                        <Menu.Item key="edit">✏️ Edit</Menu.Item>
-                        <Menu.Item key="delete" danger>
-                            🗑️ Delete
-                        </Menu.Item>
-                    </Menu>
-                );
-                return (
-                    <Dropdown overlay={menu} trigger={["click"]}>
-                        <MoreOutlined style={{ fontSize: 18, cursor: "pointer" }} />
-                    </Dropdown>
-                );
-            },
+            render: (_, record) => (
+                <Space>
+                    <AddEditProducts mode="edit" productData={record} />
+                    <Button
+                        type="link"
+                        danger
+                        onClick={() => handleDelete(record)}
+                    >
+                        <MdDeleteOutline size={19} />
+                    </Button>
+                </Space>
+            )
         },
     ];
 
-    const filteredData = dataSource.filter((item) => {
+    let filteredData = dataSource.filter((item) => {
         if (!searchText) return true; // If search box empty → show all
 
-        const value = item[selectedColumn]?.toString().toLowerCase();
+        const value = item[searchField]?.toString().toLowerCase();
         return value?.includes(searchText.toLowerCase());
     });
 
-    // drawer functions
-    const showDrawer = () => {
-        setOpen(true);
-    };
-
-    const onClose = () => {
-        setOpen(false);
-    };
-
-    const showChildrenDrawer = () => {
-        setChildrenDrawer(true);
-    };
-    const onChildrenDrawerClose = () => {
-        setChildrenDrawer(false);
-    };
-    // end of drawer functions
 
     return (
         <div className='table-responsive'>
@@ -151,77 +135,39 @@ const ViewProduct = () => {
                 <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
                 {/* drawer popup  */}
                 <>
-                    <Button
-                        type="primary"
-                        onClick={() => {
-                            setDrawerMode("add");
-                            setEditData(null);
-                            showDrawer();
-                        }}
-                        className="text-color-secondary"
-                    >
-                        Add Product
-                    </Button>
-
-                    <Drawer title={
-                        <div className="d-flex align-items-center justify-content-between w-100">
-                            <div className="d-flex align-items-center gap-2">
-                                <Button type="text" onClick={onClose} icon={<FaTimes />} />
-                                <span className="justuspro-bold">{drawerMode === "add" ? "Add Product" : "Edit Product"}</span>
-                            </div>
-
-                            <div>
-                                <Button type="primary" onClick={showChildrenDrawer}>
-                                    Add Category
-                                </Button>
-                            </div>
-                        </div>
-
-                    } className="justuspro-bold" width={800} closable={false} onClose={onClose} open={open}>
-
-                        <div>
-                            <div className="d-flex justify-content-between ">
-                            </div>
-                            {/* its coming from AddAndEdit Product drawer */}
-                            <AddAndEditDrawer mode={drawerMode} productData={editData} />
-                        </div>
-                        {/* second drawer */}
-                        <Drawer
-                            title="Two-level Drawer"
-                            width={800}
-                            closable={false}
-                            onClose={onChildrenDrawerClose}
-                            open={childrenDrawer}
-                        >
-                            This is two-level drawer
-                        </Drawer>
-                    </Drawer>
+                    <AddEditProducts mode="add" productData={null} />
                 </>
             </div>
-            <Row style={{ marginTop: "24px", marginBottom: "24px" }}>
+            <Row justify={"space-between"} style={{ marginTop: "24px", marginBottom: "24px" }}>
                 <Col span={6}>
-                    <Select
-                        defaultValue="productname"
-                        style={{ width: 200 }}
-                        onChange={(value) => setSelectedColumn(value)} >
-                        <Option value="productname">Product Name</Option>
-                        <Option value="productcatagory">Product Category</Option>
-                        <Option value="productsubcatagory">Product Sub Category</Option>
-                        <Option value="productbrand">Product Brand</Option>
-                    </Select>
+                    <Form.Item label="Filter option">
+                        <Select
+                            placeholder="Search..."
+                            onChange={(value) => changeSearchField(value)}
+                        >
+                            <Option value="productname">Product Name</Option>
+                            <Option value="productcatagory">Product Category</Option>
+                            <Option value="productsubcatagory">Product Sub Category</Option>
+                            <Option value="productbrand">Product Brand</Option>
+                        </Select>
+                    </Form.Item>
                 </Col>
 
                 <Col span={6}>
-                    <Input
-                        placeholder="Search..."
-                        style={{ width: 250 }}
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                    />
+                    <Form.Item label="Filter value">
+                        <Input
+                            placeholder="Search..."
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                            disabled={!searchField}
+                        />
+                    </Form.Item>
                 </Col>
             </Row>
 
-            <Table bordered dataSource={filteredData} columns={columns} />
+            <Table bordered dataSource={filteredData} columns={columns} />  
+
+
         </div>
     )
 }
