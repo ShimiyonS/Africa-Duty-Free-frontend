@@ -17,7 +17,6 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
 
     //for showing edit datas in input fields
     useEffect(() => {
-
         if (mode === "edit" && BrandData) {
             form.setFieldsValue({
                 brand: BrandData?.name,
@@ -37,13 +36,10 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
             .replace(/[^\w-]+/g, "");
     };
 
-
     const handleSubmit = async (values) => {
         try {
             const data = await apiRequest("POST", "/products/add", values)
             toast.success("Brand added successfully");
-            console.log("values", values);
-
             form.resetFields();
 
         } catch (error) {
@@ -130,5 +126,4 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
         </div>
     )
 }
-
 export default AddEditBrandDrawer

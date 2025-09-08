@@ -1,4 +1,4 @@
-import { Table, Space, Button } from "antd";
+import { Table, Space } from "antd";
 import AddEditBrand from '../../components/AdminComponents/AddEditBrand'
 import { useState } from 'react';
 import DeletePopup from '../../components/commonComponents/DeletePopup'
@@ -205,25 +205,23 @@ const ListAllCategories = () => {
                     </>
                 </div>
 
-                <div className="brand-pagination">
-                    <Table columns={columns} dataSource={brands} pagination={{
-                        position: ["bottomCenter"],
-                        current: pagination.current,
-                        pageSize: pagination.pageSize,
-                        // total: brands.length,
-                        showSizeChanger: true,
-                        pageSizeOptions: ["5", "10", "20", "50"],
-                        showQuickJumper: true,
-                        onChange: (page, pageSize) => {
-                            setPagination({ current: page, pageSize });
-                        },
-                        showTotal: (total) => `Total ${total} Brands`,
-                    }} />
-                </div>
+                <Table columns={columns} dataSource={brands} className="brand-pagination" pagination={{
+                    position: ["bottomCenter"],
+                    current: pagination.current,
+                    pageSize: pagination.pageSize,
+                    // total: brands.length,
+                    showSizeChanger: true,
+                    pageSizeOptions: ["5", "10", "20", "50"],
+                    showQuickJumper: true,
+                    onChange: (page, pageSize) => {
+                        setPagination({ current: page, pageSize });
+                    },
+                    showTotal: (total) => `Total ${total} Brands`,
+                }} />
+
             </div>
         </div >
 
     )
 }
-
 export default ListAllCategories

@@ -369,7 +369,8 @@ label {
     margin-left: auto !important;
 }
 
-.brand-pagination .ant-table {
+.brand-pagination .ant-table,
+.product-page-table .ant-table {
     border-radius: 10px !important;
     overflow: hidden !important;
 }

@@ -107,7 +107,7 @@ const ListAllProducts = () => {
             render: (_, record) => (
                 <Space>
                     <AddEditProducts mode="edit" productData={record} />
-                    <DeletePopup title={"Are you want to Delete this Product?"} apiEndpoint={`/products/${record.id}`} data={{id:record.id,image:"",name:record.productname}} />
+                    <DeletePopup title={"Are you want to Delete this Product?"} apiEndpoint={`/products/${record.id}`} data={{ id: record.id, image: "", name: record.productname }} />
                 </Space>
             )
         },
@@ -156,8 +156,7 @@ const ListAllProducts = () => {
                     </Form.Item>
                 </Col>
             </Row>
-
-            <Table dataSource={filteredData} columns={columns} />
+                <Table dataSource={filteredData} columns={columns} className='product-page-table'/>
         </>
     )
 }
