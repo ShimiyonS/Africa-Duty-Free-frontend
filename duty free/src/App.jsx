@@ -23,6 +23,8 @@ import MyAccountRoutes from './routes/MyAccountRoutes';
 import AdminRoutes from './routes/AdminRoutes';
 import ProtectedAdminRoute from './routes/ProtectedAdminRoute';
 import Search from './pages/Search';
+import Wishlist from './pages/Wishlist';
+import HomePage from './pages/homePage/HomePage';
 
 function App() {
   const location = useLocation()
@@ -43,6 +45,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index path="/" element={<Home />} />
           <Route path="/home" element={<MainPage />} />
+          <Route path='homepage' element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/password-reset" element={<ForgotPassword />} />
@@ -50,6 +53,7 @@ function App() {
           <Route path="/product-category/:slug/:subslug" element={<CategoryDetails />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/brand/:slug" element={<BrandDetails />} />
+          <Route path="/wishlist" element={<Wishlist />} />
           {/* <Route path="/africa-best-buy/product-category/:slug" element={<BrandDetails />} /> */}
           <Route path="/shop" element={<ShopDetails />} />
           <Route path="/about" element={<About />} />

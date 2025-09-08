@@ -64,7 +64,7 @@ const CategoryDetails = () => {
             <BreadCrumb navigation={[{ key: "home", nav: "/" }, { key: `${slug}`, nav: `/product-category/${slug}` }, subslug && { key: `${subslug}`, nav: "" }]} />
             <CategoryBanner bannerDetails={bannerDetails} />
             {!subslug ?
-                <>
+                <div className='container'>
                     <BrandSwiper />
                     <div className='container sub-calegory-body-container'>
                         <SubCategory subCategorys={subCategorys} />
@@ -73,7 +73,7 @@ const CategoryDetails = () => {
                         <NewProducts productsdata={products} hidePopTool={true} parentClassName={"mt-3"} />
                         <SaleCard data={1} headingClass={"text-center"} imageClass={"big-image"} />
                     </div>
-                </> :
+                </div> :
                 <div className='container'>
                     <div className='d-flex mt-3 mb-5 align-items-center gap-3'>
                         <button type='button' className='sub-category-button text-color-secondary button-bg-danger  border-0'>{subslug} for her</button>

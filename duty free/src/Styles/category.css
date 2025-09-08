@@ -56,8 +56,12 @@
 
 .category-nav {
     color: var(--text-color-secondary);
-    font-size: 22px;
-    padding: 10px 0px;
+    font-size: 25px;
+}
+
+.category-desc {
+    padding: 0px 15px;
+    font-size: 13px;
 }
 
 .category-des {

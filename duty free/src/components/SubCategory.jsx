@@ -12,12 +12,12 @@ const SubCategory = ({ subCategorys }) => {
             {subCategorys.map((subCategory, idex) =>
                 <div className='sub-category-container' key={idex}>
                     <div onClick={() => categoryHandler(subCategory?.slug)} className='sub-category-name'>{subCategory?.subcategoryName}</div>
-
-                    {/* <Link to={`/beauty/${subCategory?.slug}`} className="sub-category-image">
-                        <img src={subCategory.products[0]?.productImage} height={200} className=' product-image' />
+                    {console.log(subCategory.products)}
+                    <Link to={`/beauty/${subCategory?.slug}`} className="sub-category-image">
+                        <img src={subCategory.products[0]?.imageUrl} height={200} className=' product-image' />
                     </Link>
-                    <Link to={`/beauty/${subCategory?.slug}`} className={`$ product-title dmsans-bold d-block text-decoration-none mb-0 pt-2`}>{subCategory?.products[0].name}</Link>
-                    <p className={`$ product-price dmsans-bold `}>${subCategory?.products[0]?.price}</p> */}
+                    <Link to={`/beauty/${subCategory?.slug}`} className={`$ product-title dmsans-bold d-block text-decoration-none mb-0 pt-2`}>{subCategory?.products[0]?.productName}</Link>
+                    <p className={`$ product-price dmsans-bold `}>${subCategory?.products[0]?.price}</p>
                 </div>
             )}
         </div>

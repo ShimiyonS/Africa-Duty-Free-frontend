@@ -30,7 +30,7 @@ const BrandSwiper = () => {
         Brand16, Brand17,
     ];
     return (
-        <div className='container'>
+        <div className=''>
             <Swiper
                 slidesPerView={6}
                 spaceBetween={10}

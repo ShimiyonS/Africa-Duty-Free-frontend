@@ -1,6 +1,7 @@
 import "../../Styles/product.css"
 import { Link } from 'react-router-dom'
 import { IoMdHeartEmpty } from "react-icons/io";
+import { IoCloseSharp } from "react-icons/io5";
 import { FaShoppingCart, FaEye } from "react-icons/fa";
 import { useMyContext } from "../../Provider/CommonProvider";
 import { viewCart } from "../../store/slice/viewCartSlice";
@@ -8,6 +9,8 @@ import Common from "../../commonMethod/Common";
 
 const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop, imageheight = 200, titleclassname = "text-color-primary", priceclassname = "text-color-danger" }) => {
     const { handleOpenAlert } = useMyContext()
+    let currentLocation = window.location.pathname.slice(1);
+    
     const { dispatch } = Common()
     const handleAddTocart = (data) => {
         handleOpenAlert({

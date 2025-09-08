@@ -74,7 +74,9 @@ const Header = ({ togglemenu, togglesidebar }) => {
                 <img src={Bag} style={{ width: "34px" }} alt="cart" />
                 <div className='header-cart-total text-color-secondary bg-color-gold'>{cart.length}</div>
               </button>
-              <img src={Wishlist} style={{ width: "34px" }} alt="whislist" />
+              <Link to={`wishlist`}>
+                <img src={Wishlist} width={40} height={40} alt="whislist" />
+              </Link>
             </div>
             <button className={`${togglesidebar ? "toggle-icon-active" : ""} d-lg-none bg-transparent border-0 rounded-0 d-flex gap-3 flex-column toggle-icon`} onClick={() => togglemenu(togglesidebar)}>
               <span className="start-line"></span>

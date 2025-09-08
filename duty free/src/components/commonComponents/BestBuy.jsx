@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+
 import categoryimage1 from "../../assets/categoryimage1.jpg"
 import categoryimage2 from "../../assets/categoryimage2.jpg"
 import categoryimage3 from "../../assets/categoryimage3.jpg"

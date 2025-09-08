@@ -20,5 +20,14 @@
 }
 
 .footer-bottom-bg {
+    width: 100%;
+    justify-content: space-between;
     background-color: #FAFBFC;
+    margin-bottom: 3rem;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+}
+.footer-bottom-bg p{
+    margin-bottom: 0px;
 }
