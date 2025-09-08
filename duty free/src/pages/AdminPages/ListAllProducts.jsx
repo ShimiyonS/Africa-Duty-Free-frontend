@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { Col, Form, Input, Row, Select, Space, Table } from "antd";
-import { Button } from 'antd';
 import AddEditProducts from '../../components/AdminComponents/AddEditProducts';
-import { MdDeleteOutline } from 'react-icons/md';
+import DeletePopup from '../../components/commonComponents/DeletePopup'
 
-const ViewProduct = () => {
+const ListAllProducts = () => {
 
     //filter state
     const [searchField, setSearchField] = useState("");
@@ -104,18 +103,11 @@ const ViewProduct = () => {
             title: "Action",
             key: "operation",
             align: "center",
-            fixed: "right",
             width: 100,
             render: (_, record) => (
                 <Space>
                     <AddEditProducts mode="edit" productData={record} />
-                    <Button
-                        type="link"
-                        danger
-                        onClick={() => handleDelete(record)}
-                    >
-                        <MdDeleteOutline size={19} />
-                    </Button>
+                    <DeletePopup title={"Are you want to Delete this Product?"} apiEndpoint={`/products/${record.id}`} data={{id:record.id,image:"",name:record.productname}} />
                 </Space>
             )
         },
@@ -131,46 +123,43 @@ const ViewProduct = () => {
 
     return (
         <>
-
-            <div className='table-responsive'>
-                <div className='d-flex align-items-center justify-content-between'>
-                    <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
-                    {/* drawer popup  */}
-                    <>
-                        <AddEditProducts mode="add" productData={null} />
-                    </>
-                </div>
-                <Row justify={"space-between"} style={{ marginTop: "24px", marginBottom: "24px" }}>
-                    <Col span={6}>
-                        <Form.Item label="Filter option">
-                            <Select
-                                placeholder="Search..."
-                                onChange={(value) => changeSearchField(value)}
-                            >
-                                <Option value="productname">Product Name</Option>
-                                <Option value="productcatagory">Product Category</Option>
-                                <Option value="productsubcatagory">Product Sub Category</Option>
-                                <Option value="productbrand">Product Brand</Option>
-                            </Select>
-                        </Form.Item>
-                    </Col>
-
-                    <Col span={6}>
-                        <Form.Item label="Filter value">
-                            <Input
-                                placeholder="Search..."
-                                value={searchText}
-                                onChange={(e) => setSearchText(e.target.value)}
-                                disabled={!searchField}
-                            />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Table bordered dataSource={filteredData} columns={columns} />
+            <div className='d-flex align-items-center justify-content-between'>
+                <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
+                {/* drawer popup  */}
+                <>
+                    <AddEditProducts mode="add" productData={null} />
+                </>
             </div>
+            <Row justify={"space-between"} style={{ marginTop: "24px", marginBottom: "24px" }}>
+                <Col span={6}>
+                    <Form.Item label="Filter option">
+                        <Select
+                            placeholder="Search..."
+                            onChange={(value) => changeSearchField(value)}
+                        >
+                            <Option value="productname">Product Name</Option>
+                            <Option value="productcatagory">Product Category</Option>
+                            <Option value="productsubcatagory">Product Sub Category</Option>
+                            <Option value="productbrand">Product Brand</Option>
+                        </Select>
+                    </Form.Item>
+                </Col>
+
+                <Col span={6}>
+                    <Form.Item label="Filter value">
+                        <Input
+                            placeholder="Search..."
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                            disabled={!searchField}
+                        />
+                    </Form.Item>
+                </Col>
+            </Row>
+
+            <Table dataSource={filteredData} columns={columns} />
         </>
     )
 }
 
-export default ViewProduct
+export default ListAllProducts

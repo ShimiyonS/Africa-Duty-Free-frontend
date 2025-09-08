@@ -72,7 +72,7 @@ const AddEditUsers = ({ mode, userData }) => {
                     onClick={toggleDrawer}
                     className={`antd-custom-btn`}
                 >
-                    {mode === "edit" ? <FaRegEdit size={19} /> : "Add User"}
+                    {mode === "edit" ? <FaRegEdit size={19} className='text-color-warning' /> : "Add User"}
                 </Button>
                 <Drawer title={
                     <div className="d-flex align-items-center justify-content-between w-100">

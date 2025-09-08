@@ -1,24 +1,15 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Col, Form, Input, Row, Select, Space, Table } from "antd";
-import { Button, Drawer } from 'antd';
-import { FaRegEdit } from "react-icons/fa";
-import { MdDeleteOutline } from "react-icons/md";
 import AddEditUsers from '../../components/AdminComponents/AddEditUsers';
+import DeletePopup from '../../components/commonComponents/DeletePopup';
 
-const ViewUsers = () => {
+const ListAllUsers = () => {
 
     //filter state
     const [selectedColumn, setSelectedColumn] = useState("");
     const [searchText, setSearchText] = useState("");
+    const [condition, setCondition] = useState("");
     const [headerdefine, setHeaderdefine] = useState(null)
-
-
-    //popup stateopen
-    // const [drawerState, setDrawerState] = useState({
-    //     mode: "add",
-    //     data: null,
-    //     open: false
-    // });
 
 
     const changeselect = (value) => {
@@ -26,19 +17,6 @@ const ViewUsers = () => {
         setSearchText("")
         setHeaderdefine(typeof user?.[0]?.[value])
     }
-
-    const handleEdit = (record) => {
-        console.log("Edit clicked:", record);
-        setDrawerState({
-            mode: "edit",
-            data: record,
-            open: true,
-        });
-    };
-
-    const handleDelete = (record) => {
-        console.log("Delete clicked:", record);
-    };
 
 
     const user = [{
@@ -104,7 +82,7 @@ const ViewUsers = () => {
             iban: "YPUXISOBI7TTHPK2BR3HAIXL"
         },
         role: "admin",
-        orders: 20,
+        orders: 21,
         cart: 12,
         wishlist: 1,
         status: true
@@ -138,7 +116,7 @@ const ViewUsers = () => {
             iban: "YPUXISOBI7TTHPK2BR3HAIXL"
         },
         role: "admin",
-        orders: 20,
+        orders: 22,
         cart: 12,
         wishlist: 1,
         status: true
@@ -172,7 +150,7 @@ const ViewUsers = () => {
             iban: "YPUXISOBI7TTHPK2BR3HAIXL"
         },
         role: "admin",
-        orders: 0,
+        orders: 3,
         cart: 1,
         wishlist: 10,
         status: false
@@ -224,13 +202,13 @@ const ViewUsers = () => {
             orders: userdata.orders,
             cart: userdata.cart || 0,
             wishlist: userdata.wishlist || 0,
-            phone:userdata.phone
+            phone: userdata.phone
         }))
 
 
     const columns = [
         {
-            title: 'S.NO',
+            title: '#',
             dataIndex: 'id',
             key: 'id',
             fixed: 'left',
@@ -243,7 +221,7 @@ const ViewUsers = () => {
                 <img
                     src={text}
                     alt="profile"
-                    style={{ width: 40, height: 40, borderRadius: "50%", border: "1px solid green", objectFit: "cover" }}
+                    style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover" }}
                 />
             )
         },
@@ -263,8 +241,8 @@ const ViewUsers = () => {
             key: 'status',
             render: (status) => (
                 status
-                    ? <span style={{ color: "green", fontWeight: "bold" }}>Active</span>
-                    : <span style={{ color: "red", fontWeight: "bold" }}>Inactive</span>
+                    ? <span className="text-color-success" style={{ fontWeight: "bold" }}>Active</span>
+                    : <span className="text-color-danger" style={{ fontWeight: "bold" }}>Inactive</span>
             )
         },
         {
@@ -291,13 +269,7 @@ const ViewUsers = () => {
             render: (_, record) => (
                 <Space>
                     <AddEditUsers mode={"edit"} userData={record} />
-                    <Button
-                        type="link"
-                        danger
-                        onClick={() => handleDelete(record)}
-                    >
-                        <MdDeleteOutline size={19} />
-                    </Button>
+                    <DeletePopup title={"Are you want to Delete this User?"} apiEndpoint={`/user/${record.id}`} data={{ id: record.id, image: record.profile, name: record.username }} />
                 </Space>
             ),
         }
@@ -305,11 +277,42 @@ const ViewUsers = () => {
     ];
 
     const filteredData = dataSource.filter((item) => {
-        if (!searchText) return true; // If search box empty → show all
+        if (!searchText) return true; // If no filter value → show all
 
-        const value = item[selectedColumn]?.toString().toLowerCase();
-        return value?.includes(searchText.toLowerCase());
+        const value = item[selectedColumn];
+
+        if (headerdefine === "string") {
+            return value?.toString().toLowerCase().includes(searchText.toLowerCase());
+        }
+
+        if (headerdefine === "number") {
+            const numValue = Number(value);
+            const filterValue = Number(searchText);
+
+            if (isNaN(numValue) || isNaN(filterValue)) return true; // ignore invalid
+
+            switch (condition) {
+                case "gt":  // Greater than
+                    return numValue > filterValue;
+                case "lt":  // Less than
+                    return numValue < filterValue;
+                case "gte": // Greater than or equal
+                    return numValue >= filterValue;
+                case "lte": // Less than or equal
+                    return numValue <= filterValue;
+                default:
+                    return true;
+            }
+        }
+
+        if (headerdefine === "boolean") {
+            return value?.toString() === searchText;
+        }
+
+        return true;
     });
+
+
 
     return (
         <div className='table-responsive'>
@@ -346,32 +349,40 @@ const ViewUsers = () => {
                         </Form.Item>
                     </Col>
                 ) : headerdefine === "number" ? (
-                    <Row justify={"space-between"}>
-                        <Col span={12}>
-                            <Form.Item label="Filter value">
-                                <Select
-                                    placeholder="Select condition"
-                                    value={searchText}
-                                    onChange={(val) => setSearchText(val)}
-                                    disabled={!selectedColumn}
-                                >
-                                    <Option value="true">Greater than</Option>
-                                    <Option value="false">Lesser than</Option>
-                                    <Option value="false">Greater than equal</Option>
-                                    <Option value="false">Lesser than equal</Option>
-                                </Select>
-                            </Form.Item>
-                            <Form.Item label="Filter value">
-                                <Input
-                                    type="number"
-                                    placeholder="Enter number..."
-                                    value={searchText}
-                                    onChange={(e) => setSearchText(e.target.value)}
-                                    disabled={!selectedColumn}
-                                />
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                    <Col span={12}>
+                        <Row>
+                            {/* Condition Select */}
+                            <Col span={12}>
+                                <Form.Item label="Condition">
+                                    <Select
+                                        placeholder="Select condition"
+                                        value={condition}
+                                        onChange={(val) => setCondition(val)}
+                                        disabled={!selectedColumn}
+                                    >
+                                        <Option value="gt">Greater than</Option>
+                                        <Option value="lt">Lesser than</Option>
+                                        <Option value="gte">Greater than equal</Option>
+                                        <Option value="lte">Lesser than equal</Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+
+                            {/* Number Input */}
+                            <Col span={12}>
+                                <Form.Item label="Value">
+                                    <Input
+                                        type="number"
+                                        placeholder="Enter number..."
+                                        value={searchText}
+                                        onChange={(e) => setSearchText(e.target.value)}
+                                        disabled={!selectedColumn}
+                                    />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    </Col>
+
                 ) : headerdefine === "boolean" ? (
                     <Col span={6}>
                         <Form.Item label="Filter value">
@@ -392,9 +403,9 @@ const ViewUsers = () => {
 
             </Row>
 
-            <Table bordered dataSource={filteredData} columns={columns} />
+            <Table dataSource={filteredData} columns={columns} />
         </div>
     )
 }
 
-export default ViewUsers
+export default ListAllUsers
