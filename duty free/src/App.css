@@ -24,8 +24,8 @@
     --text-color-primary: #000;
     --text-color-secondary: #fff;
     --text-color-danger: #b63f21;
-    --text-color-warning:#f0b32c;
-    --text-color-success:#23c337;
+    --text-color-warning: #f0b32c;
+    --text-color-success: #23c337;
     --text-color-gold: #a49764;
     --text-color-muted: #5E5E5E;
 
@@ -85,16 +85,17 @@ label {
     color: var(--text-color-primary);
 }
 
-.text-color-secondary,.antd-custom-btn span {
+.text-color-secondary,
+.antd-custom-btn span {
     color: var(--text-color-secondary);
 }
 
-.text-color-success{
-    color:var(--text-color-success)
+.text-color-success {
+    color: var(--text-color-success)
 }
 
-.text-color-warning{
-    color:var(--text-color-warning)
+.text-color-warning {
+    color: var(--text-color-warning)
 }
 
 .text-color-danger {
@@ -354,4 +355,22 @@ label {
     .new-swipper .swiper-rtl .swiper-button-prev {
         top: 58px !important;
     }
+}
+
+.ant-upload-list-item-name {
+    color: var(--text-color-primary) !important
+}
+
+.brand-pagination .ant-pagination-total-text {
+    margin-right: auto !important;
+}
+
+.brand-pagination .ant-pagination-options {
+    margin-left: auto !important;
+}
+
+.brand-pagination .ant-table,
+.product-page-table .ant-table {
+    border-radius: 10px !important;
+    overflow: hidden !important;
 }

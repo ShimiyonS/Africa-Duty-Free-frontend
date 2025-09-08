@@ -1,154 +1,227 @@
-import { useState, useEffect } from 'react'
-import Common from '../../commonMethod/Common.js'
-import { toast } from 'react-toastify';
-import { Link } from "react-router-dom"
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaEdit } from "react-icons/fa";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { TiExportOutline } from "react-icons/ti";
-import defaultImage from '../../assets/user-default-profile.jpg'
-import Loader from '../../components/commonComponents/loader/loader'
+import { Table, Space } from "antd";
+import AddEditBrand from '../../components/AdminComponents/AddEditBrand'
+import { useState } from 'react';
+import DeletePopup from '../../components/commonComponents/DeletePopup'
+
 
 const ListAllCategories = () => {
-    const [data, setData] = useState([])
-    const { apiRequest } = Common()
-    const [confirmDeleteId, setConfirmDeleteId] = useState(null)
-    const token = localStorage.getItem("token")
-    const [status, setStatus] = useState(false)
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 5,
+    });
 
-    // list all data
-    const fetchData = async () => {
-        try {
-            setStatus(true)
-            const res = await apiRequest("GET", `/products`)
-            setData(res.products)
-            setStatus(false)
-        }
-        catch (error) {
-            console.error("api fetching error", error);
-            setStatus(false)
-        }
-        finally {
-            setStatus(false)
-        }
-    }
-    useEffect(() => {
-        fetchData()
-    }, [])
-    console.log(data);
+    const brands = [
+        {
+            id: 1,
+            name: "Beauty",
+            slug: "beauty",
+            description:
+                "Makeup and skincare products for daily beauty routine.",
+            image: "",
+        },
+        {
+            id: 2,
+            name: "Fashion",
+            slug: "fashion",
+            description:
+                "Latest trends in clothing, accessories, and lifestyle fashion.",
+            image: "",
+        },
+        {
+            id: 3,
+            name: "Shoes",
+            slug: "shoes",
+            description: "Comfortable and stylish footwear for all occasions.",
+            image: "",
+        },
+        {
+            id: 4,
+            name: "Electronics",
+            slug: "electronics",
+            description: "Modern gadgets, mobiles, laptops, and accessories.",
+            image: "",
+        },
+        {
+            id: 5,
+            name: "Sports",
+            slug: "sports",
+            description: "Sports gear, fitness equipment, and outdoor essentials.",
+            image: "",
+        },
+        {
+            id: 6,
+            name: "Home",
+            slug: "home",
+            description: "Furniture, décor, and household products.",
+            image: "",
+        },
+        {
+            id: 7,
+            name: "Books",
+            slug: "books",
+            description: "Wide range of books across all genres and subjects.",
+            image: "",
+        },
+        {
+            id: 8,
+            name: "Toys",
+            slug: "toys",
+            description: "Fun and educational toys for kids of all ages.",
+            image: "",
+        },
+        {
+            id: 9,
+            name: "Groceries",
+            slug: "groceries",
+            description: "Daily essentials, food, and household groceries.",
+            image: "",
+        },
+        {
+            id: 10,
+            name: "Health",
+            slug: "health",
+            description: "Healthcare products, supplements, and wellness items.",
+            image: "",
+        },
+        {
+            id: 11,
+            name: "Jewellery",
+            slug: "jewellery",
+            description: "Gold, silver, and fashion jewellery collections.",
+            image: "",
+        },
+        {
+            id: 12,
+            name: "Automobile",
+            slug: "automobile",
+            description: "Car accessories, spare parts, and bike essentials.",
+            image: "",
+        },
+        {
+            id: 13,
+            name: "Stationery",
+            slug: "stationery",
+            description: "Office supplies, pens, books, and study materials.",
+            image: "",
+        },
+        {
+            id: 14,
+            name: "Music",
+            slug: "music",
+            description: "Instruments, headphones, and audio accessories.",
+            image: "",
+        },
+        {
+            id: 15,
+            name: "Gaming",
+            slug: "gaming",
+            description: "Video games, consoles, and gaming accessories.",
+            image: "",
+        },
+        {
+            id: 16,
+            name: "Pets",
+            slug: "pets",
+            description: "Pet food, accessories, and care products.",
+            image: "",
+        },
+        {
+            id: 17,
+            name: "Travel",
+            slug: "travel",
+            description: "Travel bags, luggage, and accessories.",
+            image: "",
+        },
+        {
+            id: 18,
+            name: "Garden",
+            slug: "garden",
+            description: "Plants, gardening tools, and outdoor décor.",
+            image: "",
+        },
+        {
+            id: 19,
+            name: "Furniture",
+            slug: "furniture",
+            description: "Living room, bedroom, and office furniture.",
+            image: "",
+        },
+        {
+            id: 20,
+            name: "Kids Wear",
+            slug: "kids-wear",
+            description: "Trendy clothing and accessories for kids.",
+            image: "",
+        },
+    ];
 
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'id',
+            key: 'id',
+            fixed: 'left',
+        },
+        {
+            title: 'Brand Image',
+            dataIndex: 'image',
+            key: 'image',
+            width: 200,
+            render: (text) => <img src={text} alt="brand-image" width={40} />,
+        },
+        {
+            title: 'Brand Name',
+            dataIndex: 'name',
+            key: 'name',
+            width: 150,
+        },
+        {
+            title: 'Brand description',
+            dataIndex: 'description',
+            key: 'description',
+        },
+        {
+            title: "Action",
+            key: "operation",
+            align: "center",
+            width: 100,
+            render: (_, record) => (
+                <Space>
+                    <AddEditBrand mode="edit" BrandData={record} />
+                    <DeletePopup title={"Are you want to Delete this Brand ?"} apiEndpoint={`/products/${record.id}`} data={{ id: record.id, image: "", name: record.name }} />
+                </Space>
+            )
+        },
+    ];
 
-    const handleDeleteClick = (id) => {
-        setConfirmDeleteId(id);
-    }
-
-    // handle delete 
-    const handleDelete = async () => {
-        try {
-            const res = await apiRequest("DELETE", `products/${confirmDeleteId}`, {}, {
-                Authorization: `Bearer ${token}`
-            })
-            toast.success(res.data.message)
-            fetchData()
-            setConfirmDeleteId(null)
-        } catch (error) {
-            toast.error(error?.response?.data?.message || "Delete failed")
-        }
-    }
     return (
         <div>
-            <div className="d-flex justify-content-between">
-                <h1 className="justuspro-bold pb-4 ">All Brands</h1>
-                <Link to="/siteadmin/addbrand" className="addLink dmsans-bold ">Add Brand</Link>
-            </div>
-            <div className="col-md-12">
-                {confirmDeleteId && (
-                    <div className="custom-popup-overlay">
-                        <div className="custom-popup">
-                            <h4>Delete Category</h4>
-                            <p>Are you sure you want to delete this category?</p>
-                            <div className="popup-buttons">
-                                <button onClick={() => setConfirmDeleteId(null)} className="btn btn-secondary">
-                                    No
-                                </button>
-                                <button onClick={handleDelete} className="btn btn-danger">
-                                    Yes
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
-                {status ? <Loader /> :
+            <div>
+                <div className='d-flex align-items-center justify-content-between'>
+                    <h2 className="adminform-heading justuspro-medium mb-3">Brand List</h2>
+                    {/* drawer popup  */}
                     <>
-                        <div className="table-covered">
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Brand</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data.length === 0 ? <>
-                                        <tr>
-                                            <td colSpan="3" className="text-center">
-                                                No Sub Categories Found
-                                            </td>
-                                        </tr>
-                                    </> :
-                                        <>
-                                            {data.map((item, index) => (
-                                                <tr key={item.id}>
-                                                    <th scope="row" className="all-brand-td">{item.id}</th>
-                                                    <td className="d-flex gap-3">
-                                                        {item.images ? (
-                                                            <div className="d-flex gap-4">
-                                                                <img src={item.images} alt="categoryimg" className="uploadImage" />
-                                                            </div>
-                                                        ) : (
-                                                            <img src={defaultImage} alt={item.title} className="categoryImg" />
-                                                        )}
-                                                        <div className="texthide">
-                                                            <Link to={`/product/${item.id}`} target="_self" className="text-decoration-none text-color-primary dmsans-bold ">
-                                                                {item.title}
-                                                                <TiExportOutline />
-                                                            </Link>
-                                                        </div>
-                                                    </td>
-                                                    <td className="position-relative action-cell">
-                                                        <BsThreeDotsVertical className="threeDot" />
-
-                                                        <div className="position-absolute hidebtn">
-                                                            <Link
-                                                                to={`/siteadmin/editbrand/${item.id}`}
-                                                                className="ms-1 pb-2 text-decoration-none text-color-primary dmsans-bold d-block w-100"
-                                                            >
-                                                                <FaEdit className="me-2" />
-                                                                Edit
-                                                            </Link>
-                                                            <button
-                                                                onClick={() => handleDeleteClick(item.id)}
-                                                                className="dmsans-bold border-0 rounded-2 mt-2 bg-transparent  p-0"
-                                                            >
-                                                                <RiDeleteBin6Line className="me-2" />
-                                                                Delete
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </>}
-                                </tbody>
-                            </table>
-                        </div>
+                        <AddEditBrand mode="add" BrandData={null} />
                     </>
-                }
-            </div>
+                </div>
 
+                <Table columns={columns} dataSource={brands} className="brand-pagination" pagination={{
+                    position: ["bottomCenter"],
+                    current: pagination.current,
+                    pageSize: pagination.pageSize,
+                    // total: brands.length,
+                    showSizeChanger: true,
+                    pageSizeOptions: ["5", "10", "20", "50"],
+                    showQuickJumper: true,
+                    onChange: (page, pageSize) => {
+                        setPagination({ current: page, pageSize });
+                    },
+                    showTotal: (total) => `Total ${total} Brands`,
+                }} />
+
+            </div>
         </div >
 
     )
 }
-
 export default ListAllCategories

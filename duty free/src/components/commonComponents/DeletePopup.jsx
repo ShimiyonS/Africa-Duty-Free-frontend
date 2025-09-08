@@ -33,24 +33,23 @@ const DeletePopup = ({ title, apiEndpoint, data }) => {
                 <MdDeleteOutline className='text-color-danger' size={19} />
             </Button>
             <Modal
-                title={title}
+                title={
+                    <>
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                            <img className='delete-product-img' src={data.image || defaultimg} alt={data.name || "No image"}></img>
+                            <p>{title}</p>
+                        </div>
+                        <p className='text-center' style={{ fontWeight: 500, margin: 0 }}>{data.name}</p>
+                    </>
+                }
                 centered
                 open={modalOpen}
                 onOk={() => handleDelete()}
                 confirmLoading={confirmLoading}
                 onCancel={() => setModalOpen(false)}
-                okButtonProps={{className: "antd-custom-btn delete-ok-ant-btn"}}
+                okButtonProps={{ className: "antd-custom-btn delete-ok-ant-btn" }}
                 cancelButtonProps={{ className: "antd-custom-btn delete-cancel-ant-btn" }}
             >
-                <Row justify={`center`}>
-                    <Col>
-                        <div>
-                            <img className='delete-product-img' src={data.image || defaultimg} alt={data.name || "No image"}></img>
-                            <p className='text-center' style={{ fontWeight: 500, margin: 0 }}>{data.name}</p>
-                        </div>
-                    </Col>
-                </Row>
-
             </Modal>
         </>
     );
