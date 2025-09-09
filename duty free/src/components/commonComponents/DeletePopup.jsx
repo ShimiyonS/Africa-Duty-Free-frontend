@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Common from '../../commonMethod/common'
-import { Button, Col, Modal, Row } from 'antd';
+import { Button, Col, Flex, Modal, Row } from 'antd';
 import { MdDeleteOutline } from 'react-icons/md';
 import defaultimg from '../../assets/default.png'
 import { toast } from 'react-toastify';
@@ -42,10 +42,10 @@ const DeletePopup = ({ title, apiEndpoint, data }) => {
                 okButtonProps={{ className: "antd-custom-btn delete-ok-ant-btn" }}
                 cancelButtonProps={{ className: "antd-custom-btn delete-cancel-ant-btn" }}
             >
-                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <img className='delete-product-img' src={data.image || defaultimg} alt={data.name || "No image"}></img>
-                    <p className='text-center' style={{ fontWeight: 500, margin: 0 }}>{data.name}</p>
-                </div>
+                <Flex align='center'>
+                    <img className='delete-product-img'src={data.image || defaultimg} alt={data.name || "No image"}></img>
+                    <p className='delete-product-name'>{data.name}</p>
+                </Flex>
             </Modal>
 
         </>

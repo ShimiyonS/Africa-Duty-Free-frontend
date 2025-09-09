@@ -130,7 +130,7 @@ const ListAllProducts = () => {
                     <AddEditProducts mode="add" productData={null} />
                 </>
             </div>
-            <Row justify={"space-between"} style={{ marginTop: "24px", marginBottom: "24px" }}>
+            <Row justify={"space-between"} className='admin-header-space'>
                 <Col span={6}>
                     <Form.Item label="Filter option">
                         <Select

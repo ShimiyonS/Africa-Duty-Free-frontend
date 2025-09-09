@@ -25,6 +25,9 @@
     width: 140px;
     height: 150px;
 }
+.cart-input{
+    width: 80px;
+}
 
 
 .cart-number {
@@ -121,6 +124,10 @@
 .popup-cart-heading {
     font-size: 25px;
     font-weight: 600;
+}
+.popup-cart-close{
+    width: 20px;
+    height: 20px;
 }
 
 .price-tag {

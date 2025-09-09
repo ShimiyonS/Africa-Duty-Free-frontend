@@ -34,6 +34,10 @@
 .admin-left-wrapper::-webkit-scrollbar-thumb:hover {
     background: #0056b3;
 }
+.admin-header-space{
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
 
 @media (max-width:769px) {
 .admin-right-wrapper {
@@ -44,6 +48,18 @@
     left: -100%;
 }
 
+}
+
+/* css for table */
+.admin-table-img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.admin-bold{
+    font-weight: bold;
 }
 
 
@@ -60,9 +76,14 @@
 }
 
 .delete-product-img {
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 85px;
+    max-height: 85px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 30px;
     margin-bottom: 12px;
+}
+.delete-product-name{
+    text-align: center;
+    font-weight: 500;
+    margin: 0;
 }

@@ -221,7 +221,7 @@ const ListAllUsers = () => {
                 <img
                     src={text}
                     alt="profile"
-                    style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover" }}
+                    className='admin-table-img'
                 />
             )
         },
@@ -241,8 +241,8 @@ const ListAllUsers = () => {
             key: 'status',
             render: (status) => (
                 status
-                    ? <span className="text-color-success" style={{ fontWeight: "bold" }}>Active</span>
-                    : <span className="text-color-danger" style={{ fontWeight: "bold" }}>Inactive</span>
+                    ? <span className="text-color-success admin-bold">Active</span>
+                    : <span className="text-color-danger admin-bold">Inactive</span>
             )
         },
         {
@@ -321,7 +321,7 @@ const ListAllUsers = () => {
                 {/* drawer popup  */}
                 <AddEditUsers mode={"add"} userData={null} />
             </div>
-            <Row justify={"space-between"} style={{ marginTop: "24px", marginBottom: "24px" }}>
+            <Row justify={"space-between"} className='admin-header-space'>
                 <Col span={6}>
                     <Form.Item label="Filter option">
                         <Select
