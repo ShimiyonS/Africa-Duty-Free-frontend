@@ -197,7 +197,7 @@ const ListAllUsers = () => {
             id: uindex + 1,
             profile: userdata.image,
             username: userdata.userName,
-            emailaddress: userdata.email,
+            email: userdata.email,
             status: userdata.status,
             orders: userdata.orders,
             cart: userdata.cart || 0,
@@ -221,7 +221,7 @@ const ListAllUsers = () => {
                 <img
                     src={text}
                     alt="profile"
-                    style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover" }}
+                    className='admin-table-img'
                 />
             )
         },
@@ -232,8 +232,8 @@ const ListAllUsers = () => {
         },
         {
             title: 'Email Address',
-            dataIndex: 'emailaddress',
-            key: 'emailaddress',
+            dataIndex: 'email',
+            key: 'email',
         },
         {
             title: 'Status',
@@ -241,8 +241,8 @@ const ListAllUsers = () => {
             key: 'status',
             render: (status) => (
                 status
-                    ? <span className="text-color-success" style={{ fontWeight: "bold" }}>Active</span>
-                    : <span className="text-color-danger" style={{ fontWeight: "bold" }}>Inactive</span>
+                    ? <span className="text-color-success admin-bold">Active</span>
+                    : <span className="text-color-danger admin-bold">Inactive</span>
             )
         },
         {
@@ -315,13 +315,13 @@ const ListAllUsers = () => {
 
 
     return (
-        <div className='table-responsive'>
+        <>
             <div className='d-flex align-items-center justify-content-between'>
                 <h2 className="adminform-heading justuspro-medium mb-3">View Users List</h2>
                 {/* drawer popup  */}
                 <AddEditUsers mode={"add"} userData={null} />
             </div>
-            <Row justify={"space-between"} style={{ marginTop: "24px", marginBottom: "24px" }}>
+            <Row justify={"space-between"} className='admin-header-space'>
                 <Col span={6}>
                     <Form.Item label="Filter option">
                         <Select
@@ -398,13 +398,10 @@ const ListAllUsers = () => {
                         </Form.Item>
                     </Col>
                 ) : null}
-
-
-
             </Row>
 
-            <Table dataSource={filteredData} columns={columns} />
-        </div>
+            <Table dataSource={filteredData} columns={columns}  scroll={{ x: "max-content" }} />
+        </>
     )
 }
 

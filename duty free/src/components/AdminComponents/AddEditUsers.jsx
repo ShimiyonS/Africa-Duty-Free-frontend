@@ -48,10 +48,33 @@ const AddEditUsers = ({ mode, userData }) => {
             toast.error("Something went wrong");
         }
     }
+
+
+    const validateNumberInput = (e) => {
+        const { value } = e.target;
+
+        // 🔹 For keydown event
+        if (e.type === "keydown") {
+            if (e.key === '-' || e.key === 'e' || e.key === '+') {
+                e.preventDefault();
+            }
+            if (e.key === '0' && value.length === 0) {
+                e.preventDefault();
+            }
+        }
+
+        // 🔹 For input/paste event
+        if (e.type === "input") {
+            if (value.startsWith('0')) {
+                e.target.value = value.replace(/^0+/, '');
+            }
+            if (Number(value) < 0) {
+                e.target.value = '';
+            }
+        }
+    };
     useEffect(() => {
         if (mode === "edit" && userData) {
-            console.log(userData);
-            
             form.setFieldsValue({
                 userName: userData?.username,
                 email: userData?.emailaddress,
@@ -112,7 +135,7 @@ const AddEditUsers = ({ mode, userData }) => {
                                         label="Phone Number"
                                         rules={[{ required: true, message: 'Please enter Phone Number' }]}
                                     >
-                                        <Input type="number" name="phone" placeholder="Please enter Phone Number" />
+                                        <Input type="number" name="phone" className='ant-disable-control' onKeyDown={validateNumberInput} onInput={validateNumberInput} placeholder="Please enter Phone Number" />
                                     </Form.Item>
                                 </Col>
 
@@ -122,7 +145,7 @@ const AddEditUsers = ({ mode, userData }) => {
                                         label={mode === "edit" ? "Edit Image" : "Upload Image"}
                                         rules={[{ required: true, message: 'Please upload image' }]}
                                     >
-                                        <Upload style={{ width: "100%" }}
+                                        <Upload
                                             {...props}
                                             listType="picture"
                                             maxCount={1}
@@ -133,7 +156,7 @@ const AddEditUsers = ({ mode, userData }) => {
                                                 }
                                             }}
                                         >
-                                            <Button icon={<UploadOutlined />} style={{ width: "100%" }}>
+                                            <Button icon={<UploadOutlined />}>
                                                 Click to Upload
                                             </Button>
                                         </Upload>

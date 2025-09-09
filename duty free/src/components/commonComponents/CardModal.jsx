@@ -44,7 +44,7 @@ const CardModal = () => {
                         {getActiveCart?.data?.reviews?.map((item) => { return <Link to={`/product-category/${item?.reviewerName}`} className='text-color-danger text-decoration-none'>{item?.reviewerName},</Link> })}
                     </div>
                 </div>
-                <button onClick={() => { handleClose() }} className='border-0 position-absolute alert-btn shadow'><MdClose style={{ width: "20px", height: "20px" }} /></button>
+                <button onClick={() => { handleClose() }} className='border-0 position-absolute alert-btn shadow'><MdClose className='popup-cart-close' /></button>
             </div>
         </div>
     )

@@ -213,6 +213,10 @@ label {
     width: 130px;
     text-align: center;
 }
+.alert-icon{
+    width: 25px;
+    height: 25px;
+}
 
 /* conatct-us-form css */
 

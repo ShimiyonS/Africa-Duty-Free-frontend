@@ -88,7 +88,6 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
                                 </Form.Item>
                             </Col>
                         </Row>
-
                         <Row gutter={16}>
                             <Col span={24}>
                                 <Form.Item
@@ -114,7 +113,7 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
                                     label={mode === "edit" ? "Edit Image" : "Upload Image"}
                                     rules={[{ required: true, message: 'Please upload image' }]}
                                 >
-                                    <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" beforeUpload={() => { return false; }} className="antd-custom-btn">
+                                    <Upload  accept=".jpg,.png,.jpeg,.png" beforeUpload={() => { return false; }} className="antd-custom-btn">
                                         <Button icon={<UploadOutlined />} type="primary">Upload</Button>
                                     </Upload>
                                 </Form.Item>
