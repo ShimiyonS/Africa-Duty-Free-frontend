@@ -47,6 +47,9 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
             toast.error("Something went wrong");
         }
     }
+    // checking upload image
+    const normFile = (e) => Array.isArray(e) ? e : e?.fileList;
+
     return (
         <div>
             <Button type={mode === "edit" ? "link" : "primary"} onClick={toggleDrawer} className="antd-custom-btn">
@@ -85,19 +88,7 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
                                 </Form.Item>
                             </Col>
                         </Row>
-                        <Row gutter={16}>
-                            <Col span={12}>
-                                <Form.Item
-                                    name="uploadImage"
-                                    label={mode === "edit" ? "Edit Image" : "Upload Image"}
-                                    rules={[{ required: true, message: 'Please upload image' }]}
-                                >
-                                    <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" beforeUpload={() => { return false; }} className="antd-custom-btn">
-                                        <Button icon={<UploadOutlined />} type="primary">Upload</Button>
-                                    </Upload>
-                                </Form.Item>
-                            </Col>
-                        </Row>
+
                         <Row gutter={16}>
                             <Col span={24}>
                                 <Form.Item
@@ -111,6 +102,21 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
                                     ]}
                                 >
                                     <Input.TextArea rows={4} placeholder="please enter description" />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={16}>
+                            <Col span={12}>
+                                <Form.Item
+                                    name="uploadImage"
+                                    valuePropName="fileList"
+                                    getValueFromEvent={normFile}
+                                    label={mode === "edit" ? "Edit Image" : "Upload Image"}
+                                    rules={[{ required: true, message: 'Please upload image' }]}
+                                >
+                                    <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" beforeUpload={() => { return false; }} className="antd-custom-btn">
+                                        <Button icon={<UploadOutlined />} type="primary">Upload</Button>
+                                    </Upload>
                                 </Form.Item>
                             </Col>
                         </Row>

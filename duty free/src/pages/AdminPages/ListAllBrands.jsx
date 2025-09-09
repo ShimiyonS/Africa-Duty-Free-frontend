@@ -4,7 +4,7 @@ import { useState } from 'react';
 import DeletePopup from '../../components/commonComponents/DeletePopup'
 
 
-const ListAllCategories = () => {
+const ListAllBrand = () => {
     const [pagination, setPagination] = useState({
         current: 1,
         pageSize: 5,
@@ -224,4 +224,4 @@ const ListAllCategories = () => {
 
     )
 }
-export default ListAllCategories
+export default ListAllBrand

@@ -117,7 +117,7 @@ const AddEditProducts = ({ mode, productData }) => {
 
     //for showing edit datas in input fields
     useEffect(() => {
-        if (mode === "edit" && productData) { 
+        if (mode === "edit" && productData) {
             form.setFieldsValue({
                 product: productData?.productname,
                 productSlug: productData?.productSlug,
@@ -143,10 +143,10 @@ const AddEditProducts = ({ mode, productData }) => {
                 }
             ])
         }
-        console.log("updated category", shareValue);
-
     }, [shareValue]);
 
+    // checking upload image
+    const normFile = (e) => Array.isArray(e) ? e : e?.fileList;
 
     return (
         <div>
@@ -178,7 +178,7 @@ const AddEditProducts = ({ mode, productData }) => {
                     onClose={toggleDrawer}
                     className="justuspro-bold" width={800} closable={true}>
                     <div>
-                       
+
                         <Form layout="vertical" form={form} onFinish={handleSubmit}>
                             <Row gutter={16}>
                                 <Col span={12}>
@@ -214,6 +214,8 @@ const AddEditProducts = ({ mode, productData }) => {
                                 <Col span={12}>
                                     <Form.Item
                                         name="uploadImage"
+                                        valuePropName="fileList"
+                                        getValueFromEvent={normFile}
                                         label={mode === "edit" ? "Edit Image" : "Upload Image"}
                                         rules={[{ required: true, message: 'Please upload image' }]}
                                     >

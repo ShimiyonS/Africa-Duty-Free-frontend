@@ -15,6 +15,7 @@ const AdminMenuBar = () => {
                 <NavLink to="/siteadmin" end className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <RxDashboard style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Dashboard</span></NavLink>
                 <NavLink to="/siteadmin/products" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <GiDrinkMe style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Products</span></NavLink>
                 <NavLink to="/siteadmin/brands" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Brands</span></NavLink>
+                <NavLink to="/siteadmin/subcategories" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Sub Categories</span></NavLink>
                 <NavLink to="/siteadmin/users" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <LuUserRound style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">users</span></NavLink>
 
             </div>

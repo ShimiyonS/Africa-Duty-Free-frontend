@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import ListAllProducts from '../pages/AdminPages/ListAllProducts'
 import ListAllUsers from '../pages/AdminPages/ListAllUsers';
 import ListAllBrands from '../pages/AdminPages/ListAllBrands'
+import ListAllSubCategories from '../pages/AdminPages/ListAllSubCategories'
 
 
 const AdminRoutes = () => {
@@ -16,6 +17,7 @@ const AdminRoutes = () => {
                     <Route path="*" element={<NoPage />} />
                     <Route path="/brands" element={<ListAllBrands />} />
                     <Route index path="/products" element={<ListAllProducts />} />
+                    <Route index path="/subcategories" element={<ListAllSubCategories />} />
                     <Route index path="/users" element={<ListAllUsers />} />
 
                 </Route>
