@@ -73,8 +73,7 @@ const Cart = () => {
                                                         name="minimumOrderQuantity"
                                                         onChange={(e) => handleInput(e, index)}
                                                         value={item?.minimumOrderQuantity}
-                                                        className="form-control text-center rounded-5"
-                                                        style={{ width: "80px" }}
+                                                        className="form-control text-center rounded-5 cart-input"
                                                     />
                                                 </td>
                                                 <td className="text-color-primary-cart dmsans-bold ">

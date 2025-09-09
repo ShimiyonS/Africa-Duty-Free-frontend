@@ -145,7 +145,7 @@ const AddEditUsers = ({ mode, userData }) => {
                                         label={mode === "edit" ? "Edit Image" : "Upload Image"}
                                         rules={[{ required: true, message: 'Please upload image' }]}
                                     >
-                                        <Upload style={{ width: "100%" }}
+                                        <Upload
                                             {...props}
                                             listType="picture"
                                             maxCount={1}
@@ -156,7 +156,7 @@ const AddEditUsers = ({ mode, userData }) => {
                                                 }
                                             }}
                                         >
-                                            <Button icon={<UploadOutlined />} style={{ width: "100%" }}>
+                                            <Button icon={<UploadOutlined />}>
                                                 Click to Upload
                                             </Button>
                                         </Upload>
