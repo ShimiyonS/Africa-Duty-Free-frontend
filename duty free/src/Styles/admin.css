@@ -5,7 +5,6 @@
     width: 265px;
     height: 100vh;
     overflow-y: scroll;
-    background: white;
     z-index: 3;
     transition: 0.5s linear;
 }
@@ -57,7 +56,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: aqua;
 }
 
 .admin-toggle-btn,

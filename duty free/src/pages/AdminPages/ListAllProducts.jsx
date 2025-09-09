@@ -129,7 +129,7 @@ const ListAllProducts = () => {
 
     return (
         <>
-            <AdminHeader title={`View Products`} addComponent={<AddEditProducts mode="add" productData={null} />} />
+            <AdminHeader title={`View Products`} addComponent={<AddEditProducts mode="add" productData={null} />} hideBack={true} />
 
             <Row justify={"space-between"} className='admin-header-space'>
                 <Col span={6}>
@@ -158,7 +158,7 @@ const ListAllProducts = () => {
                 </Col>
             </Row>
 
-            <Table dataSource={filteredData} columns={columns} className='product-page-table brand-pagination' pagination={{
+            <Table dataSource={filteredData} columns={columns} scroll={{ x: "max-content" }} className='product-page-table brand-pagination' pagination={{
                 position: ["bottomCenter"],
                 current: pagination.current,
                 pageSize: pagination.pageSize,

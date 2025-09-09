@@ -8,7 +8,7 @@ const AdminLayout = () => {
     const { adminSidebarToggle } = useMyContext()
     return (
         <div className='d-flex flex-wrap'>
-            <div className={`admin-left-wrapper ${adminSidebarToggle ? `adminsidebar-active` : ``}`}>
+            <div className={`admin-left-wrapper bg-color-primary ${adminSidebarToggle ? `adminsidebar-active` : ``}`}>
                 <AdminMenuBar />
             </div>
             <div className='admin-right-wrapper'>

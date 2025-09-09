@@ -311,7 +311,7 @@ const ListAllCategory = () => {
 
     return (
         <>
-            <AdminHeader title={`View Category`} addComponent={<AddEditCategory mode="add" categoryData={null} />} />
+            <AdminHeader title={`View Category`} addComponent={<AddEditCategory mode="add" categoryData={null} />} hideBack={true} />
 
             <Row justify={"space-between"} className='admin-header-space'>
                 <Col span={6}>

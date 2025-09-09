@@ -356,7 +356,7 @@ const ListAllUsers = () => {
 
     return (
         <>
-            <AdminHeader title={"View Users"} addComponent={<AddEditUsers mode={"add"} userData={null} />} />
+            <AdminHeader title={"View Users"} addComponent={<AddEditUsers mode={"add"} userData={null} />} hideBack={true} />
             <Row justify={"space-between"} className='admin-header-space'>
                 <Col span={6}>
                     <Form.Item label="Filter option">
