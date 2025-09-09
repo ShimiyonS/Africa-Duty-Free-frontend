@@ -13,7 +13,7 @@ const AddEditProducts = ({ mode, productData }) => {
     const [subCategories, setSubCategories] = useState([]);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
     const { Option } = Select;
-    const { apiRequest } = Common()
+    const { apiRequest, generateSlug } = Common()
     const [form] = Form.useForm();
     const [childrenDrawer, setChildrenDrawer] = useState(false);
     const [shareValue, setShareValue] = useState(null)
@@ -75,6 +75,11 @@ const AddEditProducts = ({ mode, productData }) => {
     const toggleDrawer = () => {
         setChildrenDrawer(!childrenDrawer);
     };
+
+    const handleSlug = (value, placeArea) => {
+        const slug = generateSlug(value);
+        form.setFieldsValue({ [placeArea]: slug })
+    }
 
     const handleSubmit = async (values) => {
         try {
@@ -214,7 +219,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                         label={mode === "add" ? "Product Name" : "Edit Name"}
                                         rules={[{ required: true, message: 'Please enter product name' }]}
                                     >
-                                        <Input placeholder="Please enter product name" />
+                                        <Input placeholder="Please enter product name" onBlur={(e) => { handleSlug(e.target.value, "productSlug") }} />
                                     </Form.Item>
                                 </Col>
                                 <Col span={12}>
@@ -223,7 +228,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                         label={mode === "edit" ? "Edit Slug" : "Product Slug"}
                                         rules={[{ required: true, message: 'Please enter slug' }]}
                                     >
-                                        <Input placeholder="Please enter slug" />
+                                        <Input placeholder="Please enter slug" onBlur={(e) => { handleSlug(e.target.value, "productSlug") }} />
                                     </Form.Item>
                                 </Col>
                             </Row>

@@ -2,8 +2,14 @@ import { useState } from 'react'
 import { Col, Form, Input, Row, Select, Space, Table } from "antd";
 import AddEditUsers from '../../components/AdminComponents/AddEditUsers';
 import DeletePopup from '../../components/commonComponents/DeletePopup';
+import AdminHeader from '../../components/AdminComponents/AdminHeader';
 
 const ListAllUsers = () => {
+
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 5,
+    });
 
     //filter state
     const [selectedColumn, setSelectedColumn] = useState("");
@@ -188,6 +194,40 @@ const ListAllUsers = () => {
         cart: 1,
         wishlist: 10,
         status: false
+    },
+    {
+        id: 6,
+        firstName: "Emily",
+        lastName: "Johnson",
+        userName: 'Ganesh',
+        age: 28,
+        gender: "male",
+        email: "ganesh123@gmail.com",
+        phone: "+81 965-431-3024",
+        username: "emilys",
+        password: "emilyspass",
+        birthDate: "1996-05-30",
+        image: "https://dummyjson.com/icon/emilys/128",
+        address: {
+            address: "626 Main Street",
+            city: "Phoenix",
+            state: "Mississippi",
+            stateCode: "MS",
+            postalCode: "29112",
+            country: "United States"
+        },
+        bank: {
+            cardExpire: "03/26",
+            cardNumber: "9289760655481815",
+            cardType: "Elo",
+            currency: "CNY",
+            iban: "YPUXISOBI7TTHPK2BR3HAIXL"
+        },
+        role: "admin",
+        orders: 21,
+        cart: 12,
+        wishlist: 1,
+        status: true
     }
     ];
 
@@ -316,11 +356,7 @@ const ListAllUsers = () => {
 
     return (
         <>
-            <div className='d-flex align-items-center justify-content-between'>
-                <h2 className="adminform-heading justuspro-medium mb-3">View Users List</h2>
-                {/* drawer popup  */}
-                <AddEditUsers mode={"add"} userData={null} />
-            </div>
+            <AdminHeader title={"View Users"} addComponent={<AddEditUsers mode={"add"} userData={null} />} hideBack={true} />
             <Row justify={"space-between"} className='admin-header-space'>
                 <Col span={6}>
                     <Form.Item label="Filter option">
@@ -400,7 +436,19 @@ const ListAllUsers = () => {
                 ) : null}
             </Row>
 
-            <Table dataSource={filteredData} columns={columns}  scroll={{ x: "max-content" }} />
+            <Table dataSource={filteredData} columns={columns} className='brand-pagination' scroll={{ x: "max-content" }} pagination={{
+                position: ["bottomCenter"],
+                current: pagination.current,
+                pageSize: pagination.pageSize,
+                // total: brands.length,
+                showSizeChanger: true,
+                pageSizeOptions: ["5", "10", "20", "50"],
+                showQuickJumper: true,
+                onChange: (page, pageSize) => {
+                    setPagination({ current: page, pageSize });
+                },
+                showTotal: (total) => `Total ${total} Users`,
+            }} />
         </>
     )
 }
