@@ -1,8 +1,9 @@
-import { Table, Space } from "antd";
+import { Table, Space, Row, Col, Form, Select, Input } from "antd";
 import AddEditSubCategories from '../../components/AdminComponents/AddEditSubCategory'
 import { useState } from 'react';
 import DeletePopup from '../../components/commonComponents/DeletePopup'
-import AddEditSubCategory from './../../components/AdminComponents/AddEditSubCategory';
+import AdminHeader from '../../components/AdminComponents/AdminHeader';
+
 
 
 const ListAllSubCategories = () => {
@@ -10,6 +11,15 @@ const ListAllSubCategories = () => {
         current: 1,
         pageSize: 5,
     });
+
+    //filter state
+    const [searchField, setSearchField] = useState("");
+    const [searchText, setSearchText] = useState("");
+
+    const changeSearchField = (value) => {
+        setSearchField(value)
+        setSearchText("")
+    }
 
     const subCategories = [
         {
@@ -199,31 +209,51 @@ const ListAllSubCategories = () => {
         },
     ];
 
+    let filteredData = subCategories.filter((item) => {
+        if (!searchText) return true; // If search box empty → show all
+
+        const value = item[searchField]?.toString().toLowerCase();
+        return value?.includes(searchText.toLowerCase());
+    });
+
     return (
         <div>
-            <div>
-                <div className='d-flex align-items-center justify-content-between'>
-                    <h2 className="adminform-heading justuspro-medium mb-3">Sub Category List</h2>
-                    {/* drawer popup  */}
-                    <>
-                        <AddEditSubCategories mode="add" subCategoryData={null} />
-                    </>
-                </div>
+            <AdminHeader title={`View Sub Categories`} addComponent={<AddEditSubCategories mode="add" productData={null} />} hideBack={true} />
+            <Row justify={"space-between"} className='admin-header-space'>
+                <Col span={6}>
+                    <Form.Item label="Filter option">
+                        <Select
+                            placeholder="Search..."
+                            onChange={(value) => changeSearchField(value)}
+                        >
+                            <Option value="name">Sub Category Name</Option>
+                        </Select>
+                    </Form.Item>
+                </Col>
 
-                <Table columns={columns} dataSource={subCategories} className="sub-category-pagination" pagination={{
-                    position: ["bottomCenter"],
-                    current: pagination.current,
-                    pageSize: pagination.pageSize,
-                    showSizeChanger: true,
-                    pageSizeOptions: ["5", "10", "20", "50"],
-                    showQuickJumper: true,
-                    onChange: (page, pageSize) => {
-                        setPagination({ current: page, pageSize });
-                    },
-                    showTotal: (total) => `Total ${total} subCategories`,
-                }} />
-
-            </div>
+                <Col span={6}>
+                    <Form.Item label="Filter value">
+                        <Input
+                            placeholder="Search..."
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                            disabled={!searchField}
+                        />
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Table columns={columns} dataSource={filteredData} className="sub-category-pagination" pagination={{
+                position: ["bottomCenter"],
+                current: pagination.current,
+                pageSize: pagination.pageSize,
+                showSizeChanger: true,
+                pageSizeOptions: ["5", "10", "20", "50"],
+                showQuickJumper: true,
+                onChange: (page, pageSize) => {
+                    setPagination({ current: page, pageSize });
+                },
+                showTotal: (total) => `Total ${total} subCategories`,
+            }} />
         </div >
 
     )

@@ -1,7 +1,8 @@
-import { Table, Space } from "antd";
+import { Col, Form, Input, Row, Select, Space, Table } from "antd";
 import AddEditBrand from '../../components/AdminComponents/AddEditBrand'
 import { useState } from 'react';
 import DeletePopup from '../../components/commonComponents/DeletePopup'
+import AdminHeader from '../../components/AdminComponents/AdminHeader';
 
 
 const ListAllBrand = () => {
@@ -9,6 +10,15 @@ const ListAllBrand = () => {
         current: 1,
         pageSize: 5,
     });
+
+    //filter state
+    const [searchField, setSearchField] = useState("");
+    const [searchText, setSearchText] = useState("");
+
+    const changeSearchField = (value) => {
+        setSearchField(value)
+        setSearchText("")
+    }
 
     const brands = [
         {
@@ -198,31 +208,51 @@ const ListAllBrand = () => {
         },
     ];
 
+    let filteredData = brands.filter((item) => {
+        if (!searchText) return true; // If search box empty → show all
+
+        const value = item[searchField]?.toString().toLowerCase();
+        return value?.includes(searchText.toLowerCase());
+    });
+
     return (
         <div>
-            <div>
-                <div className='d-flex align-items-center justify-content-between'>
-                    <h2 className="adminform-heading justuspro-medium mb-3">Brand List</h2>
-                    {/* drawer popup  */}
-                    <>
-                        <AddEditBrand mode="add" brandData={null} />
-                    </>
-                </div>
+            <AdminHeader title={`View Brands`} addComponent={<AddEditBrand mode="add" productData={null} />} hideBack={true} />
+            <Row justify={"space-between"} className='admin-header-space'>
+                <Col span={6}>
+                    <Form.Item label="Filter option">
+                        <Select
+                            placeholder="Search..."
+                            onChange={(value) => changeSearchField(value)}
+                        >
+                            <Option value="name">Brand Name</Option>
+                        </Select>
+                    </Form.Item>
+                </Col>
 
-                <Table columns={columns} dataSource={brands} className="brand-pagination" pagination={{
-                    position: ["bottomCenter"],
-                    current: pagination.current,
-                    pageSize: pagination.pageSize,
-                    showSizeChanger: true,
-                    pageSizeOptions: ["5", "10", "20", "50"],
-                    showQuickJumper: true,
-                    onChange: (page, pageSize) => {
-                        setPagination({ current: page, pageSize });
-                    },
-                    showTotal: (total) => `Total ${total} Brands`,
-                }} />
-
-            </div>
+                <Col span={6}>
+                    <Form.Item label="Filter value">
+                        <Input
+                            placeholder="Search..."
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                            disabled={!searchField}
+                        />
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Table columns={columns} dataSource={filteredData} className="brand-pagination" pagination={{
+                position: ["bottomCenter"],
+                current: pagination.current,
+                pageSize: pagination.pageSize,
+                showSizeChanger: true,
+                pageSizeOptions: ["5", "10", "20", "50"],
+                showQuickJumper: true,
+                onChange: (page, pageSize) => {
+                    setPagination({ current: page, pageSize });
+                },
+                showTotal: (total) => `Total ${total} Brands`,
+            }} />
         </div >
 
     )

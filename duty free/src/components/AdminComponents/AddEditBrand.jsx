@@ -9,8 +9,13 @@ import { FaRegEdit } from 'react-icons/fa';
 const AddEditBrandDrawer = ({ mode, brandData }) => {
     const [loading, setLoading] = useState(false)
     const [form] = Form.useForm();
-    const { apiRequest } = Common()
+    const { apiRequest, generateSlug } = Common()
     const [childrenDrawer, setChildrenDrawer] = useState(false);
+
+    const handleSlug = (value, placeArea) => {
+        const slug = generateSlug(value);
+        form.setFieldsValue({ [placeArea]: slug })
+    }
 
     const toggleDrawer = () => {
         setChildrenDrawer(!childrenDrawer);
@@ -29,13 +34,6 @@ const AddEditBrandDrawer = ({ mode, brandData }) => {
             form.resetFields();
         }
     }, [mode, brandData, form]);
-
-    const generateSlug = (value) => {
-        return value
-            .toLowerCase()
-            .replace(/\s+/g, "-")
-            .replace(/[^\w-]+/g, "");
-    };
 
     const handleSubmit = async (values) => {
         setLoading(true)
@@ -80,7 +78,7 @@ const AddEditBrandDrawer = ({ mode, brandData }) => {
                                     label={mode === "edit" ? "Edit Name" : "Name"}
                                     rules={[{ required: true, message: 'Please enter Brand name' }]}
                                 >
-                                    <Input placeholder="Please enter Brand name" onBlur={(e) => { const slug = generateSlug(e.target.value); form.setFieldsValue({ brandSlug: slug }) }} />
+                                    <Input placeholder="Please enter Brand name" onBlur={(e) => { handleSlug(e.target.value,"brandSlug")}} />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
@@ -89,7 +87,7 @@ const AddEditBrandDrawer = ({ mode, brandData }) => {
                                     label={mode === "edit" ? "Edit Slug" : " Slug"}
                                     rules={[{ required: true, message: 'Please enter slug' }]}
                                 >
-                                    <Input placeholder="Please enter slug" onBlur={(e) => { const updatedSlug = generateSlug(e.target.value); form.setFieldsValue({ brandSlug: updatedSlug }) }} />
+                                    <Input placeholder="Please enter slug"  onBlur={(e) => { handleSlug(e.target.value,"brandSlug")}}  />
                                 </Form.Item>
                             </Col>
                         </Row>

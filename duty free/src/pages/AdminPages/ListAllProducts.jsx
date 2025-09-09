@@ -165,11 +165,10 @@ const ListAllProducts = () => {
                 </Col>
             </Row>
 
-            <Table dataSource={filteredData} columns={columns} scroll={{ x: "max-content" }} className='product-page-table brand-pagination' pagination={{
+            <Table dataSource={filteredData} columns={columns} className='product-page-table brand-pagination' pagination={{
                 position: ["bottomCenter"],
                 current: pagination.current,
                 pageSize: pagination.pageSize,
-                // total: brands.length,
                 showSizeChanger: true,
                 pageSizeOptions: ["5", "10", "20", "50"],
                 showQuickJumper: true,
