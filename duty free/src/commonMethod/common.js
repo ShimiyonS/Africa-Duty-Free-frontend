@@ -37,11 +37,11 @@ const apiRequest = async (method, url, data = {}, headers = {}) => {
     }
 };
 
-const Common = () => {
+const common = () => {
     const dispatch = useDispatch();
     const getActiveCart = useSelector(
         (state) => state.viewCart
     );
     return { dispatch, getActiveCart, firstLetterCapital, apiRequest }
 }
-export default Common;
+export default common;

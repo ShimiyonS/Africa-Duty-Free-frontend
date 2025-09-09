@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Col, Form, Input, Row, Select, Space, Table } from "antd";
 import AddEditProducts from '../../components/AdminComponents/AddEditProducts';
 import DeletePopup from '../../components/commonComponents/DeletePopup'
+import { toast } from 'react-toastify';
+import common from '../../commonMethod/common';
 
 const ListAllProducts = () => {
 
@@ -9,63 +11,44 @@ const ListAllProducts = () => {
     const [searchField, setSearchField] = useState("");
     const [searchText, setSearchText] = useState("");
 
+    const { apiRequest } = common()
+    const [productData, setProductData] = useState([])
     const changeSearchField = (value) => {
         setSearchField(value)
         setSearchText("")
     }
 
-    const categorys = [
-        {
-            id: 1,
-            name: "Beauty",
-            slug: "beauty",
-            subCategorys: [
-                {
-                    id: 1,
-                    name: "Fragrances",
-                    slug: "fragrances",
-                    products: [{
-                        productid: 1,
-                        name: "Dolce Gabana",
-                        price: 33,
-                        slug: "dolce-gabana",
-                        // productImage: DolceGabana,
-                        stock: 22,
-                        brand: "LG",
-                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
-                    },
-                    {
-                        productid: 2,
-                        name: "Fog",
-                        price: 50,
-                        slug: "fog",
-                        // productImage: DolceGabana
-                        stock: 27,
-                        brand: "Samsung",
-                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
-                    },
-                    ]
-                }
-            ]
-        }
-    ]
 
-    const dataSource = categorys.flatMap((cat, catindex) =>
-        cat.subCategorys.flatMap((subc, subcindex) =>
-            subc.products.map((product, pindex) => ({
-                key: catindex,
-                id: product.productid,
-                productname: product.name,
-                productcatagory: cat.name,
-                productsubcatagory: subc.name,
-                productbrand: product.brand || "",
-                stock: product.stock || 0,
-                price: product.price,
-                description: product.Description,
-                productSlug: product.slug
-                // address: item.name
-            }))
-        ))
+
+    // const dataSource = productData.flatMap((product, pidx) =>
+    //     product.subCategory.flatMap((subc) =>
+    //         subc.category.map((cat) => ({
+    //             key: pidx,
+    //             id: product.productid,
+    //             productname: product.productName,
+    //             productcatagory: cat.categoryName,
+    //             productsubcatagory: subc.subcategoryName,
+    //             productbrand: product.brand || "",
+    //             stock: product.stock || 0,
+    //             price: product.price,
+    //             description: product.description,
+    //             productSlug: product.slug
+    //             // address: item.name
+    //         }))
+    //     ))
+
+    const dataSource = productData.map((product, pidx) => ({
+        key: pidx,
+        id: product?.id,
+        productname: product?.productName,
+        productcatagory: product?.subCategory?.category?.categoryName,
+        productsubcatagory: product?.subCategory?.subcategoryName,
+        productbrand: product?.brand || "",
+        stock: product?.stock || 0,
+        price: product?.price,
+        description: product?.description,
+        productSlug: product?.slug
+    }))
 
     const columns = [
         {
@@ -76,23 +59,41 @@ const ListAllProducts = () => {
         },
         {
             title: 'Product Name',
-            dataIndex: 'productname',
-            key: 'productname',
+            dataIndex: 'productName',
+            key: 'productName',
         },
         {
             title: 'Product Catagory',
             dataIndex: 'productcatagory',
             key: 'productcatagory',
+            render: (_, item) => (
+                <div>{item?.subCategory?.category?.categoryName}</div>
+            )
         },
         {
             title: 'Product Sub Catagory',
             dataIndex: 'productsubcatagory',
             key: 'productsubcatagory',
+            render: (_, item) => (
+                <div>{item?.subCategory?.subcategoryName}</div>
+            )
         },
         {
             title: 'Product Brand',
             dataIndex: 'productbrand',
             key: 'productbrand',
+            render: (_, item) => (
+                <div>{item?.brand || "-"}</div>
+            )
+        },
+        {
+            title: "Price",
+            dataIndex: "price",
+            key: "price",
+            render: (_, item) => (
+                <div>{item.price}</div>
+            )
+
         },
         {
             title: 'Stock',
@@ -107,20 +108,25 @@ const ListAllProducts = () => {
             render: (_, record) => (
                 <Space>
                     <AddEditProducts mode="edit" productData={record} />
-                    <DeletePopup title={"Are you want to Delete this Product?"} apiEndpoint={`/products/${record.id}`} name={record.productname} image={'njdvbdfvhbuh'} />
+                    <DeletePopup title={"Are you want to Delete this Product?"} apiEndpoint={`/products/${record.id}`} name={record.productname} image={record?.imageUrl} />
                 </Space>
             )
         },
     ];
 
-    let filteredData = dataSource.filter((item) => {
-        if (!searchText) return true; // If search box empty → show all
+    const fetchProducts = async () => {
+        try {
+            const products = await apiRequest("GET", "/product",)
+            setProductData(products?.products)
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.message)
+        }
+    }
 
-        const value = item[searchField]?.toString().toLowerCase();
-        return value?.includes(searchText.toLowerCase());
-    });
-
-
+    useEffect(() => {
+        fetchProducts()
+    }, [])
     return (
         <>
             <div className='d-flex align-items-center justify-content-between'>
@@ -157,7 +163,7 @@ const ListAllProducts = () => {
                 </Col>
             </Row>
 
-            <Table dataSource={filteredData} columns={columns} />
+            <Table dataSource={productData} columns={columns} />
         </>
     )
 }

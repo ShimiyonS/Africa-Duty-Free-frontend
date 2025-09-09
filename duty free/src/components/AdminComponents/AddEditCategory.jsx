@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Button, Col, Drawer, Form, Input, Row, Select, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import Common from '../../commonMethod/common.js'
+import common from '../../commonMethod/common.js';
 import { toast } from "react-toastify";
 import { CiEdit } from "react-icons/ci";
 
 
 const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
     const [form] = Form.useForm();
-    const { apiRequest } = Common()
+    const { apiRequest } = common()
     const [childrenDrawer, setChildrenDrawer] = useState(false);
 
     const toggleDrawer = () => {
@@ -17,7 +17,8 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
 
     //for showing edit datas in input fields
     useEffect(() => {
-
+        
+        console.log("categoryData", categoryData)
         if (mode === "edit" && categoryData) {
             form.setFieldsValue({
                 category: categoryData?.title,
@@ -33,7 +34,25 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
 
     const handleSubmit = async (values) => {
         try {
-            const data = await apiRequest("POST", "/products/add", values)
+            const fileList = values?.uploadImage?.fileList
+            let formData;
+            if (fileList.length > 0) {
+                formData = new FormData();
+                fileList.forEach((file) =>
+                    formData.append("file", file.originFileObj)
+                );
+            }
+
+            const imageURL = await apiRequest("POST", "/upload/product", formData)
+
+            values.uploadImage = imageURL?.url;
+            const categoryData = {
+                categoryName: values.category,
+                slug: values.categorySlug,
+                description: values.description,
+                image: imageURL?.url,
+            }
+            await apiRequest("POST", "/category/create", categoryData)
             toast.success("Category added successfully");
             setShareValue(values)
             form.resetFields();
@@ -88,7 +107,7 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
                                     label={mode === "edit" ? "Edit Image" : "Upload Image"}
                                     rules={[{ required: true, message: 'Please upload image' }]}
                                 >
-                                    <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" className="antd-custom-btn">
+                                    <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png " beforeUpload={() => false} className="antd-custom-btn">
                                         <Button icon={<UploadOutlined />} type="primary">Upload</Button>
                                     </Upload>
                                 </Form.Item>

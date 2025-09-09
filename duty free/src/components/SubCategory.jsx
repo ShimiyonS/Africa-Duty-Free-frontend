@@ -14,7 +14,8 @@ const SubCategory = ({ subCategorys }) => {
                     <div onClick={() => categoryHandler(subCategory?.slug)} className='sub-category-name'>{subCategory?.subcategoryName}</div>
                     {console.log(subCategory.products)}
                     <Link to={`/beauty/${subCategory?.slug}`} className="sub-category-image">
-                        <img src={subCategory.products[0]?.imageUrl} height={200} className=' product-image' />
+                        {/* <img src={subCategory.products[0]?.imageUrl} height={200} className=' product-image' /> */}
+                        <img src="http://localhost:8000/uploads/product/images/1757323591936-7661_MAIN_1_original_webshop.jpg" height={200} className=' product-image' />
                     </Link>
                     <Link to={`/beauty/${subCategory?.slug}`} className={`$ product-title dmsans-bold d-block text-decoration-none mb-0 pt-2`}>{subCategory?.products[0]?.productName}</Link>
                     <p className={`$ product-price dmsans-bold `}>${subCategory?.products[0]?.price}</p>

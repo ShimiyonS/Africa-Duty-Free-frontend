@@ -17,114 +17,67 @@ const AddEditProducts = ({ mode, productData }) => {
     const [childrenDrawer, setChildrenDrawer] = useState(false);
     const [shareValue, setShareValue] = useState(null)
 
-    const [categories, setCategories] = useState([
-        {
-            id: 1,
-            name: "Beauty",
-            slug: "beauty",
-            subCategorys: [
-                {
-                    id: 3,
-                    name: "Fragrances",
-                    slug: "fragrances",
-                    products: [{
-                        name: "Dolce Gabana",
-                        price: 33,
-                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
-                    },
-
-                    ]
-                }
-            ]
-        },
-        {
-            id: 2,
-            name: "dress",
-            slug: "dress",
-            subCategorys: [
-                {
-                    id: 1,
-                    name: "belt",
-                    slug: "fragrances",
-                    products: [{
-                        name: "Dolce Gabana",
-                        price: 33,
-                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
-                    },
-                    {
-                        name: "Dolce Gabana",
-                        price: 33,
-                    },
-                    ]
-                }, {
-                    id: 2,
-                    name: "watch",
-                    slug: "fragrances",
-                    products: [{
-                        name: " Gabana",
-                        price: 33,
-                        // productImage: DolceGabana,
-                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
-                    },
-                    ]
-                }
-            ]
-        }
-    ]);
+    const [categories, setCategories] = useState([]);
     const toggleDrawer = () => {
         setChildrenDrawer(!childrenDrawer);
     };
 
     const handleSubmit = async (values) => {
-        try {
-            const data = await apiRequest("POST", "/products/add", values)
-            toast.success("Product added successfully");
-            form.resetFields();
+        if (mode == "edit") {
 
-            // Find the category by ID
-            const matchedCategory = categories.find(cat => cat.id === values.categories);
-            if (Object.keys(matchedCategory).length) {
-                console.error("Category not found");
-                return;
+        } else {
+            const fileList = values?.uploadImage?.fileList
+            let formData;
+            if (fileList.length > 0) {
+                formData = new FormData();
+                fileList.forEach((file) =>
+                    formData.append("file", file.originFileObj)
+                );
             }
+            const imageURL = await apiRequest("POST", "/upload/product", formData)
+            values.uploadImage = imageURL?.url;
+            console.log(values.subCategories)
 
-            values.subCategories.forEach(subCatId => {
-                const matchedSubCategory = matchedCategory.categories.subCategorys.find(sub => sub.id === subCatId);
-                if (matchedSubCategory) {
-                    matchedSubCategory.products.push({
-                        name: values.Product,
-                        price: values.ProductPrice,
-                        slug: values.ProductSlug,
-                        image: values.UploadImage,
-                        Description: values.description
-                    });
+            const productDetail = {
+                subCategoryIds: values.subCategories,
+                productName: values.product,
+                slug: values.productSlug,
+                price: values.productPrice,
+                description: values.description,
+                imageUrl: values.uploadImage,
+            }
+            try {
+                const data = await apiRequest("POST", "/product/create", productDetail)
+
+                if (data.status) {
+                    toast.success(data.message);
+                    form.resetFields();
                 }
-            });
-
-        } catch (error) {
-            console.error(error);
-            toast.error("Something went wrong");
+            } catch (error) {
+                console.error(error);
+                toast.error(error?.message);
+            }
         }
     }
     // select option for categories and sub categories 
     const handleCategoryChange = (value) => {
         setSelectedCategory(value);
-        const selected = categories.find((cat) => cat.id === value);
-        setSubCategories(selected?.subCategorys || []);
-        setSelectedSubCategory(null);
+        const selected = categories.find((cat) => cat?.id === value);
+        setSubCategories(selected?.subCategories || []);
         form.setFieldsValue({ subCategories: [] });
     };
 
     //for showing edit datas in input fields
     useEffect(() => {
-        if (mode === "edit" && productData) { 
+        if (mode === "edit" && productData) {
+            console.log(productData?.imageUrl)
             form.setFieldsValue({
-                product: productData?.productname,
-                productSlug: productData?.productSlug,
+                product: productData?.productName,
+                productSlug: productData?.slug,
                 productPrice: productData?.price,
-                uploadImage: productData?.images?.[0],
-                categories: productData?.productcatagory,
-                subCategories: productData?.productsubcatagory,
+                uploadImage: productData?.imageUrl,
+                categories: productData?.subCategory?.category?.categoryName,
+                subCategories: productData?.subCategory?.subcategoryName,
                 description: productData?.description,
             });
         } else {
@@ -143,11 +96,35 @@ const AddEditProducts = ({ mode, productData }) => {
                 }
             ])
         }
-        console.log("updated category", shareValue);
 
     }, [shareValue]);
 
 
+    const fetchCategories = async () => {
+        try {
+            const data = await apiRequest("GET", "/category")
+            setCategories(data?.categories)
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        fetchCategories()
+    }, []);
+
+    const getCategoryId = (categoryName) => {
+        const selectedCategory = categories.find((cat) => cat.categoryName === categoryName);
+        // setSubCategories(selectedCategory?.subCategories || [])
+        return selectedCategory?.id;
+    }
+
+    const getSubCategoryId = (subCategoryName) => {
+        const selectedSubCategory = subCategories.find((sub) => sub.subcategoryName === subCategoryName);
+        return selectedSubCategory?.id;
+    }
+
+    const isCategory = Form.useWatch("categories", form)
     return (
         <div>
             <Button
@@ -178,7 +155,7 @@ const AddEditProducts = ({ mode, productData }) => {
                     onClose={toggleDrawer}
                     className="justuspro-bold" width={800} closable={true}>
                     <div>
-                       
+
                         <Form layout="vertical" form={form} onFinish={handleSubmit}>
                             <Row gutter={16}>
                                 <Col span={12}>
@@ -205,7 +182,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                     <Form.Item
                                         name="productPrice"
                                         label={mode === "edit" ? "Edit Price" : "Product Price"}
-                                        rules={[{ required: true, message: 'Please enter price' }, { pattern: /^[0-9]{1,5}$/, message: "Price should be maximum 5 digits (0 - 999)", },]}
+                                        rules={[{ required: true, message: 'Please enter price' }]}
                                     >
                                         <Input type="number" placeholder="Please enter price" />
                                     </Form.Item>
@@ -217,7 +194,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                         label={mode === "edit" ? "Edit Image" : "Upload Image"}
                                         rules={[{ required: true, message: 'Please upload image' }]}
                                     >
-                                        <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" className="antd-custom-btn">
+                                        <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" beforeUpload={() => false} className="antd-custom-btn">
                                             <Button icon={<UploadOutlined />} type="primary">Upload</Button>
                                         </Upload>
                                     </Form.Item>
@@ -236,8 +213,8 @@ const AddEditProducts = ({ mode, productData }) => {
                                             onChange={handleCategoryChange}
                                         >
                                             {categories.map((cat) => (
-                                                <Option key={cat.id} value={cat.id}>
-                                                    {cat.name}
+                                                <Option key={cat.id} value={getCategoryId(cat?.categoryName)}>
+                                                    {cat.categoryName}
                                                 </Option>
                                             ))}
                                         </Select>
@@ -254,10 +231,11 @@ const AddEditProducts = ({ mode, productData }) => {
                                             value={selectedSubCategory}
                                             onChange={(value) => setSelectedSubCategory(value)}
                                             mode="multiple"
+                                            disabled={!isCategory}
                                         >
                                             {subCategories.map((sub) => (
-                                                <Option key={sub.id} value={sub.id}>
-                                                    {sub.name}
+                                                <Option key={sub.id} value={getSubCategoryId(sub?.subcategoryName)}>
+                                                    {sub?.subcategoryName}
                                                 </Option>
                                             ))}
                                         </Select>

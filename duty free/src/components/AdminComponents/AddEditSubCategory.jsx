@@ -9,6 +9,7 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
     const [form] = Form.useForm();
     const { apiRequest } = Common()
     const [childrenDrawer, setChildrenDrawer] = useState(false);
+    const [category, setCategory] = useState([])
 
     const categorys = [
         {
@@ -33,14 +34,22 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
         }
 
     ]
+    const fetchCategories = async () => {
+        try {
+            const data = await apiRequest("GET", "/category")
+            console.log(data?.categories, "categories")
+            setCategory(data?.categories)
+        } catch (error) {
+            console.error(error);
+        }
+    }
     const toggleDrawer = () => {
         setChildrenDrawer(!childrenDrawer);
     };
 
     //for showing edit datas in input fields
     useEffect(() => {
-        console.log(subCategoryData, "categorydata");
-
+        fetchCategories()
         if (mode === "edit" && subCategoryData) {
             form.setFieldsValue({
                 category: subCategoryData?.title,
@@ -57,14 +66,38 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
     const handleSubmit = async (values) => {
 
         try {
-            const data = await apiRequest("POST", "/products/add", values)
-            toast.success("Sub Category added successfully");
+            let formData;
+            if (values.uploadImage?.fileList.length > 0) {
+                formData = new FormData();
+                values.uploadImage?.fileList.forEach((file) =>
+                    formData.append("file", file.originFileObj)
+                );
+            }
+            const imageURL = await apiRequest("POST", "/upload/product", formData)
+            values.uploadImage = imageURL?.url;
+            const subCategoryData = {
+                subcategoryName: values.subcategoryName,
+                slug: values.slug,
+                description: values.description,
+                image: imageURL?.url,
+            }
+            const data = await apiRequest("POST", `/subcategory/create/${values.category}`, subCategoryData)
+            if (data?.status) {
+                toast.success("Sub Category added successfully");
+            } else {
+                toast.error(data?.message);
+            }
             form.resetFields();
 
         } catch (error) {
             console.error(error);
-            toast.error("Something went wrong");
+            toast.error(error?.message);
         }
+    }
+
+    const getCategoryId = (categoryName) => {
+        const selectedCategory = category.find((cat) => cat.categoryName === categoryName);
+        return selectedCategory?.id;
     }
     return (
         <div>
@@ -87,7 +120,7 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
-                                    name="category"
+                                    name="subcategoryName"
                                     label={mode === "edit" ? "Edit Name" : "Name"}
                                     rules={[{ required: true, message: 'Please enter Sub Category name' }]}
                                 >
@@ -96,7 +129,7 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
                             </Col>
                             <Col span={12}>
                                 <Form.Item
-                                    name="categorySlug"
+                                    name="slug"
                                     label={mode === "edit" ? "Edit slug" : " slug"}
                                     rules={[{ required: true, message: 'Please enter slug' }]}
                                 >
@@ -107,17 +140,17 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
-                                    name="categories"
+                                    name="category"
                                     label={mode === "edit" ? "Edit Categories" : "Categories"}
-                                    rules={[{ required: true, message: 'Please choose the Sub categories' }]}
+                                    rules={[{ required: true, message: 'Please choose the categorie' }]}
                                 >
                                     <Select
                                         placeholder="Select Category"
                                         mode="multiple"
                                     >
-                                        {categorys.map((cat) =>
-                                            <Option key={cat.id} value={cat.id} >
-                                                {cat.name}
+                                        {category.map((cat) =>
+                                            <Option key={cat.id} value={getCategoryId(cat?.categoryName)} >
+                                                {cat.categoryName}
                                             </Option>)}
                                     </Select>
                                 </Form.Item>
@@ -129,7 +162,7 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
                                     label={mode === "edit" ? "Edit Image" : "Upload Image"}
                                     rules={[{ required: true, message: 'Please upload image' }]}
                                 >
-                                    <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" className="antd-custom-btn">
+                                    <Upload style={{ width: "100%" }} beforeUpload={() => false} accept=".jpg,.png,.jpeg,.png" className="antd-custom-btn">
                                         <Button icon={<UploadOutlined />} type="primary">Upload</Button>
                                     </Upload>
                                 </Form.Item>
