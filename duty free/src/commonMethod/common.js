@@ -1,6 +1,13 @@
 
 const firstLetterCapital = (text) => { if (!text) return ""; return text.charAt(0).toUpperCase() + text.slice(1); };
 
+const generateSlug = (value) => {
+    return value
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w-]+/g, "");
+};
+
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -42,6 +49,6 @@ const Common = () => {
     const getActiveCart = useSelector(
         (state) => state.viewCart
     );
-    return { dispatch, getActiveCart ,firstLetterCapital, apiRequest}
+    return { dispatch, getActiveCart, firstLetterCapital, apiRequest, generateSlug }
 }
 export default Common;

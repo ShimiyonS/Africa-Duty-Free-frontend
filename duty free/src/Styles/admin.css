@@ -5,6 +5,9 @@
     width: 265px;
     height: 100vh;
     overflow-y: scroll;
+    background: white;
+    z-index: 3;
+    transition: 0.5s linear;
 }
 
 .admin-right-wrapper {
@@ -34,31 +37,71 @@
 .admin-left-wrapper::-webkit-scrollbar-thumb:hover {
     background: #0056b3;
 }
-.admin-header-space{
+
+/* css for Admin header css */
+.admin-header-space {
     margin-top: 24px;
     margin-bottom: 24px;
 }
 
-@media (max-width:769px) {
-.admin-right-wrapper {
-    margin: 0;
-    width: 100%;
-}
-.admin-left-wrapper {
-    left: -100%;
+.header-profile {
+    text-decoration: none;
 }
 
+.profile-img-header {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: aqua;
+}
+
+.admin-toggle-btn,
+.admin-sidebar-close {
+    display: none;
+    border: none;
+    background: transparent;
+}
+
+.admin-page-back-btn {
+    border: none;
+    background: transparent;
+}
+
+@media (max-width:769px) {
+    .admin-right-wrapper {
+        margin: 0;
+        width: 100%;
+        padding: 8px;
+    }
+
+    .admin-left-wrapper {
+        left: -100%;
+    }
+
+    .adminsidebar-active {
+        left: 0;
+    }
+
+    .admin-toggle-btn,
+    .admin-sidebar-close {
+        display: block;
+    }
 }
 
 /* css for table */
-.admin-table-img{
+.admin-table-img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.admin-bold{
+.admin-bold {
     font-weight: bold;
 }
 
@@ -82,7 +125,8 @@
     border-radius: 30px;
     margin-bottom: 12px;
 }
-.delete-product-name{
+
+.delete-product-name {
     text-align: center;
     font-weight: 500;
     margin: 0;
