@@ -1,9 +1,15 @@
 import { useState } from 'react'
 import { Col, Form, Input, Row, Select, Space, Table } from "antd";
 import AddEditProducts from '../../components/AdminComponents/AddEditProducts';
-import DeletePopup from '../../components/commonComponents/DeletePopup'
+import DeletePopup from '../../components/commonComponents/DeletePopup';
+import AdminHeader from '../../components/AdminComponents/AdminHeader';
 
 const ListAllProducts = () => {
+
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 5,
+    });
 
     //filter state
     const [searchField, setSearchField] = useState("");
@@ -123,13 +129,8 @@ const ListAllProducts = () => {
 
     return (
         <>
-            <div className='d-flex align-items-center justify-content-between'>
-                <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
-                {/* drawer popup  */}
-                <>
-                    <AddEditProducts mode="add" productData={null} />
-                </>
-            </div>
+            <AdminHeader title={`View Products`} addComponent={<AddEditProducts mode="add" productData={null} />} hideBack={true} />
+
             <Row justify={"space-between"} className='admin-header-space'>
                 <Col span={6}>
                     <Form.Item label="Filter option">
@@ -156,7 +157,20 @@ const ListAllProducts = () => {
                     </Form.Item>
                 </Col>
             </Row>
-                <Table dataSource={filteredData} columns={columns} className='product-page-table'/>
+
+            <Table dataSource={filteredData} columns={columns} scroll={{ x: "max-content" }} className='product-page-table brand-pagination' pagination={{
+                position: ["bottomCenter"],
+                current: pagination.current,
+                pageSize: pagination.pageSize,
+                // total: brands.length,
+                showSizeChanger: true,
+                pageSizeOptions: ["5", "10", "20", "50"],
+                showQuickJumper: true,
+                onChange: (page, pageSize) => {
+                    setPagination({ current: page, pageSize });
+                },
+                showTotal: (total) => `Total ${total} Products`,
+            }} />
         </>
     )
 }
