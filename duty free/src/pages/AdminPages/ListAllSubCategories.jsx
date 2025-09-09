@@ -22,10 +22,10 @@ const ListAllSubCategories = () => {
         },
         {
             id: 2,
-            name: "Fashion",
+            name: "Fashionsssssssdddddddddsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssshhhhhhhhhhhhhhhhhhhhhhhhhhhh",
             slug: "fashion",
             description:
-                "Latest trends in clothing, accessories, and lifestyle fashion.",
+                "Latest trends in clothing, accessories, and lifestyle fashion.Latest trends in clothing, accessories, and lifestyle fashion.Latest trends in clothing, accessories, and lifestyle fashion.Latest trends in clothing, accessories, and lifestyle fashion.",
             image: "",
         },
         {
@@ -72,7 +72,7 @@ const ListAllSubCategories = () => {
         },
         {
             id: 9,
-            name: "Groceries",
+            name: "GroceriesGroceriesGroceriesGroceriesGroceriesGroceriesGroceriesGroceriesGroceriesGroceriesGroceriesGroceriesGroceriesGroceriesGroceriesGroceriesGroceries",
             slug: "groceries",
             description: "Daily essentials, food, and household groceries.",
             image: "",
@@ -162,12 +162,13 @@ const ListAllSubCategories = () => {
             dataIndex: 'id',
             key: 'id',
             fixed: 'left',
+            width: 50
         },
         {
             title: 'Image',
             dataIndex: 'image',
             key: 'image',
-            width: 200,
+            width: 150,
             render: (text) => <img src={text} alt="sub-category-image" width={40} />,
         },
         {
@@ -175,11 +176,14 @@ const ListAllSubCategories = () => {
             dataIndex: 'name',
             key: 'name',
             width: 150,
+            ellipsis: true
         },
         {
             title: 'Description',
             dataIndex: 'description',
             key: 'description',
+            width: 300,
+            ellipsis: true
         },
         {
             title: "Action",

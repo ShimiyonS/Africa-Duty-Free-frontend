@@ -17,7 +17,7 @@ const ListAllProducts = () => {
     const categorys = [
         {
             id: 1,
-            name: "Beauty",
+            name: "Beautyvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
             slug: "beauty",
             subCategorys: [
                 {
@@ -26,10 +26,9 @@ const ListAllProducts = () => {
                     slug: "fragrances",
                     products: [{
                         productid: 1,
-                        name: "Dolce Gabana",
+                        name: "Dolce Gabana ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true",
                         price: 33,
                         slug: "dolce-gabana",
-                        // productImage: DolceGabana,
                         stock: 22,
                         brand: "LG",
                         Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
@@ -39,7 +38,6 @@ const ListAllProducts = () => {
                         name: "Fog",
                         price: 50,
                         slug: "fog",
-                        // productImage: DolceGabana
                         stock: 27,
                         brand: "Samsung",
                         Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
@@ -73,31 +71,40 @@ const ListAllProducts = () => {
             dataIndex: 'id',
             key: 'id',
             fixed: 'left',
+            width: 50,
         },
         {
             title: 'Product Name',
             dataIndex: 'productname',
             key: 'productname',
+            width: 150,
+            ellipsis: true
         },
         {
-            title: 'Product Catagory',
+            title: 'Product Category',
             dataIndex: 'productcatagory',
             key: 'productcatagory',
+            width: 150,
+            ellipsis: true
         },
         {
-            title: 'Product Sub Catagory',
+            title: 'Product Sub Category',
             dataIndex: 'productsubcatagory',
             key: 'productsubcatagory',
+            width: 150,
+            ellipsis: true
         },
         {
             title: 'Product Brand',
             dataIndex: 'productbrand',
             key: 'productbrand',
+            width: 150,
         },
         {
             title: 'Stock',
             dataIndex: 'stock',
             key: 'stock',
+            width: 150,
         },
         {
             title: "Action",
@@ -156,7 +163,7 @@ const ListAllProducts = () => {
                     </Form.Item>
                 </Col>
             </Row>
-                <Table dataSource={filteredData} columns={columns} className='product-page-table'/>
+            <Table dataSource={filteredData} columns={columns} className='product-page-table' />
         </>
     )
 }

@@ -74,7 +74,7 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
                             <Col span={12}>
                                 <Form.Item
                                     name="categorySlug"
-                                    label={mode === "edit" ? "Edit slug" : " slug"}
+                                    label={mode === "edit" ? "Edit Slug" : " Slug"}
                                     rules={[{ required: true, message: 'Please enter slug' }]}
                                 >
                                     <Input placeholder="Please enter slug" />

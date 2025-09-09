@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Button, Col, Drawer, Form, Input, Row, Select, Upload, message } from 'antd';
+import { Button, Col, Drawer, Form, Input, Row, Select, Upload, } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import Common from '../../commonMethod/common.js'
 import { toast } from "react-toastify";
@@ -8,6 +8,7 @@ import AddEditCategory from './AddEditCategory.jsx';
 import AddEditSubCategory from './AddEditSubCategory.jsx';
 
 const AddEditProducts = ({ mode, productData }) => {
+    const [loading, setLoading] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [subCategories, setSubCategories] = useState([]);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
@@ -210,7 +211,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                 <Col span={12}>
                                     <Form.Item
                                         name="product"
-                                        label={mode === "add" ? "Product Name" : "Edit name"}
+                                        label={mode === "add" ? "Product Name" : "Edit Name"}
                                         rules={[{ required: true, message: 'Please enter product name' }]}
                                     >
                                         <Input placeholder="Please enter product name" />
@@ -276,7 +277,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                 <Col span={12}>
                                     <Form.Item
                                         name="subCategories"
-                                        label="subCategories"
+                                        label="Sub Categories"
                                         rules={[{ required: true, message: 'Please choose the sub categories' }]}
                                     >
                                         <Select
@@ -312,7 +313,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                 </Col>
                             </Row>
                             <div className="d-flex justify-content-end">
-                                <Button type="primary" htmlType="submit" className="antd-custom-btn">
+                                <Button type="primary" htmlType="submit" className="antd-custom-btn" loading={loading}>
                                     Submit
                                 </Button>
                             </div>

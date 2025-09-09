@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Button, Col, Drawer, Form, Input, Row, Select, Upload, message } from 'antd';
+import { Button, Col, Drawer, Form, Input, Row, Select, Upload, } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import Common from '../../commonMethod/common.js'
 import { toast } from "react-toastify";
 import { FaRegEdit } from 'react-icons/fa';
 
 const AddEditSubCategory = ({ mode, subCategoryData }) => {
+    const [loading, setLoading] = useState(false)
     const [form] = Form.useForm();
     const { apiRequest } = Common()
     const [childrenDrawer, setChildrenDrawer] = useState(false);
@@ -43,19 +44,17 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
             .replace(/\s+/g, "-")
             .replace(/[^\w-]+/g, "");
     }
-
-
-
     //for showing edit datas in input fields
     useEffect(() => {
         console.log(subCategoryData, "categorydata");
+        console.log(("image name", subCategoryData?.image));
 
         if (mode === "edit" && subCategoryData) {
             form.setFieldsValue({
                 category: subCategoryData?.name,
                 categorySlug: subCategoryData?.slug,
                 description: subCategoryData?.description,
-                uploadImage: subCategoryData?.images?.[0],
+                uploadImage: subCategoryData?.image[0],
             });
         } else {
             form.resetFields();
@@ -64,7 +63,7 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
 
 
     const handleSubmit = async (values) => {
-
+        setLoading(true)
         try {
             const data = await apiRequest("POST", "/products/add", values)
             toast.success("Sub Category added successfully");
@@ -74,9 +73,12 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
             console.error(error);
             toast.error("Something went wrong");
         }
+        finally {
+            setLoading(false)
+        }
     }
 
-    // checking upload image
+    // checking upload imageflas
     const normFile = (e) => Array.isArray(e) ? e : e?.fileList;
 
     return (
@@ -110,7 +112,7 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
                             <Col span={12}>
                                 <Form.Item
                                     name="categorySlug"
-                                    label={mode === "edit" ? "Edit slug" : " slug"}
+                                    label={mode === "edit" ? "Edit Slug" : " Slug"}
                                     rules={[{ required: true, message: 'Please enter slug' }]}
                                 >
                                     <Input placeholder="Please enter slug" onBlur={(e) => { const updatedSlug = generateSlug(e.target.value); form.setFieldsValue({ categorySlug: updatedSlug }) }} />
@@ -169,7 +171,7 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
                             </Col>
                         </Row>
                         <div className="d-flex justify-content-end">
-                            <Button type="primary" htmlType="submit" className="antd-custom-btn">
+                            <Button type="primary" htmlType="submit" className="antd-custom-btn" loading={loading}>
                                 {mode === "edit" ? "Update" : "Submit"}
                             </Button>
                         </div>
