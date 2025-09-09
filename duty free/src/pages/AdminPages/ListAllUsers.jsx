@@ -197,7 +197,7 @@ const ListAllUsers = () => {
             id: uindex + 1,
             profile: userdata.image,
             username: userdata.userName,
-            emailaddress: userdata.email,
+            email: userdata.email,
             status: userdata.status,
             orders: userdata.orders,
             cart: userdata.cart || 0,
@@ -232,8 +232,8 @@ const ListAllUsers = () => {
         },
         {
             title: 'Email Address',
-            dataIndex: 'emailaddress',
-            key: 'emailaddress',
+            dataIndex: 'email',
+            key: 'email',
         },
         {
             title: 'Status',
@@ -315,7 +315,7 @@ const ListAllUsers = () => {
 
 
     return (
-        <div className='table-responsive'>
+        <>
             <div className='d-flex align-items-center justify-content-between'>
                 <h2 className="adminform-heading justuspro-medium mb-3">View Users List</h2>
                 {/* drawer popup  */}
@@ -398,13 +398,10 @@ const ListAllUsers = () => {
                         </Form.Item>
                     </Col>
                 ) : null}
-
-
-
             </Row>
 
-            <Table dataSource={filteredData} columns={columns} />
-        </div>
+            <Table dataSource={filteredData} columns={columns}  scroll={{ x: "max-content" }} />
+        </>
     )
 }
 

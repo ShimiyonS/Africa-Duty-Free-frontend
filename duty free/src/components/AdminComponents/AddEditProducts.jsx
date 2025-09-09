@@ -115,6 +115,32 @@ const AddEditProducts = ({ mode, productData }) => {
         form.setFieldsValue({ subCategories: [] });
     };
 
+
+    const validateNumberInput = (e) => {
+        const { value } = e.target;
+
+        // 🔹 For keydown event
+        if (e.type === "keydown") {
+            if (e.key === '-' || e.key === 'e' || e.key === '+') {
+                e.preventDefault();
+            }
+            if (e.key === '0' && value.length === 0) {
+                e.preventDefault();
+            }
+        }
+
+        // 🔹 For input/paste event
+        if (e.type === "input") {
+            if (value.startsWith('0')) {
+                e.target.value = value.replace(/^0+/, '');
+            }
+            if (Number(value) < 0) {
+                e.target.value = '';
+            }
+        }
+    };
+
+
     //for showing edit datas in input fields
     useEffect(() => {
         if (mode === "edit" && productData) { 
@@ -205,9 +231,11 @@ const AddEditProducts = ({ mode, productData }) => {
                                     <Form.Item
                                         name="productPrice"
                                         label={mode === "edit" ? "Edit Price" : "Product Price"}
-                                        rules={[{ required: true, message: 'Please enter price' }, { pattern: /^[0-9]{1,5}$/, message: "Price should be maximum 5 digits (0 - 999)", },]}
+                                        rules={[{ required: true, message: 'Please enter price' }]}
                                     >
-                                        <Input type="number" placeholder="Please enter price" />
+                                        <Input type="number" className='ant-disable-control' placeholder="Please enter price"
+                                            onKeyDown={validateNumberInput}
+                                            onInput={validateNumberInput} />
                                     </Form.Item>
                                 </Col>
 
