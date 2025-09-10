@@ -235,7 +235,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
                     <img src={item?.thumbnail} className='header-cart-image' />
                     <div>
                       <button onClick={() => { navigate(`/product/${item.id}`) }} className='text-decoration-none header-cart-product-link text-color-danger' type='button' data-bs-dismiss="offcanvas" aria-label="Close">{item.title}</button>
-                      <p><span className='fs-6'>{item?.minimumOrderQuantity} </span><IoIosClose style={{ width: "15px", height: "15px" }} /> <span className='fw-bold text-break'>${item?.price}</span></p>
+                      <p><span className='fs-6'>{item?.minimumOrderQuantity} </span> <IoIosClose className='header-multiply-icon' /> <span className='fw-bold text-break'>${item?.price}</span></p>
                     </div>
                   </div>
                 )

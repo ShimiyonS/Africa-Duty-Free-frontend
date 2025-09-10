@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
-import { Button, Col, Drawer, Form, Input, Row, Select, Upload, message } from 'antd';
+import { Button, Col, Drawer, Form, Input, Row, Upload, } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import common from '../../commonMethod/common.js';
+import Common from '../../commonMethod/common.js'
 import { toast } from "react-toastify";
-import { CiEdit } from "react-icons/ci";
+import { FaRegEdit } from 'react-icons/fa';
 
 
-const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
+const AddEditBrandDrawer = ({ mode, BrandData }) => {
     const [form] = Form.useForm();
-    const { apiRequest } = common()
+    const { apiRequest } = Common()
     const [childrenDrawer, setChildrenDrawer] = useState(false);
 
     const toggleDrawer = () => {
@@ -17,44 +17,29 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
 
     //for showing edit datas in input fields
     useEffect(() => {
-        
-        console.log("categoryData", categoryData)
-        if (mode === "edit" && categoryData) {
+        if (mode === "edit" && BrandData) {
             form.setFieldsValue({
-                category: categoryData?.title,
-                categorySlug: categoryData?.slug,
-                description: categoryData?.description,
-                uploadImage: categoryData?.images?.[0],
+                brand: BrandData?.name,
+                brandSlug: BrandData?.slug,
+                description: BrandData?.description,
+                uploadImage: BrandData?.images?.[0],
             });
         } else {
             form.resetFields();
         }
-    }, [mode, categoryData, form]);
+    }, [mode, BrandData, form]);
 
+    const generateSlug = (value) => {
+        return value
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]+/g, "");
+    };
 
     const handleSubmit = async (values) => {
         try {
-            const fileList = values?.uploadImage?.fileList
-            let formData;
-            if (fileList.length > 0) {
-                formData = new FormData();
-                fileList.forEach((file) =>
-                    formData.append("file", file.originFileObj)
-                );
-            }
-
-            const imageURL = await apiRequest("POST", "/upload/product", formData)
-
-            values.uploadImage = imageURL?.url;
-            const categoryData = {
-                categoryName: values.category,
-                slug: values.categorySlug,
-                description: values.description,
-                image: imageURL?.url,
-            }
-            await apiRequest("POST", "/category/create", categoryData)
-            toast.success("Category added successfully");
-            setShareValue(values)
+            const data = await apiRequest("POST", "/products/add", values)
+            toast.success("Brand added successfully");
             form.resetFields();
 
         } catch (error) {
@@ -64,14 +49,14 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
     }
     return (
         <div>
-            <Button type="primary" onClick={toggleDrawer} className="antd-custom-btn">
-                {mode === "edit" ? <CiEdit /> : "Add Category"}
+            <Button type={mode === "edit" ? "link" : "primary"} onClick={toggleDrawer} className="antd-custom-btn">
+                {mode === "edit" ? <FaRegEdit size={19} className="text-color-warning" /> : "Add Brand"}
             </Button>
             <>
                 <Drawer
                     title={<div className="d-flex align-items-center justify-content-between w-100">
                         <div>
-                            <span> {mode === "edit" ? "Edit Category" : "Add Category"}</span>
+                            <span> {mode === "edit" ? "Edit Brand" : "Add Brand"}</span>
                         </div>
                     </div>}
                     width={800}
@@ -83,20 +68,20 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
-                                    name="category"
+                                    name="brand"
                                     label={mode === "edit" ? "Edit Name" : "Name"}
-                                    rules={[{ required: true, message: 'Please enter Category name' }]}
+                                    rules={[{ required: true, message: 'Please enter Brand name' }]}
                                 >
-                                    <Input placeholder="Please enter Category name" />
+                                    <Input placeholder="Please enter Brand name" onBlur={(e) => { const slug = generateSlug(e.target.value); form.setFieldsValue({ brandSlug: slug }) }} />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
                                 <Form.Item
-                                    name="categorySlug"
+                                    name="brandSlug"
                                     label={mode === "edit" ? "Edit slug" : " slug"}
                                     rules={[{ required: true, message: 'Please enter slug' }]}
                                 >
-                                    <Input placeholder="Please enter slug" />
+                                    <Input placeholder="Please enter slug" onBlur={(e) => { const updatedSlug = generateSlug(e.target.value); form.setFieldsValue({ brandSlug: updatedSlug }) }} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -107,7 +92,7 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
                                     label={mode === "edit" ? "Edit Image" : "Upload Image"}
                                     rules={[{ required: true, message: 'Please upload image' }]}
                                 >
-                                    <Upload accept=".jpg,.png,.jpeg,.png" className="antd-custom-btn">
+                                    <Upload className="upload-default" accept=".jpg,.png,.jpeg,.png" beforeUpload={() => { return false; }} className="antd-custom-btn">
                                         <Button icon={<UploadOutlined />} type="primary">Upload</Button>
                                     </Upload>
                                 </Form.Item>
@@ -141,5 +126,4 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
         </div>
     )
 }
-
-export default AddEditCategory
+export default AddEditBrandDrawer

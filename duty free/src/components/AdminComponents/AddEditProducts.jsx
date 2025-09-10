@@ -67,6 +67,32 @@ const AddEditProducts = ({ mode, productData }) => {
         form.setFieldsValue({ subCategories: [] });
     };
 
+
+    const validateNumberInput = (e) => {
+        const { value } = e.target;
+
+        // 🔹 For keydown event
+        if (e.type === "keydown") {
+            if (e.key === '-' || e.key === 'e' || e.key === '+') {
+                e.preventDefault();
+            }
+            if (e.key === '0' && value.length === 0) {
+                e.preventDefault();
+            }
+        }
+
+        // 🔹 For input/paste event
+        if (e.type === "input") {
+            if (value.startsWith('0')) {
+                e.target.value = value.replace(/^0+/, '');
+            }
+            if (Number(value) < 0) {
+                e.target.value = '';
+            }
+        }
+    };
+
+
     //for showing edit datas in input fields
     useEffect(() => {
         if (mode === "edit" && productData) {
@@ -132,7 +158,7 @@ const AddEditProducts = ({ mode, productData }) => {
                 onClick={toggleDrawer}
                 className={`antd-custom-btn`}
             >
-                {mode === "edit" ? <FaRegEdit size={19} /> : "Add Product"}
+                {mode === "edit" ? <FaRegEdit size={19} className='text-color-warning' /> : "Add Product"}
             </Button>
             <>
                 <Drawer title={
@@ -184,7 +210,9 @@ const AddEditProducts = ({ mode, productData }) => {
                                         label={mode === "edit" ? "Edit Price" : "Product Price"}
                                         rules={[{ required: true, message: 'Please enter price' }]}
                                     >
-                                        <Input type="number" placeholder="Please enter price" />
+                                        <Input type="number" className='ant-disable-control' placeholder="Please enter price"
+                                            onKeyDown={validateNumberInput}
+                                            onInput={validateNumberInput} />
                                     </Form.Item>
                                 </Col>
 
@@ -194,7 +222,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                         label={mode === "edit" ? "Edit Image" : "Upload Image"}
                                         rules={[{ required: true, message: 'Please upload image' }]}
                                     >
-                                        <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" beforeUpload={() => false} className="antd-custom-btn">
+                                        <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" className="antd-custom-btn">
                                             <Button icon={<UploadOutlined />} type="primary">Upload</Button>
                                         </Upload>
                                     </Form.Item>

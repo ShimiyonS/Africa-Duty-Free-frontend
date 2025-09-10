@@ -12,10 +12,10 @@ const AdminMenuBar = () => {
         <div className="menu-wrapper">
             <Link to="/siteadmin" className='text-decoration-none px-3 py-3 d-block logo-wrapper'><img src={logo} alt="logo" className='admin-image' /></Link>
             <div className=" px-3 py-2 admin-menu-wrapper">
-                <NavLink to="/siteadmin" end className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <RxDashboard style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Dashboard</span></NavLink>
-                <NavLink to="/siteadmin/products" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <GiDrinkMe style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Products</span></NavLink>
-                <NavLink to="/siteadmin/brands" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">Brands</span></NavLink>
-                <NavLink to="/siteadmin/users" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <LuUserRound style={{ width: "20px", height: "20px" }} /><span className="justuspro-regular">users</span></NavLink>
+                <NavLink to="/siteadmin" end className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <RxDashboard/><span className="justuspro-regular">Dashboard</span></NavLink>
+                <NavLink to="/siteadmin/products" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <GiDrinkMe/><span className="justuspro-regular">Products</span></NavLink>
+                <NavLink to="/siteadmin/brands" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory/><span className="justuspro-regular">Brands</span></NavLink>
+                <NavLink to="/siteadmin/users" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " > <LuUserRound/><span className="justuspro-regular">users</span></NavLink>
 
             </div>
         </div>

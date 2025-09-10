@@ -7,12 +7,20 @@ import { Link } from 'react-router-dom'
 const Wishlist = () => {
     const [products, setproducts] = useState([])
     const { apiRequest } = Common()
+    const userId = 1
+    const getWishList = async () => {
+        try {
+            const wishlist = await apiRequest("GET", `/auth/${userId}/wishlist`)
+            setproducts(wishlist?.products)
+            console.log(wishlist?.products)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+
     useEffect(() => {
-        const fetchproducts = async () => {
-            const data = await apiRequest("GET", `/products`);
-            setproducts(data?.products)
-        };
-        fetchproducts();
+        getWishList();
     }, [])
 
     return (
@@ -25,12 +33,12 @@ const Wishlist = () => {
                     </div>
                 </> :
                 <>
-                    <div className="product-grid container mx-auto">
-                        {products?.map((Item, index) => (
-                             <ProductCard gridplacement={"product-grid"} hidePagnation={true} hidePopTool={true} imageheight={250} data={Item} />
+                    <div className="product-grid container mx-auto my-5">
+                        {products.map((Item, index) => (
+                            <ProductCard gridplacement={"product-grid"} hidePagnation={true} hidePopTool={true} imageheight={250} data={Item} />
                         ))}
                     </div>
-            <DiscountComponent />
+                    <DiscountComponent />
                 </>}
         </>
     )

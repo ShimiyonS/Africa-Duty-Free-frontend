@@ -26,8 +26,14 @@ const Home = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const data = await apiRequest("GET", "/products");
-      setProducts(data?.products)
+      try {
+        const data = await apiRequest("GET", "/product");
+        setProducts(data?.products)
+        console.log(data?.products)
+
+      } catch (error) {
+        console.log(error.message)
+      }
     };
     fetchProducts();
   }, [])

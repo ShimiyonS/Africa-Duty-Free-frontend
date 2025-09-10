@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { Col, Form, Input, Row, Select, Space, Table } from "antd";
 import AddEditUsers from '../../components/AdminComponents/AddEditUsers';
-import DeletePopup from '../../components/commonComponents/DeletePopup'
+import DeletePopup from '../../components/commonComponents/DeletePopup';
 
 const ListAllUsers = () => {
 
     //filter state
     const [selectedColumn, setSelectedColumn] = useState("");
     const [searchText, setSearchText] = useState("");
+    const [condition, setCondition] = useState("");
     const [headerdefine, setHeaderdefine] = useState(null)
 
 
@@ -16,19 +17,6 @@ const ListAllUsers = () => {
         setSearchText("")
         setHeaderdefine(typeof user?.[0]?.[value])
     }
-
-    const handleEdit = (record) => {
-        console.log("Edit clicked:", record);
-        setDrawerState({
-            mode: "edit",
-            data: record,
-            open: true,
-        });
-    };
-
-    const handleDelete = (record) => {
-        console.log("Delete clicked:", record);
-    };
 
 
     const user = [{
@@ -94,7 +82,7 @@ const ListAllUsers = () => {
             iban: "YPUXISOBI7TTHPK2BR3HAIXL"
         },
         role: "admin",
-        orders: 20,
+        orders: 21,
         cart: 12,
         wishlist: 1,
         status: true
@@ -128,7 +116,7 @@ const ListAllUsers = () => {
             iban: "YPUXISOBI7TTHPK2BR3HAIXL"
         },
         role: "admin",
-        orders: 20,
+        orders: 22,
         cart: 12,
         wishlist: 1,
         status: true
@@ -162,7 +150,7 @@ const ListAllUsers = () => {
             iban: "YPUXISOBI7TTHPK2BR3HAIXL"
         },
         role: "admin",
-        orders: 0,
+        orders: 3,
         cart: 1,
         wishlist: 10,
         status: false
@@ -209,18 +197,18 @@ const ListAllUsers = () => {
             id: uindex + 1,
             profile: userdata.image,
             username: userdata.userName,
-            emailaddress: userdata.email,
+            email: userdata.email,
             status: userdata.status,
             orders: userdata.orders,
             cart: userdata.cart || 0,
             wishlist: userdata.wishlist || 0,
-            phone:userdata.phone
+            phone: userdata.phone
         }))
 
 
     const columns = [
         {
-            title: 'S.NO',
+            title: '#',
             dataIndex: 'id',
             key: 'id',
             fixed: 'left',
@@ -233,7 +221,7 @@ const ListAllUsers = () => {
                 <img
                     src={text}
                     alt="profile"
-                    style={{ width: 40, height: 40, borderRadius: "50%", border: "1px solid green", objectFit: "cover" }}
+                    className='admin-table-img'
                 />
             )
         },
@@ -244,8 +232,8 @@ const ListAllUsers = () => {
         },
         {
             title: 'Email Address',
-            dataIndex: 'emailaddress',
-            key: 'emailaddress',
+            dataIndex: 'email',
+            key: 'email',
         },
         {
             title: 'Status',
@@ -253,8 +241,8 @@ const ListAllUsers = () => {
             key: 'status',
             render: (status) => (
                 status
-                    ? <span style={{ color: "green", fontWeight: "bold" }}>Active</span>
-                    : <span style={{ color: "red", fontWeight: "bold" }}>Inactive</span>
+                    ? <span className="text-color-success admin-bold">Active</span>
+                    : <span className="text-color-danger admin-bold">Inactive</span>
             )
         },
         {
@@ -281,7 +269,7 @@ const ListAllUsers = () => {
             render: (_, record) => (
                 <Space>
                     <AddEditUsers mode={"edit"} userData={record} />
-                    <DeletePopup title={"Are you want to Delete this User?"} apiEndpoint={`/user/${record.id}`} name={record.username} image={record.image}/>
+                    <DeletePopup title={"Are you want to Delete this User?"} apiEndpoint={`/user/${record.id}`} data={{ id: record.id, image: record.profile, name: record.username }} />
                 </Space>
             ),
         }
@@ -289,20 +277,51 @@ const ListAllUsers = () => {
     ];
 
     const filteredData = dataSource.filter((item) => {
-        if (!searchText) return true; // If search box empty → show all
+        if (!searchText) return true; // If no filter value → show all
 
-        const value = item[selectedColumn]?.toString().toLowerCase();
-        return value?.includes(searchText.toLowerCase());
+        const value = item[selectedColumn];
+
+        if (headerdefine === "string") {
+            return value?.toString().toLowerCase().includes(searchText.toLowerCase());
+        }
+
+        if (headerdefine === "number") {
+            const numValue = Number(value);
+            const filterValue = Number(searchText);
+
+            if (isNaN(numValue) || isNaN(filterValue)) return true; // ignore invalid
+
+            switch (condition) {
+                case "gt":  // Greater than
+                    return numValue > filterValue;
+                case "lt":  // Less than
+                    return numValue < filterValue;
+                case "gte": // Greater than or equal
+                    return numValue >= filterValue;
+                case "lte": // Less than or equal
+                    return numValue <= filterValue;
+                default:
+                    return true;
+            }
+        }
+
+        if (headerdefine === "boolean") {
+            return value?.toString() === searchText;
+        }
+
+        return true;
     });
 
+
+
     return (
-        <div className='table-responsive'>
+        <>
             <div className='d-flex align-items-center justify-content-between'>
                 <h2 className="adminform-heading justuspro-medium mb-3">View Users List</h2>
                 {/* drawer popup  */}
                 <AddEditUsers mode={"add"} userData={null} />
             </div>
-            <Row justify={"space-between"} style={{ marginTop: "24px", marginBottom: "24px" }}>
+            <Row justify={"space-between"} className='admin-header-space'>
                 <Col span={6}>
                     <Form.Item label="Filter option">
                         <Select
@@ -330,32 +349,40 @@ const ListAllUsers = () => {
                         </Form.Item>
                     </Col>
                 ) : headerdefine === "number" ? (
-                    <Row justify={"space-between"}>
-                        <Col span={12}>
-                            <Form.Item label="Filter value">
-                                <Select
-                                    placeholder="Select condition"
-                                    value={searchText}
-                                    onChange={(val) => setSearchText(val)}
-                                    disabled={!selectedColumn}
-                                >
-                                    <Option value="true">Greater than</Option>
-                                    <Option value="false">Lesser than</Option>
-                                    <Option value="false">Greater than equal</Option>
-                                    <Option value="false">Lesser than equal</Option>
-                                </Select>
-                            </Form.Item>
-                            <Form.Item label="Filter value">
-                                <Input
-                                    type="number"
-                                    placeholder="Enter number..."
-                                    value={searchText}
-                                    onChange={(e) => setSearchText(e.target.value)}
-                                    disabled={!selectedColumn}
-                                />
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                    <Col span={12}>
+                        <Row>
+                            {/* Condition Select */}
+                            <Col span={12}>
+                                <Form.Item label="Condition">
+                                    <Select
+                                        placeholder="Select condition"
+                                        value={condition}
+                                        onChange={(val) => setCondition(val)}
+                                        disabled={!selectedColumn}
+                                    >
+                                        <Option value="gt">Greater than</Option>
+                                        <Option value="lt">Lesser than</Option>
+                                        <Option value="gte">Greater than equal</Option>
+                                        <Option value="lte">Lesser than equal</Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+
+                            {/* Number Input */}
+                            <Col span={12}>
+                                <Form.Item label="Value">
+                                    <Input
+                                        type="number"
+                                        placeholder="Enter number..."
+                                        value={searchText}
+                                        onChange={(e) => setSearchText(e.target.value)}
+                                        disabled={!selectedColumn}
+                                    />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    </Col>
+
                 ) : headerdefine === "boolean" ? (
                     <Col span={6}>
                         <Form.Item label="Filter value">
@@ -371,13 +398,10 @@ const ListAllUsers = () => {
                         </Form.Item>
                     </Col>
                 ) : null}
-
-
-
             </Row>
 
-            <Table dataSource={filteredData} columns={columns} />
-        </div>
+            <Table dataSource={filteredData} columns={columns}  scroll={{ x: "max-content" }} />
+        </>
     )
 }
 

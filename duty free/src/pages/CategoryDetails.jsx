@@ -34,7 +34,6 @@ const CategoryDetails = () => {
         try {
             const data = await apiRequest("GET", `/subcategory/${slug}`);
             setSubCategorys(data?.subCategories)
-            console.log("data", data?.subCategories)
         } catch (error) {
             console.error("api fetching error", error)
         }
@@ -42,16 +41,27 @@ const CategoryDetails = () => {
 
     const fetchProducts = async () => {
         try {
-            const products = await apiRequest("GET", `/product/getproductsbysubcategory/${subslug}`)
+            const products = await apiRequest("GET", `/subcategory/products/getproductsbysubcategory/${subslug}`)
             setProducts(products?.subCategory?.products)
             console.log(products?.subCategory?.products)
         } catch (error) {
             console.log("api fetching error ", error.message)
         }
     }
+
+    const fetchNewProduct = async () => {
+        try {
+            const newProducts = await apiRequest("GET", `/subcategory/products/by-category/${slug}`)
+            // console.log(newProducts?.products)
+            setProducts(newProducts?.products)
+        } catch (error) {
+            console.log("api ferching error", error.message)
+        }
+    }
     useEffect(() => {
         if (slug) {
             fetchSubCategorys()
+            fetchNewProduct()
         } else if (subslug) {
             fetchProducts()
         }
@@ -68,7 +78,7 @@ const CategoryDetails = () => {
                     <BrandSwiper />
                     <div className='container sub-calegory-body-container'>
                         <SubCategory subCategorys={subCategorys} />
-                        <SaleCard data={0}  />
+                        <SaleCard data={0} />
                         <TitleComponent heading={"New products"} />
                         <NewProducts productsdata={products} hidePopTool={true} parentClassName={"mt-3"} />
                         <SaleCard data={1} headingClass={"text-center"} imageClass={"big-image"} />

@@ -108,7 +108,7 @@ const ListAllProducts = () => {
             render: (_, record) => (
                 <Space>
                     <AddEditProducts mode="edit" productData={record} />
-                    <DeletePopup title={"Are you want to Delete this Product?"} apiEndpoint={`/products/${record.id}`} name={record.productname} image={record?.imageUrl} />
+                    <DeletePopup title={"Are you want to Delete this Product?"} apiEndpoint={`/products/${record.id}`} data={{ id: record.id, image: record?.imageUrl, name: record.productName }} />
                 </Space>
             )
         },
@@ -136,7 +136,7 @@ const ListAllProducts = () => {
                     <AddEditProducts mode="add" productData={null} />
                 </>
             </div>
-            <Row justify={"space-between"} style={{ marginTop: "24px", marginBottom: "24px" }}>
+            <Row justify={"space-between"} className='admin-header-space'>
                 <Col span={6}>
                     <Form.Item label="Filter option">
                         <Select
@@ -162,8 +162,7 @@ const ListAllProducts = () => {
                     </Form.Item>
                 </Col>
             </Row>
-
-            <Table dataSource={productData} columns={columns} />
+                <Table dataSource={productData} columns={columns} className='product-page-table'/>
         </>
     )
 }

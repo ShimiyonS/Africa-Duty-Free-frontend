@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom'
 const SubCategory = ({ subCategorys }) => {
     const location = useNavigate()
     const categoryHandler = (slug) => {
-        console.log(slug)
         location(`/product-category/beauty/${slug}`)
     }
     return (
@@ -12,7 +11,6 @@ const SubCategory = ({ subCategorys }) => {
             {subCategorys.map((subCategory, idex) =>
                 <div className='sub-category-container' key={idex}>
                     <div onClick={() => categoryHandler(subCategory?.slug)} className='sub-category-name'>{subCategory?.subcategoryName}</div>
-                    {console.log(subCategory.products)}
                     <Link to={`/beauty/${subCategory?.slug}`} className="sub-category-image">
                         {/* <img src={subCategory.products[0]?.imageUrl} height={200} className=' product-image' /> */}
                         <img src="http://localhost:8000/uploads/product/images/1757323591936-7661_MAIN_1_original_webshop.jpg" height={200} className=' product-image' />
