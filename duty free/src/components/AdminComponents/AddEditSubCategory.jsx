@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Button, Col, Drawer, Form, Input, Row, Select, Upload, } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Button, Col, Drawer, Form, Image, Input, Row, Select, Upload, } from 'antd';
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import Common from '../../commonMethod/common.js'
 import { toast } from "react-toastify";
 import { FaRegEdit } from 'react-icons/fa';
@@ -10,6 +10,18 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
     const [form] = Form.useForm();
     const { apiRequest, generateSlug } = Common()
     const [childrenDrawer, setChildrenDrawer] = useState(false);
+
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+
+    const getBase64 = file =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
 
     const handleSlug = (value, placeArea) => {
         const slug = generateSlug(value);
@@ -24,18 +36,18 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
         },
         {
             id: 2,
-            name: "Beauty",
-            slug: "beauty",
+            name: "Fog",
+            slug: "fog",
         },
         {
             id: 3,
-            name: "Beauty",
-            slug: "beauty",
+            name: "Whine",
+            slug: "whine",
         },
         {
             id: 4,
-            name: "Beauty",
-            slug: "beauty",
+            name: "LG",
+            slug: "lg",
         }
 
     ]
@@ -49,16 +61,38 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
         console.log(("image name", subCategoryData?.image));
 
         if (mode === "edit" && subCategoryData) {
+            console.log(subCategoryData);
+            
             form.setFieldsValue({
-                category: subCategoryData?.name,
-                categorySlug: subCategoryData?.slug,
+                subCategory: subCategoryData?.name,
+                subCategorySlug: subCategoryData?.slug,
+                categories:subCategoryData?.categories,
                 description: subCategoryData?.description,
-                uploadImage: subCategoryData?.image[0],
+                uploadImage: subCategoryData.image
+                    ? [
+                        {
+                            uid: '-1',
+                            name: 'category-image.png',
+                            status: 'done',
+                            url: subCategoryData.image,
+                        },
+                    ]
+                    : [],
             });
         } else {
             form.resetFields();
         }
     }, [mode, subCategoryData, form]);
+
+
+    // Handle image preview
+    const handlePreview = async file => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewImage(file.url || file.preview);
+        setPreviewOpen(true);
+    };
 
 
     const handleSubmit = async (values) => {
@@ -101,7 +135,7 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
-                                    name="category"
+                                    name="subCategory"
                                     label={mode === "edit" ? "Edit Name" : "Name"}
                                     rules={[{ required: true, message: 'Please enter Sub Category name' }]}
                                 >
@@ -127,7 +161,6 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
                                 >
                                     <Select
                                         placeholder="Select Category"
-                                        mode="multiple"
                                     >
                                         {categorys.map((cat) =>
                                             <Option key={cat.id} value={cat.id} >
@@ -155,20 +188,40 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
                             </Col>
                         </Row>
                         <Row>
-                            <Col span={12}>
+                            <Col span={24}>
                                 <Form.Item
                                     name="uploadImage"
+                                    label={mode === 'edit' ? 'Edit Images' : 'Upload Images'}
                                     valuePropName="fileList"
                                     getValueFromEvent={normFile}
-                                    label={mode === "edit" ? "Edit Image" : "Upload Image"}
-                                    rules={[{ required: true, message: 'Please upload image' }]}
+                                    rules={[{ required: true, message: 'Please upload at least 1 image' }]}
                                 >
-                                    <Upload accept=".jpg,.png,.jpeg,.png" beforeUpload={() => { return false; }} className="antd-custom-btn">
-                                        <Button icon={<UploadOutlined />} type="primary">Upload</Button>
+                                    <Upload
+                                        listType="picture-card"
+                                        accept=".jpg,.png,.jpeg"
+                                        beforeUpload={() => false} // prevent auto upload
+                                        onPreview={handlePreview}
+                                        maxCount={1}
+                                    >
+                                        <div>
+                                            <PlusOutlined />
+                                            <div style={{ marginTop: 8 }}>Upload</div>
+                                        </div>
                                     </Upload>
                                 </Form.Item>
+
                             </Col>
                         </Row>
+                        {previewImage && (
+                            <Image
+                                preview={{
+                                    visible: previewOpen,
+                                    onVisibleChange: visible => setPreviewOpen(visible),
+                                    afterOpenChange: visible => !visible && setPreviewImage(''),
+                                }}
+                                src={previewImage}
+                            />
+                        )}
                         <div className="d-flex justify-content-end">
                             <Button type="primary" htmlType="submit" className="antd-custom-btn" loading={loading}>
                                 {mode === "edit" ? "Update" : "Submit"}

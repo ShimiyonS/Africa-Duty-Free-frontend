@@ -3,6 +3,7 @@ import { Col, Form, Input, Row, Select, Space, Table } from "antd";
 import AddEditProducts from '../../components/AdminComponents/AddEditProducts';
 import DeletePopup from '../../components/commonComponents/DeletePopup';
 import AdminHeader from '../../components/AdminComponents/AdminHeader';
+import productimage from "../../assets/blinkbottle.png"
 
 const ListAllProducts = () => {
 
@@ -35,6 +36,7 @@ const ListAllProducts = () => {
                         name: "Dolce Gabana ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true",
                         price: 33,
                         slug: "dolce-gabana",
+                        image:[productimage,productimage],
                         stock: 22,
                         brand: "LG",
                         Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
@@ -44,6 +46,7 @@ const ListAllProducts = () => {
                         name: "Fog",
                         price: 50,
                         slug: "fog",
+                        image:[productimage,productimage],
                         stock: 27,
                         brand: "Samsung",
                         Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
@@ -66,7 +69,8 @@ const ListAllProducts = () => {
                 stock: product.stock || 0,
                 price: product.price,
                 description: product.Description,
-                productSlug: product.slug
+                productSlug: product.slug,
+                productImage:product.image
                 // address: item.name
             }))
         ))
