@@ -352,7 +352,6 @@ label {
 }
 
 @media (width:768px) {
-
     .new-swipper .swiper-button-prev,
     .new-swipper .swiper-rtl .swiper-button-next,
     .new-swipper .swiper-button-next,
@@ -365,16 +364,19 @@ label {
     color: var(--text-color-primary) !important
 }
 
-.brand-pagination .ant-pagination-total-text {
+.brand-pagination .ant-pagination-total-text,
+.sub-category-pagination .ant-pagination-total-text {
     margin-right: auto !important;
 }
 
-.brand-pagination .ant-pagination-options {
+.brand-pagination .ant-pagination-options,
+.sub-category-pagination .ant-pagination-options {
     margin-left: auto !important;
 }
 
 .brand-pagination .ant-table,
-.product-page-table .ant-table {
+.product-page-table .ant-table,
+.sub-category-pagination .ant-table {
     border-radius: 10px !important;
     overflow: hidden !important;
 }

@@ -79,7 +79,7 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
                             <Col span={12}>
                                 <Form.Item
                                     name="categorySlug"
-                                    label={mode === "edit" ? "Edit slug" : "Slug"}
+                                    label={mode === "edit" ? "Edit Slug" : " Slug"}
                                     rules={[{ required: true, message: 'Please enter slug' }]}
                                 >
                                     <Input placeholder="Please enter slug" onBlur={(e) => { handleSlug(e.target.value, "categorySlug") }} />

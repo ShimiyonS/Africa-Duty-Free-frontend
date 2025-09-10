@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react'
-import { Button, Col, Drawer, Form, Input, Row, Upload, } from 'antd';
+import { Button, Col, Drawer, Form, Input, Row, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import Common from '../../commonMethod/common.js'
 import { toast } from "react-toastify";
 import { FaRegEdit } from 'react-icons/fa';
 
 
-const AddEditBrandDrawer = ({ mode, BrandData }) => {
+const AddEditBrandDrawer = ({ mode, brandData }) => {
+    const [loading, setLoading] = useState(false)
     const [form] = Form.useForm();
-    const { apiRequest } = Common()
+    const { apiRequest, generateSlug } = Common()
     const [childrenDrawer, setChildrenDrawer] = useState(false);
+
+    const handleSlug = (value, placeArea) => {
+        const slug = generateSlug(value);
+        form.setFieldsValue({ [placeArea]: slug })
+    }
 
     const toggleDrawer = () => {
         setChildrenDrawer(!childrenDrawer);
@@ -17,26 +23,20 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
 
     //for showing edit datas in input fields
     useEffect(() => {
-        if (mode === "edit" && BrandData) {
+        if (mode === "edit" && brandData) {
             form.setFieldsValue({
-                brand: BrandData?.name,
-                brandSlug: BrandData?.slug,
-                description: BrandData?.description,
-                uploadImage: BrandData?.images?.[0],
+                brand: brandData?.name,
+                brandSlug: brandData?.slug,
+                description: brandData?.description,
+                uploadImage: brandData?.images?.[0],
             });
         } else {
             form.resetFields();
         }
-    }, [mode, BrandData, form]);
-
-    const generateSlug = (value) => {
-        return value
-            .toLowerCase()
-            .replace(/\s+/g, "-")
-            .replace(/[^\w-]+/g, "");
-    };
+    }, [mode, brandData, form]);
 
     const handleSubmit = async (values) => {
+        setLoading(true)
         try {
             const data = await apiRequest("POST", "/products/add", values)
             toast.success("Brand added successfully");
@@ -46,7 +46,13 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
             console.error(error);
             toast.error("Something went wrong");
         }
+        finally {
+            setLoading(false)
+        }
     }
+    // checking upload image
+    const normFile = (e) => Array.isArray(e) ? e : e?.fileList;
+
     return (
         <div>
             <Button type={mode === "edit" ? "link" : "primary"} onClick={toggleDrawer} className="antd-custom-btn">
@@ -72,29 +78,16 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
                                     label={mode === "edit" ? "Edit Name" : "Name"}
                                     rules={[{ required: true, message: 'Please enter Brand name' }]}
                                 >
-                                    <Input placeholder="Please enter Brand name" onBlur={(e) => { const slug = generateSlug(e.target.value); form.setFieldsValue({ brandSlug: slug }) }} />
+                                    <Input placeholder="Please enter Brand name" onBlur={(e) => { handleSlug(e.target.value,"brandSlug")}} />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
                                 <Form.Item
                                     name="brandSlug"
-                                    label={mode === "edit" ? "Edit slug" : " slug"}
+                                    label={mode === "edit" ? "Edit Slug" : " Slug"}
                                     rules={[{ required: true, message: 'Please enter slug' }]}
                                 >
-                                    <Input placeholder="Please enter slug" onBlur={(e) => { const updatedSlug = generateSlug(e.target.value); form.setFieldsValue({ brandSlug: updatedSlug }) }} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={16}>
-                            <Col span={12}>
-                                <Form.Item
-                                    name="uploadImage"
-                                    label={mode === "edit" ? "Edit Image" : "Upload Image"}
-                                    rules={[{ required: true, message: 'Please upload image' }]}
-                                >
-                                    <Upload className="upload-default" accept=".jpg,.png,.jpeg,.png" beforeUpload={() => { return false; }} className="antd-custom-btn">
-                                        <Button icon={<UploadOutlined />} type="primary">Upload</Button>
-                                    </Upload>
+                                    <Input placeholder="Please enter slug"  onBlur={(e) => { handleSlug(e.target.value,"brandSlug")}}  />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -114,8 +107,23 @@ const AddEditBrandDrawer = ({ mode, BrandData }) => {
                                 </Form.Item>
                             </Col>
                         </Row>
+                        <Row gutter={16}>
+                            <Col span={12}>
+                                <Form.Item
+                                    name="uploadImage"
+                                    valuePropName="fileList"
+                                    getValueFromEvent={normFile}
+                                    label={mode === "edit" ? "Edit Image" : "Upload Image"}
+                                    rules={[{ required: true, message: 'Please upload image' }]}
+                                >
+                                    <Upload accept=".jpg,.png,.jpeg,.png" beforeUpload={() => { return false; }} className="antd-custom-btn">
+                                        <Button icon={<UploadOutlined />} type="primary">Upload</Button>
+                                    </Upload>
+                                </Form.Item>
+                            </Col>
+                        </Row>
                         <div className="d-flex justify-content-end">
-                            <Button type="primary" htmlType="submit" className="antd-custom-btn" >
+                            <Button type="primary" htmlType="submit" className="antd-custom-btn" loading={loading}>
                                 {mode === "edit" ? "Update" : "Submit"}
                             </Button>
                         </div>

@@ -7,7 +7,7 @@ import { GiDrinkMe } from 'react-icons/gi';
 import { MdCategory } from 'react-icons/md';
 import { useMyContext } from "../Provider/CommonProvider";
 import { TfiClose } from "react-icons/tfi";
-import { Flex,Button } from "antd";
+import { Flex, Button } from "antd";
 
 
 const AdminMenuBar = () => {
@@ -24,6 +24,7 @@ const AdminMenuBar = () => {
                 <NavLink to="/siteadmin" end className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary"> <RxDashboard /><span className="justuspro-regular">Dashboard</span></NavLink>
                 <NavLink to="/siteadmin/products" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary"> <GiDrinkMe /><span className="justuspro-regular">Products</span></NavLink>
                 <NavLink to="/siteadmin/category" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary"> <GiDrinkMe /><span className="justuspro-regular">Category</span></NavLink>
+                <NavLink to="/siteadmin/subcategories" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><MdCategory/><span className="justuspro-regular">Sub Categories</span></NavLink>
                 <NavLink to="/siteadmin/brands" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary"><MdCategory /><span className="justuspro-regular">Brands</span></NavLink>
                 <NavLink to="/siteadmin/users" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary"> <LuUserRound /><span className="justuspro-regular">users</span></NavLink>
 
