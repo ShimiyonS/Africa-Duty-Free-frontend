@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Button, Col, Drawer, Form, Input, Row, Select, Upload, message } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Button, Col, Drawer, Form, Image, Input, Row, Select, Upload } from 'antd';
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import Common from '../../commonMethod/common.js'
 import { toast } from "react-toastify";
 import { FaRegEdit } from 'react-icons/fa';
@@ -8,6 +8,19 @@ const AddEditUsers = ({ mode, userData }) => {
 
     const { apiRequest } = Common()
     const [form] = Form.useForm();
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+
+    const getBase64 = file =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+    // checking upload image
+    const normFile = (e) => Array.isArray(e) ? e : e?.fileList;
 
     //popup stateopen
     const [drawerState, setDrawerState] = useState(false);
@@ -15,27 +28,7 @@ const AddEditUsers = ({ mode, userData }) => {
     // Drawer functions
     const toggleDrawer = () =>
         setDrawerState(!drawerState);
-   
 
-    const token = localStorage.getItem("token")
-
-    const props = {
-        name: 'file',
-        action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
-        headers: {
-            authorization: `Bearer ${token}`,
-        },
-        onChange(info) {
-            if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
-            }
-            if (info.file.status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully`);
-            } else if (info.file.status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-    };
 
     const handleSubmit = async (values) => {
         try {
@@ -73,18 +66,48 @@ const AddEditUsers = ({ mode, userData }) => {
             }
         }
     };
+
+    const confirmPasswordValidator = ({ getFieldValue }) => ({
+        validator(_, value) {
+            if (!value || getFieldValue("password") === value) {
+                return Promise.resolve();
+            }
+            return Promise.reject(new Error("Passwords do not match!"));
+        },
+    });
+
     useEffect(() => {
         if (mode === "edit" && userData) {
             form.setFieldsValue({
                 userName: userData?.username,
-                email: userData?.emailaddress,
+                email: userData?.email,
                 phone: userData?.phone,
-                UploadImage: userData?.profile,
+                status: userData?.status,
+                uploadImage: userData?.profile
+                    ? [
+                        {
+                            uid: '-1',
+                            name: 'user-image.png',
+                            status: 'done',
+                            url: userData.profile,
+                        },
+                    ]
+                    : [],
             });
         } else {
             form.resetFields();
         }
     }, [mode, userData, form]);
+
+
+    // Handle image preview
+    const handlePreview = async file => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewImage(file.url || file.preview);
+        setPreviewOpen(true);
+    };
 
 
     return (
@@ -138,31 +161,94 @@ const AddEditUsers = ({ mode, userData }) => {
                                         <Input type="number" name="phone" className='ant-disable-control' onKeyDown={validateNumberInput} onInput={validateNumberInput} placeholder="Please enter Phone Number" />
                                     </Form.Item>
                                 </Col>
-
                                 <Col span={12}>
                                     <Form.Item
-                                        name="UploadImage"
-                                        label={mode === "edit" ? "Edit Image" : "Upload Image"}
-                                        rules={[{ required: true, message: 'Please upload image' }]}
+                                        name="status"
+                                        label={mode === "edit" ? "Edit Status" : "Status"}
+                                        rules={[{ required: true, message: 'Please choose the Sub Status' }]}
                                     >
-                                        <Upload
-                                            {...props}
-                                            listType="picture"
-                                            maxCount={1}
-                                            onChange={(info) => {
-                                                if (info.file.status === 'done') {
-                                                    const url = info.file.response.url;
-                                                    form.setFieldsValue({ UploadImage: url });
-                                                }
-                                            }}
-                                        >
-                                            <Button icon={<UploadOutlined />}>
-                                                Click to Upload
-                                            </Button>
-                                        </Upload>
+                                        <Select placeholder="Select Status">
+                                            <Option key={1} value={false} >
+                                                In Active
+                                            </Option>
+                                            <Option key={2} value={true} >
+                                                Active
+                                            </Option>
+                                        </Select>
                                     </Form.Item>
                                 </Col>
                             </Row>
+
+                            <Row gutter={16}>
+                                <Col span={12}>
+                                    <Form.Item
+                                        name="password"
+                                        label="Password"
+                                        rules={[
+                                            { required: true, message: "Please enter your password" },
+                                            {
+                                                pattern: /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
+                                                message:
+                                                    "Password must have 1 capital, 1 number, 1 special char and min 8 length",
+                                            },
+                                        ]}
+                                        hasFeedback
+                                    >
+                                        <Input.Password placeholder="Enter password" />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={12}>
+                                    <Form.Item
+                                        name="confirmPassword"
+                                        label="Confirm Password"
+                                        dependencies={["password"]}
+                                        hasFeedback
+                                        rules={[
+                                            { required: true, message: "Please confirm your password" },
+                                            confirmPasswordValidator,
+                                        ]}
+                                    >
+                                        <Input.Password placeholder="Confirm password" />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+
+                            <Row gutter={16}>
+                                <Col span={24}>
+                                    <Form.Item
+                                        name="uploadImage"
+                                        label={mode === 'edit' ? 'Edit Images' : 'Upload Images'}
+                                        valuePropName="fileList"
+                                        getValueFromEvent={normFile}
+                                        rules={[{ required: true, message: 'Please upload at least 1 image' }]}
+                                    >
+                                        <Upload
+                                            listType="picture-card"
+                                            accept=".jpg,.png,.jpeg"
+                                            beforeUpload={() => false}
+                                            onPreview={handlePreview}
+                                            maxCount={1}
+                                        >
+                                            <div>
+                                                <PlusOutlined />
+                                                <div style={{ marginTop: 8 }}>Upload</div>
+                                            </div>
+                                        </Upload>
+                                    </Form.Item>
+
+                                </Col>
+                            </Row>
+
+                            {previewImage && (
+                                <Image
+                                    preview={{
+                                        visible: previewOpen,
+                                        onVisibleChange: visible => setPreviewOpen(visible),
+                                        afterOpenChange: visible => !visible && setPreviewImage(''),
+                                    }}
+                                    src={previewImage}
+                                />
+                            )}
                             <Button type="primary" htmlType="submit">
                                 Submit
                             </Button>

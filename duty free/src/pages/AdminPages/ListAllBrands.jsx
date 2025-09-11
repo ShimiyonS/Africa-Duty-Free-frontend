@@ -219,7 +219,7 @@ const ListAllBrand = () => {
         <div>
             <AdminHeader title={`View Brands`} addComponent={<AddEditBrand mode="add" productData={null} />} hideBack={true} />
             <Row justify={"space-between"} className='admin-header-space'>
-                <Col span={6}>
+                <Col xs={24} sm={12} md={10} xl={8}>
                     <Form.Item label="Filter option">
                         <Select
                             placeholder="Search..."
@@ -230,7 +230,7 @@ const ListAllBrand = () => {
                     </Form.Item>
                 </Col>
 
-                <Col span={6}>
+                <Col xs={24} sm={12} md={10} xl={8}>
                     <Form.Item label="Filter value">
                         <Input
                             placeholder="Search..."

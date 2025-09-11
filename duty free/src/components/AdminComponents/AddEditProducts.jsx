@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Button, Col, Drawer, Form, Input, Row, Select, Upload, } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Button, Col, Drawer, Form, Input, Row, Select, Upload, Image } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import Common from '../../commonMethod/common.js'
 import { toast } from "react-toastify";
 import { FaRegEdit } from 'react-icons/fa';
@@ -17,6 +17,16 @@ const AddEditProducts = ({ mode, productData }) => {
     const [form] = Form.useForm();
     const [childrenDrawer, setChildrenDrawer] = useState(false);
     const [shareValue, setShareValue] = useState(null)
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+
+    const getBase64 = file =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
 
     const [categories, setCategories] = useState([
         {
@@ -72,6 +82,7 @@ const AddEditProducts = ({ mode, productData }) => {
             ]
         }
     ]);
+
     const toggleDrawer = () => {
         setChildrenDrawer(!childrenDrawer);
     };
@@ -154,7 +165,13 @@ const AddEditProducts = ({ mode, productData }) => {
                 product: productData?.productname,
                 productSlug: productData?.productSlug,
                 productPrice: productData?.price,
-                uploadImage: productData?.images?.[0],
+                productStock:productData?.stock,
+                uploadImage: productData.productImage.map((imgUrl, i) => ({
+                    uid: `-edit-${i}`,
+                    name: `image-${i + 1}.png`,
+                    status: 'done',
+                    url: imgUrl,
+                })),
                 categories: productData?.productcatagory,
                 subCategories: productData?.productsubcatagory,
                 description: productData?.description,
@@ -163,6 +180,22 @@ const AddEditProducts = ({ mode, productData }) => {
             form.resetFields();
         }
     }, [mode, productData, form]);
+
+    // Handle image preview
+    const handlePreview = async file => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewImage(file.url || file.preview);
+        setPreviewOpen(true);
+    };
+
+    const uploadButton = (
+        <div>
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>Upload</div>
+        </div>
+    );
 
     useEffect(() => {
         if (shareValue) {
@@ -244,18 +277,15 @@ const AddEditProducts = ({ mode, productData }) => {
                                             onInput={validateNumberInput} />
                                     </Form.Item>
                                 </Col>
-
                                 <Col span={12}>
                                     <Form.Item
-                                        name="uploadImage"
-                                        valuePropName="fileList"
-                                        getValueFromEvent={normFile}
-                                        label={mode === "edit" ? "Edit Image" : "Upload Image"}
-                                        rules={[{ required: true, message: 'Please upload image' }]}
+                                        name="productStock"
+                                        label={mode === "edit" ? "Edit Stock" : "Product Stock"}
+                                        rules={[{ required: true, message: 'Please enter Stock' }]}
                                     >
-                                        <Upload accept=".jpg,.png,.jpeg,.png" className="antd-custom-btn">
-                                            <Button icon={<UploadOutlined />} type="primary">Upload</Button>
-                                        </Upload>
+                                        <Input type="number" className='ant-disable-control' placeholder="Please enter Stock"
+                                            onKeyDown={validateNumberInput}
+                                            onInput={validateNumberInput} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -317,6 +347,40 @@ const AddEditProducts = ({ mode, productData }) => {
                                     </Form.Item>
                                 </Col>
                             </Row>
+
+                            <Row gutter={16}>
+                                <Col span={24}>
+                                    <Form.Item
+                                        name="uploadImage"
+                                        label={mode === 'edit' ? 'Edit Images' : 'Upload Images'}
+                                        valuePropName="fileList"
+                                        getValueFromEvent={normFile}
+                                        rules={[{ required: true, message: 'Please upload at least 1 image' }]}
+                                    >
+                                        <Upload
+                                            listType="picture-card"
+                                            accept=".jpg,.png,.jpeg"
+                                            beforeUpload={() => false} // prevent auto upload
+                                            onPreview={handlePreview}
+                                            multiple
+                                        >
+                                            {/* use Form.Item value length */}
+                                            {form.getFieldValue('uploadImage')?.length >= 8 ? null : uploadButton}
+                                        </Upload>
+                                    </Form.Item>
+
+                                </Col>
+                            </Row>
+                            {previewImage && (
+                                <Image
+                                    preview={{
+                                        visible: previewOpen,
+                                        onVisibleChange: visible => setPreviewOpen(visible),
+                                        afterOpenChange: visible => !visible && setPreviewImage(''),
+                                    }}
+                                    src={previewImage}
+                                />
+                            )}
                             <div className="d-flex justify-content-end">
                                 <Button type="primary" htmlType="submit" className="antd-custom-btn" loading={loading}>
                                     Submit

@@ -129,3 +129,28 @@
     font-weight: 500;
     margin: 0;
 }
+
+/* css for List all user page */
+.admin-product-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.admin-product-toggle {
+    position: relative;
+    font-size: 20px;
+}
+
+.admin-product-total {
+    position: absolute;
+    top: -8px;
+    left: 33px;
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 3px;
+    border-radius: 50%;
+}
