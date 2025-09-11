@@ -1,8 +1,9 @@
 import { Button, Card, Drawer, Flex } from 'antd'
 import { useState } from 'react';
-import { IoIosClose } from 'react-icons/io';
+import NotifyBtn from '../commonComponents/NotifyBtn';
+import { Link } from 'react-router-dom';
 
-const UserShowProducts = ({ title, data }) => {
+const UserShowProducts = ({ title, data, notifyIcon }) => {
     const [openDrawer, setOpenDrawer] = useState(false);
 
     const toggleDrawer = () => {
@@ -10,9 +11,7 @@ const UserShowProducts = ({ title, data }) => {
     }
     return (
         <>
-            <Button type="primary" onClick={toggleDrawer} className="antd-custom-btn">
-                {data.length}
-            </Button>
+            <NotifyBtn icon={notifyIcon} notifyLength={data.length} action={toggleDrawer}/>
             <>
                 <Drawer
                     title={
@@ -20,7 +19,7 @@ const UserShowProducts = ({ title, data }) => {
                             <span>{title}</span>
                         </Flex>
                     }
-                    width={500}
+                    width={450}
                     closable={true}
                     onClose={toggleDrawer}
                     open={openDrawer}
@@ -31,14 +30,14 @@ const UserShowProducts = ({ title, data }) => {
                                 key={index}
                                 className="mb-3 shadow-sm"
                             >
-                                <Flex align="center" gap={16}>
+                                <Flex gap={16}>
                                     <img
                                         src={item?.productImage}
                                         alt={item?.productName}
-                                        className="admin-product-image"   
+                                        className="admin-product-image"
                                     />
                                     <div>
-                                        <p className="mb-1 fw-bold text-break">Product Name: {item?.productName}</p>
+                                        <Link to={`/product/${item.productId}`} className='text-decoration-none'> <p className="mb-1 fw-bold text-break">{item?.productName}</p> </Link>
                                         <p className="mb-1 text-color-danger">Price: ${item?.productPrice}</p>
                                         {item.orderOn && <p className="mb-1">Ordered On: <span className="fw-semibold">{item?.orderOn}</span></p>}
                                         {item.deliveredOn && <p className="mb-1">Delivered On: <span className="fw-semibold">{item?.deliveredOn}</span></p>}
