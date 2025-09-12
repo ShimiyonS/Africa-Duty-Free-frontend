@@ -4,8 +4,14 @@ import AddEditProducts from '../../components/AdminComponents/AddEditProducts';
 import DeletePopup from '../../components/commonComponents/DeletePopup'
 import { toast } from 'react-toastify';
 import common from '../../commonMethod/common';
+import AdminHeader from "../../components/AdminComponents/AdminHeader"
 
 const ListAllProducts = () => {
+
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 5,
+    });
 
     //filter state
     const [searchField, setSearchField] = useState("");
@@ -18,70 +24,46 @@ const ListAllProducts = () => {
         setSearchText("")
     }
 
-
-
-    // const dataSource = productData.flatMap((product, pidx) =>
-    //     product.subCategory.flatMap((subc) =>
-    //         subc.category.map((cat) => ({
-    //             key: pidx,
-    //             id: product.productid,
-    //             productname: product.productName,
-    //             productcatagory: cat.categoryName,
-    //             productsubcatagory: subc.subcategoryName,
-    //             productbrand: product.brand || "",
-    //             stock: product.stock || 0,
-    //             price: product.price,
-    //             description: product.description,
-    //             productSlug: product.slug
-    //             // address: item.name
-    //         }))
-    //     ))
-
-    const dataSource = productData.map((product, pidx) => ({
-        key: pidx,
-        id: product?.id,
-        productname: product?.productName,
-        productcatagory: product?.subCategory?.category?.categoryName,
-        productsubcatagory: product?.subCategory?.subcategoryName,
-        productbrand: product?.brand || "",
-        stock: product?.stock || 0,
-        price: product?.price,
-        description: product?.description,
-        productSlug: product?.slug
-    }))
-
     const columns = [
         {
             title: 'Id',
             dataIndex: 'id',
             key: 'id',
             fixed: 'left',
+            width: 50,
         },
         {
             title: 'Product Name',
             dataIndex: 'productName',
             key: 'productName',
+            width: 150,
+            ellipsis: true
         },
         {
-            title: 'Product Catagory',
+            title: 'Product Category',
             dataIndex: 'productcatagory',
             key: 'productcatagory',
+            width: 150,
+            ellipsis: true,
             render: (_, item) => (
                 <div>{item?.subCategory?.category?.categoryName}</div>
             )
         },
         {
-            title: 'Product Sub Catagory',
+            title: 'Product Sub Category',
             dataIndex: 'productsubcatagory',
             key: 'productsubcatagory',
+            width: 150,
+            ellipsis: true,
             render: (_, item) => (
                 <div>{item?.subCategory?.subcategoryName}</div>
-            )
+            ),
         },
         {
             title: 'Product Brand',
             dataIndex: 'productbrand',
             key: 'productbrand',
+            width:150,
             render: (_, item) => (
                 <div>{item?.brand || "-"}</div>
             )
@@ -90,21 +72,22 @@ const ListAllProducts = () => {
             title: "Price",
             dataIndex: "price",
             key: "price",
+            width: 150,
             render: (_, item) => (
                 <div>{item.price}</div>
-            )
-
+            ),
         },
         {
             title: 'Stock',
             dataIndex: 'stock',
             key: 'stock',
+            width: 150,
         },
         {
             title: "Action",
             key: "operation",
             align: "center",
-            width: 100,
+            width: 150,
             render: (_, record) => (
                 <Space>
                     <AddEditProducts mode="edit" productData={record} />
@@ -129,13 +112,8 @@ const ListAllProducts = () => {
     }, [])
     return (
         <>
-            <div className='d-flex align-items-center justify-content-between'>
-                <h2 className="adminform-heading justuspro-medium mb-3">View Product List</h2>
-                {/* drawer popup  */}
-                <>
-                    <AddEditProducts mode="add" productData={null} />
-                </>
-            </div>
+            <AdminHeader title={`View Products`} addComponent={<AddEditProducts mode="add" productData={null} />} hideBack={true} />
+
             <Row justify={"space-between"} className='admin-header-space'>
                 <Col span={6}>
                     <Form.Item label="Filter option">
@@ -162,7 +140,19 @@ const ListAllProducts = () => {
                     </Form.Item>
                 </Col>
             </Row>
-                <Table dataSource={productData} columns={columns} className='product-page-table'/>
+
+            <Table dataSource={productData} columns={columns} className='product-page-table brand-pagination' pagination={{
+                position: ["bottomCenter"],
+                current: pagination.current,
+                pageSize: pagination.pageSize,
+                showSizeChanger: true,
+                pageSizeOptions: ["5", "10", "20", "50"],
+                showQuickJumper: true,
+                onChange: (page, pageSize) => {
+                    setPagination({ current: page, pageSize });
+                },
+                showTotal: (total) => `Total ${total} Products`,
+            }} />
         </>
     )
 }

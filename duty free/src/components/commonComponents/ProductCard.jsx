@@ -4,7 +4,7 @@ import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
 import { FaShoppingCart, FaEye } from "react-icons/fa";
 import { useMyContext } from "../../Provider/CommonProvider";
-import { viewCart } from "../../store/slice/viewCartSlice";
+import { viewCard } from "../../store/slice/viewCardSlice";
 import common from "../../commonMethod/common.js";
 import { useEffect, useState } from "react";
 
@@ -20,14 +20,6 @@ const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop
             linkText: "VIEW CART"
         })
     }
-
-    // const handleAddTowishlist = (data) => {
-    //     handleOpenAlert({
-    //         text: `${data?.title} has been added to your whishlist`,
-    //         link: "/cart",
-    //         linkText: "VIEW WISHLIST"
-    //     })
-    // }
 
     const handleToggleWishList = async () => {
         try {
@@ -59,9 +51,7 @@ const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop
         }
         getWishList()
     }, [wishlist])
-    // const handleOpenModal = (data) => {
-    //     dispatch(viewCart(data));
-    // }
+
     return (
         <>
             <div className='p-2 position-relative product-card'>
@@ -76,7 +66,7 @@ const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop
 */}
                 {!hideWishlist && <button type="button" onClick={() => handleToggleWishList(data)} className="bg-transparent border-0 heart-btn position-absolute">{wishlist.includes(data?.id) ? <IoMdHeart /> : <IoMdHeartEmpty />}   </button>}
                 <div>
-                    <Link to={`/product/${data.id}`} className="">
+                    <Link to={`/product/${data.slug}`} className="">
                         <img src={data?.imageUrl} height={imageheight} className='p-2 product-image' />
                     </Link>
                     {!hidePopTool &&
@@ -86,7 +76,7 @@ const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop
                         </div>
                     }
                 </div>
-                <Link to={`/product/${data?.id}`} className={`${titleclassname} product-title dmsans-bold d-block text-decoration-none mb-0 pt-2`}>{data?.productName}</Link>
+                <Link to={`/product/${data?.slug}`} className={`${titleclassname} product-title dmsans-bold d-block text-decoration-none mb-0 pt-2`}>{data?.productName}</Link>
                 <p className={`${priceclassname} product-price dmsans-bold `}>${data?.price}</p>
             </div>
         </>

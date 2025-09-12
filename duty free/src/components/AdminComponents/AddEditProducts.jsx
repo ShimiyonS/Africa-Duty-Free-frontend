@@ -1,32 +1,65 @@
-import { useState, useEffect } from 'react'
-import { Button, Col, Drawer, Form, Input, Row, Select, Upload, message } from 'antd';
+import { useState, useEffect, useCallback } from 'react'
+import { Button, Col, Drawer, Form, Input, Row, Select, Upload, } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import Common from '../../commonMethod/common.js'
+import Common from '../../commonMethod/Common'
 import { toast } from "react-toastify";
 import { FaRegEdit } from 'react-icons/fa';
 import AddEditCategory from './AddEditCategory.jsx';
 import AddEditSubCategory from './AddEditSubCategory.jsx';
 
 const AddEditProducts = ({ mode, productData }) => {
+    const [loading] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [subCategories, setSubCategories] = useState([]);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
     const { Option } = Select;
-    const { apiRequest } = Common()
+    const { apiRequest, generateSlug } = Common()
     const [form] = Form.useForm();
     const [childrenDrawer, setChildrenDrawer] = useState(false);
-    const [shareValue, setShareValue] = useState(null)
 
     const [categories, setCategories] = useState([]);
     const toggleDrawer = () => {
         setChildrenDrawer(!childrenDrawer);
     };
 
+    const handleSlug = (value, placeArea) => {
+        const slug = generateSlug(value);
+        form.setFieldsValue({ [placeArea]: slug })
+    }
+
     const handleSubmit = async (values) => {
         if (mode == "edit") {
+            try {
+                const fileList = values?.uploadImage || []
+                let imageUrlToUse = productData?.imageUrl || null;
+                const filesToUpload = fileList.filter((f) => !!f.originFileObj);
+                if (filesToUpload.length > 0) {
+                    const formData = new FormData();
+                    filesToUpload.forEach((file) => formData.append("file", file.originFileObj));
+                    const imageURL = await apiRequest("POST", "/upload/product", formData)
+                    imageUrlToUse = imageURL?.url;
+                } else if (fileList.length > 0 && fileList[0]?.url) {
+                    imageUrlToUse = fileList[0].url;
+                }
+
+                const productDetail = {
+                    subCategoryIds: values.subCategories,
+                    productName: values.product,
+                    slug: values.productSlug,
+                    price: values.productPrice,
+                    description: values.description,
+                    imageUrl: imageUrlToUse,
+                }
+                const response = await apiRequest("PUT", `/product/${productData?.id}`, productDetail)
+                console.log(response.message)
+                toast.success(response?.message)
+            } catch (error) {
+                console.log(error.message)
+                toast.error(error.message)
+            }
 
         } else {
-            const fileList = values?.uploadImage?.fileList
+            const fileList = values?.uploadImage
             let formData;
             if (fileList.length > 0) {
                 formData = new FormData();
@@ -36,7 +69,6 @@ const AddEditProducts = ({ mode, productData }) => {
             }
             const imageURL = await apiRequest("POST", "/upload/product", formData)
             values.uploadImage = imageURL?.url;
-            console.log(values.subCategories)
 
             const productDetail = {
                 subCategoryIds: values.subCategories,
@@ -95,62 +127,61 @@ const AddEditProducts = ({ mode, productData }) => {
 
     //for showing edit datas in input fields
     useEffect(() => {
-        if (mode === "edit" && productData) {
-            console.log(productData?.imageUrl)
+        if (mode === "edit" && productData && categories?.length > 0) {
+            const categoryId = productData?.subCategory?.category?.id;
+            const initialSubCategoryIds = Array.isArray(productData?.subCategoryIds)
+                ? productData.subCategoryIds
+                : (productData?.subCategoryIds ? JSON.parse(productData.subCategoryIds) : [productData?.subCategoryId || productData?.subCategory?.id].filter(Boolean));
+
+            if (categoryId) {
+                setSelectedCategory(categoryId);
+                const selected = categories.find((cat) => cat?.id === categoryId);
+                setSubCategories(selected?.subCategories || []);
+            }
+
+            setSelectedSubCategory(initialSubCategoryIds);
+
             form.setFieldsValue({
                 product: productData?.productName,
                 productSlug: productData?.slug,
                 productPrice: productData?.price,
-                uploadImage: productData?.imageUrl,
-                categories: productData?.subCategory?.category?.categoryName,
-                subCategories: productData?.subCategory?.subcategoryName,
+                uploadImage: [
+                    {
+                        uid: "existing-image-uid",
+                        name: "existing_image.png",
+                        status: "done",
+                        url: productData?.imageUrl
+                    }
+                ],
+                categories: categoryId,
+                subCategories: initialSubCategoryIds,
                 description: productData?.description,
             });
-        } else {
+        } else if (mode === "add") {
             form.resetFields();
+            setSelectedCategory(null);
+            setSelectedSubCategory(null);
+            setSubCategories([]);
         }
-    }, [mode, productData, form]);
+    }, [mode, productData, categories, form]);
 
-    useEffect(() => {
-        if (shareValue) {
-            setCategories((prev) => [
-                ...prev, {
-                    id: prev.length + 1,
-                    name: shareValue.category,
-                    slug: shareValue.categorySlug,
-                    description: shareValue.description
-                }
-            ])
-        }
-
-    }, [shareValue]);
-
-
-    const fetchCategories = async () => {
+    const fetchCategories = useCallback(async () => {
         try {
             const data = await apiRequest("GET", "/category")
             setCategories(data?.categories)
         } catch (error) {
             console.error(error);
         }
-    }
+    }, [apiRequest])
 
     useEffect(() => {
         fetchCategories()
-    }, []);
-
-    const getCategoryId = (categoryName) => {
-        const selectedCategory = categories.find((cat) => cat.categoryName === categoryName);
-        // setSubCategories(selectedCategory?.subCategories || [])
-        return selectedCategory?.id;
-    }
-
-    const getSubCategoryId = (subCategoryName) => {
-        const selectedSubCategory = subCategories.find((sub) => sub.subcategoryName === subCategoryName);
-        return selectedSubCategory?.id;
-    }
+    }, [fetchCategories]);
 
     const isCategory = Form.useWatch("categories", form)
+
+    // / checking upload image
+    const normFile = (e) => Array.isArray(e) ? e : e?.fileList;
     return (
         <div>
             <Button
@@ -170,7 +201,7 @@ const AddEditProducts = ({ mode, productData }) => {
                         <Row gutter={16}>
                             {/* calling component category and subCategory */}
                             <Col>
-                                <AddEditCategory setShareValue={setShareValue} />
+                                <AddEditCategory />
                             </Col>
                             <Col>
                                 <AddEditSubCategory />
@@ -182,15 +213,16 @@ const AddEditProducts = ({ mode, productData }) => {
                     className="justuspro-bold" width={800} closable={true}>
                     <div>
 
+
                         <Form layout="vertical" form={form} onFinish={handleSubmit}>
                             <Row gutter={16}>
                                 <Col span={12}>
                                     <Form.Item
                                         name="product"
-                                        label={mode === "add" ? "Product Name" : "Edit name"}
+                                        label={mode === "add" ? "Product Name" : "Edit Name"}
                                         rules={[{ required: true, message: 'Please enter product name' }]}
                                     >
-                                        <Input placeholder="Please enter product name" />
+                                        <Input placeholder="Please enter product name" onBlur={(e) => { handleSlug(e.target.value, "productSlug") }} />
                                     </Form.Item>
                                 </Col>
                                 <Col span={12}>
@@ -199,7 +231,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                         label={mode === "edit" ? "Edit Slug" : "Product Slug"}
                                         rules={[{ required: true, message: 'Please enter slug' }]}
                                     >
-                                        <Input placeholder="Please enter slug" />
+                                        <Input placeholder="Please enter slug" onBlur={(e) => { handleSlug(e.target.value, "productSlug") }} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -219,10 +251,12 @@ const AddEditProducts = ({ mode, productData }) => {
                                 <Col span={12}>
                                     <Form.Item
                                         name="uploadImage"
+                                        valuePropName="fileList"
+                                        getValueFromEvent={normFile}
                                         label={mode === "edit" ? "Edit Image" : "Upload Image"}
                                         rules={[{ required: true, message: 'Please upload image' }]}
                                     >
-                                        <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" className="antd-custom-btn">
+                                        <Upload style={{ width: "100%" }} accept=".jpg,.png,.jpeg,.png" className="antd-custom-btn" beforeUpload={() => false}>
                                             <Button icon={<UploadOutlined />} type="primary">Upload</Button>
                                         </Upload>
                                     </Form.Item>
@@ -241,7 +275,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                             onChange={handleCategoryChange}
                                         >
                                             {categories.map((cat) => (
-                                                <Option key={cat.id} value={getCategoryId(cat?.categoryName)}>
+                                                <Option key={cat.id} value={cat.id}>
                                                     {cat.categoryName}
                                                 </Option>
                                             ))}
@@ -251,7 +285,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                 <Col span={12}>
                                     <Form.Item
                                         name="subCategories"
-                                        label="subCategories"
+                                        label="Sub Categories"
                                         rules={[{ required: true, message: 'Please choose the sub categories' }]}
                                     >
                                         <Select
@@ -262,7 +296,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                             disabled={!isCategory}
                                         >
                                             {subCategories.map((sub) => (
-                                                <Option key={sub.id} value={getSubCategoryId(sub?.subcategoryName)}>
+                                                <Option key={sub.id} value={sub.id}>
                                                     {sub?.subcategoryName}
                                                 </Option>
                                             ))}
@@ -288,7 +322,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                 </Col>
                             </Row>
                             <div className="d-flex justify-content-end">
-                                <Button type="primary" htmlType="submit" className="antd-custom-btn">
+                                <Button type="primary" htmlType="submit" className="antd-custom-btn" loading={loading}>
                                     Submit
                                 </Button>
                             </div>

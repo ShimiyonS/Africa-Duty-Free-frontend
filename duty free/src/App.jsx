@@ -51,7 +51,7 @@ function App() {
           <Route path="/password-reset" element={<ForgotPassword />} />
           <Route path="/product-category/:slug" element={<CategoryDetails />} />
           <Route path="/product-category/:slug/:subslug" element={<CategoryDetails />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/product/:slug" element={<ProductDetails />} />
           <Route path="/brand/:slug" element={<BrandDetails />} />
           <Route path="/wishlist" element={<Wishlist />} />
           {/* <Route path="/africa-best-buy/product-category/:slug" element={<BrandDetails />} /> */}

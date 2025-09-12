@@ -1,21 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const viewCartSlice = createSlice({
-    name: "viewCart",
+const viewCardSlice = createSlice({
+    name: "viewCard",
     initialState: {
     },
     reducers: {
-        viewCart: (state, action) => {
+        viewCard: (state, action) => {
             state.data = { ...action.payload };
         },
-        clearCart: (state, action) => {
+        clearCard: (state, action) => {
             state.data = {};
         },
     },
 });
 
 // Export the action
-export const { viewCart, clearCart } = viewCartSlice.actions;
+export const { viewCard, clearCard } = viewCardSlice.actions;
 
 // Export the reducer
-export default viewCartSlice.reducer;
+export default viewCardSlice.reducer;

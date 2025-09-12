@@ -6,16 +6,17 @@ import Wishlist from "../../../assets/wishlist.svg"
 import { CiSearch } from "react-icons/ci";
 import "./Header.css"
 import { Link, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import Common from '../../../commonMethod/Common'
+import { useEffect, useState, useCallback } from 'react'
+import Common from '../../../commonMethod/common'
+import { setCartItems } from '../../../store/slice/cartSlice'
 import { IoClose } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
+import { toast } from 'react-toastify'
 
 const Header = ({ togglemenu, togglesidebar }) => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState();
-  const { apiRequest } = Common()
-  const [cart, setCart] = useState([])
+  const { apiRequest, dispatch, cartItems } = Common()
   useEffect(() => {
 
     const offcanvasEl = document.getElementById("offcanvasRight");
@@ -46,6 +47,47 @@ const Header = ({ togglemenu, togglesidebar }) => {
     }
   }
 
+
+  const getCartProducts = useCallback(async () => {
+    try {
+      const response = await apiRequest("GET", "/cart", { userId: 1 })
+      const items = Array.isArray(response?.items) ? response.items : []
+      const mapped = items.map((row) => ({
+        id: row?.product?.id,
+        title: row?.product?.productName,
+        price: row?.product?.price,
+        quantity: row?.quantity || 0,
+        thumbnail: row?.product?.imageUrl
+      }))
+      dispatch(setCartItems(mapped))
+    } catch (error) {
+      console.log(error.message)
+      toast.error(error.message)
+    }
+  }, [apiRequest])
+
+
+  // Refresh cart each time offcanvas opens
+  useEffect(() => {
+    const el = document.getElementById("offcanvasRight");
+    const handleShown = () => {
+      getCartProducts();
+    };
+    el?.addEventListener("shown.bs.offcanvas", handleShown);
+    return () => {
+      el?.removeEventListener("shown.bs.offcanvas", handleShown);
+    };
+  }, [getCartProducts])
+
+
+  const mathRound = (cartItems) => {
+    const total = cartItems.reduce(
+      (acc, item) =>
+        acc + (item?.quantity || 0) * (item?.price || 0),
+      0
+    );
+    return Math.round(total * 100) / 100;
+  }
   return (
 
     <div className='container'>
@@ -72,7 +114,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
               </button>
               <button className='bg-transparent m-0 p-0 border-0 header-cart-toggle' type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                 <img src={Bag} style={{ width: "34px" }} alt="cart" />
-                <div className='header-cart-total text-color-secondary bg-color-gold'>{cart.length}</div>
+                <div className='header-cart-total text-color-secondary bg-color-gold'>{cartItems.length}</div>
               </button>
               <Link to={`wishlist`}>
                 <img src={Wishlist} width={40} height={40} alt="whislist" />
@@ -187,7 +229,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
                   <IoClose />
                 </button>
               </div>
-              <div className="d-flex justify-content-around">
+              <div className='d-flex justify-content-around'>
                 <button
                   className="popup-login  bg-color-danger  text-color-secondary dmsans-bold"
                   data-bs-dismiss="modal"
@@ -227,21 +269,26 @@ const Header = ({ togglemenu, togglesidebar }) => {
           <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div className="offcanvas-body">
-          {cart.length > 0 ? <>
+          {cartItems.length > 0 ? <>
             <div className='whishlist-content'>
-              {cart?.map((item, index) => {
+              {cartItems?.map((item, index) => {
                 return (
                   <div className='d-flex align-items-center gap-3 p-2' key={index}>
                     <img src={item?.thumbnail} className='header-cart-image' />
                     <div>
                       <button onClick={() => { navigate(`/product/${item.id}`) }} className='text-decoration-none header-cart-product-link text-color-danger' type='button' data-bs-dismiss="offcanvas" aria-label="Close">{item.title}</button>
-                      <p><span className='fs-6'>{item?.minimumOrderQuantity} </span> <IoIosClose className='header-multiply-icon' /> <span className='fw-bold text-break'>${item?.price}</span></p>
+                      <p><span className='fs-6'>{item?.quantity} </span> <IoIosClose className='header-multiply-icon' /> <span className='fw-bold text-break'>${item?.price}</span></p>
                     </div>
                   </div>
                 )
               })}
             </div>
-            <p className='p-2 fw-bold'><span className='fs-6'>Subtotal: </span><span className='fs-5'>${cart?.reduce((acc, item,) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</span></p>
+            <p className='p-2 fw-bold'>
+              <span className='fs-6'>Subtotal:
+              </span>
+              <span className='fs-5'>${mathRound(cartItems)}
+              </span>
+            </p>
             <div className='d-flex flex-column text-center'>
               <button onClick={() => { navigate("/cart") }} className='position-relative whishilist-button header-cart-link bg-color-primary mb-3' type='button' data-bs-dismiss="offcanvas" aria-label="Close">
                 <span className="dmsans-bold">VIEW CART</span>
