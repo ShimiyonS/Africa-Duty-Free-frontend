@@ -58,15 +58,12 @@ const AddEditSubCategory = ({ mode, subCategoryData }) => {
     //for showing edit datas in input fields
     useEffect(() => {
         console.log(subCategoryData, "categorydata");
-        console.log(("image name", subCategoryData?.image));
 
         if (mode === "edit" && subCategoryData) {
-            console.log(subCategoryData);
-            
             form.setFieldsValue({
                 subCategory: subCategoryData?.name,
                 subCategorySlug: subCategoryData?.slug,
-                categories:subCategoryData?.categories,
+                categories: subCategoryData?.categories,
                 description: subCategoryData?.description,
                 uploadImage: subCategoryData.image
                     ? [
