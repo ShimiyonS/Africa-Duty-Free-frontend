@@ -1,6 +1,7 @@
 import { Col, Form, Input, Row, Select, Space, Table } from "antd";
 import AddEditBrand from '../../components/AdminComponents/AddEditBrand'
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import DeletePopup from '../../components/commonComponents/DeletePopup'
 import AdminHeader from '../../components/AdminComponents/AdminHeader';
 
@@ -185,7 +186,12 @@ const ListAllBrand = () => {
             dataIndex: 'name',
             key: 'name',
             width: 150,
-            ellipsis: true
+            ellipsis: true,
+            render: (text, record) => (
+                <Link to={`/brand/${record.slug}`} className="ant-link">
+                    {text}
+                </Link>
+            )
         },
         {
             title: 'Brand Description',

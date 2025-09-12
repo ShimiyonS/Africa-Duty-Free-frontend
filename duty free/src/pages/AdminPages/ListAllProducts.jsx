@@ -4,6 +4,7 @@ import AddEditProducts from '../../components/AdminComponents/AddEditProducts';
 import DeletePopup from '../../components/commonComponents/DeletePopup';
 import AdminHeader from '../../components/AdminComponents/AdminHeader';
 import productimage from "../../assets/blinkbottle.png"
+import { Link } from 'react-router-dom';
 
 const ListAllProducts = () => {
 
@@ -36,7 +37,7 @@ const ListAllProducts = () => {
                         name: "Dolce Gabana ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true",
                         price: 33,
                         slug: "dolce-gabana",
-                        image:[productimage,productimage],
+                        image: [productimage, productimage],
                         stock: 22,
                         brand: "LG",
                         Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
@@ -46,7 +47,7 @@ const ListAllProducts = () => {
                         name: "Fog",
                         price: 50,
                         slug: "fog",
-                        image:[productimage,productimage],
+                        image: [productimage, productimage],
                         stock: 27,
                         brand: "Samsung",
                         Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
@@ -70,7 +71,7 @@ const ListAllProducts = () => {
                 price: product.price,
                 description: product.Description,
                 productSlug: product.slug,
-                productImage:product.image
+                productImage: product.image
                 // address: item.name
             }))
         ))
@@ -88,7 +89,12 @@ const ListAllProducts = () => {
             dataIndex: 'productname',
             key: 'productname',
             width: 150,
-            ellipsis: true
+            ellipsis: true,
+            render: (text, record) => (
+                <Link to={`/product/${record.productSlug}`} className="ant-link">
+                    {text}
+                </Link>
+            ) 
         },
         {
             title: 'Product Category',
