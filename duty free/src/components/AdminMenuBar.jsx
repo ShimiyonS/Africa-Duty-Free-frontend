@@ -5,7 +5,7 @@ import { RxDashboard } from "react-icons/rx";
 import { LuUserRound } from "react-icons/lu";
 import { BsCart } from "react-icons/bs";
 import { IoLayersOutline } from "react-icons/io5";
-import { BsLayers } from "react-icons/bs";
+import { BsLayers, BsBoxSeam } from "react-icons/bs";
 import { GiHummingbird } from "react-icons/gi";
 import { useMyContext } from "../Provider/CommonProvider";
 import { TfiClose } from "react-icons/tfi";
@@ -29,6 +29,7 @@ const AdminMenuBar = () => {
                 <NavLink to="/siteadmin/subcategories" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary " ><BsLayers/><span className="justuspro-regular">Sub Categories</span></NavLink>
                 <NavLink to="/siteadmin/brands" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary"><GiHummingbird /><span className="justuspro-regular">Brands</span></NavLink>
                 <NavLink to="/siteadmin/users" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary"> <LuUserRound /><span className="justuspro-regular">users</span></NavLink>
+                <NavLink to="/siteadmin/orders" className="d-flex rounded-2 align-items-center gap-3 admin-menu-link d-block text-decoration-none text-color-primary"> <BsBoxSeam /><span className="justuspro-regular">Orders</span></NavLink>
 
             </div>
         </div>

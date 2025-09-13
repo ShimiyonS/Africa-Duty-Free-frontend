@@ -11,7 +11,7 @@ const UserShowProducts = ({ title, data, notifyIcon }) => {
     }
     return (
         <>
-            <NotifyBtn icon={notifyIcon} notifyLength={data.length} action={toggleDrawer}/>
+            <NotifyBtn icon={notifyIcon} notifyLength={data.length} action={toggleDrawer} />
             <>
                 <Drawer
                     title={
@@ -31,11 +31,7 @@ const UserShowProducts = ({ title, data, notifyIcon }) => {
                                 className="mb-3 shadow-sm"
                             >
                                 <Flex gap={16}>
-                                    <img
-                                        src={item?.productImage}
-                                        alt={item?.productName}
-                                        className="admin-product-image"
-                                    />
+                                    <Link to={`/product/${item.productId}`}><img src={item?.productImage} alt={item?.productName} className="admin-product-image" /></Link>
                                     <div>
                                         <Link to={`/product/${item.productId}`} className='text-decoration-none'> <p className="mb-1 fw-bold text-break">{item?.productName}</p> </Link>
                                         <p className="mb-1 text-color-danger">Price: ${item?.productPrice}</p>
