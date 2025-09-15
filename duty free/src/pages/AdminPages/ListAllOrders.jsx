@@ -4,6 +4,7 @@ import AdminHeader from '../../components/AdminComponents/AdminHeader';
 import { FaDownload } from "react-icons/fa6";
 import catimage from "../../assets/blinkbottle.png"
 import ViewOrderedProducts from '../../components/AdminComponents/ViewOrderedProducts';
+import InvoicePopup from '../../components/commonComponents/InvoicePopup';
 
 const ListAllOrders = () => {
 
@@ -29,30 +30,6 @@ const ListAllOrders = () => {
         console.log(typeof orders?.[0]?.[value]);
 
     }
-
-
-    function downloadInvoice() {
-        // Create a dynamically generated invoice content
-        const invoiceContent = `
-        INVOICE #001
-        -------------------------
-        Date: ${new Date().toLocaleDateString()}
-        Client: Jane Doe
-        -------------------------
-        Service 1: $100.00
-        Service 2: $75.00
-        -------------------------
-        Total: $175.00
-      `;
-
-        const blob = new Blob([invoiceContent], { type: 'text/plain' });
-        const dlink = document.createElement('a');
-        dlink.download = 'Invoice-001.txt';
-        dlink.href = window.URL.createObjectURL(blob);
-        dlink.click();
-        window.URL.revokeObjectURL(dlink.href);
-    }
-
 
     const orders = [
         {
@@ -377,9 +354,7 @@ const ListAllOrders = () => {
             render: (_, record) => (
                 <Space>
                     <ViewOrderedProducts data={record} />
-                    <Button type="link" onClick={()=>downloadInvoice()} className={`antd-custom-btn`}>
-                        <FaDownload size={19} className='text-color-danger' />
-                    </Button>
+                    <InvoicePopup order={record}/>
                 </Space>
             ),
         }
