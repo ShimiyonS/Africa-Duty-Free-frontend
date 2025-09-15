@@ -3,25 +3,73 @@ import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { HiEmojiSad } from "react-icons/hi";
 import "../Styles/login.css"
 import UserDefaultProfile from "../assets/user-default-profile.jpg"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import common from "../commonMethod/common";
+import { useDispatch } from "react-redux";
+import { setAuth } from "../store/slice/authSlice";
+import { setCartItems } from "../store/slice/cartSlice";
+import { setWishlist } from "../store/slice/wishlistSlice";
+import { setOrders } from "../store/slice/orderSlice";
 
 
 const Login = () => {
-    const [formData,setFormData] = useState({email:"",password:""})
-    const [token, setToken] = useState(localStorage.getItem("LoginToken"))
-    console.log(token);
+    const navigate = useNavigate();
+    const { apiRequest } = common();
+    const dispatch = useDispatch();
+    const [formData, setFormData] = useState({ email: "", password: "" })
+    const [token, setToken] = useState(localStorage.getItem("token"))
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
 
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        alert(`Login with: ${formData.password}`);
-        const updateToken = "1234567890"
-        localStorage.setItem("LoginToken", updateToken)
-        setToken(updateToken)
+        setError("")
+        setLoading(true)
+        try {
+            const payload = {
+                usernameOrEmail: formData.email,
+                password: formData.password
+            }
+            const res = await apiRequest('POST', '/auth/login', payload)
+            if (res?.token && res?.user) {
+                // store token and user data
+                localStorage.setItem('token', res.token)
+                localStorage.setItem('user', JSON.stringify(res.user))
+                // optionally store extras
+                if (res.orders) localStorage.setItem('orders', JSON.stringify(res.orders))
+                if (res.wishlist) localStorage.setItem('wishlist', JSON.stringify(res.wishlist))
+                if (res.cart) localStorage.setItem('cart', JSON.stringify(res.cart))
+
+                // Redux
+                dispatch(setAuth({ token: res.token, user: res.user }))
+                if (Array.isArray(res.cart?.items)) {
+                    dispatch(setCartItems(res.cart.items))
+                } else if (Array.isArray(res.cart)) {
+                    dispatch(setCartItems(res.cart))
+                }
+                if (Array.isArray(res.wishlist)) dispatch(setWishlist(res.wishlist))
+                if (Array.isArray(res.orders)) dispatch(setOrders(res.orders))
+
+                setToken(res.token)
+                navigate('/')
+            } else {
+                setError(res?.message || 'Login failed')
+            }
+        } catch (err) {
+            const message = err?.response?.data?.message || 'Login failed'
+            setError(message)
+        } finally {
+            setLoading(false)
+        }
     };
 
     const handleLogout = () => {
-        localStorage.removeItem("LoginToken")
+        localStorage.removeItem("token")
+        localStorage.removeItem("user")
+        localStorage.removeItem("orders")
+        localStorage.removeItem("wishlist")
+        localStorage.removeItem("cart")
         setToken(null)
     }
 
@@ -42,7 +90,7 @@ const Login = () => {
                                     className="form-control custom-auth-input"
                                     id="email"
                                     value={formData.email}
-                                    onChange={(e) => setFormData({...formData, email:e.target.value})}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     required
                                 />
                             </div>
@@ -55,7 +103,7 @@ const Login = () => {
                                     className="form-control custom-auth-input"
                                     id="password"
                                     value={formData.password}
-                                    onChange={(e) => setFormData({...formData, password:e.target.value})}
+                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                     required
                                 />
                             </div>
@@ -73,13 +121,16 @@ const Login = () => {
                             </div>
 
                             <div className="d-flex gap-2">
-                                <button type="submit" className="border-0 auth-btns button-text-primary button-bg-primary">
+                                <button type="submit" disabled={loading} className="border-0 auth-btns button-text-primary button-bg-primary">
                                     Login
                                 </button>
                                 <Link to="/register" className="text-decoration-none auth-btns button-text-primary button-bg-danger">
                                     Register
                                 </Link>
                             </div>
+                            {error ? (
+                                <div className="mt-3 text-danger small">{error}</div>
+                            ) : null}
                         </form>
 
                         <div className="text-center mt-4">
@@ -91,7 +142,7 @@ const Login = () => {
                     <div className="user-control">
                         <div className="img-section p-2">
                             <img src={UserDefaultProfile} width={80} height={80} className="rounded-circle user-default-img"></img>
-                            <p className="text-center mb-1 fw-bold">Ganesh Kumar</p>
+                            <p className="text-center mb-1 fw-bold">Logged in</p>
                         </div>
                         <div className="controls-section p-2">
                             <ul className="p-2 m-0">

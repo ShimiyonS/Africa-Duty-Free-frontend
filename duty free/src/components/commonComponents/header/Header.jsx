@@ -50,7 +50,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
 
   const getCartProducts = useCallback(async () => {
     try {
-      const response = await apiRequest("GET", "/cart", { userId: 1 })
+      const response = await apiRequest("GET", "/cart")
       const items = Array.isArray(response?.items) ? response.items : []
       const mapped = items.map((row) => ({
         id: row?.product?.id,
@@ -64,7 +64,7 @@ const Header = ({ togglemenu, togglesidebar }) => {
       console.log(error.message)
       toast.error(error.message)
     }
-  }, [apiRequest])
+  }, [apiRequest, dispatch])
 
 
   // Refresh cart each time offcanvas opens
@@ -109,7 +109,19 @@ const Header = ({ togglemenu, togglesidebar }) => {
               <button className='bg-transparent m-0 p-0 border-0' data-bs-toggle="modal" data-bs-target="#dutyPopup">
                 <img src={Airplane} style={{ width: "34px" }} alt="airplane" />
               </button>
-              <button className='bg-transparent m-0 p-0 border-0' data-bs-toggle="modal" data-bs-target="#customPopup">
+              <button
+                className='bg-transparent m-0 p-0 border-0'
+                data-bs-toggle="modal"
+                data-bs-target="#customPopup"
+                onClick={(e) => {
+                  const token = localStorage.getItem('token');
+                  if (token) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    navigate('/my-account');
+                  }
+                }}
+              >
                 <img src={User} style={{ width: "34px" }} alt="user" />
               </button>
               <button className='bg-transparent m-0 p-0 border-0 header-cart-toggle' type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">

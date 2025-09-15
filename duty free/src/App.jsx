@@ -59,7 +59,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="account/*" element={<ProtectedRoute ><AccountRoutes /></ProtectedRoute >} />
+          <Route path="account/*" element={<ProtectedRoute ><AccountRoutes /></ProtectedRoute>} />
           <Route path="my-account/*" element={<ProtectedRoute ><MyAccountRoutes /></ProtectedRoute>} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="search" element={<Search />} />
