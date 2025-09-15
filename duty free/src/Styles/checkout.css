@@ -3,7 +3,18 @@
     padding: 20px 20px;
     margin-bottom: 15px;
 }
-
+.custom-select-address select{
+    width: 100% !important;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+select:focus{
+    outline: none;
+}
+.custom-select-address option{
+    width: 100% !important;
+    padding: 1rem;
+}
 .apply-btn {
     background-color: #eee;
     color: var(--text-color-primary);

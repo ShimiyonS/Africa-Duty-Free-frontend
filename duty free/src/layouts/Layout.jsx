@@ -5,9 +5,9 @@ import NavBar from '../components/commonComponents/header/navbar.jsx'
 import Footer from '../components/commonComponents/footer/Footer.jsx'
 import { useEffect, useState, Fragment } from 'react'
 import CardModal from '../components/commonComponents/CardModal.jsx'
-import Common from '../commonMethod/Common.js'
+import Common from '../commonMethod/common.js'
 import DiscountComponent from '../components/commonComponents/DiscountComponent.jsx'
-import { clearCart } from '../store/slice/viewCartSlice.js'
+import { clearCard } from '../store/slice/viewCardSlice.js'
 import ScrollToTop from '../components/commonComponents/ScrollToTop.jsx'
 import SwiperComponent from '../components/commonComponents/swiperComponent'
 
@@ -24,7 +24,7 @@ const Layout = () => {
     const isAdminRoute = location.pathname.startsWith("/siteadmin")
 
     useEffect(() => {
-        dispatch(clearCart())
+        dispatch(clearCard())
     }, [location])
 
     return (
@@ -46,14 +46,8 @@ const Layout = () => {
             {/* Footer part (hide for admin) */}
             {!isAdminRoute && (
                 <Fragment>
-                    <DiscountComponent />
-                    {slug === "home" && <>
-                        <SwiperComponent />
-                    </>}
                     <Footer />
                     <ScrollToTop />
-
-
                 </Fragment>
             )}
         </>

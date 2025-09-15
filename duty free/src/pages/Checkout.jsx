@@ -1,134 +1,661 @@
-import React, { useEffect, useState } from 'react'
-import "../Styles/checkout.css"
-import Common from '../commonMethod/Common'
-import { IoMdClose } from 'react-icons/io'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import "../Styles/checkout.css";
+import common from "../commonMethod/common";
+import { Link } from "react-router-dom";
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import { FaCreditCard } from "react-icons/fa6";
+import { FaMobileAlt, FaUniversity } from "react-icons/fa";
 const Checkout = () => {
-    const [couponStatus, setCouponStatus] = useState(false)
-    const [cart, setCart] = useState([])
-    const [form, setForm] = useState({})
-    const [btnClick, setBtnClick] = useState(false)
-    const { apiRequest } = Common()
-    const handleChange = () => {
+  const [couponStatus, setCouponStatus] = useState(false);
+  const [cart, setCart] = useState([]);
+  const [form, setForm] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    company: "",
+    country: "",
+    street1: "",
+    street2: "",
+    city: "",
+    region: "",
+    postcode: "",
+    phone: "",
+    shipDifferent: false,
+    sFirstName: "",
+    sLastName: "",
+    sCompany: "",
+    sCountry: "",
+    sStreet1: "",
+    sStreet2: "",
+    sCity: "",
+    sRegion: "",
+    sPostcode: "",
+    orderNotes: "",
+  });
+  const [btnClick, setBtnClick] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const { apiRequest, cartItems } = common();
 
+  useEffect(() => {
+    setCart(Array.isArray(cartItems) ? cartItems : []);
+  }, [cartItems]);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const computeTotal = () => {
+    const total = (cart || []).reduce(
+      (acc, item) => acc + (item?.quantity || 0) * (item?.price || 0),
+      0
+    );
+    return Number(total.toFixed(2)); // rounds to 2 decimals
+  };
+
+  const buildAddressPayload = () => {
+    const billing = {
+      firstName: form.firstName,
+      lastName: form.lastName,
+      company: form.company,
+      country: form.country,
+      region: form.region,
+      city: form.city,
+      street1: form.street1,
+      street2: form.street2,
+      postalCode: form.postcode,
+      phone: form.phone,
+      isDefault: true,
+    };
+
+    let shipping = undefined;
+    if (form.shipDifferent || btnClick) {
+      shipping = {
+        firstName: form.sFirstName,
+        lastName: form.sLastName,
+        company: form.sCompany,
+        country: form.sCountry,
+        region: form.sRegion,
+        city: form.sCity,
+        street1: form.sStreet1,
+        street2: form.sStreet2,
+        postalCode: form.sPostcode,
+        phone: form.phone,
+        isDefault: false,
+      };
     }
-    useEffect(() => {
-        const fetchCart = async () => {
-            const data = await apiRequest("GET", `/products`);
-            setCart(data?.products)
-        };
-        fetchCart();
-    }, [])
+
+    return { billing, shipping };
+  };
+
+  const submitAddresses = async () => {
+    try {
+      const payload = buildAddressPayload();
+      const res = await apiRequest("POST", "/address", payload);
+      console.log("Addresses saved:", res);
+      return res;
+    } catch (err) {
+      console.error("Failed to save addresses", err);
+      throw err;
+    }
+  };
 
 
-    return (
-        <div className='container mt-5'>
-            <div className='d-flex align-items-center flex-wrap gap-2'>
-                <p className='m-0'>Have a coupon?</p>
-                <button type='button' onClick={() => { setCouponStatus(!couponStatus) }} className='link-custom m-0 p-0 bg-transparent border-0'>Click here to enter your code</button>
+
+  const [paymentMethod, setPaymentMethod] = useState("");
+
+  const onPay = async (method) => {
+    try {
+      // 1. First create the order
+      const orderResponse = await apiRequest("POST", "/orders", {
+        items: cart.map(item => ({
+          product_id: item.id,
+          quantity: item.quantity,
+          price: item.price
+        })),
+        total: computeTotal(),
+        userId: 1, // TODO: change to user id 
+      });
+
+      const orderId = orderResponse.orderId;
+
+      // 2. Then initialize payment with order ID
+      const paymentResponse = await apiRequest("POST", "/payment/initialize", {
+        amount: computeTotal(),
+        email: form.email || "test@test.com",
+        name: `${form.firstName} ${form.lastName}`.trim() || "Test User",
+        paymentMethod: method,
+        orderId: orderId,
+        redirectUrl: window.location.origin + "/payment/callback",
+        userId: 1,
+      });
+
+      // 3. Redirect to payment page
+      if (paymentResponse.link) {
+        window.location.href = paymentResponse.link;
+      }
+    } catch (error) {
+      console.error("Payment initialization failed:", error);
+      alert("Payment initialization failed. Please try again.");
+    }
+  };
+  const handlePay = () => {
+    if (!paymentMethod) return;
+    // Trigger parent callback or payment initiation
+    onPay(paymentMethod);
+
+
+  };
+  return (
+    <div className="container mt-5">
+      <div className="d-flex align-items-center flex-wrap gap-2">
+        <p className="m-0">Have a coupon?</p>
+        <button
+          type="button"
+          onClick={() => {
+            setCouponStatus(!couponStatus);
+          }}
+          className="link-custom m-0 p-0 bg-transparent border-0"
+        >
+          Click here to enter your code
+        </button>
+      </div>
+      {couponStatus ? (
+        <>
+          <input
+            type="text"
+            placeholder="coupon code"
+            className="placeholder-custom custom-input mt-5 col-12 col-lg-4"
+            value={couponCode}
+            onChange={(e) => setCouponCode(e.target.value)}
+          />
+          <button
+            onClick={() => {
+              // Placeholder apply coupon logic
+              if (!couponCode?.trim()) return;
+              console.log("Applying coupon:", couponCode);
+            }}
+            className="apply-btn"
+          >
+            Apply coupon
+          </button>
+        </>
+      ) : (
+        ""
+      )}
+      <div className="d-flex flex-wrap py-5 ">
+        <div className="col-12 col-lg-6 p-lg-3">
+          <h1 className="justuspro-bold mb-4 cart-heading">Billing details</h1>
+          <label className="checkout-form-label required dmsans-bold">
+            Email address
+          </label>
+          <input
+            type="email"
+            placeholder=""
+            className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+          />
+          <label className="checkout-form-label required dmsans-bold">
+            First name
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+            name="firstName"
+            value={form.firstName}
+            onChange={handleChange}
+          />
+          <label className="checkout-form-label required dmsans-bold">
+            Last name
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+            name="lastName"
+            value={form.lastName}
+            onChange={handleChange}
+          />
+          <label className="checkout-form-label dmsans-bold">
+            Company name (optional)
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+            name="company"
+            value={form.company}
+            onChange={handleChange}
+          />
+          <label className="checkout-form-label required dmsans-bold">
+            Country / Region
+          </label>
+          <div></div>
+          <div className="d-block col-12 col-lg-8 placeholder-custom custom-select-address">
+            <CountryDropdown
+              value={form.country}
+              onChange={(val) =>
+                handleChange({ target: { name: "country", value: val } })
+              }
+              valueType="short"
+            />
+          </div>
+          <div></div>
+          <label className="checkout-form-label required dmsans-bold">
+            Street address
+          </label>
+          <input
+            type="text"
+            placeholder="House number and street name"
+            className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+            name="street1"
+            value={form.street1}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            placeholder="Apartment, suite, unit, etc. (optional)"
+            className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+            name="street2"
+            value={form.street2}
+            onChange={handleChange}
+          />
+          <label className="checkout-form-label required dmsans-bold">
+            Town / City
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+            name="city"
+            value={form.city}
+            onChange={handleChange}
+          />
+          <label className="checkout-form-label dmsans-bold ">
+            State / Province
+          </label>
+          <div></div>
+          <div className="d-block col-12 col-lg-8 placeholder-custom custom-select-address">
+            <RegionDropdown
+              country={form.country}
+              value={form.region}
+              onChange={(val) =>
+                handleChange({ target: { name: "region", value: val } })
+              }
+              classes="d-block col-12 col-lg-8 placeholder-custom custom-input"
+              countryValueType="short"
+            />
+          </div>
+          <div></div>
+          <label className="checkout-form-label required dmsans-bold">
+            Postcode
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+            name="postcode"
+            value={form.postcode}
+            onChange={handleChange}
+          />
+          <label className="checkout-form-label required dmsans-bold">
+            Phone
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+            name="phone"
+            value={form.phone}
+            onChange={handleChange}
+          />
+          <div className="d-flex align-items-center gap-2 my-4">
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                setBtnClick(e.target.checked);
+                handleChange({
+                  target: {
+                    name: "shipDifferent",
+                    type: "checkbox",
+                    checked: e.target.checked,
+                  },
+                });
+              }}
+              checked={btnClick}
+            ></input>
+            <h1 className="justuspro-bold cart-heading">
+              Ship to a different address?
+            </h1>
+          </div>
+          {btnClick && (
+            <div className="">
+              {" "}
+              <label className="checkout-form-label required dmsans-bold">
+                First name
+              </label>
+              <input
+                type="text"
+                placeholder=""
+                className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+                name="sFirstName"
+                value={form.sFirstName}
+                onChange={handleChange}
+              />
+              <label className="checkout-form-label required dmsans-bold">
+                Last name
+              </label>
+              <input
+                type="text"
+                placeholder=""
+                className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+                name="sLastName"
+                value={form.sLastName}
+                onChange={handleChange}
+              />
+              <label className="checkout-form-label dmsans-bold">
+                Company name (optional)
+              </label>
+              <input
+                type="text"
+                placeholder=""
+                className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+                name="sCompany"
+                value={form.sCompany}
+                onChange={handleChange}
+              />
+              <label className="checkout-form-label required dmsans-bold">
+                Country / Region
+              </label>
+              <div></div>
+              <div className="d-block col-12 col-lg-8 placeholder-custom custom-select-address">
+                <CountryDropdown
+                  value={form.sCountry}
+                  onChange={(val) =>
+                    handleChange({ target: { name: "sCountry", value: val } })
+                  }
+
+                  valueType="short"
+                />
+              </div>
+              <div></div>
+              <label className="checkout-form-label required dmsans-bold">
+                Street address
+              </label>
+              <input
+                type="text"
+                placeholder="House number and street name"
+                className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+                name="sStreet1"
+                value={form.sStreet1}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                placeholder="Apartment, suite, unit, etc. (optional)"
+                className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+                name="sStreet2"
+                value={form.sStreet2}
+                onChange={handleChange}
+              />
+              <label className="checkout-form-label required dmsans-bold">
+                Town / City
+              </label>
+              <input
+                type="text"
+                placeholder=""
+                className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+                name="sCity"
+                value={form.sCity}
+                onChange={handleChange}
+              />
+              <label className="checkout-form-label dmsans-bold ">
+                State / Province
+              </label>
+              <div></div>
+              <div className="d-block col-12 col-lg-8 placeholder-custom custom-select-address">
+                <RegionDropdown
+                  country={form.sCountry}
+                  value={form.sRegion}
+                  onChange={(val) =>
+                    handleChange({ target: { name: "sRegion", value: val } })
+                  }
+                  classes="d-block col-12 col-lg-8 placeholder-custom custom-select-address"
+                  countryValueType="short"
+                />
+              </div>
+              <div></div>
+              <label className="checkout-form-label required dmsans-bold">
+                Postcode
+              </label>
+              <input
+                type="text"
+                placeholder=""
+                className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+                name="sPostcode"
+                value={form.sPostcode}
+                onChange={handleChange}
+              />
             </div>
-            {couponStatus ? <><input type='text' placeholder='coupon code' className='placeholder-custom custom-input mt-5 col-12 col-lg-4' /><button onClick={null} className='apply-btn' >Apply coupon</button></> : ""}
-            <div className='d-flex flex-wrap py-5 '>
-                <div className='col-12 col-lg-6 p-lg-3'>
-                    <h1 className='justuspro-bold mb-4 cart-heading'>Billing details</h1>
-                    <label className='checkout-form-label required dmsans-bold'>Email address</label>
-                    <input type='email' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                    <label className='checkout-form-label required dmsans-bold'>First name</label>
-                    <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                    <label className='checkout-form-label required dmsans-bold'>Last name</label>
-                    <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                    <label className='checkout-form-label dmsans-bold'>Company name (optional)</label>
-                    <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                    <label className='checkout-form-label required dmsans-bold'>Country / Region</label>
-                    <select value={form} onChange={handleChange} className='d-block col-12 col-lg-8 placeholder-custom custom-input'>
-                        <option value="">Select a country / region…</option><option value="AF">Afghanistan</option><option value="AX">Åland Islands</option><option value="AL">Albania</option><option value="DZ">Algeria</option><option value="AS">American Samoa</option><option value="AD">Andorra</option><option value="AO">Angola</option><option value="AI">Anguilla</option><option value="AQ">Antarctica</option><option value="AG">Antigua and Barbuda</option><option value="AR">Argentina</option><option value="AM">Armenia</option><option value="AW">Aruba</option><option value="AU">Australia</option><option value="AT">Austria</option><option value="AZ">Azerbaijan</option><option value="BS">Bahamas</option><option value="BH">Bahrain</option><option value="BD">Bangladesh</option><option value="BB">Barbados</option><option value="BY">Belarus</option><option value="PW">Belau</option><option value="BE">Belgium</option><option value="BZ">Belize</option><option value="BJ">Benin</option><option value="BM">Bermuda</option><option value="BT">Bhutan</option><option value="BO">Bolivia</option><option value="BQ">Bonaire, Saint Eustatius and Saba</option><option value="BA">Bosnia and Herzegovina</option><option value="BW">Botswana</option><option value="BV">Bouvet Island</option><option value="BR">Brazil</option><option value="IO">British Indian Ocean Territory</option><option value="BN">Brunei</option><option value="BG">Bulgaria</option><option value="BF">Burkina Faso</option><option value="BI">Burundi</option><option value="KH">Cambodia</option><option value="CM">Cameroon</option><option value="CA">Canada</option><option value="CV">Cape Verde</option><option value="KY">Cayman Islands</option><option value="CF">Central African Republic</option><option value="TD">Chad</option><option value="CL">Chile</option><option value="CN">China</option><option value="CX">Christmas Island</option><option value="CC">Cocos (Keeling) Islands</option><option value="CO">Colombia</option><option value="KM">Comoros</option><option value="CG">Congo (Brazzaville)</option><option value="CD">Congo (Kinshasa)</option><option value="CK">Cook Islands</option><option value="CR">Costa Rica</option><option value="HR">Croatia</option><option value="CU">Cuba</option><option value="CW">Curaçao</option><option value="CY">Cyprus</option><option value="CZ">Czech Republic</option><option value="DK">Denmark</option><option value="DJ">Djibouti</option><option value="DM">Dominica</option><option value="DO">Dominican Republic</option><option value="EC">Ecuador</option><option value="EG">Egypt</option><option value="SV">El Salvador</option><option value="GQ">Equatorial Guinea</option><option value="ER">Eritrea</option><option value="EE">Estonia</option><option value="SZ">Eswatini</option><option value="ET">Ethiopia</option><option value="FK">Falkland Islands</option><option value="FO">Faroe Islands</option><option value="FJ">Fiji</option><option value="FI">Finland</option><option value="FR">France</option><option value="GF">French Guiana</option><option value="PF">French Polynesia</option><option value="TF">French Southern Territories</option><option value="GA">Gabon</option><option value="GM">Gambia</option><option value="GE">Georgia</option><option value="DE">Germany</option><option value="GH">Ghana</option><option value="GI">Gibraltar</option><option value="GR">Greece</option><option value="GL">Greenland</option><option value="GD">Grenada</option><option value="GP">Guadeloupe</option><option value="GU">Guam</option><option value="GT">Guatemala</option><option value="GG">Guernsey</option><option value="GN">Guinea</option><option value="GW">Guinea-Bissau</option><option value="GY">Guyana</option><option value="HT">Haiti</option><option value="HM">Heard Island and McDonald Islands</option><option value="HN">Honduras</option><option value="HK">Hong Kong</option><option value="HU">Hungary</option><option value="IS">Iceland</option><option value="IN">India</option><option value="ID">Indonesia</option><option value="IR">Iran</option><option value="IQ">Iraq</option><option value="IE">Ireland</option><option value="IM">Isle of Man</option><option value="IL">Israel</option><option value="IT">Italy</option><option value="CI">Ivory Coast</option><option value="JM">Jamaica</option><option value="JP">Japan</option><option value="JE">Jersey</option><option value="JO">Jordan</option><option value="KZ">Kazakhstan</option><option value="KE">Kenya</option><option value="KI">Kiribati</option><option value="KW">Kuwait</option><option value="KG">Kyrgyzstan</option><option value="LA">Laos</option><option value="LV">Latvia</option><option value="LB">Lebanon</option><option value="LS">Lesotho</option><option value="LR">Liberia</option><option value="LY">Libya</option><option value="LI">Liechtenstein</option><option value="LT">Lithuania</option><option value="LU">Luxembourg</option><option value="MO">Macao</option><option value="MG">Madagascar</option><option value="MW">Malawi</option><option value="MY">Malaysia</option><option value="MV">Maldives</option><option value="ML">Mali</option><option value="MT">Malta</option><option value="MH">Marshall Islands</option><option value="MQ">Martinique</option><option value="MR">Mauritania</option><option value="MU">Mauritius</option><option value="YT">Mayotte</option><option value="MX">Mexico</option><option value="FM">Micronesia</option><option value="MD">Moldova</option><option value="MC">Monaco</option><option value="MN">Mongolia</option><option value="ME">Montenegro</option><option value="MS">Montserrat</option><option value="MA">Morocco</option><option value="MZ">Mozambique</option><option value="MM">Myanmar</option><option value="NA">Namibia</option><option value="NR">Nauru</option><option value="NP">Nepal</option><option value="NL">Netherlands</option><option value="NC">New Caledonia</option><option value="NZ" selected="selected">New Zealand</option><option value="NI">Nicaragua</option><option value="NE">Niger</option><option value="NG">Nigeria</option><option value="NU">Niue</option><option value="NF">Norfolk Island</option><option value="KP">North Korea</option><option value="MK">North Macedonia</option><option value="MP">Northern Mariana Islands</option><option value="NO">Norway</option><option value="OM">Oman</option><option value="PK">Pakistan</option><option value="PS">Palestinian Territory</option><option value="PA">Panama</option><option value="PG">Papua New Guinea</option><option value="PY">Paraguay</option><option value="PE">Peru</option><option value="PH">Philippines</option><option value="PN">Pitcairn</option><option value="PL">Poland</option><option value="PT">Portugal</option><option value="PR">Puerto Rico</option><option value="QA">Qatar</option><option value="RE">Reunion</option><option value="RO">Romania</option><option value="RU">Russia</option><option value="RW">Rwanda</option><option value="ST">São Tomé and Príncipe</option><option value="BL">Saint Barthélemy</option><option value="SH">Saint Helena</option><option value="KN">Saint Kitts and Nevis</option><option value="LC">Saint Lucia</option><option value="SX">Saint Martin (Dutch part)</option><option value="MF">Saint Martin (French part)</option><option value="PM">Saint Pierre and Miquelon</option><option value="VC">Saint Vincent and the Grenadines</option><option value="WS">Samoa</option><option value="SM">San Marino</option><option value="SA">Saudi Arabia</option><option value="SN">Senegal</option><option value="RS">Serbia</option><option value="SC">Seychelles</option><option value="SL">Sierra Leone</option><option value="SG">Singapore</option><option value="SK">Slovakia</option><option value="SI">Slovenia</option><option value="SB">Solomon Islands</option><option value="SO">Somalia</option><option value="ZA">South Africa</option><option value="GS">South Georgia/Sandwich Islands</option><option value="KR">South Korea</option><option value="SS">South Sudan</option><option value="ES">Spain</option><option value="LK">Sri Lanka</option><option value="SD">Sudan</option><option value="SR">Suriname</option><option value="SJ">Svalbard and Jan Mayen</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="SY">Syria</option><option value="TW">Taiwan</option><option value="TJ">Tajikistan</option><option value="TZ">Tanzania</option><option value="TH">Thailand</option><option value="TL">Timor-Leste</option><option value="TG">Togo</option><option value="TK">Tokelau</option><option value="TO">Tonga</option><option value="TT">Trinidad and Tobago</option><option value="TN">Tunisia</option><option value="TR">Türkiye</option><option value="TM">Turkmenistan</option><option value="TC">Turks and Caicos Islands</option><option value="TV">Tuvalu</option><option value="UG">Uganda</option><option value="UA">Ukraine</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom (UK)</option><option value="US">United States (US)</option><option value="UM">United States (US) Minor Outlying Islands</option><option value="UY">Uruguay</option><option value="UZ">Uzbekistan</option><option value="VU">Vanuatu</option><option value="VA">Vatican</option><option value="VE">Venezuela</option><option value="VN">Vietnam</option><option value="VG">Virgin Islands (British)</option><option value="VI">Virgin Islands (US)</option><option value="WF">Wallis and Futuna</option><option value="EH">Western Sahara</option><option value="YE">Yemen</option><option value="ZM">Zambia</option><option value="ZW">Zimbabwe</option></select>
-                    <label className='checkout-form-label required dmsans-bold'>Street address</label>
-                    <input type='text' placeholder='House number and street name' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                    <input type='text' placeholder='Apartment, suite, unit, etc. (optional)' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                    <label className='checkout-form-label required dmsans-bold'>Town / City</label>
-                    <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                    <label className='checkout-form-label dmsans-bold '>Region (optional)</label>
-                    <select value={form} onChange={handleChange} className='d-block col-12 col-lg-8 placeholder-custom custom-input'>
-                        <option value="">Select an option…</option><option value="NTL">Northland</option><option value="AUK">Auckland</option><option value="WKO">Waikato</option><option value="BOP">Bay of Plenty</option><option value="TKI">Taranaki</option><option value="GIS">Gisborne</option><option value="HKB">Hawke’s Bay</option><option value="MWT">Manawatu-Whanganui</option><option value="WGN">Wellington</option><option value="NSN">Nelson</option><option value="MBH">Marlborough</option><option value="TAS">Tasman</option><option value="WTC">West Coast</option><option value="CAN">Canterbury</option><option value="OTA">Otago</option><option value="STL">Southland</option></select>
-                    <label className='checkout-form-label required dmsans-bold'>Postcode</label>
-                    <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                    <label className='checkout-form-label required dmsans-bold'>Phone</label>
-                    <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                    <div className='d-flex align-items-center gap-2 my-4'>
-                        <input type='checkbox' onClick={() => setBtnClick(!btnClick)}></input>
-                        <h1 className='justuspro-bold cart-heading'>Ship to a different address?</h1>
-                    </div>
-                    {btnClick && <div className=""> <label className='checkout-form-label required dmsans-bold'>First name</label>
-                        <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                        <label className='checkout-form-label required dmsans-bold'>Last name</label>
-                        <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                        <label className='checkout-form-label dmsans-bold'>Company name (optional)</label>
-                        <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                        <label className='checkout-form-label required dmsans-bold'>Country / Region</label>
-                        <select value={form} onChange={handleChange} className='d-block col-12 col-lg-8 placeholder-custom custom-input'>
-                            <option value="">Select a country / region…</option><option value="AF">Afghanistan</option><option value="AX">Åland Islands</option><option value="AL">Albania</option><option value="DZ">Algeria</option><option value="AS">American Samoa</option><option value="AD">Andorra</option><option value="AO">Angola</option><option value="AI">Anguilla</option><option value="AQ">Antarctica</option><option value="AG">Antigua and Barbuda</option><option value="AR">Argentina</option><option value="AM">Armenia</option><option value="AW">Aruba</option><option value="AU">Australia</option><option value="AT">Austria</option><option value="AZ">Azerbaijan</option><option value="BS">Bahamas</option><option value="BH">Bahrain</option><option value="BD">Bangladesh</option><option value="BB">Barbados</option><option value="BY">Belarus</option><option value="PW">Belau</option><option value="BE">Belgium</option><option value="BZ">Belize</option><option value="BJ">Benin</option><option value="BM">Bermuda</option><option value="BT">Bhutan</option><option value="BO">Bolivia</option><option value="BQ">Bonaire, Saint Eustatius and Saba</option><option value="BA">Bosnia and Herzegovina</option><option value="BW">Botswana</option><option value="BV">Bouvet Island</option><option value="BR">Brazil</option><option value="IO">British Indian Ocean Territory</option><option value="BN">Brunei</option><option value="BG">Bulgaria</option><option value="BF">Burkina Faso</option><option value="BI">Burundi</option><option value="KH">Cambodia</option><option value="CM">Cameroon</option><option value="CA">Canada</option><option value="CV">Cape Verde</option><option value="KY">Cayman Islands</option><option value="CF">Central African Republic</option><option value="TD">Chad</option><option value="CL">Chile</option><option value="CN">China</option><option value="CX">Christmas Island</option><option value="CC">Cocos (Keeling) Islands</option><option value="CO">Colombia</option><option value="KM">Comoros</option><option value="CG">Congo (Brazzaville)</option><option value="CD">Congo (Kinshasa)</option><option value="CK">Cook Islands</option><option value="CR">Costa Rica</option><option value="HR">Croatia</option><option value="CU">Cuba</option><option value="CW">Curaçao</option><option value="CY">Cyprus</option><option value="CZ">Czech Republic</option><option value="DK">Denmark</option><option value="DJ">Djibouti</option><option value="DM">Dominica</option><option value="DO">Dominican Republic</option><option value="EC">Ecuador</option><option value="EG">Egypt</option><option value="SV">El Salvador</option><option value="GQ">Equatorial Guinea</option><option value="ER">Eritrea</option><option value="EE">Estonia</option><option value="SZ">Eswatini</option><option value="ET">Ethiopia</option><option value="FK">Falkland Islands</option><option value="FO">Faroe Islands</option><option value="FJ">Fiji</option><option value="FI">Finland</option><option value="FR">France</option><option value="GF">French Guiana</option><option value="PF">French Polynesia</option><option value="TF">French Southern Territories</option><option value="GA">Gabon</option><option value="GM">Gambia</option><option value="GE">Georgia</option><option value="DE">Germany</option><option value="GH">Ghana</option><option value="GI">Gibraltar</option><option value="GR">Greece</option><option value="GL">Greenland</option><option value="GD">Grenada</option><option value="GP">Guadeloupe</option><option value="GU">Guam</option><option value="GT">Guatemala</option><option value="GG">Guernsey</option><option value="GN">Guinea</option><option value="GW">Guinea-Bissau</option><option value="GY">Guyana</option><option value="HT">Haiti</option><option value="HM">Heard Island and McDonald Islands</option><option value="HN">Honduras</option><option value="HK">Hong Kong</option><option value="HU">Hungary</option><option value="IS">Iceland</option><option value="IN">India</option><option value="ID">Indonesia</option><option value="IR">Iran</option><option value="IQ">Iraq</option><option value="IE">Ireland</option><option value="IM">Isle of Man</option><option value="IL">Israel</option><option value="IT">Italy</option><option value="CI">Ivory Coast</option><option value="JM">Jamaica</option><option value="JP">Japan</option><option value="JE">Jersey</option><option value="JO">Jordan</option><option value="KZ">Kazakhstan</option><option value="KE">Kenya</option><option value="KI">Kiribati</option><option value="KW">Kuwait</option><option value="KG">Kyrgyzstan</option><option value="LA">Laos</option><option value="LV">Latvia</option><option value="LB">Lebanon</option><option value="LS">Lesotho</option><option value="LR">Liberia</option><option value="LY">Libya</option><option value="LI">Liechtenstein</option><option value="LT">Lithuania</option><option value="LU">Luxembourg</option><option value="MO">Macao</option><option value="MG">Madagascar</option><option value="MW">Malawi</option><option value="MY">Malaysia</option><option value="MV">Maldives</option><option value="ML">Mali</option><option value="MT">Malta</option><option value="MH">Marshall Islands</option><option value="MQ">Martinique</option><option value="MR">Mauritania</option><option value="MU">Mauritius</option><option value="YT">Mayotte</option><option value="MX">Mexico</option><option value="FM">Micronesia</option><option value="MD">Moldova</option><option value="MC">Monaco</option><option value="MN">Mongolia</option><option value="ME">Montenegro</option><option value="MS">Montserrat</option><option value="MA">Morocco</option><option value="MZ">Mozambique</option><option value="MM">Myanmar</option><option value="NA">Namibia</option><option value="NR">Nauru</option><option value="NP">Nepal</option><option value="NL">Netherlands</option><option value="NC">New Caledonia</option><option value="NZ" selected="selected">New Zealand</option><option value="NI">Nicaragua</option><option value="NE">Niger</option><option value="NG">Nigeria</option><option value="NU">Niue</option><option value="NF">Norfolk Island</option><option value="KP">North Korea</option><option value="MK">North Macedonia</option><option value="MP">Northern Mariana Islands</option><option value="NO">Norway</option><option value="OM">Oman</option><option value="PK">Pakistan</option><option value="PS">Palestinian Territory</option><option value="PA">Panama</option><option value="PG">Papua New Guinea</option><option value="PY">Paraguay</option><option value="PE">Peru</option><option value="PH">Philippines</option><option value="PN">Pitcairn</option><option value="PL">Poland</option><option value="PT">Portugal</option><option value="PR">Puerto Rico</option><option value="QA">Qatar</option><option value="RE">Reunion</option><option value="RO">Romania</option><option value="RU">Russia</option><option value="RW">Rwanda</option><option value="ST">São Tomé and Príncipe</option><option value="BL">Saint Barthélemy</option><option value="SH">Saint Helena</option><option value="KN">Saint Kitts and Nevis</option><option value="LC">Saint Lucia</option><option value="SX">Saint Martin (Dutch part)</option><option value="MF">Saint Martin (French part)</option><option value="PM">Saint Pierre and Miquelon</option><option value="VC">Saint Vincent and the Grenadines</option><option value="WS">Samoa</option><option value="SM">San Marino</option><option value="SA">Saudi Arabia</option><option value="SN">Senegal</option><option value="RS">Serbia</option><option value="SC">Seychelles</option><option value="SL">Sierra Leone</option><option value="SG">Singapore</option><option value="SK">Slovakia</option><option value="SI">Slovenia</option><option value="SB">Solomon Islands</option><option value="SO">Somalia</option><option value="ZA">South Africa</option><option value="GS">South Georgia/Sandwich Islands</option><option value="KR">South Korea</option><option value="SS">South Sudan</option><option value="ES">Spain</option><option value="LK">Sri Lanka</option><option value="SD">Sudan</option><option value="SR">Suriname</option><option value="SJ">Svalbard and Jan Mayen</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="SY">Syria</option><option value="TW">Taiwan</option><option value="TJ">Tajikistan</option><option value="TZ">Tanzania</option><option value="TH">Thailand</option><option value="TL">Timor-Leste</option><option value="TG">Togo</option><option value="TK">Tokelau</option><option value="TO">Tonga</option><option value="TT">Trinidad and Tobago</option><option value="TN">Tunisia</option><option value="TR">Türkiye</option><option value="TM">Turkmenistan</option><option value="TC">Turks and Caicos Islands</option><option value="TV">Tuvalu</option><option value="UG">Uganda</option><option value="UA">Ukraine</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom (UK)</option><option value="US">United States (US)</option><option value="UM">United States (US) Minor Outlying Islands</option><option value="UY">Uruguay</option><option value="UZ">Uzbekistan</option><option value="VU">Vanuatu</option><option value="VA">Vatican</option><option value="VE">Venezuela</option><option value="VN">Vietnam</option><option value="VG">Virgin Islands (British)</option><option value="VI">Virgin Islands (US)</option><option value="WF">Wallis and Futuna</option><option value="EH">Western Sahara</option><option value="YE">Yemen</option><option value="ZM">Zambia</option><option value="ZW">Zimbabwe</option></select>
-                        <label className='checkout-form-label required dmsans-bold'>Street address</label>
-                        <input type='text' placeholder='House number and street name' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                        <input type='text' placeholder='Apartment, suite, unit, etc. (optional)' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                        <label className='checkout-form-label required dmsans-bold'>Town / City</label>
-                        <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' />
-                        <label className='checkout-form-label dmsans-bold '>Region (optional)</label>
-                        <select value={form} onChange={handleChange} className='d-block col-12 col-lg-8 placeholder-custom custom-input'>
-                            <option value="">Select an option…</option><option value="NTL">Northland</option><option value="AUK">Auckland</option><option value="WKO">Waikato</option><option value="BOP">Bay of Plenty</option><option value="TKI">Taranaki</option><option value="GIS">Gisborne</option><option value="HKB">Hawke’s Bay</option><option value="MWT">Manawatu-Whanganui</option><option value="WGN">Wellington</option><option value="NSN">Nelson</option><option value="MBH">Marlborough</option><option value="TAS">Tasman</option><option value="WTC">West Coast</option><option value="CAN">Canterbury</option><option value="OTA">Otago</option><option value="STL">Southland</option></select>
-                        <label className='checkout-form-label required dmsans-bold'>Postcode</label>
-                        <input type='text' placeholder='' className='d-block col-12 col-lg-8 placeholder-custom custom-input' /></div>}
-                    <label className='checkout-form-label mt-5'>Order notes (optional)</label>
-                    <textarea className='d-block col-12 col-lg-8 placeholder-custom custom-input' rows={6} placeholder='Notes about your order, e.g. special notes for delivery.'></textarea>
-                </div>
-                <div className='col-12 col-lg-6 p-lg-3'>
-                    <h1 className='justuspro-bold mb-4 cart-heading'>Your order</h1>
-                    <div className='d-flex align-items-center flex-wrap table-box'>
-                        <div className='col-8 col-lg-10 cart-table-title justuspro-bold text-color-muted'>Product</div>
-                        <div className='col-4 col-lg-2 cart-table-title justuspro-bold text-color-muted'>Subtotal</div>
-                    </div>
-                    {
-                        cart?.slice(0, 3).map((item, index) => {
-                            return (
-                                <div className='d-flex align-items-center flex-wrap table-box-list'>
-                                    <div className='col-8 col-lg-10 cart-table-item'>
-                                        <div className='d-flex align-items-center flex-wrap gap-3 p-2'>
-                                            <img src={item?.thumbnail} className='checkout-item-image' />
-                                            <div>
-                                                <Link to={`/product/${item.id}`} className='text-decoration-none cart-product-link justuspro-regular text-color-primary'>{item.title} * {item?.minimumOrderQuantity}</Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='col-4 col-lg-2 cart-table-item text-break dmsans-bold'>${item?.minimumOrderQuantity * item?.price}</div>
-                                </div>
-                            )
-                        })
-                    }
-                    <div className='d-flex align-items-center flex-wrap table-box'>
-                        <div className='col-8 col-lg-10 dmsans-bold text-color-primary'>SUBTOTAL</div>
-                        <div className='col-4 col-lg-2 dmsans-bold text-color-primary'> ${cart?.reduce((acc, item, i) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</div>
-                    </div>
-                    <div className='d-flex align-items-center table-box-list'>
-                        <div className='col-12 cart-table-title right-total p-4'>
-                            <p className='dmsans-bold text-color-primary'> SHIPPING</p>
-                            <p className='delivery-type px-4 py-3 dmsans-bold text-color-primary'>FREE SHIPPING</p>
-                        </div>
-                    </div>
-                    <div className='d-flex align-items-center flex-wrap table-box'>
-                        <div className='col-8 col-lg-10  dmsans-bold text-color-primary'>TOTAL</div>
-                        <div className='col-4 col-lg-2 dmsans-bold text-color-primary'> ${cart?.reduce((acc, item, i) => acc + (item?.minimumOrderQuantity || 0) * (item?.price || 0), 0)}</div>
-                    </div>
-                    <p className='table-box mt-5 mb-0 justuspro-regular text-color-primary'>Sorry, it seems that there are no available payment methods. Please contact us if you require assistance or wish to make alternate arrangements.</p>
-                    <div className=' table-box '>
-                        <p className=" text-color-primary">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <Link to="/privacy" className='text-decoration-none text-color-danger'>privacy policy.</Link></p>
-                        <button onClick={null} className='order-btn w-100 border-0 justuspro-medium text-color-primary button-bg-primary' >PLACE ORDER</button>
-                    </div>
-                </div>
-            </div>
-
-
-
+          )}
+          <label className="checkout-form-label mt-5">
+            Order notes (optional)
+          </label>
+          <textarea
+            className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+            rows={6}
+            placeholder="Notes about your order, e.g. special notes for delivery."
+            name="orderNotes"
+            value={form.orderNotes}
+            onChange={handleChange}
+          ></textarea>
         </div>
-    )
-}
+        <div className="col-12 col-lg-6 p-lg-3">
+          <h1 className="justuspro-bold mb-4 cart-heading">Your order</h1>
+          <div className="d-flex align-items-center flex-wrap table-box">
+            <div className="col-8 col-lg-10 cart-table-title justuspro-bold text-color-muted">
+              Product
+            </div>
+            <div className="col-4 col-lg-2 cart-table-title justuspro-bold text-color-muted">
+              Subtotal
+            </div>
+          </div>
+          {cart?.map((item, index) => {
+            return (
+              <div
+                key={item?.id ?? index}
+                className="d-flex align-items-center flex-wrap table-box-list"
+              >
+                <div className="col-8 col-lg-10 cart-table-item">
+                  <div className="d-flex align-items-center flex-wrap gap-3 p-2">
+                    <img
+                      src={item?.thumbnail}
+                      className="checkout-item-image"
+                      alt={item?.title || "Product"}
+                    />
+                    <div>
+                      <Link
+                        to={`/product/${item.id}`}
+                        className="text-decoration-none cart-product-link justuspro-regular text-color-primary"
+                      >
+                        {item.title} * {item?.quantity}
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-4 col-lg-2 cart-table-item text-break dmsans-bold">
+                  ${item?.price * item?.quantity}
+                </div>
+              </div>
+            );
+          })}
+          <div className="d-flex align-items-center flex-wrap table-box">
+            <div className="col-8 col-lg-10 dmsans-bold text-color-primary">
+              SUBTOTAL
+            </div>
+            <div className="col-4 col-lg-2 dmsans-bold text-color-primary">
+              {" "}
+              ${computeTotal()}
+            </div>
+          </div>
+          <div className="d-flex align-items-center table-box-list">
+            <div className="col-12 cart-table-title right-total p-4">
+              <p className="dmsans-bold text-color-primary"> SHIPPING</p>
+              <p className="delivery-type px-4 py-3 dmsans-bold text-color-primary">
+                FREE SHIPPING
+              </p>
+            </div>
+          </div>
+          <div className="d-flex align-items-center flex-wrap table-box">
+            <div className="col-8 col-lg-10  dmsans-bold text-color-primary">
+              TOTAL
+            </div>
+            <div className="col-4 col-lg-2 dmsans-bold text-color-primary">
+              {" "}
+              ${computeTotal()}
+            </div>
+          </div>
+          <p className="table-box mt-5 mb-0 justuspro-regular text-color-primary">
+            Sorry, it seems that there are no available payment methods. Please
+            contact us if you require assistance or wish to make alternate
+            arrangements.
+          </p>
+          <div>
+            <div style={{
+              border: "1px solid #ddd",
+              padding: "20px",
+              margin: "20px 0px "
+            }}>
+              <h3 style={{ marginBottom: "15px" }}>Choose a Payment Method</h3>
 
-export default Checkout
+              <div style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                marginBottom: "20px"
+              }}>
+                <label style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  cursor: "pointer",
+                  padding: "10px",
+                  border: paymentMethod === "card" ? "2px solid #f9a825" : "1px solid #ccc",
+                  borderRadius: "6px"
+                }}>
+                  <input
+                    type="radio"
+                    name="payment"
+                    value="card"
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                    checked={paymentMethod === "card"}
+                  />
+                  <FaCreditCard color="#f9a825" />
+                  Pay with Card
+                </label>
+
+                <label style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  cursor: "pointer",
+                  padding: "10px",
+                  border: paymentMethod === "mobilemoneyghana" ? "2px solid #f9a825" : "1px solid #ccc",
+                  borderRadius: "6px"
+                }}>
+                  <input
+                    type="radio"
+                    name="payment"
+                    value="mobilemoneyghana"
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                    checked={paymentMethod === "mobilemoneyghana"}
+                  />
+                  <FaMobileAlt color="#f9a825" />
+                  Mobile Money
+                </label>
+
+                <label style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  cursor: "pointer",
+                  padding: "10px",
+                  border: paymentMethod === "bank" ? "2px solid #f9a825" : "1px solid #ccc",
+                  borderRadius: "6px"
+                }}>
+                  <input
+                    type="radio"
+                    name="payment"
+                    value="bank"
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                    checked={paymentMethod === "bank"}
+                  />
+                  <FaUniversity color="#f9a825" />
+                  Bank Transfer
+                </label>
+              </div>
+
+              {paymentMethod && (
+                <button
+                  onClick={handlePay}
+                  style={{
+                    backgroundColor: "#f9a825",
+                    border: "none",
+                    padding: "12px 20px",
+                    borderRadius: "6px",
+                    fontWeight: "bold",
+                    cursor: "pointer"
+                  }}
+                >
+                  Pay ${computeTotal()} Now
+                </button>
+              )}
+            </div>
+          </div>
+          <div className=" table-box ">
+            <p className=" text-color-primary">
+              Your personal data will be used to process your order, support
+              your experience throughout this website, and for other purposes
+              described in our{" "}
+              <Link
+                to="/privacy"
+                className="text-decoration-none text-color-danger"
+              >
+                privacy policy.
+              </Link>
+            </p>
+            <button
+              onClick={async () => {
+                try {
+                  // Save addresses first
+                  await submitAddresses();
+
+                  // Then proceed with payment if method is selected
+                  if (paymentMethod) {
+                    await onPay(paymentMethod);
+                  } else {
+                    alert("Please select a payment method");
+                  }
+                } catch (e) {
+                  console.error(e);
+                  alert("Order placement failed. Please try again.");
+                }
+              }}
+              className="order-btn w-100 border-0 justuspro-medium text-color-primary button-bg-primary"
+            >
+              PLACE ORDER
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Checkout;

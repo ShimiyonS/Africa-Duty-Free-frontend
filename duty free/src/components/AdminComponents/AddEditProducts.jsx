@@ -1,22 +1,21 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button, Col, Drawer, Form, Input, Row, Select, Upload, Image } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import Common from '../../commonMethod/common.js'
+import common from '../../commonMethod/common'
 import { toast } from "react-toastify";
 import { FaRegEdit } from 'react-icons/fa';
 import AddEditCategory from './AddEditCategory.jsx';
 import AddEditSubCategory from './AddEditSubCategory.jsx';
 
 const AddEditProducts = ({ mode, productData }) => {
-    const [loading, setLoading] = useState(false)
+    const [loading] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [subCategories, setSubCategories] = useState([]);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
     const { Option } = Select;
-    const { apiRequest, generateSlug } = Common()
+    const { apiRequest, generateSlug } = common()
     const [form] = Form.useForm();
     const [childrenDrawer, setChildrenDrawer] = useState(false);
-    const [shareValue, setShareValue] = useState(null)
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
 
@@ -28,61 +27,7 @@ const AddEditProducts = ({ mode, productData }) => {
             reader.onerror = error => reject(error);
         });
 
-    const [categories, setCategories] = useState([
-        {
-            id: 1,
-            name: "Beauty",
-            slug: "beauty",
-            subCategorys: [
-                {
-                    id: 3,
-                    name: "Fragrances",
-                    slug: "fragrances",
-                    products: [{
-                        name: "Dolce Gabana",
-                        price: 33,
-                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
-                    },
-
-                    ]
-                }
-            ]
-        },
-        {
-            id: 2,
-            name: "dress",
-            slug: "dress",
-            subCategorys: [
-                {
-                    id: 1,
-                    name: "belt",
-                    slug: "fragrances",
-                    products: [{
-                        name: "Dolce Gabana",
-                        price: 33,
-                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
-                    },
-                    {
-                        name: "Dolce Gabana",
-                        price: 33,
-                    },
-                    ]
-                }, {
-                    id: 2,
-                    name: "watch",
-                    slug: "fragrances",
-                    products: [{
-                        name: " Gabana",
-                        price: 33,
-                        // productImage: DolceGabana,
-                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
-                    },
-                    ]
-                }
-            ]
-        }
-    ]);
-
+    const [categories, setCategories] = useState([]);
     const toggleDrawer = () => {
         setChildrenDrawer(!childrenDrawer);
     };
@@ -93,43 +38,75 @@ const AddEditProducts = ({ mode, productData }) => {
     }
 
     const handleSubmit = async (values) => {
-        try {
-            const data = await apiRequest("POST", "/products/add", values)
-            toast.success("Product added successfully");
-            form.resetFields();
+        if (mode == "edit") {
+            try {
+                const fileList = values?.uploadImage || []
+                let imageUrlToUse = productData?.imageUrl || null;
+                const filesToUpload = fileList.filter((f) => !!f.originFileObj);
+                if (filesToUpload.length > 0) {
+                    const formData = new FormData();
+                    filesToUpload.forEach((file) => formData.append("file", file.originFileObj));
+                    const imageURL = await apiRequest("POST", "/upload/product", formData)
+                    imageUrlToUse = imageURL?.url;
+                } else if (fileList.length > 0 && fileList[0]?.url) {
+                    imageUrlToUse = fileList[0].url;
+                }
 
-            // Find the category by ID
-            const matchedCategory = categories.find(cat => cat.id === values.categories);
-            if (Object.keys(matchedCategory).length) {
-                console.error("Category not found");
-                return;
+                const productDetail = {
+                    subCategoryIds: values.subCategories,
+                    productName: values.product,
+                    slug: values.productSlug,
+                    price: values.productPrice,
+                    description: values.description,
+                    imageUrl: imageUrlToUse,
+                }
+                const response = await apiRequest("PUT", `/product/${productData?.id}`, productDetail)
+                console.log(response.message)
+                toast.success(response?.message)
+            } catch (error) {
+                console.log(error.message)
+                toast.error(error.message)
             }
 
-            values.subCategories.forEach(subCatId => {
-                const matchedSubCategory = matchedCategory.categories.subCategorys.find(sub => sub.id === subCatId);
-                if (matchedSubCategory) {
-                    matchedSubCategory.products.push({
-                        name: values.Product,
-                        price: values.ProductPrice,
-                        slug: values.ProductSlug,
-                        image: values.UploadImage,
-                        Description: values.description
-                    });
-                }
-            });
+        } else {
+            const fileList = values?.uploadImage
+            let formData;
+            if (fileList.length > 0) {
+                formData = new FormData();
+                fileList.forEach((file) =>
+                    formData.append("file", file.originFileObj)
+                );
+            }
+            const imageURL = await apiRequest("POST", "/upload/product", formData)
+            values.uploadImage = imageURL?.url;
 
-        } catch (error) {
-            console.error(error);
-            toast.error("Something went wrong");
+            const productDetail = {
+                subCategoryIds: values.subCategories,
+                productName: values.product,
+                slug: values.productSlug,
+                price: values.productPrice,
+                description: values.description,
+                imageUrl: values.uploadImage,
+            }
+            try {
+                const data = await apiRequest("POST", "/product/create", productDetail)
+
+                if (data.status) {
+                    toast.success(data.message);
+                    form.resetFields();
+                }
+            } catch (error) {
+                console.error(error);
+                toast.error(error?.message);
+            }
         }
     }
     // select option for categories and sub categories 
     const handleCategoryChange = (value) => {
         setSelectedCategory(value);
-        const selected = categories.find((cat) => cat.id === value);
+        const selected = categories.find((cat) => cat?.id === value);
         setSubCategories(selected?.subCategorys || []);
-        setSelectedSubCategory(null);
-        form.setFieldsValue({ subCategories: [] });
+        form.setFieldsValue({ subCategorys: [] });
     };
 
 
@@ -160,26 +137,44 @@ const AddEditProducts = ({ mode, productData }) => {
 
     //for showing edit datas in input fields
     useEffect(() => {
-        if (mode === "edit" && productData) {
+        if (mode === "edit" && productData && categories?.length > 0) {
+            const categoryId = productData?.subCategory?.category?.id;
+            const initialSubCategoryIds = Array.isArray(productData?.subCategoryIds)
+                ? productData.subCategoryIds
+                : (productData?.subCategoryIds ? JSON.parse(productData.subCategoryIds) : [productData?.subCategoryId || productData?.subCategory?.id].filter(Boolean));
+
+            if (categoryId) {
+                setSelectedCategory(categoryId);
+                const selected = categories.find((cat) => cat?.id === categoryId);
+                setSubCategories(selected?.subCategories || []);
+            }
+
+            setSelectedSubCategory(initialSubCategoryIds);
+
             form.setFieldsValue({
-                product: productData?.productname,
-                productSlug: productData?.productSlug,
+                product: productData?.productName,
+                productSlug: productData?.slug,
                 productPrice: productData?.price,
-                productStock:productData?.stock,
-                uploadImage: productData.productImage.map((imgUrl, i) => ({
-                    uid: `-edit-${i}`,
-                    name: `image-${i + 1}.png`,
-                    status: 'done',
-                    url: imgUrl,
-                })),
-                categories: productData?.productcatagory,
-                subCategories: productData?.productsubcatagory,
+                uploadImage: [
+                    {
+                        uid: "existing-image-uid",
+                        name: "existing_image.png",
+                        status: "done",
+                        url: productData?.imageUrl
+                    }
+                ],
+                categories: categoryId,
+                subCategories: initialSubCategoryIds,
+                productStock: productData?.stock,
                 description: productData?.description,
             });
-        } else {
+        } else if (mode === "add") {
             form.resetFields();
+            setSelectedCategory(null);
+            setSelectedSubCategory(null);
+            setSubCategories([]);
         }
-    }, [mode, productData, form]);
+    }, [mode, productData, categories, form]);
 
     // Handle image preview
     const handlePreview = async file => {
@@ -197,22 +192,23 @@ const AddEditProducts = ({ mode, productData }) => {
         </div>
     );
 
-    useEffect(() => {
-        if (shareValue) {
-            setCategories((prev) => [
-                ...prev, {
-                    id: prev.length + 1,
-                    name: shareValue.category,
-                    slug: shareValue.categorySlug,
-                    description: shareValue.description
-                }
-            ])
+    const fetchCategories = useCallback(async () => {
+        try {
+            const data = await apiRequest("GET", "/category")
+            setCategories(data?.categories)
+        } catch (error) {
+            console.error(error);
         }
-    }, [shareValue]);
+    }, [apiRequest])
 
-    // checking upload image
+    useEffect(() => {
+        fetchCategories()
+    }, [fetchCategories]);
+
+    const isCategory = Form.useWatch("categories", form)
+
+    // / checking upload image
     const normFile = (e) => Array.isArray(e) ? e : e?.fileList;
-
     return (
         <div>
             <Button
@@ -232,7 +228,7 @@ const AddEditProducts = ({ mode, productData }) => {
                         <Row gutter={16}>
                             {/* calling component category and subCategory */}
                             <Col>
-                                <AddEditCategory setShareValue={setShareValue} />
+                                <AddEditCategory />
                             </Col>
                             <Col>
                                 <AddEditSubCategory />
@@ -243,6 +239,7 @@ const AddEditProducts = ({ mode, productData }) => {
                     onClose={toggleDrawer}
                     className="justuspro-bold" width={800} closable={true}>
                     <div>
+
 
                         <Form layout="vertical" form={form} onFinish={handleSubmit}>
                             <Row gutter={16}>
@@ -303,7 +300,7 @@ const AddEditProducts = ({ mode, productData }) => {
                                         >
                                             {categories.map((cat) => (
                                                 <Option key={cat.id} value={cat.id}>
-                                                    {cat.name}
+                                                    {cat.categoryName}
                                                 </Option>
                                             ))}
                                         </Select>
@@ -320,10 +317,11 @@ const AddEditProducts = ({ mode, productData }) => {
                                             value={selectedSubCategory}
                                             onChange={(value) => setSelectedSubCategory(value)}
                                             mode="multiple"
+                                            disabled={!isCategory}
                                         >
                                             {subCategories.map((sub) => (
                                                 <Option key={sub.id} value={sub.id}>
-                                                    {sub.name}
+                                                    {sub?.subcategoryName}
                                                 </Option>
                                             ))}
                                         </Select>
@@ -391,7 +389,7 @@ const AddEditProducts = ({ mode, productData }) => {
                 </Drawer>
 
             </>
-        </div >
+        </div>
     )
 }
 

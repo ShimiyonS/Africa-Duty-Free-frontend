@@ -1,0 +1,41 @@
+.offer-banner-container {
+    width: 100%;
+    /* background: #000; */
+    height: 170px;
+    padding: 0 8rem;
+    display: flex;
+    gap: 4rem;
+    
+    justify-content: center;
+}
+
+.offer-banner-card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.offer-banner-text-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+.offer-banner-text-container p {
+    color: #ffff;
+    font-size: 20px;
+}
+
+.offer-banner-values {
+    display: flex;
+    gap: 6px;
+}
+
+.offer-banner-container .offer-banner-card:first-child .offer-banner-text-container {
+    background-color: #AE9B65;
+}
+
+.offer-banner-container .offer-banner-card:last-child .offer-banner-text-container {
+    background-color: #B73F20;
+}
