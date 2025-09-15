@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Col, Form, Input, Row, Select, Space, Table } from "antd";
+import { Link } from 'react-router-dom';
 import catimage from "../../assets/blinkbottle.png"
 import DeletePopup from '../../components/commonComponents/DeletePopup';
 import AdminHeader from '../../components/AdminComponents/AdminHeader';
@@ -276,7 +277,13 @@ const ListAllCategory = () => {
             dataIndex: 'categoryName',
             key: 'categoryName',
             width: 100,
-            ellipsis: true
+            ellipsis: true,
+            render: (text, record) => (
+                <Link to={`/product-category/${record.slug}`} className="ant-link">
+                    {text}
+                </Link>
+            )
+
         },
         {
             title: 'Category Description',
@@ -314,7 +321,7 @@ const ListAllCategory = () => {
             <AdminHeader title={`View Category`} addComponent={<AddEditCategory mode="add" categoryData={null} />} hideBack={true} />
 
             <Row justify={"space-between"} className='admin-header-space'>
-                <Col span={6}>
+                <Col xs={24} sm={12} md={10} xl={8}>
                     <Form.Item label="Filter option">
                         <Select
                             placeholder="Search..."
@@ -325,7 +332,7 @@ const ListAllCategory = () => {
                     </Form.Item>
                 </Col>
 
-                <Col span={6}>
+                <Col xs={24} sm={12} md={10} xl={8}>
                     <Form.Item label="Filter value">
                         <Input
                             placeholder="Search..."

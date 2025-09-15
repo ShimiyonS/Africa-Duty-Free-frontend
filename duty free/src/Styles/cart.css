@@ -183,19 +183,19 @@
     color: #000 !important;
 }
 
-tbody,
-td,
-tfoot,
-th,
-thead,
-tr {
+.table-cart tbody,
+.table-cart td,
+.table-cart tfoot,
+.table-cart th,
+.table-cart thead,
+.table-cart tr {
     border-style: solid;
     border-width: 0;
 }
 
-table,
-th,
-td {
+.table-cart table,
+.table-cart th,
+.table-cart td {
     border: none;
     border-collapse: collapse;
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Button, Col, Drawer, Form, Input, Row, Select, Upload, message } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Button, Col, Drawer, Form, Input, Row, Select, Upload, } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import common from '../../commonMethod/common';
 import { toast } from "react-toastify";
 import { FaRegEdit } from 'react-icons/fa';
@@ -10,6 +10,16 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
     const [form] = Form.useForm();
     const { apiRequest, generateSlug } = common()
     const [childrenDrawer, setChildrenDrawer] = useState(false);
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+
+    const getBase64 = file =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
 
     const toggleDrawer = () => {
         setChildrenDrawer(!childrenDrawer);
@@ -20,6 +30,9 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
         form.setFieldsValue({ [placeArea]: slug })
     }
 
+    // checking upload image
+    const normFile = (e) => Array.isArray(e) ? e : e?.fileList;
+
     //for showing edit datas in input fields
     useEffect(() => {
 
@@ -29,13 +42,32 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
                 category: categoryData?.categoryName,
                 categorySlug: categoryData?.slug,
                 description: categoryData?.description,
-                uploadImage: categoryData?.image,
+                uploadImage: categoryData.image
+                    ? [
+                        {
+                            uid: '-1',
+                            name: 'category-image.png',
+                            status: 'done',
+                            url: categoryData.image,
+                        },
+                    ]
+                    : [],
             });
+
         } else {
             form.resetFields();
         }
     }, [mode, categoryData, form]);
 
+
+    // Handle image preview
+    const handlePreview = async file => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewImage(file.url || file.preview);
+        setPreviewOpen(true);
+    };
 
     const handleSubmit = async (values) => {
         try {
@@ -122,18 +154,41 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
                             </Col>
                         </Row>
                         <Row gutter={16}>
-                            <Col span={12}>
+                            <Col span={24}>
                                 <Form.Item
                                     name="uploadImage"
-                                    label={mode === "edit" ? "Edit Image" : "Upload Image"}
-                                    rules={[{ required: true, message: 'Please upload image' }]}
+                                    label={mode === 'edit' ? 'Edit Images' : 'Upload Images'}
+                                    valuePropName="fileList"
+                                    getValueFromEvent={normFile}
+                                    rules={[{ required: true, message: 'Please upload at least 1 image' }]}
                                 >
-                                    <Upload accept=".jpg,.png,.jpeg,.png" className="antd-custom-btn" beforeUpload={() => false}>
-                                        <Button icon={<UploadOutlined />} type="primary">Upload</Button>
+                                    <Upload
+                                        listType="picture-card"
+                                        accept=".jpg,.png,.jpeg"
+                                        beforeUpload={() => false} // prevent auto upload
+                                        onPreview={handlePreview}
+                                        maxCount={1}
+                                    >
+                                        <div>
+                                            <PlusOutlined />
+                                            <div style={{ marginTop: 8 }}>Upload</div>
+                                        </div>
                                     </Upload>
                                 </Form.Item>
+
                             </Col>
                         </Row>
+
+                        {previewImage && (
+                            <Image
+                                preview={{
+                                    visible: previewOpen,
+                                    onVisibleChange: visible => setPreviewOpen(visible),
+                                    afterOpenChange: visible => !visible && setPreviewImage(''),
+                                }}
+                                src={previewImage}
+                            />
+                        )}
                         <div className="d-flex justify-content-end">
                             <Button type="primary" htmlType="submit" className="antd-custom-btn" >
                                 {mode === "edit" ? "Update" : "Submit"}

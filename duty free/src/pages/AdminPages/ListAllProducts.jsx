@@ -5,6 +5,7 @@ import DeletePopup from '../../components/commonComponents/DeletePopup'
 import { toast } from 'react-toastify';
 import common from '../../commonMethod/common';
 import AdminHeader from "../../components/AdminComponents/AdminHeader"
+import { Link } from 'react-router-dom';
 
 const ListAllProducts = () => {
 
@@ -37,7 +38,12 @@ const ListAllProducts = () => {
             dataIndex: 'productName',
             key: 'productName',
             width: 150,
-            ellipsis: true
+            ellipsis: true,
+            render: (text, record) => (
+                <Link to={`/product/${record.productSlug}`} className="ant-link">
+                    {text}
+                </Link>
+            )
         },
         {
             title: 'Product Category',
@@ -63,7 +69,7 @@ const ListAllProducts = () => {
             title: 'Product Brand',
             dataIndex: 'productbrand',
             key: 'productbrand',
-            width:150,
+            width: 150,
             render: (_, item) => (
                 <div>{item?.brand || "-"}</div>
             )
@@ -115,7 +121,7 @@ const ListAllProducts = () => {
             <AdminHeader title={`View Products`} addComponent={<AddEditProducts mode="add" productData={null} />} hideBack={true} />
 
             <Row justify={"space-between"} className='admin-header-space'>
-                <Col span={6}>
+                <Col xs={24} sm={12} md={10} xl={8}>
                     <Form.Item label="Filter option">
                         <Select
                             placeholder="Search..."
@@ -129,7 +135,7 @@ const ListAllProducts = () => {
                     </Form.Item>
                 </Col>
 
-                <Col span={6}>
+                <Col xs={24} sm={12} md={10} xl={8}>
                     <Form.Item label="Filter value">
                         <Input
                             placeholder="Search..."

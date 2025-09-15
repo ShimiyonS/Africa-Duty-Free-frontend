@@ -218,7 +218,8 @@ font-family: "JustusProMedium", Sans-serif;
     width: 130px;
     text-align: center;
 }
-.alert-icon{
+
+.alert-icon {
     width: 25px;
     height: 25px;
 }
@@ -362,6 +363,7 @@ font-family: "JustusProMedium", Sans-serif;
 }
 
 @media (width:768px) {
+
     .new-swipper .swiper-button-prev,
     .swiper-rtl .swiper-button-next,
     .swiper-button-next,
@@ -394,4 +396,13 @@ font-family: "JustusProMedium", Sans-serif;
 .sub-category-pagination .ant-table {
     border-radius: 10px !important;
     overflow: hidden !important;
+}
+
+.ant-link {
+    text-decoration: none;
+    color: var(--text-color-primary);
+}
+
+.ant-link:hover {
+    color: var(--text-color-primary);
 }
