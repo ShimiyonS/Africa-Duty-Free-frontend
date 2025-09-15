@@ -20,7 +20,7 @@ const AdminHeader = ({ title, addComponent, hideBack }) => {
             </Flex>
             {/* drawer popup  */}
             <Flex align='center' gap={15}>
-                {addComponent}
+                {addComponent && addComponent}
                 {adminToken &&
                     <Link to={"/siteadmin/profile"} className='header-profile'>
                         {profileimg ? <img className='profile-img-header' src={profileimg} alt="profile-img" /> : <p className='profile-img-header bg-color-warning text-color-primary'>{username.charAt(0)}</p>}

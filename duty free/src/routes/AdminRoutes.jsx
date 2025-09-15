@@ -7,6 +7,7 @@ import ListAllUsers from '../pages/AdminPages/ListAllUsers';
 import ListAllBrands from '../pages/AdminPages/ListAllBrands'
 import ListAllSubCategories from '../pages/AdminPages/ListAllSubCategories'
 import ListAllCategories from '../pages/AdminPages/ListAllCategory';
+import ListAllOrders from '../pages/AdminPages/ListAllOrders';
 
 
 const AdminRoutes = () => {
@@ -21,6 +22,7 @@ const AdminRoutes = () => {
                     <Route index path="/subcategories" element={<ListAllSubCategories />} />
                     <Route index path="/category" element={<ListAllCategories />} />
                     <Route index path="/users" element={<ListAllUsers />} />
+                    <Route index path="/orders" element={<ListAllOrders />} />
 
                 </Route>
             </Routes >

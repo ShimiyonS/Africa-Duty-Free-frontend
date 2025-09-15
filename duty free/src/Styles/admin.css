@@ -154,3 +154,19 @@
     padding: 3px;
     border-radius: 50%;
 }
+
+/* css for list all orders */
+.admin-payment {
+    width: 50px;
+    height: 35px;
+    display: block;
+    margin: 0 auto;
+}
+
+.Admin-address {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
