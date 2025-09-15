@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
-import { Button, Col, Drawer, Form, Input, Row, Select, Upload, Image, message } from 'antd';
+import { Button, Col, Drawer, Form, Input, Row, Select, Upload, } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import Common from '../../commonMethod/common.js'
+import common from '../../commonMethod/common';
 import { toast } from "react-toastify";
 import { FaRegEdit } from 'react-icons/fa';
 
 
 const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
     const [form] = Form.useForm();
-    const { apiRequest, generateSlug } = Common()
+    const { apiRequest, generateSlug } = common()
     const [childrenDrawer, setChildrenDrawer] = useState(false);
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
@@ -36,6 +36,7 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
     //for showing edit datas in input fields
     useEffect(() => {
 
+        console.log("categoryData", categoryData)
         if (mode === "edit" && categoryData) {
             form.setFieldsValue({
                 category: categoryData?.categoryName,
@@ -70,7 +71,25 @@ const AddEditCategory = ({ setShareValue, mode, categoryData }) => {
 
     const handleSubmit = async (values) => {
         try {
-            const data = await apiRequest("POST", "/products/add", values)
+            const fileList = values?.uploadImage?.fileList
+            let formData;
+            if (fileList.length > 0) {
+                formData = new FormData();
+                fileList.forEach((file) =>
+                    formData.append("file", file.originFileObj)
+                );
+            }
+
+            const imageURL = await apiRequest("POST", "/upload/product", formData)
+
+            values.uploadImage = imageURL?.url;
+            const categoryData = {
+                categoryName: values.category,
+                slug: values.categorySlug,
+                description: values.description,
+                image: imageURL?.url,
+            }
+            await apiRequest("POST", "/category/create", categoryData)
             toast.success("Category added successfully");
             setShareValue(values)
             form.resetFields();

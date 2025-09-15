@@ -20,19 +20,19 @@ const SwiperComponent = () => {
         { img: swipperImg4, heading: "Gift from Helena Rubinstein", para: "exclusive festive offers & receive a 5-pc exclusive festive gift set * when you spend S$1,850 or more", stock: "While stock" },
         { img: swipperImg5, heading: "Gift from Helena Rubinstein", para: "exclusive festive offers & receive a 5-pc exclusive festive gift set * when you spend S$1,850 or more", stock: "While stock" },
         { img: swipperImg6, heading: "Gift from Helena Rubinstein", para: "exclusive festive offers & receive a 5-pc exclusive festive gift set * when you spend S$1,850 or more", stock: "While stock" },
-        { img: swipperImg7, heading: "Gift from Helena Rubinstein", para: "exclusive festive offers & receive a 5-pc exclusive festive gift set * when you spend S$1,850 or more", stock: "While stock" }]
+        { img: swipperImg7, heading: "Gift from Helena Rubinstein", para: "exclusive festive offers & receive a 5-pc exclusive festive gift set * when you spend S$1,850 or more", stock: "While stock" }
+    ]
 
     return (
         <div className="container mt-5">
             <div className="d-flex justify-content-between mb-3">
                 <h3 className="justuspro-medium">Special offers</h3>
                 <h3 className="justuspro-medium">Special Billing Beauty Product</h3>
-
             </div>
-            <div className="new-swipper">
+            <div className="offer-banner-swiper">
                 <Swiper
                     slidesPerView={3}
-                    spaceBetween={10}
+                    spaceBetween={20}
                     loop={true}
                     autoplay={{
                         delay: 2500,
@@ -60,7 +60,7 @@ const SwiperComponent = () => {
                     {brands.map((item) => {
                         return (
                             <SwiperSlide>
-                                <div className="pb-5 d-flex justify-content-center flex-column align-items-center">
+                                <div className="pb-3 d-flex justify-content-center flex-column align-items-center">
                                     <img src={item.img} alt="slider-img" className="slider-main-image" />
                                     <div className="mt-2">
                                         <h5 className="dmsans-bold text-color-danger m-0">{item.heading}</h5>
@@ -72,9 +72,7 @@ const SwiperComponent = () => {
                         )
                     })}
                 </Swiper>
-
             </div>
-
         </div >
     )
 }

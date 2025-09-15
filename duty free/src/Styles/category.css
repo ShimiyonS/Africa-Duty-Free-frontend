@@ -1,17 +1,20 @@
 .mid-heading {
-    font-size: 30px;
+    font-size: 22px;
+    color: var(--header-text-color);
 }
 
 .category-banner {
     height: 180px;
     background-repeat: repeat;
     padding: 30px 0px 30px 80px;
+    padding: 30px 0px 30px 80px;
 }
 
 .banner-des {
-    width: 250px;
-    font-size: 25px;
-    line-height: 30px;
+    width: 20%;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--text-color-secondary);
 }
 
 .brand-swiper .swiper {
@@ -25,6 +28,10 @@
 
 .card-category {
     border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .category-image {
@@ -57,6 +64,12 @@
     font-size: 13px;
 }
 
+.category-des {
+    font-size: 12px;
+    color: var(--text-color-secondary);
+    line-height: 1;
+}
+
 .small-image {
     height: 200px;
     box-shadow: 4px 5px 8px 0px rgba(0, 0, 0, 0.35);
@@ -75,7 +88,7 @@
 
 /* sub category start*/
 .sub-category-button {
-    padding: 10px 30px;
+    padding: 8px 28px;
 }
 
 .filter-wrapper-heading {
@@ -100,6 +113,8 @@
 .filter-title {
     font-size: 14px
 }
+
+
 
 @media screen and (max-width:576px) {
     .filter-left {
@@ -131,3 +146,91 @@
 } */
 
 /* sub category end*/
+
+.sub-calegory-body-container {
+    background-color: #FAFBFC;
+    padding: 14px 16px 2rem 16px;
+}
+
+.sub-category-page-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* justify-content: space-between; */
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.sub-category-container {
+    width: 18%;
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sub-category-container .sub-category-name {
+    width: 100%;
+    background-color: #C4310C;
+    padding: 6px 40px;
+    text-align: center;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+}
+
+.sub-category-container .sub-category-image {
+    width: 100%;
+    height: 250px;
+}
+
+.sub-category-container .sub-category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: none;
+}
+
+.sub-category-container .product-title {
+    width: 100%;
+    text-align: start;
+    color: #000;
+}
+
+.sub-category-container .product-price {
+    width: 100%;
+    text-align: start;
+    color: #C4310C;
+}
+
+.product-filter-page {
+    background-color: #FAFBFC;
+    padding: 16px 16px 2rem 16px;
+}
+
+.remove-box-shadow img {
+    box-shadow: none !important;
+}
+
+
+.sales-cards-container {
+    width: 100%;
+    display: flex;
+    gap: 40px;
+}
+
+.sales-card {
+    width: 100%;
+}
+
+.image-container-salescard {
+    width: 500px;
+    height: 260px;
+}
+
+.image-container-salescard img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

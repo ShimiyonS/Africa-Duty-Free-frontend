@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Col, Form, Input, Row, Select, Space, Table } from "antd";
 import AddEditProducts from '../../components/AdminComponents/AddEditProducts';
-import DeletePopup from '../../components/commonComponents/DeletePopup';
-import AdminHeader from '../../components/AdminComponents/AdminHeader';
-import productimage from "../../assets/blinkbottle.png"
+import DeletePopup from '../../components/commonComponents/DeletePopup'
+import { toast } from 'react-toastify';
+import common from '../../commonMethod/common';
+import AdminHeader from "../../components/AdminComponents/AdminHeader"
 import { Link } from 'react-router-dom';
 
 const ListAllProducts = () => {
@@ -17,64 +18,12 @@ const ListAllProducts = () => {
     const [searchField, setSearchField] = useState("");
     const [searchText, setSearchText] = useState("");
 
+    const { apiRequest } = common()
+    const [productData, setProductData] = useState([])
     const changeSearchField = (value) => {
         setSearchField(value)
         setSearchText("")
     }
-
-    const categorys = [
-        {
-            id: 1,
-            name: "Beautyvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
-            slug: "beauty",
-            subCategorys: [
-                {
-                    id: 1,
-                    name: "Fragrances",
-                    slug: "fragrances",
-                    products: [{
-                        productid: 1,
-                        name: "Dolce Gabana ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true ellipsis: true",
-                        price: 33,
-                        slug: "dolce-gabana",
-                        image: [productimage, productimage],
-                        stock: 22,
-                        brand: "LG",
-                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
-                    },
-                    {
-                        productid: 2,
-                        name: "Fog",
-                        price: 50,
-                        slug: "fog",
-                        image: [productimage, productimage],
-                        stock: 27,
-                        brand: "Samsung",
-                        Description: "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application."
-                    },
-                    ]
-                }
-            ]
-        }
-    ]
-
-    const dataSource = categorys.flatMap((cat, catindex) =>
-        cat.subCategorys.flatMap((subc, subcindex) =>
-            subc.products.map((product, pindex) => ({
-                key: catindex,
-                id: product.productid,
-                productname: product.name,
-                productcatagory: cat.name,
-                productsubcatagory: subc.name,
-                productbrand: product.brand || "",
-                stock: product.stock || 0,
-                price: product.price,
-                description: product.Description,
-                productSlug: product.slug,
-                productImage: product.image
-                // address: item.name
-            }))
-        ))
 
     const columns = [
         {
@@ -86,35 +35,53 @@ const ListAllProducts = () => {
         },
         {
             title: 'Product Name',
-            dataIndex: 'productname',
-            key: 'productname',
+            dataIndex: 'productName',
+            key: 'productName',
             width: 150,
             ellipsis: true,
             render: (text, record) => (
                 <Link to={`/product/${record.productSlug}`} className="ant-link">
                     {text}
                 </Link>
-            ) 
+            )
         },
         {
             title: 'Product Category',
             dataIndex: 'productcatagory',
             key: 'productcatagory',
             width: 150,
-            ellipsis: true
+            ellipsis: true,
+            render: (_, item) => (
+                <div>{item?.subCategory?.category?.categoryName}</div>
+            )
         },
         {
             title: 'Product Sub Category',
             dataIndex: 'productsubcatagory',
             key: 'productsubcatagory',
             width: 150,
-            ellipsis: true
+            ellipsis: true,
+            render: (_, item) => (
+                <div>{item?.subCategory?.subcategoryName}</div>
+            ),
         },
         {
             title: 'Product Brand',
             dataIndex: 'productbrand',
             key: 'productbrand',
             width: 150,
+            render: (_, item) => (
+                <div>{item?.brand || "-"}</div>
+            )
+        },
+        {
+            title: "Price",
+            dataIndex: "price",
+            key: "price",
+            width: 150,
+            render: (_, item) => (
+                <div>{item.price}</div>
+            ),
         },
         {
             title: 'Stock',
@@ -126,24 +93,29 @@ const ListAllProducts = () => {
             title: "Action",
             key: "operation",
             align: "center",
-            width: 100,
+            width: 150,
             render: (_, record) => (
                 <Space>
                     <AddEditProducts mode="edit" productData={record} />
-                    <DeletePopup title={"Are you want to Delete this Product?"} apiEndpoint={`/products/${record.id}`} data={{ id: record.id, image: "", name: record.productname }} />
+                    <DeletePopup title={"Are you want to Delete this Product?"} apiEndpoint={`/products/${record.id}`} data={{ id: record.id, image: record?.imageUrl, name: record.productName }} />
                 </Space>
             )
         },
     ];
 
-    let filteredData = dataSource.filter((item) => {
-        if (!searchText) return true; // If search box empty → show all
+    const fetchProducts = async () => {
+        try {
+            const products = await apiRequest("GET", "/product",)
+            setProductData(products?.products)
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.message)
+        }
+    }
 
-        const value = item[searchField]?.toString().toLowerCase();
-        return value?.includes(searchText.toLowerCase());
-    });
-
-
+    useEffect(() => {
+        fetchProducts()
+    }, [])
     return (
         <>
             <AdminHeader title={`View Products`} addComponent={<AddEditProducts mode="add" productData={null} />} hideBack={true} />
@@ -175,7 +147,7 @@ const ListAllProducts = () => {
                 </Col>
             </Row>
 
-            <Table dataSource={filteredData} columns={columns} className='product-page-table brand-pagination' pagination={{
+            <Table dataSource={productData} columns={columns} className='product-page-table brand-pagination' pagination={{
                 position: ["bottomCenter"],
                 current: pagination.current,
                 pageSize: pagination.pageSize,

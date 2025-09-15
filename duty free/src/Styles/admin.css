@@ -117,10 +117,10 @@
 }
 
 .delete-product-img {
-    max-width: 85px;
-    max-height: 85px;
+    max-width: 100px;
+    max-height: 100px;
     object-fit: cover;
-    border-radius: 30px;
+    border-radius: 10px;
     margin-bottom: 12px;
 }
 

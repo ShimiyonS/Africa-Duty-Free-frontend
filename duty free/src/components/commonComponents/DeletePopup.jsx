@@ -42,7 +42,7 @@ const DeletePopup = ({ title, apiEndpoint, data }) => {
                 okButtonProps={{ className: "antd-custom-btn delete-ok-ant-btn" }}
                 cancelButtonProps={{ className: "antd-custom-btn delete-cancel-ant-btn" }}
             >
-                <Flex align='center'>
+                <Flex align='center' gap={10}>
                     <img className='delete-product-img'src={data.image || defaultimg} alt={data.name || "No image"}></img>
                     <p className='delete-product-name'>{data.name}</p>
                 </Flex>

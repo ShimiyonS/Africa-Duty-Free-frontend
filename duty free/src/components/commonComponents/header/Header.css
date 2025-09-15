@@ -14,9 +14,9 @@
 .header-search,
 .header-submit {
     font-size: 15px;
-    height: 50px;
+    height: 40px;
     border: none;
-    padding: 8px 20px 8px 20px;
+    padding: 0px 20px 0px 20px;
 }
 
 .header-search {
@@ -36,6 +36,7 @@
 
 .header-menus {
     width: 250px;
+    height: 40px;
 }
 
 .toggle-icon {
@@ -205,11 +206,11 @@
 
 .header-cart-total {
     position: absolute;
-    top: -5px;
+    top: -4px;
     left: 25px;
     width: 20px;
     height: 20px;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: bold;
     padding: 3px;
     border-radius: 50%;

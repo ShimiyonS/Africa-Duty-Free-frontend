@@ -7,7 +7,7 @@ const Banner = () => {
         <div className='position-relative'>
             <div className="home-banner ">
                 <div className="col-12 col-md-7 col-lg-8 h-100">
-                    <div className='d-flex flex-column justify-content-end h-100'>
+                    <div className='d-flex flex-column justify-content-end h-100 banner-left'>
                         <h3 className='text-start banner-heading justuspro-regular text-color-secondary'>duty free</h3>
                         <h3 className='text-start banner-heading justuspro-regular text-color-secondary'>30%</h3>
                         <h3 className='text-start banner-heading justuspro-regular text-color-secondary'>less <span className='text-color-secondary'>on high street prices</span></h3>

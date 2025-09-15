@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from 'react'
 import 'swiper/css';
-import Common from "../commonMethod/Common.js";
+import Common from "../commonMethod/common.js";
+import { upsertCartItem } from "../store/slice/cartSlice";
 import '../Styles/product-details.css'
 import { CiHeart } from "react-icons/ci";
 import Bag from '../assets/product-bag.png'
@@ -29,16 +30,17 @@ import { IoStar } from "react-icons/io5";
 import BreadCrumb from "../components/commonComponents/BreadCrumb.jsx";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
+import { toast } from "react-toastify";
 
 const ProductDetails = () => {
-    const { apiRequest } = Common()
-    const { id } = useParams()
+    const { apiRequest, dispatch } = Common()
+    const { slug } = useParams()
     const [product, setProduct] = useState(null)
     const [activeTab, setActiveTab] = useState("description");
     const [open, setOpen] = useState(false);
     const imgRef = useRef(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
-    const [relatedData, setRelatedData] = useState(null)
+    const [relatedData] = useState(null)
     const [loading, setLoading] = useState(false)
     const BASEURL = import.meta.env.VITE_APP_BASE_URL;
     const [rating, setRating] = useState(false)
@@ -48,12 +50,13 @@ const ProductDetails = () => {
         const fetchProduct = async () => {
             try {
                 setLoading(true)
-                const data = await apiRequest("GET", `products/${id}`)
-                const related = await apiRequest("GET", `products`)
-                setRelatedData(related)
-                setProduct(data);
-                setMainImg(data.images[0])
-                setLoading(false)
+                const response = await apiRequest("GET", `product/${slug}`)
+                if (response?.status) {
+                    setProduct(response?.product);
+                    setLoading(false)
+                } else {
+                    toast.error("Backend error")
+                }
             } catch (error) {
                 console.error("api fetching error", error)
                 setLoading(false)
@@ -62,8 +65,38 @@ const ProductDetails = () => {
             }
         }
         fetchProduct();
-    }, [id])
+    }, [slug])
 
+
+    const handleAddTocart = async (id) => {
+        try {
+            const response = await apiRequest("POST", "/cart/add",
+                {
+                    userId: 1,
+                    productId: id,
+                    quantity: 1
+                }
+            )
+            toast.success(response?.message)
+            console.log(response?.message)
+
+            // Optimistically update Redux cart for header/count
+            const added = response?.item || response?.data || {};
+            const productData = added.product || product || {};
+            dispatch(
+                upsertCartItem({
+                    id: productData?.id || id,
+                    title: productData?.productName || productData?.title,
+                    price: Number(productData?.price) || 0,
+                    quantityDelta: 1,
+                    thumbnail: productData?.imageUrl,
+                })
+            );
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.message)
+        }
+    }
     const handleMainimgChange = (img) => {
         setMainImg(img)
     }
@@ -114,29 +147,7 @@ const ProductDetails = () => {
     }, []);
 
 
-    const handleCount = (type) => {
-        if (type == "increment") {
-            setProduct((prev) => ({
-                ...prev,
-                ["minimumOrderQuantity"]: Number(prev?.minimumOrderQuantity) + 1
-            }))
-        }
-        else {
-            setProduct((prev) => ({
-                ...prev,
-                ["minimumOrderQuantity"]: Number(prev?.minimumOrderQuantity) - 1
-            }))
-        }
-
-    }
-
-    const handleChange = (e) => {
-        const { name, value, checked, type } = e.target
-        setProduct((prev) => ({
-            ...prev,
-            [name]: value
-        }))
-    }
+    // quantity handlers not used
     //download image in popup
     const handleDownloadImage = (downloadImage) => {
         if (!downloadImage) return;
@@ -151,6 +162,7 @@ const ProductDetails = () => {
                 window.URL.revokeObjectURL(url);
             });
     };
+
 
     return (
         <div className="container">
@@ -194,10 +206,10 @@ const ProductDetails = () => {
                     <>
                         <BreadCrumb navigation={[{ key: "home", nav: "/" }, { key: `${product?.category}`, nav: `/product-category/${product?.category}` }]} />
                         <div className="d-flex flex-wrap align-items-center justify-content-center product-wrapper pb-5 ">
-                            
+
                             <div className="col-12 col-md-8 col-lg-6 d-flex flex-column" >
                                 <div className="position-relative">
-                                    <img src={mainImg} alt={product?.title} className="product-img w-100" />
+                                    <img src={product?.imageUrl} alt={product?.title} className="product-img w-100" />
                                     <div className="position-absolute zoom-wrapper  " onClick={() => setOpen(true)}>
                                         <GoZoomIn className="zoom-img" />
                                     </div>
@@ -213,9 +225,9 @@ const ProductDetails = () => {
                                             modules={[FreeMode, Navigation]}
                                             className={`${"product-swiper"}`}
                                         >
-                                            {product?.images?.map((item, index) => {
+                                            {product?.images?.map((item) => {
                                                 return (
-                                                    <SwiperSlide>
+                                                    <SwiperSlide key={item}>
                                                         <div className=""><img onMouseEnter={() => handleMainimgChange(item)} src={item} alt={product?.title} className="product-gallary-img w-100" /></div>
                                                     </SwiperSlide>
                                                 )
@@ -225,29 +237,34 @@ const ProductDetails = () => {
                                     :
                                     <>
                                         <div className="d-flex flex-wrap">
-                                            {product?.images?.map((item, index) => (
-                                                <div className="col-3"><img onMouseEnter={() => handleMainimgChange(item)} src={item} alt={product?.title} className="product-gallary-img w-100" /></div>
+                                            {product?.images?.map((item) => (
+                                                <div className="col-3" key={item}><img onMouseEnter={() => handleMainimgChange(item)} src={item} alt={product?.title} className="product-gallary-img w-100" /></div>
                                             ))}
                                         </div>
                                     </>
                                 }
                             </div>
-                            
+
                             <div className="col-12 col-md-4 col-lg-6">
                                 <div className="mb-3">
-                                    <h2 className="product-page-title justuspro-bold">{product?.title}</h2>
+                                    <h2 className="product-page-title justuspro-bold">{product?.productName}</h2>
                                 </div>
                                 <p className="pb-2 product-single-price text-color-danger text-break dmsans-bold">${product?.price}</p>
                                 <p className="product-description text-break">{product?.description}</p>
                                 <div className="d-flex flex-wrap gap-3">
-                                    <div className="d-flex rounded-5 increment-wrapper align-items-center flex-wrap ">
+                                    {/* <div className="d-flex rounded-5 increment-wrapper align-items-center flex-wrap ">
                                         <button onClick={() => handleCount("")} className=" border-0 text-center p-0 bg-transparent text-color-gold" disabled={product?.minimumOrderQuantity === 1}>-</button>
                                         <input type="number" name="minimumOrderQuantity" onChange={(e) => { handleChange(e) }} min={1} className="border-0 text-center p-0 input-hide-arrow dmsans-bold" value={Number(product?.minimumOrderQuantity)} />
                                         <button onClick={() => handleCount("increment")} className=" border-0 text-center p-0 bg-transparent text-color-gold" disabled={product?.minimumOrderQuantity === 100}>+</button>
-                                    </div>
+                                    </div> */}
                                     <div >
-                                        <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0 button-bg-gold d-flex justify-content-center align-items-center" ><span className="text-color-secondary pe-4 dmsans-bold">Add to cart</span>  <img src={Bag} alt="bag" className="product-bag " /></button>
-
+                                        <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0 button-bg-gold d-flex justify-content-center align-items-center"
+                                            onClick={() => handleAddTocart(product?.id)}>
+                                            <span className="text-color-secondary pe-4 dmsans-bold">
+                                                Add to cart
+                                            </span>
+                                            <img src={Bag} alt="bag" className="product-bag " />
+                                        </button>
                                     </div>
 
                                 </div>
@@ -289,7 +306,7 @@ const ProductDetails = () => {
                                     </div>
                                 </div>
                                 <div className="d-flex gap-1">
-                                    <span class="posted_in">Brand:</span> <Link to={`/brand/${product?.brand}`} className="text-decoration-none text-color-danger dmsans-bold">{product?.brand ? product?.brand : "no brand"}</Link>
+                                    <span className="posted_in">Brand:</span> <Link to={`/brand/${product?.brand}`} className="text-decoration-none text-color-danger dmsans-bold">{product?.brand ? product?.brand : "no brand"}</Link>
                                 </div>
                             </div>
 

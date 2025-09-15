@@ -1,3 +1,8 @@
+.container {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
 .home-banner {
     width: 100%;
     height: calc(100vh - 200px);
@@ -9,8 +14,10 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+
+    margin-top: 10px;
     margin-bottom: 50px;
-    padding: 0px 120px;
+    padding: 0px 80px;
 }
 
 .banner-heading:nth-child(1),
@@ -97,5 +104,21 @@
     .shop-left-btn {
         display: block !important;
     }
+
+}
+
+
+.pagebody {
+    background-color: #FAFBFC;
+    padding: 2px 16px 2rem 16px;
+}
+
+.offer-banner-swiper .swiper {
+    padding: 0 0px !important;
+}
+
+.banner-left {
+    position: absolute;
+    bottom: -10px;
 
 }

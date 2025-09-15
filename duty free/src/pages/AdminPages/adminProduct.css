@@ -1,0 +1,14 @@
+.admin_page_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.css-dev-only-do-not-override-176l6cy {
+    margin-bottom: 1rem !important;
+}
+
+.ant-form-item-label {
+    text-align: start !important;
+}

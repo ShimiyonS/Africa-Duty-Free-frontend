@@ -24,6 +24,7 @@ import AdminRoutes from './routes/AdminRoutes';
 import ProtectedAdminRoute from './routes/ProtectedAdminRoute';
 import Search from './pages/Search';
 import Wishlist from './pages/Wishlist';
+import HomePage from './pages/homePage/HomePage';
 
 function App() {
   const location = useLocation()
@@ -44,12 +45,13 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index path="/" element={<Home />} />
           <Route path="/home" element={<MainPage />} />
+          <Route path='homepage' element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/password-reset" element={<ForgotPassword />} />
           <Route path="/product-category/:slug" element={<CategoryDetails />} />
           <Route path="/product-category/:slug/:subslug" element={<CategoryDetails />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/product/:slug" element={<ProductDetails />} />
           <Route path="/brand/:slug" element={<BrandDetails />} />
           <Route path="/wishlist" element={<Wishlist />} />
           {/* <Route path="/africa-best-buy/product-category/:slug" element={<BrandDetails />} /> */}
@@ -57,10 +59,10 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="account/*" element={<ProtectedRoute ><AccountRoutes /></ProtectedRoute >} />
+          <Route path="account/*" element={<ProtectedRoute ><AccountRoutes /></ProtectedRoute>} />
           <Route path="my-account/*" element={<ProtectedRoute ><MyAccountRoutes /></ProtectedRoute>} />
           <Route path="checkout" element={<Checkout />} />
-           <Route path="search" element={<Search />} />
+          <Route path="search" element={<Search />} />
           <Route path="siteadmin/*" element={<ProtectedAdminRoute><AdminRoutes /></ProtectedAdminRoute>} />
           <Route path="*" element={<NoPage />} />
         </Route>

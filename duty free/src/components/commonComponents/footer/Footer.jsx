@@ -42,10 +42,8 @@ const Footer = () => {
                 </div>
             </div>
 
-            <div className="d-flex justify-content-around py-3 footer-bottom-bg">
-                <div>
+            <div className="d-flex py-3 footer-bottom-bg">
                     <p>Copyright © 2025 Africa Duty Free. All rights reserved.</p>
-                </div>
                 <div className="d-flex gap-2">
                     <Link className="nav-link icon-link "><RiTwitterXLine className="twitter-icon footer-share-icons" /></Link>
                     <Link className="nav-link icon-link"><IoLogoInstagram className="instagram-icon footer-share-icons" /></Link>

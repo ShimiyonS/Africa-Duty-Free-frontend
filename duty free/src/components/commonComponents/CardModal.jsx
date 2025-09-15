@@ -1,6 +1,6 @@
 import HoverZoomImage from './HoverZoomImage'
-import Common from '../../commonMethod/Common'
-import { clearCart, viewCart } from '../../store/slice/viewCartSlice'
+import Common from '../../commonMethod/common.js'
+import { clearCard, viewCard } from '../../store/slice/viewCardSlice'
 import { MdClose } from "react-icons/md";
 import { useMyContext } from '../../Provider/CommonProvider';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,7 @@ const CardModal = () => {
     const { handleOpenAlert } = useMyContext()
     const { getActiveCart, dispatch } = Common()
     const handleClose = () => {
-        dispatch(clearCart())
+        dispatch(clearCard())
     }
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -17,7 +17,7 @@ const CardModal = () => {
             ...getActiveCart?.data,
             [name]: value
         }
-        dispatch(viewCart(updatedData))
+        dispatch(viewCard(updatedData))
     }
     const handleAddTocart = (data) => {
         handleOpenAlert({

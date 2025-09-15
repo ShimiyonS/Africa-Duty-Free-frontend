@@ -1,20 +1,23 @@
 .product-image {
     width: 100%;
-    border: 1px solid var(--text-color-danger);
-    box-shadow: 0px 0px 8px 0px var(--text-color-primary);
+    border: 2px solid var(--text-color-danger);
+    box-shadow: 4px 4px 12px 1px #0000126b ;
+    /* right & bottom shadow */
     object-fit: contain;
 }
 
 .product-title {
-    font-size: 17px;
+    font-size: 14px;
 }
 
 .product-price {
-    font-size: 22px;
+    font-size: 16px;
 }
 
 .product-swiper .swiper-button-prev:after,
-.product-swiper .swiper-button-next:after {
+.product-swiper .swiper-button-next:after,
+.offer-banner-swiper .swiper-button-prev:after,
+.offer-banner-swiper .swiper-button-next:after {
     color: var(--text-color-danger);
     font-size: 22px;
     font-weight: bold;
@@ -91,6 +94,7 @@
 .most-popular {
     color: var(--iconic-color);
 }
+
 .pop-tool {
     bottom: -130px;
     width: 200px;
@@ -135,6 +139,7 @@
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .product-grid-4 {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
@@ -145,6 +150,7 @@
     .product-grid {
         grid-template-columns: repeat(1, 1fr);
     }
+
     .product-grid-4 {
         grid-template-columns: repeat(1, 1fr);
         gap: 10px;
