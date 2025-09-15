@@ -3,17 +3,17 @@ import { FaRegUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ProductCard from "../../components/commonComponents/ProductCard";
 import { useEffect, useState } from "react";
-import Common from "../../commonMethod/Common";
+// import Common from "../../commonMethod/Common";
 const MyaccountDashboard = () => {
-  const { apiRequest } = Common()
+  // const { apiRequest } = Common()
   const [products, setProducts] = useState([])
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const data = await apiRequest("GET", "/products");
-      setProducts(data?.products?.slice(0, 3))
-    };
-    fetchProducts();
-  }, [])
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     const data = await apiRequest("GET", "/products");
+  //     setProducts(data?.products?.slice(0, 3))
+  //   };
+  //   fetchProducts();
+  // }, [])
   return (
     <>
       <div className="d-block d-lg-flex justify-content-between gap-3">

@@ -5,15 +5,19 @@ import { RxDownload } from "react-icons/rx";
 import { LuMapPin } from "react-icons/lu";
 import { SlUser } from "react-icons/sl";
 import { LuLogOut } from "react-icons/lu";
-import { NavLink } from 'react-router-dom'
-import { useState } from "react";
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const MyAccountSidebar = () => {
-  const [token, setToken] = useState(localStorage.getItem("LoginToken"))
+
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("LoginToken")
-    setToken(null)
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    localStorage.removeItem("orders")
+    localStorage.removeItem("wishlist")
+    localStorage.removeItem("cart")
+    navigate('/login')
   }
   return (
 

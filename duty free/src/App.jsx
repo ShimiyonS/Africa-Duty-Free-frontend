@@ -49,6 +49,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/password-reset" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ForgotPassword />} />
           <Route path="/product-category/:slug" element={<CategoryDetails />} />
           <Route path="/product-category/:slug/:subslug" element={<CategoryDetails />} />
           <Route path="/product/:slug" element={<ProductDetails />} />
