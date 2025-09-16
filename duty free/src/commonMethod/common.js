@@ -47,6 +47,7 @@ const apiRequest = async (method, url, data = {}, headers = {}) => {
 const common = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart?.items || []);
-    return { dispatch, cartItems, firstLetterCapital, apiRequest, generateSlug }
+    const brandItems = useSelector((state) => state.brand?.items || [])
+    return { dispatch, cartItems, brandItems, firstLetterCapital, apiRequest, generateSlug }
 }
 export default common;
