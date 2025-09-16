@@ -103,7 +103,7 @@ const ProductAnalytic = () => {
         },
     });
     return (
-        <div className="border-radius-dashboard product-analytics-heading">
+        <div className="antd-radius-table product-analytics-heading">
             <div className="product-analytics">
                 <ReactApexChart options={state.options} series={state.series} type="area" height={350} />
             </div>

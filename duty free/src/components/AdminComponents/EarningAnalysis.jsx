@@ -60,7 +60,7 @@ const EarningAnalysis = () => {
     });
 
     return (
-        <div className="border-radius-dashboard" >
+        <div className="antd-radius-table" >
             <div className="earning-analytic-title">
                 <p className="justuspro-medium">Total Income</p>
                 <p>123</p>

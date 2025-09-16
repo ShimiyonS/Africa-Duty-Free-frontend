@@ -325,53 +325,34 @@ label {
 }
 
 /* ------------------------------------------------------------------- */
-.new-swipper .swiper-button-prev:after,
-.new-swipper .swiper-rtl .swiper-button-next:after,
-.new-swipper .swiper-button-next:after,
-.new-swipper .swiper-rtl .swiper-button-prev:after {
-    color: var(--bg-color-danger);
-    font-size: 25px !important;
-    font-weight: bold;
-}
 
 .new-swipper .slider-main-image {
     width: 80% !important;
 }
 
-.new-swipper .swiper-button-prev,
-.swiper-rtl .swiper-button-next,
-.swiper-button-next,
-.swiper-button-prev,
-.swiper-rtl .swiper-button-prev {
-    top: 108px !important;
-}
-
-.new-swipper .swiper-button-prev,
+.offer-banner-swiper .swiper-button-prev,
 .swiper-rtl .swiper-button-next {
-    left: var(--swiper-navigation-sides-offset, 0px) !important;
+    left: var(--swiper-navigation-sides-offset, -3px);
     right: auto;
+    top: 71px !important;
 }
 
-.new-swipper .swiper-button-next,
+.offer-banner-swiper .swiper-button-next,
 .swiper-rtl .swiper-button-prev {
-    right: var(--swiper-navigation-sides-offset, 0px) !important;
+    right: var(--swiper-navigation-sides-offset, -3px);
     left: auto;
+    top: 71px !important;
+}
+
+@media (max-width:321px) {
+    .offer-swipper {
+        flex-direction: column !important;
+    }
 }
 
 .swiper {
     padding: 0 32px !important;
 }
-
-@media (width:768px) {
-
-    .new-swipper .swiper-button-prev,
-    .swiper-rtl .swiper-button-next,
-    .swiper-button-next,
-    .swiper-rtl .swiper-button-prev {
-        top: 58px !important;
-    }
-}
-
 
 .container .breadcrum {
     display: flex;
@@ -408,14 +389,29 @@ label {
     color: var(--text-color-primary);
 }
 
-.offer-banner-swiper .swiper-button-prev,
-.swiper-rtl .swiper-button-next {
-    left: var(--swiper-navigation-sides-offset, -4px) !important;
-    right: auto !important;
+.antd-radius-table {
+    background-color: var(--bg-color-primary);
+    border-radius: 20px;
 }
 
-.offer-banner-swiper .swiper-button-next,
-.swiper-rtl .swiper-button-prev {
-    right: var(--swiper-navigation-sides-offset, -7px) !important;
-    left: auto;
+@media (max-width:426px) {
+    .antd-order-container {
+        overflow-x: auto;
+    }
+
+    .antd-table-wrapper {
+        width: 409px;
+    }
+}
+
+@media(max-width:376px) {
+    .antd-table-wrapper {
+        width: 360px;
+    }
+}
+
+@media(max-width:321px) {
+    .antd-table-wrapper {
+        width: 305px;
+    }
 }

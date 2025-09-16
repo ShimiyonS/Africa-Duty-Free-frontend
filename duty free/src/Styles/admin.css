@@ -170,3 +170,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+@media (max-width:321px) {
+    .admin-header-container {
+        flex-direction: column-reverse;
+    }
+}
+
+@media (max-width:426px) {
+    .admin-container-responsive {
+        flex-direction: column-reverse;
+    }
+}

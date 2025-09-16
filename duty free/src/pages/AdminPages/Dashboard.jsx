@@ -4,25 +4,28 @@ import OverviewCard from '../../components/AdminComponents/OverviewCard'
 import DashboardFile from '../../components/AdminComponents/DashboardFile'
 import ProductAnalytic from '../../components/AdminComponents/ProductAnalytic'
 import EarningAnalysis from '../../components/AdminComponents/EarningAnalysis'
+import DateFilter from '../../components/DateFilter'
+import AdminHeader from '../../components/AdminComponents/AdminHeader'
 
 const Dashboard = () => {
     return (
         <div>
+            <AdminHeader title={"Dashboard"} addComponent={<DateFilter />} hideBack={true} customClass={"admin-container-responsive"} />
             <OverviewCard />
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} xl={16} >
+                <Col xs={24} xl={16} >
                     <ProductAnalytic />
                 </Col>
-                <Col xs={24} sm={24} md={24} xl={8}>
+                <Col xs={24} xl={8}>
                     <EarningAnalysis />
                 </Col>
             </Row>
 
-            <Row gutter={20} className="dashboard-order-wrapper">
-                <Col xs={24} sm={24} md={24} xl={16} className="dashboard-order-main">
+            <Row gutter={20} className="antd-table-wrapper">
+                <Col xs={24} xl={16} className="dashboard-order-main">
                     <DashboardOrders />
                 </Col>
-                <Col xs={24} sm={24} md={24} xl={8}>
+                <Col xs={24} xl={8}>
                     <DashboardFile />
                 </Col>
             </Row>

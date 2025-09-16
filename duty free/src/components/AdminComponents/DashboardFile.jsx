@@ -42,7 +42,7 @@ const DashboardFile = () => {
 
     return (
         <div>
-            <div className="border-radius-dashboard" >
+            <div className="antd-radius-table" >
                 <h2 className="justuspro-medium dashboard-table-sub-heading" >Patient File</h2>
                 <Table columns={columns} dataSource={details} />
             </div>
