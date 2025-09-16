@@ -109,21 +109,14 @@ const Header = ({ togglemenu, togglesidebar }) => {
               <button className='bg-transparent m-0 p-0 border-0' data-bs-toggle="modal" data-bs-target="#dutyPopup">
                 <img src={Airplane} style={{ width: "34px" }} alt="airplane" />
               </button>
-              <button
+              {localStorage.getItem('token') ? 
+              <Link to={`/my-account`}><img src={User} style={{ width: "34px" }} alt="user" /></Link> :
+               <button
                 className='bg-transparent m-0 p-0 border-0'
                 data-bs-toggle="modal"
-                data-bs-target="#customPopup"
-                onClick={(e) => {
-                  const token = localStorage.getItem('token');
-                  if (token) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    navigate('/my-account');
-                  }
-                }}
-              >
+                data-bs-target="#customPopup">
                 <img src={User} style={{ width: "34px" }} alt="user" />
-              </button>
+              </button>}
               <button className='bg-transparent m-0 p-0 border-0 header-cart-toggle' type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                 <img src={Bag} style={{ width: "34px" }} alt="cart" />
                 <div className='header-cart-total text-color-secondary bg-color-gold'>{cartItems.length}</div>
