@@ -25,7 +25,7 @@ const SwiperComponent = () => {
 
     return (
         <div className="container mt-5">
-            <div className="d-flex justify-content-between mb-3">
+            <div className="d-flex justify-content-between mb-3 offer-swipper">
                 <h3 className="justuspro-medium">Special offers</h3>
                 <h3 className="justuspro-medium">Special Billing Beauty Product</h3>
             </div>
@@ -59,10 +59,10 @@ const SwiperComponent = () => {
                 >
                     {brands.map((item) => {
                         return (
-                            <SwiperSlide>
-                                <div className="pb-3 d-flex justify-content-center flex-column align-items-center">
+                            <SwiperSlide className="new-swipper">
+                                <div className="pb-3 d-flex justify-content-center flex-column align-items-center ">
                                     <img src={item.img} alt="slider-img" className="slider-main-image" />
-                                    <div className="mt-2">
+                                    <div className="mt-2 ps-4">
                                         <h5 className="dmsans-bold text-color-danger m-0">{item.heading}</h5>
                                         <p className="text-color-danger m-0 swipper-paragraph">{item.para}</p>
                                         <span className="text-color-danger stock-font" >{item.stock}</span>

@@ -28,6 +28,21 @@
     display: flex;
     align-items: center;
 }
-.footer-bottom-bg p{
+
+.footer-bottom-bg p {
     margin-bottom: 0px;
+}
+
+@media (max-width: 321px) {
+    .content-div {
+        max-width: 229px !important;
+    }
+
+    .input-box {
+        padding: 0 !important;
+    }
+
+    .main-content {
+        font-size: 19px !important;
+    }
 }
