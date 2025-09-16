@@ -41,7 +41,7 @@ const BestBuy = ({ data = bestBuyDefault, itemClassName, slug }) => {
             {data?.map((item, idx) => {
                 return (
                     <div className={`${itemClassName ? itemClassName : "p-5 col-12 col-md-6 col-lg-3"}`} key={idx}>
-                        <CategoryCard item={item} image={item.image} text={item?.name} link={slug ? slug + "/" + item?.slug : item?.slug} />
+                        <CategoryCard item={item} image={item?.image_url || item?.image} text={item?.name} link={slug ? slug + "/" + item?.slug : item?.slug} />
                     </div>
                 )
             })}

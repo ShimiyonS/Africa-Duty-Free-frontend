@@ -4,7 +4,7 @@ import CategoryBanner from '../components/commonComponents/CategoryBanner'
 import BrandSwiper from '../components/commonComponents/BrandSwiper'
 import NewProducts from '../components/commonComponents/NewProducts'
 // import Products from '../components/commonComponents/Products'
-import Common from '../commonMethod/Common'
+import Common from '../commonMethod/common.js'
 import SaleCard from '../components/commonComponents/SaleCard'
 import BestBuy from '../components/commonComponents/BestBuy'
 import { Link, useParams } from 'react-router-dom'
@@ -41,9 +41,12 @@ const CategoryDetails = () => {
 
     const fetchProducts = async () => {
         try {
-            const products = await apiRequest("GET", `/subcategory/products/getproductsbysubcategory/${subslug}`)
-            setProducts(products?.subCategory?.products)
-            console.log(products?.subCategory?.products)
+            // const products = await apiRequest("GET", `/subcategory/products/getproductsbysubcategory/${subslug}`)
+            const data = await apiRequest("POST", "/products/details", { "api_key": import.meta.env.VITE_APP_YESERP_API_KEY }, {}, import.meta.env.VITE_APP_YESERP_URL);
+            setProducts(data?.data)
+
+            // setProducts(products?.subCategory?.products)
+            // console.log(products?.subCategory?.products)
         } catch (error) {
             console.log("api fetching error ", error.message)
         }
@@ -65,6 +68,7 @@ const CategoryDetails = () => {
         } else if (subslug) {
             fetchProducts()
         }
+        fetchProducts()
     }, [slug, subslug])
 
 

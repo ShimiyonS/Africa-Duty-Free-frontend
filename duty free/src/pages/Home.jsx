@@ -9,7 +9,7 @@ import OfferProduct1 from "../assets/categoryimage1.jpg"
 import OfferProduct2 from "../assets/categoryimage5.jpg"
 import NewProducts from "../components/commonComponents/NewProducts"
 import { useEffect, useState } from "react"
-import Common from "../commonMethod/Common"
+import Common from "../commonMethod/common"
 import BestBuy from "../components/commonComponents/BestBuy"
 import Banner from "../components/commonComponents/Banner"
 import TitleComponent from "../components/TitleComponent"
@@ -20,6 +20,7 @@ import SwiperComponent from "../components/commonComponents/swiperComponent"
 const Home = () => {
   const { apiRequest } = Common()
   const [products, setProducts] = useState([])
+  const [category, setCategory] = useState([])
 
   const location = useLocation()
   const slug = location.pathname.split("/").pop();
@@ -27,15 +28,29 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await apiRequest("GET", "/product");
-        setProducts(data?.products)
-        console.log(data?.products)
+        const data = await apiRequest("POST", "/products/details", { "api_key": import.meta.env.VITE_APP_YESERP_API_KEY }, {}, import.meta.env.VITE_APP_YESERP_URL);
+        setProducts(data?.data)
+        console.log(data?.data)
 
       } catch (error) {
         console.log(error.message)
       }
     };
     fetchProducts();
+  }, [])
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const data = await apiRequest("GET", "/categories", {}, { "X-API-Key": import.meta.env.VITE_APP_YESERP_API_KEY }, import.meta.env.VITE_APP_YESERP_URL);
+        setCategory(data?.data?.filter(item => item?.x_parent_id === null))
+        console.log(data?.data)
+
+      } catch (error) {
+        console.log(error.message)
+      }
+    };
+    fetchCategory();
   }, [])
 
   const bestBuy = [
@@ -70,7 +85,7 @@ const Home = () => {
       <Banner />
       <BrandSwiper />
       <div>
-        <BestBuy data={bestBuy} itemClassName={`p-3 col-12 col-md-6 col-lg-3`} slug={"beauty"} />
+        <BestBuy data={category} itemClassName={`p-3 col-12 col-md-6 col-lg-3`} slug={""} />
       </div>
       <div className="pagebody">
         <TitleComponent heading={"Most Popular"} />

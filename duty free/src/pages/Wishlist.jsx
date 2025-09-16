@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import Common from '../commonMethod/Common'
+import Common from '../commonMethod/common'
 import ProductCard from '../components/commonComponents/ProductCard'
 import DiscountComponent from '../components/commonComponents/DiscountComponent'
 import { Link } from 'react-router-dom'
 
 const Wishlist = () => {
     const [products, setproducts] = useState([])
-    const { apiRequest } = Common()
+    const { apiRequest, wishlistItems } = Common()
     const userId = 1
+    // const getWishList = async () => {
+    //     try {
+    //         const wishlist = await apiRequest("GET", `/auth/${userId}/wishlist`)
+    //         setproducts(wishlist?.products)
+    //         console.log(wishlist?.products)
+    //     } catch (error) {
+    //         console.log(error.message)
+    //     }
+    // }
     const getWishList = async () => {
-        try {
-            const wishlist = await apiRequest("GET", `/auth/${userId}/wishlist`)
-            setproducts(wishlist?.products)
-            console.log(wishlist?.products)
-        } catch (error) {
-            console.log(error.message)
-        }
+        setproducts(wishlistItems)
     }
 
 
     useEffect(() => {
         getWishList();
-    }, [])
+    }, [wishlistItems])
 
     return (
         <>

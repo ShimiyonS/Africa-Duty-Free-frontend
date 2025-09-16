@@ -27,11 +27,12 @@ api.interceptors.request.use(
     },
     (error) => Promise.reject(error)
 );
-const apiRequest = async (method, url, data = {}, headers = {}) => {
+const apiRequest = async (method, url, data = {}, headers = {}, baseURL) => {
     try {
         const response = await api({
             method,
             url,
+            baseURL: baseURL || import.meta.env.VITE_APP_API_URL,
             data,
             params: method === "GET" ? data : {},
             headers,
@@ -47,6 +48,7 @@ const apiRequest = async (method, url, data = {}, headers = {}) => {
 const common = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart?.items || []);
-    return { dispatch, cartItems, firstLetterCapital, apiRequest, generateSlug }
+    const wishlistItems = useSelector((state) => state.wishlist?.items || []);
+    return { dispatch, cartItems, wishlistItems, firstLetterCapital, apiRequest, generateSlug }
 }
 export default common;
