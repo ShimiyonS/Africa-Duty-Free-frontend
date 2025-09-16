@@ -1,7 +1,5 @@
 .container {
-    padding-left: 40px;
-    padding-right: 40px;
-}
+    max-width: 1220px !important;}
 
 .home-banner {
     width: 100%;
@@ -103,6 +101,15 @@
 
     .shop-left-btn {
         display: block !important;
+    }
+    .banner-left {
+        position: static!important;
+    }
+
+    .home-banner-image {
+        width: 90px;
+        height: 90px;
+        margin-left: auto;
     }
 
 }

@@ -60,32 +60,7 @@
     border-bottom-right-radius: 30px !important;
 }
 
-.border-radius-dashboard {
-    background-color: var(--bg-color-primary);
-    border-radius: 20px;
-}
 
-@media (max-width:426px) {
-    .dashboard-order-container {
-        overflow-x: auto;
-    }
-
-    .dashboard-order-wrapper {
-        width: 409px;
-    }
-}
-
-@media(max-width:376px) {
-    .dashboard-order-wrapper {
-        width: 360px;
-    }
-}
-
-@media(max-width:321px) {
-    .dashboard-order-wrapper {
-        width: 305px;
-    }
-}
 
 .dashboard-table-sub-heading {
     padding: 10px 0 0 15px;

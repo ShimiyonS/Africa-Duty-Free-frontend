@@ -49,6 +49,7 @@ const common = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart?.items || []);
     const wishlistItems = useSelector((state) => state.wishlist?.items || []);
-    return { dispatch, cartItems, wishlistItems, firstLetterCapital, apiRequest, generateSlug }
+    const brandItems = useSelector((state) => state.brand?.items || [])
+    return { dispatch, cartItems, brandItems, wishlistItems, firstLetterCapital, apiRequest, generateSlug }
 }
 export default common;

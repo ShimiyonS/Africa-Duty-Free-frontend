@@ -255,7 +255,6 @@ const ListAllCategory = () => {
             title: '#',
             dataIndex: 'SNO',
             key: 'SNO',
-            fixed: 'left',
             width: 25
         },
         {
@@ -297,7 +296,6 @@ const ListAllCategory = () => {
             key: "operation",
             align: "center",
             width: "150px",
-            fixed: "right",
             render: (_, record) => (
                 <Space>
                     <AddEditCategory mode={"edit"} categoryData={record} />
@@ -343,20 +341,24 @@ const ListAllCategory = () => {
                     </Form.Item>
                 </Col>
             </Row>
+            <div className="antd-table-wrapper">
+                <div className="antd-radius-table antd-order-container" >
+                    <Table dataSource={filteredData} columns={columns} scroll={{ x: 800 }} className='brand-pagination' pagination={{
+                        position: ["bottomCenter"],
+                        current: pagination.current,
+                        pageSize: pagination.pageSize,
 
-            <Table dataSource={filteredData} columns={columns} className='brand-pagination' pagination={{
-                position: ["bottomCenter"],
-                current: pagination.current,
-                pageSize: pagination.pageSize,
-                // total: brands.length,
-                showSizeChanger: true,
-                pageSizeOptions: ["5", "10", "20", "50"],
-                showQuickJumper: true,
-                onChange: (page, pageSize) => {
-                    setPagination({ current: page, pageSize });
-                },
-                showTotal: (total) => `Total ${total} Categorys`,
-            }} />
+                        // total: brands.length,
+                        showSizeChanger: true,
+                        pageSizeOptions: ["5", "10", "20", "50"],
+                        showQuickJumper: true,
+                        onChange: (page, pageSize) => {
+                            setPagination({ current: page, pageSize });
+                        },
+                        showTotal: (total) => `Total ${total} Categorys`,
+                    }} />
+                </div>
+            </div>
         </>
     )
 }

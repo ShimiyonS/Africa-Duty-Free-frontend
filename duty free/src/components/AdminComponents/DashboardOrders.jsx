@@ -96,8 +96,8 @@ const DashboardOrder = () => {
     ];
 
     return (
-        <div className="dashboard-order-wrapper">
-            <div className="border-radius-dashboard dashboard-order-container" >
+        <div className="antd-table-wrapper">
+            <div className="antd-radius-table antd-order-container" >
                 <h2 className="justuspro-medium dashboard-table-sub-heading" >Orders</h2>
                 <Table columns={columns} dataSource={details} pagination={true} scroll={{ x: 800 }} tableLayout="fixed" />
             </div>
