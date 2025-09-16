@@ -207,7 +207,7 @@ label {
 }
 
 .alert-text {
-font-family: "JustusProMedium", Sans-serif;
+    font-family: "JustusProMedium", Sans-serif;
 }
 
 .alert-link {
@@ -377,6 +377,7 @@ font-family: "JustusProMedium", Sans-serif;
     display: flex;
     gap: 5px;
 }
+
 .ant-upload-list-item-name {
     color: var(--text-color-primary) !important
 }
@@ -405,4 +406,16 @@ font-family: "JustusProMedium", Sans-serif;
 
 .ant-link:hover {
     color: var(--text-color-primary);
+}
+
+.offer-banner-swiper .swiper-button-prev,
+.swiper-rtl .swiper-button-next {
+    left: var(--swiper-navigation-sides-offset, -4px) !important;
+    right: auto !important;
+}
+
+.offer-banner-swiper .swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+    right: var(--swiper-navigation-sides-offset, -7px) !important;
+    left: auto;
 }

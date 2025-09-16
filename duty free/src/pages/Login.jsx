@@ -50,9 +50,13 @@ const Login = () => {
                 }
                 if (Array.isArray(res.wishlist)) dispatch(setWishlist(res.wishlist))
                 if (Array.isArray(res.orders)) dispatch(setOrders(res.orders))
-
                 setToken(res.token)
-                navigate('/')
+                // checking the role 
+                if (res?.user?.role === "admin" || "superadmin") {
+                    navigate('/siteadmin')
+                } else {
+                    navigate('/')
+                }
             } else {
                 setError(res?.message || 'Login failed')
             }
