@@ -25,9 +25,24 @@ import ProtectedAdminRoute from './routes/ProtectedAdminRoute';
 import Search from './pages/Search';
 import Wishlist from './pages/Wishlist';
 import HomePage from './pages/homePage/HomePage';
+import { setBrand } from "./store/slice/brandSlice";
+import common from './commonMethod/common';
 
 function App() {
   const location = useLocation()
+  const { apiRequest, dispatch } = common();
+
+
+  const fetchBrand = async () => {
+    try {
+      const res = await apiRequest('GET', '/products')
+      if (Array.isArray(res.products)) dispatch(setBrand(res.products))
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.scrollY > 20) {
@@ -37,6 +52,7 @@ function App() {
         });
       }
     };
+    fetchBrand();
     toggleVisibility();
   }, [location]);
   return (

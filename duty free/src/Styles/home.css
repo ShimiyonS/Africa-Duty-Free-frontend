@@ -102,6 +102,15 @@
     .shop-left-btn {
         display: block !important;
     }
+    .banner-left {
+        position: static!important;
+    }
+
+    .home-banner-image {
+        width: 90px;
+        height: 90px;
+        margin-left: auto;
+    }
 
 }
 

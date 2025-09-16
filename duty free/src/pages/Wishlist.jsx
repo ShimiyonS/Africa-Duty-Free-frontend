@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Common from '../commonMethod/Common'
+import Common from '../commonMethod/common'
 import ProductCard from '../components/commonComponents/ProductCard'
 import DiscountComponent from '../components/commonComponents/DiscountComponent'
 import { Link } from 'react-router-dom'
