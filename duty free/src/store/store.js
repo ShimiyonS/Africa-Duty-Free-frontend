@@ -3,6 +3,7 @@ import cart from "./slice/cartSlice";
 import auth from "./slice/authSlice";
 import wishlist from "./slice/wishlistSlice";
 import orders from "./slice/orderSlice";
+import brand from "./slice/brandSlice"
 
 export default configureStore({
     reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
         auth: auth,
         wishlist: wishlist,
         orders: orders,
+        brand: brand,
     },
 });
