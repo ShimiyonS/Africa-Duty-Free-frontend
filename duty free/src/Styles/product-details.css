@@ -163,9 +163,6 @@
     border-radius: 0 0 30px 30px;
 }
 
-.form-main-div {
-    width: 90%;
-}
 
 .product-text-input::placeholder,
 .product-text-area::placeholder {
@@ -227,6 +224,7 @@
     display: none;
     flex-direction: column;
     width: max-content;
+    z-index: 1;
 }
 
 .share-tooltip:before {
@@ -316,5 +314,21 @@
 
     .share-emoji::after {
         left: 9%;
+    }
+
+    .product-img {
+        height: 400px;
+    }
+
+    .product-page-title {
+        font-size: 23px;
+    }
+
+    .review-header {
+        font-size: 23px;
+    }
+
+    .related-single-post-heading {
+        font-size: 23px;
     }
 }

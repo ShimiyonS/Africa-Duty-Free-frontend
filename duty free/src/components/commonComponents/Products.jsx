@@ -27,7 +27,7 @@ const Products = ({ data, headingText, paraClassName, gridplacement, hidePagnati
     return (
         <div>
             <div className='container'>
-                <p className={`mb-4 px-3 py-2 justuspro-medium ${paraClassName}`}>
+                <p className={`mb-4 px-md-3 px-1  py-2 justuspro-medium ${paraClassName}`}>
                     {firstLetterCapital(slug ?? headingText ?? "")}
                 </p>
                 {currentData?.length ? <><div className={`${gridplacement}`}>
