@@ -31,16 +31,9 @@ const Home = () => {
     const fetchProducts = async () => {
       try {
         const data = await apiRequest("GET", "/product", { limit: 100 });
+        const category = await apiRequest("GET", "/subcategory");
         setProducts(data?.products)
-        const uniqueSubCategories = [
-          ...new Map(
-            (data?.products || [])
-              .map(item => [item?.subCategory?.slug, item?.subCategory]) // use slug as key
-          ).values()
-        ];
-        setCategory(uniqueSubCategories)
-        console.log()
-
+        setCategory(Array.from(new Map(category?.subCategories.map(item => [item?.slug, item])).values()))
       } catch (error) {
         console.log(error.message)
       }
@@ -48,46 +41,26 @@ const Home = () => {
     fetchProducts();
   }, [])
 
-  // useEffect(() => {
-  //   const fetchCategory = async () => {
-  //     setCategoryLoading(true)
-  //     try {
-  //       const data = await apiRequest("GET", "/categories", {}, { "X-API-Key": import.meta.env.VITE_APP_YESERP_API_KEY }, import.meta.env.VITE_APP_YESERP_URL);
-  //       setCategory(data?.data?.filter(item => item?.x_parent_id === null))
-  //       console.log(data?.data)
-
-  //     } catch (error) {
-  //       console.log(error.message)
-  //     }
-  //     finally {
-  //       setCategoryLoading(false)
-  //     }
-  //   };
-  //   fetchCategory();
-  // }, [])
-
   return (
     <div className="container">
       <Banner />
       <BrandSwiper />
-      <div>
-        <BestBuy data={category} itemClassName={`p-3 col-12 col-md-6 col-lg-3`}  loading={categoryLoading} />
-      </div>
+      <BestBuy data={category} itemClassName={`p-md-3 col-12 col-md-6 col-lg-3`} loading={categoryLoading} />
       <div className="pagebody">
         <TitleComponent heading={"Most Popular"} />
         <NewProducts heading={"Most Popular"} productsdata={products} parentClassName={"mt-2"} hidePopTool={true} />
-        <div className="container py-4 row justify-content-center gap-5">
-          <div className="d-flex p-0 col-12 col-xl-4 col-lg-5 col-md-6 col-sm-12 offers">
-            <div className="col-6 offerbanner bg-color-gold">
+        <div className="py-0 pb-4 py-md-4 d-flex flex-wrap justify-content-center">
+          <div className="d-flex flex-wrap col-12 col-xl-4 col-lg-6 col-md-12 col-sm-12 offers mb-3 mb-lg-0">
+            <div className="col-6 col-md-6 offerbanner bg-color-gold">
               <p className="text-color-secondary justuspro-regular">This week only beverage.</p>
               <p className="mb-0 text-color-secondary justuspro-regular">Pommery</p>
               <p className="text-color-secondary justuspro-regular"><span className="text-decoration-line-through fs-6 text-color-secondary justuspro-regular">$30</span> $20</p>
             </div>
-            <div className="col-6">
+            <div className="col-6 col-md-6">
               <img width={"100%"} height={"172"} src={OfferProduct1}></img>
             </div>
           </div>
-          <div className="d-flex p-0 col-12 col-xl-4 col-lg-5 col-md-6 col-sm-12 offers">
+          <div className="d-flex flex-wrap col-12 col-xl-4 col-lg-6 col-md-12 col-sm-12 offers">
             <div className="col-6 offerbanner bg-color-danger">
               <p className="text-color-secondary justuspro-regular">This week only beverage.</p>
               <p className="mb-0 text-color-secondary justuspro-regular">Pommery</p>

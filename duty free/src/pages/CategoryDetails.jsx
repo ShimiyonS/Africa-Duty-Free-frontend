@@ -76,7 +76,7 @@ const CategoryDetails = () => {
             {!subslug ?
                 <div className='container'>
                     <BrandSwiper />
-                    <div className='container sub-calegory-body-container'>
+                    <div className=' sub-calegory-body-container'>
                         <SubCategory subCategorys={subCategorys} />
                         <SaleCard data={0} />
                         <TitleComponent heading={"New products"} />
