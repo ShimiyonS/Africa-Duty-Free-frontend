@@ -170,7 +170,7 @@ const Login = () => {
                                 {errors?.password && <div className="invalid-feedback d-block">{errors.password}</div>}
 
                             </div>
-                            <div className="mb-3 custom-login-checkbox">
+                            {/* <div className="mb-3 custom-login-checkbox">
                                 <input type="checkbox" id="remember" />
                                 <label htmlFor="remember">
                                     <span className="icon unchecked text-color-muted">
@@ -181,7 +181,7 @@ const Login = () => {
                                     </span>
                                     Keep me signed in
                                 </label>
-                            </div>
+                            </div> */}
 
                             <div className="d-flex gap-2">
                                 <button type="submit" disabled={loading} className="border-0 auth-btns button-text-primary button-bg-primary">

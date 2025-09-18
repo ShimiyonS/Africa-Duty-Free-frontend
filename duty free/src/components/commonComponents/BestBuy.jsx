@@ -38,7 +38,7 @@ const bestBuyDefault = [
 const BestBuy = ({ data = bestBuyDefault, itemClassName, loading }) => {
     // const { slug, subslug } = useParams();
     return (
-        <div className='d-flex align-items-center flex-wrap container mb-5'>
+        <div className='d-flex align-items-center flex-wrap mb-5'>
             {loading ? Array.from({ length: 4 }).map((item) => <div className={`${itemClassName ? itemClassName : "p-5 col-12 col-md-6 col-lg-3"}`}> <CategoryLoader /></div>)
                 : data?.map((item, idx) => {
                     return (

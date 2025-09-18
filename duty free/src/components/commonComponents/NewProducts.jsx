@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import ProductCard from './ProductCard';
 const NewProducts = ({ productsdata, parentClassName, headingClassName, swiperClassName, hideWishlist = false, hidePopTool = false, hideCart = false, hideAddCartPop = false, titleclassname = "text-color-primary", priceclassname = "text-color-danger" }) => {
     return (
-        <div className={`container ${parentClassName}`}>
+        <div className={`${parentClassName}`}>
             {/* <p className={`${headingClassName ? headingClassName : 'mb-4 justuspro-medium linear-bg-heading px-3 py-2 text-color-secondary'} `}>{heading}</p> */}
             <Swiper
                 slidesPerView={5}
@@ -19,8 +19,8 @@ const NewProducts = ({ productsdata, parentClassName, headingClassName, swiperCl
                 }}
                 breakpoints={{
                     320: {
-                        slidesPerView: 1,
-                        spaceBetween: 20,
+                        slidesPerView: 2,
+                        spaceBetween: 5,
                     },
                     426: {
                         slidesPerView: 2,

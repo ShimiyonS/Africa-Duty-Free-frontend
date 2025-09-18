@@ -299,6 +299,18 @@ label {
     .contact-us-subheader {
         font-size: 20px;
     }
+
+    .alert-wrapper {
+        left: 8px;
+        width: 95%;
+        padding: 10px;
+
+    }
+
+    .alert-wrapper p {
+        font-size: 15px;
+        max-width: 85%;
+    }
 }
 
 /* ------------------------------------------------------------------- */
@@ -350,9 +362,9 @@ label {
     }
 }
 
-.swiper {
+/* .swiper {
     padding: 0 32px !important;
-}
+} */
 
 .container .breadcrum {
     display: flex;

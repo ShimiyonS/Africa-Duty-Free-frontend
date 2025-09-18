@@ -32,7 +32,7 @@ const BrandSwiper = () => {
         Brand16, Brand17,
     ];
     return (
-        <div className=''>
+        <div className='py-2'>
             <Swiper
                 slidesPerView={6}
                 spaceBetween={10}
