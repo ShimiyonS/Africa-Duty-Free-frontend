@@ -308,7 +308,8 @@ const ProductDetails = () => {
 
                                         </div>)}
                                     <div className="position-relative share-content" >
-                                        <div className="gap-3 share-emoji  p-3 rounded-5"><Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${slug}`)}`}><SlSocialFacebook /></Link>
+                                        <div className="gap-3 share-emoji  p-3 rounded-5">
+                                            <Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${slug}`)}`} target="_blank"><SlSocialFacebook /></Link>
                                             <Link to={`https://twitter.com/intent/tweet?text=${encodeURIComponent(slug)}&url=${encodeURIComponent(`${BASEURL}/product/${slug}`)}`} target="_blank"><TfiTwitter /></Link>
                                             <Link to={`https://plus.google.com/share?url=${encodeURIComponent(`${BASEURL}/product/${slug}`)}`} target="_blank"> <FaGooglePlusG /></Link>
                                             <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${slug}`)} `} target="_blank"><FaPinterestP /></Link>
