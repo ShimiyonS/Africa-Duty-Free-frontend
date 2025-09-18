@@ -1,0 +1,455 @@
+@import url("./Styles/font.css");
+
+* {
+    font-family: "DMSans-Regular", Sans-serif;
+}
+
+:root {
+    --shadow: 0px 0px 0px #000;
+    --login-btn-color: #3ba1da;
+    --register-btn-color: #eeeeee;
+    --header-text-color: #C4310C;
+    --button-bg-danger-yellow: #ECA203;
+    --button-bg-color-secondary: #1691aa;
+    --iconic-color: #ae9962;
+
+    --button-bg-primary: #f0b32c;
+    --button-bg-danger: #b63f21;
+    --button-bg-success: #23c337;
+    --button-bg-gold: #ae9962;
+
+    --button-text-primary: #fff;
+    --button-text-secondary: #000;
+
+    --text-color-primary: #000;
+    --text-color-secondary: #fff;
+    --text-color-danger: #b63f21;
+    --text-color-warning: #f0b32c;
+    --text-color-success: #23c337;
+    --text-color-gold: #a49764;
+    --text-color-muted: #5E5E5E;
+
+    --bg-color-primary: #fff;
+    --bg-color-secondary: #000;
+    --bg-color-warning: #f0b32c;
+    --bg-color-gold: #ae9962;
+    --bg-color-danger: #b63f21;
+
+    --border-color-primary-primary: rgba(34, 34, 34, 0.1);
+    --border-color-primary-secondary: #3D3D3D;
+    --border-color-danger: #b63f21;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+label {
+    color: var(--text-color-primary);
+}
+
+/* common button class start */
+.button-bg-primary {
+    background-color: var(--button-bg-primary);
+}
+
+.button-bg-danger {
+    background-color: var(--button-bg-danger);
+}
+
+.button-bg-success {
+    background-color: var(--button-bg-success);
+}
+
+.button-bg-gold {
+    background-color: var(--button-bg-gold);
+}
+
+.button-text-primary {
+    color: var(--button-text-primary);
+}
+
+.button-text-secondary {
+    color: var(--button-text-secondary);
+}
+
+/* common button class end */
+
+
+/* common text class start */
+.text-color-primary {
+    color: var(--text-color-primary);
+}
+
+.text-color-secondary,
+.antd-custom-btn span {
+    color: var(--text-color-secondary);
+}
+
+.text-color-success {
+    color: var(--text-color-success)
+}
+
+.text-color-warning {
+    color: var(--text-color-warning)
+}
+
+.text-color-danger {
+    color: var(--text-color-danger);
+}
+
+.text-color-gold {
+    color: var(--text-color-gold);
+}
+
+.text-color-muted {
+    color: var(--text-color-muted);
+}
+
+/* common text class end */
+
+/* common bg class start */
+
+.bg-color-primary {
+    background-color: var(--bg-color-primary);
+}
+
+.bg-color-secondary {
+    background-color: var(--bg-color-secondary);
+}
+
+.bg-color-warning {
+    background-color: var(--bg-color-warning);
+}
+
+.bg-color-gold {
+    background-color: var(--bg-color-gold);
+}
+
+.bg-color-danger {
+    background-color: var(--bg-color-danger);
+}
+
+
+
+/* common bg class end */
+
+
+/* common font class start */
+.justuspro-medium {
+    font-family: "JustusProMedium", Sans-serif;
+}
+
+.justuspro-bold {
+    font-family: "JustusProBold", Sans-serif;
+}
+
+.justuspro-regular {
+    cursor: pointer;
+    font-family: "JustusProRegular", Sans-serif;
+}
+
+.dmsans-regular {
+    font-family: "DMSans-Regular", Sans-serif;
+}
+
+.dmsans-medium {
+    font-family: "DMSans-Medium", Sans-serif;
+}
+
+.dmsans-bold {
+    font-family: "DMSans-Bold", Sans-serif;
+}
+
+/* common font class end */
+
+
+.alertsuccess {
+    background-color: var(--button-bg-success);
+}
+
+.alertfail {
+    background-color: var(--text-color-danger);
+}
+
+
+.link-custom:hover {
+    color: var(--button-bg-color-secondary) !important;
+}
+
+.placeholder-custom::placeholder {
+    color: #aaa;
+}
+
+.input-hide-arrow::-webkit-outer-spin-button,
+.input-hide-arrow::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* common classed end */
+
+.alert-wrapper {
+    background-color: var(--button-bg-success);
+    padding: 23px;
+    border-radius: 5px;
+    bottom: 20px;
+    left: 20px;
+    max-width: 500px;
+    width: 100%;
+    z-index: 1001;
+    position: fixed;
+    color: var(--text-color-secondary);
+}
+
+.alert-text {
+    font-family: "JustusProMedium", Sans-serif;
+}
+
+.alert-link {
+    font-size: 12px;
+    padding: 7px 13px;
+    border: 3px solid var(--text-color-secondary);
+    border-radius: 10px;
+    width: 130px;
+    text-align: center;
+}
+
+.alert-icon {
+    width: 25px;
+    height: 25px;
+}
+
+/* conatct-us-form css */
+
+.contact-us-form {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.contact-us-header {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.contact-us-subheader {
+    font-size: 20px;
+}
+
+.icon-wrapper {
+    background-color: rgb(246, 246, 246);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.contact-us-icon {
+    font-size: 20px;
+}
+
+.scroll-top {
+    position: fixed;
+    bottom: 20px;
+    right: 4%;
+    border: 1px solid var(--text-color-danger);
+    background-color: var(--bg-color-primary);
+    border-radius: 30px;
+}
+
+.scroll-wrapper {
+    width: 40px;
+    height: 40px;
+}
+
+.scroll-top:hover svg {
+    color: var(--text-color-secondary) !important;
+    z-index: 1;
+}
+
+.text-404 {
+    font-size: 7.5rem;
+    font-weight: 600;
+}
+
+.linear-bg {
+    background: linear-gradient(90deg, rgba(39, 36, 43, 1) 19%, rgba(125, 46, 32, 1) 42%, rgba(184, 66, 33, 1) 68%, rgba(173, 154, 101, 1) 89%);
+}
+
+.linear-bg-heading {
+    background: linear-gradient(90deg, rgba(125, 46, 32, 1) 1%, rgba(184, 66, 33, 1) 78%, rgba(174, 146, 95, 1) 88%);
+}
+
+@media (max-width:426px) {
+    .contact-us-form {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .contact-us-header {
+        font-size: 35px;
+    }
+
+    .contact-us-subheader {
+        font-size: 20px;
+    }
+
+    .alert-wrapper {
+        left: 8px;
+        width: 95%;
+        padding: 10px;
+
+    }
+
+    .alert-wrapper p {
+        font-size: 15px;
+        max-width: 85%;
+    }
+}
+
+/* ------------------------------------------------------------------- */
+
+/* 404 error page */
+.search-404 {
+    position: relative;
+}
+
+.search-404-btn {
+    font-size: 18px;
+    position: absolute;
+    top: 17%;
+    right: 10px;
+}
+
+
+.stock-font {
+    font-size: 10px;
+}
+
+.swipper-paragraph {
+    max-width: 300px;
+}
+
+/* ------------------------------------------------------------------- */
+
+.new-swipper .slider-main-image {
+    width: 80% !important;
+}
+
+.offer-banner-swiper .swiper-button-prev,
+.swiper-rtl .swiper-button-next {
+    left: var(--swiper-navigation-sides-offset, -3px);
+    right: auto;
+    top: 71px !important;
+}
+
+.offer-banner-swiper .swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+    right: var(--swiper-navigation-sides-offset, -3px);
+    left: auto;
+    top: 71px !important;
+}
+
+@media (max-width:321px) {
+    .offer-swipper {
+        flex-direction: column !important;
+    }
+}
+
+/* .swiper {
+    padding: 0 32px !important;
+} */
+
+.container .breadcrum {
+    display: flex;
+    gap: 5px;
+}
+
+.ant-upload-list-item-name {
+    color: var(--text-color-primary) !important
+}
+
+.brand-pagination .ant-pagination-total-text,
+.sub-category-pagination .ant-pagination-total-text {
+    margin-right: auto !important;
+}
+
+.brand-pagination .ant-pagination-options,
+.sub-category-pagination .ant-pagination-options {
+    margin-left: auto !important;
+}
+
+.brand-pagination .ant-table,
+.product-page-table .ant-table,
+.sub-category-pagination .ant-table {
+    border-radius: 10px !important;
+    overflow: hidden !important;
+}
+
+.ant-link {
+    text-decoration: none;
+    color: var(--text-color-primary);
+}
+
+.ant-link:hover {
+    color: var(--text-color-primary);
+}
+
+.antd-radius-table {
+    background-color: var(--bg-color-primary);
+    border-radius: 20px;
+}
+
+@media (max-width:426px) {
+    .antd-order-container {
+        overflow-x: auto;
+    }
+
+    .antd-table-wrapper {
+        width: 409px;
+    }
+}
+
+@media(max-width:376px) {
+    .antd-table-wrapper {
+        width: 360px;
+    }
+}
+
+@media(max-width:321px) {
+    .antd-table-wrapper {
+        width: 305px;
+    }
+}
+
+
+.is-loading {
+    background-color: #eee !important;
+    background-image: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%) !important;
+    border-radius: 5px;
+    background-size: 200% 100%;
+    animation: 1.5s shine linear infinite;
+}
+
+
+.form-label.required::after {
+    content: "*";
+    color: var(--text-color-danger);
+}
+
+.password-icon {
+    top: 52%;
+    right: 17px;
+}
+
+@keyframes shine {
+    to {
+        background-position-x: -200%;
+    }
+}

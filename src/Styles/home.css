@@ -1,0 +1,167 @@
+.container {
+    max-width: 1220px !important;
+}
+
+.home-banner {
+    width: 100%;
+    height: calc(100vh - 200px);
+    background-image: url("../assets/home-banner.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 10px;
+    margin-bottom: 50px;
+    padding: 0px 80px;
+}
+
+.banner-heading:nth-child(1),
+.banner-heading:nth-child(3) {
+    font-size: 35px;
+}
+
+.banner-right-heading {
+    font-size: 35px;
+}
+
+.banner-heading:nth-child(3)>span {
+    font-size: 18px;
+}
+
+.banner-heading:nth-child(2) {
+    font-size: 80px;
+}
+
+.shop-btn {
+    width: max-content;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.wigited-buttons {
+    bottom: -30px;
+}
+
+.wigited-box {
+    width: 150px;
+    height: 65px;
+    padding: 10px;
+    text-align: center;
+    background: linear-gradient(90deg, rgba(39, 36, 43, 1) 19%, rgba(125, 46, 32, 1) 42%, rgba(184, 66, 33, 1) 68%, rgba(173, 154, 101, 1) 89%);
+}
+
+.offers {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25px;
+    color: var(--text-color-secondary);
+}
+
+.offerbanner {
+    padding: 10px 10px 10px 20px;
+}
+
+/* main page css start */
+.main-home-category {
+    font-size: 14px;
+}
+
+.main-home-category-heading {
+    font-size: 25px;
+}
+
+
+.pagebody {
+    background-color: #FAFBFC;
+    padding: 2px 16px 2rem 16px;
+}
+
+/* main page css end */
+
+@media screen and (max-width:768px) {
+    .home-banner {
+        padding: 0px 20px;
+    }
+
+    .home-banner-image {
+        width: 150px;
+        height: 130px;
+    }
+}
+
+@media screen and (max-width:426px) {
+    .home-banner {
+        padding: 0px 10px;
+        margin-bottom: 15px;
+        height: 100%;
+        justify-content: space-evenly;
+    }
+
+    .shop-btn {
+        font-size: 11px;
+    }
+
+    .banner-heading:nth-child(2) {
+        font-size: 30px;
+    }
+
+    .banner-right-heading {
+        font-size: 15px;
+    }
+
+    .banner-heading:nth-child(3)>span {
+        font-size: 14px;
+    }
+
+    .banner-heading:nth-child(1),
+    .banner-heading:nth-child(3) {
+        font-size: 20px;
+    }
+
+    .wigited-box {
+        width: 100px;
+        height: 50px;
+        padding: 5px;
+        font-size: 13px;
+    }
+
+    .wigited-buttons {
+        position: relative !important;
+        bottom: 0px !important;
+    }
+
+
+    .banner-left {
+        position: static !important;
+        margin-top: 20px;
+    }
+
+    .home-banner-image {
+        width: 90px;
+        height: 90px;
+        margin-bottom: -10px;
+    }
+
+    .pagebody {
+        padding: 0px;
+    }
+
+    .offerbanner {
+        padding: 10px 10px 10px 10px;
+    }
+}
+
+/* .offer-banner-swiper .swiper {
+    padding: 0 0px !important;
+} */
+
+.banner-left {
+    position: absolute;
+    bottom: -10px;
+
+}

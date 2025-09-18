@@ -1,0 +1,57 @@
+.custom-input {
+    border: 1px solid #aaa;
+    padding: 20px 20px;
+    margin-bottom: 15px;
+}
+.custom-select-address select{
+    width: 100% !important;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+select:focus{
+    outline: none;
+}
+.custom-select-address option{
+    width: 100% !important;
+    padding: 1rem;
+}
+.apply-btn {
+    background-color: #eee;
+    color: var(--text-color-primary);
+    display: block;
+    border: 0;
+    padding: 16px 35px;
+    font-family: "JustusProMedium", Sans-serif;
+}
+
+.checkout-item-image {
+    width: 100px;
+    height: 100px;
+}
+
+.order-btn {
+    padding: 20px 20px;
+}
+
+.checkout-form-label {
+    font-size: 19px;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.checkout-form-label.required::after {
+    content: "*";
+    color: red;
+    top: -9px;
+    font-weight: bold;
+    right: -12px;
+    position: absolute;
+}
+
+.cart-product-link {
+    font-size: 15px;
+}
+
+.cart-table-title {
+    font-size: 22px;
+}

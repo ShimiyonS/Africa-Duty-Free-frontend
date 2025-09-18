@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'JustusProBold';
+    src: url('../font/JustusProBold.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'JustusProMedium';
+    src: url('../font/JustusProMedium.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'JustusProRegular';
+    src: url('../font/JustusProRegular.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: 'DMSans-Regular';
+    src: url('../font/DMSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'DMSans-Medium';
+    src: url('../font/DMSans-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'DMSans-Bold';
+    src: url('../font/DMSans-Bold.ttf') format('truetype');
+}

@@ -1,0 +1,104 @@
+.main-content {
+    font-size: 50px;
+    font-weight: 300;
+    text-transform: capitalize;
+    line-height: 1em;
+    margin: 0px 0px 22px;
+    max-width: 478px;
+}
+
+.content-div {
+    max-width: 378px;
+}
+
+.input-box {
+    border: none;
+    border-bottom-left-radius: 50px !important;
+    border-top-left-radius: 50px !important;
+    flex: 1;
+    padding: 13px 16px;
+}
+
+.send-emoji {
+    left: 10px;
+    top: 6px;
+    transform: rotate(20deg);
+}
+
+.input-box::placeholder {
+    color: var(--text-color-secondary);
+}
+
+.input-box:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.form-input {
+    display: flex;
+    max-width: 400px;
+    height: 50px;
+}
+
+.subscribe_mail {
+    border: none;
+    width: 56px;
+    border-left: 1px solid var(--bg-color-primary);
+    background-repeat: no-repeat;
+    background-size: 88% 80%;
+    background-position: center;
+    border-bottom-right-radius: 50px !important;
+    border-top-right-radius: 50px !important;
+    font-size: 34px;
+}
+
+.discount-main-component {
+    background-image: url(../assets/discount-img.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 530px;
+    border-radius: 40px;
+    position: relative;
+}
+
+@media (max-width:768px) and (min-width:768px) {
+    .never-miss-out {
+        padding-left: 342px;
+    }
+
+    .discount-main-component {
+        height: 400px;
+    }
+}
+
+@media (max-width:426px) {
+    .discount-main-component {
+        height: auto;
+        background-position-x: left;
+    }
+
+    .content-div p {
+        color: var(--text-color-secondary);
+    }
+
+    .discount-main-component::before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        pointer-events: none;
+    }
+    .discount-main-component{
+        border-radius: 22px;
+    }
+
+    .main-content {
+        font-size: 27px;
+    }
+
+    .content-div {
+        max-width: 308px;
+    }
+}

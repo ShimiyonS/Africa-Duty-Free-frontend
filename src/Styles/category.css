@@ -1,0 +1,254 @@
+.mid-heading {
+    font-size: 22px;
+    color: var(--header-text-color);
+}
+
+.category-banner {
+    height: 180px;
+    background-repeat: repeat;
+    padding: 30px 0px 30px 80px;
+}
+
+.banner-des {
+    width: 20%;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--text-color-secondary);
+}
+
+.brand-swiper .swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.brand-swiper.swiper .swiper-slide img {
+    width: 100%;
+}
+
+.card-category {
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.category-image {
+    border-radius: 20px;
+    height: 230px;
+    border: 1px solid var(--text-color-danger);
+}
+
+.category-sub-img {
+    height: 220px;
+    box-shadow: 4px 5px 8px 0px rgba(0, 0, 0, 0.35);
+}
+
+.category-sub-title {
+    font-size: 20px;
+}
+
+.category-sub-textsize {
+    font-size: 18px;
+}
+
+.category-nav {
+    color: var(--text-color-secondary);
+    font-size: 25px;
+    min-height: 38px;
+}
+
+.category-desc {
+    padding: 0px 15px;
+    font-size: 13px;
+}
+
+.category-des {
+    font-size: 12px;
+    color: var(--text-color-secondary);
+    line-height: 1;
+}
+
+.small-image {
+    height: 200px;
+    box-shadow: 4px 5px 8px 0px rgba(0, 0, 0, 0.35);
+}
+
+.big-image {
+    height: 272px;
+    border-radius: 26px;
+    object-fit: cover;
+    box-shadow: 4px 5px 8px 0px rgba(0, 0, 0, 0.35);
+}
+
+.sale-banner-heading {
+    font-size: 20px;
+}
+
+/* sub category start*/
+.sub-category-button {
+    padding: 8px 28px;
+}
+
+.filter-wrapper-heading {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.filter-heading {
+    font-size: 15px;
+
+}
+
+.list-item {
+    font-size: 14px;
+}
+
+.filter-image {
+    width: 100%;
+    height: 200px;
+}
+
+.filter-title {
+    font-size: 14px
+}
+
+
+
+@media screen and (max-width:576px) {
+    .filter-left {
+        position: fixed;
+        left: -100%;
+        top: 0px;
+        padding: 20px 20px;
+        background-color: #fff;
+        height: 100%;
+        overflow: scroll;
+        transition: left 0.4s linear;
+    }
+
+    .filter-left.active {
+        left: 0;
+    }
+}
+
+/* .filter-wrapper{
+    height: 100vh;
+}
+
+.filter-left {
+    position: sticky;
+    top: 1px;
+    left: 0;
+    height: 100vh;
+    overflow-y: scroll;
+} */
+
+/* sub category end*/
+
+.sub-calegory-body-container {
+    background-color: #FAFBFC;
+    padding: 14px 16px 2rem 16px;
+}
+
+.sub-category-page-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* justify-content: space-between; */
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.sub-category-container {
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sub-category-container .sub-category-name {
+    width: 100%;
+    background-color: #C4310C;
+    padding: 6px 40px;
+    text-align: center;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+}
+
+.sub-category-container .sub-category-image {
+    width: 100%;
+    height: 250px;
+}
+
+.sub-category-container .sub-category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: none;
+}
+
+.sub-category-container .product-title {
+    width: 100%;
+    text-align: start;
+    color: #000;
+}
+
+.sub-category-container .product-price {
+    width: 100%;
+    text-align: start;
+    color: #C4310C;
+}
+
+.product-filter-page {
+    background-color: #FAFBFC;
+    padding: 16px 16px 2rem 16px;
+}
+
+.remove-box-shadow img {
+    box-shadow: none !important;
+}
+
+
+.sales-cards-container {
+    width: 100%;
+    display: flex;
+    gap: 40px;
+}
+
+.sales-card {
+    width: 100%;
+}
+
+.image-container-salescard {
+    width: 500px;
+    height: 260px;
+}
+
+@media (max-width:426px) {
+    .image-container-salescard {
+        width: 100% !important;
+    }
+
+    .category-banner {
+        padding: 30px 0px 30px 30px;
+    }
+
+    .sub-calegory-body-container {
+        padding: 0px;
+    }
+}
+
+.image-container-salescard img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media screen and (max-width:576px) {
+    .image-container-salescard {
+        width: 300px;
+    }
+}

@@ -1,0 +1,76 @@
+/* sidebar css */
+.myaccount-links {
+    width: 100%;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    background-color: #eee;
+    color: var(--text-color-muted);
+}
+
+.myaccountsidebar-icons {
+    font-size: 30px;
+}
+
+.myaccount-links:hover,
+.side-bar-links .active {
+    background-color: #ddd;
+    color: var(--button-bg-primary);
+}
+
+/* ------------------------------------------------------------- */
+
+/* dashboard css */
+.dashboard-icon-section {
+    padding: 15px;
+    border-radius: 50%;
+}
+
+.dashboard-icon {
+    font-size: 40px;
+}
+
+.dashboard-option {
+    background-color: #FFFFFF;
+    padding: 20px 30px 20px 30px;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-link {
+    font-size: 1.50rem;
+    font-weight: bold;
+}
+
+/* --------------------------------------------------------------------- */
+
+/* addresses css */
+.borderbottom-1 {
+    border-bottom: 1px solid var(--text-color-muted);
+}
+
+.myaccountaddress-button {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.address-block {
+    padding: 20px;
+    border: 1px solid var(--text-color-muted);
+}
+
+/* ------------------------------------------------------ */
+
+/* myaccountdetails css */
+
+.password-see-icon {
+    position: relative;
+}
+
+.see-btn {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
