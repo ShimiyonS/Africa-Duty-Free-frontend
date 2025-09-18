@@ -27,7 +27,7 @@ const SwiperComponent = () => {
         <div className="container mt-5">
             <div className="d-flex justify-content-between mb-3 offer-swipper">
                 <h3 className="justuspro-medium">Special offers</h3>
-                <h3 className="justuspro-medium">Special Billing Beauty Product</h3>
+                <h3 className="justuspro-medium d-none d-md-block">Special Billing Beauty Product</h3>
             </div>
             <div className="offer-banner-swiper">
                 <Swiper

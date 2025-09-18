@@ -25,6 +25,7 @@ const Layout = () => {
 
     useEffect(() => {
         dispatch(clearCard())
+        setToggleSidebar(false)
     }, [location])
 
     return (
