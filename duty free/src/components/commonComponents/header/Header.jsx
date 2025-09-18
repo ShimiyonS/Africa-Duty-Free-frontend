@@ -111,8 +111,8 @@ const Header = ({ togglemenu, togglesidebar }) => {
               </button>
               <button
                 className='bg-transparent m-0 p-0 border-0'
-                data-bs-toggle="modal"
-                data-bs-target="#customPopup"
+                // data-bs-toggle="modal"
+                // data-bs-target="#customPopup"
                 onClick={(e) => {
                   const token = localStorage.getItem('token');
                   if (token) {

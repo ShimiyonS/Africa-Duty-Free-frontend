@@ -34,6 +34,7 @@ const Login = () => {
             const res = await apiRequest('POST', '/auth/login', payload)
             if (res?.token && res?.user) {
                 // store token and user data
+                console.log("data", res)
                 localStorage.setItem('token', res.token)
                 localStorage.setItem('user', JSON.stringify(res.user))
                 // optionally store extras
@@ -82,13 +83,13 @@ const Login = () => {
 
                         <form onSubmit={handleLogin}>
                             <div className="mb-3">
-                                <label htmlFor="email" className="form-label fw-bold">
+                                <label htmlFor="useremail" className="form-label fw-bold">
                                     Username or E-mail
                                 </label>
                                 <input
                                     type="email"
                                     className="form-control custom-auth-input"
-                                    id="email"
+                                    id="useremail"
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     required

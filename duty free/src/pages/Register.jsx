@@ -50,7 +50,6 @@ const Register = () => {
             }
             const res = await apiRequest('POST', '/auth/register', payload)
             if (res?.status && res?.token) {
-                localStorage.setItem('token', res.token)
                 navigate('/')
                 return
             } else {
