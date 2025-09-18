@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import { Select, Spin } from "antd";
 import debounce from "lodash/debounce";
-import Loader from "./Loader";
+import Loader from "./Loader.jsx";
 
 const DebounceSelect = ({ allowClear, mode, fetchOptions, debounceTimeout = 800, ...props }) => {
     const [fetching, setFetching] = useState(false);
@@ -10,7 +10,7 @@ const DebounceSelect = ({ allowClear, mode, fetchOptions, debounceTimeout = 800,
 
     const debounceFetcher = useMemo(() => {
         const loadOptions = (value) => {
-            fetchRef.current += 1;  
+            fetchRef.current += 1;
             const fetchId = fetchRef.current;
             setOptions([]);
             setFetching(true);
