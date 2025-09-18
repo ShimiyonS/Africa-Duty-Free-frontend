@@ -6,10 +6,10 @@ const MyaccountDetails = () => {
   const user = JSON.parse(localStorage.getItem('user'));
 
   const [formData, setFormData] = useState({
-    firstName: user.firstName,
-    lastName: user.lastName,
-    username: user.username,
-    email: user.email,
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    username: user?.username,
+    email: user?.email,
     password: '',
     newpassword: '',
     confirmpassword: ''

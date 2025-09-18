@@ -1,5 +1,6 @@
 .container {
-    max-width: 1220px !important;}
+    max-width: 1220px !important;
+}
 
 .home-banner {
     width: 100%;
@@ -35,8 +36,7 @@
     font-size: 80px;
 }
 
-.shop-btn,
-.shop-left-btn {
+.shop-btn {
     width: max-content;
     font-size: 16px;
     font-weight: 600;
@@ -85,13 +85,42 @@
     .home-banner-image {
         width: 150px;
         height: 130px;
-        margin-left: auto;
     }
 }
 
 @media screen and (max-width:426px) {
-    .right-side-banner {
-        display: none;
+    .home-banner {
+        padding: 0px 10px;
+        margin-bottom: 15px;
+        height: 100%;
+        justify-content: space-evenly;
+    }
+
+    .shop-btn {
+        font-size: 11px;
+    }
+
+    .banner-heading:nth-child(2) {
+        font-size: 30px;
+    }
+
+    .banner-right-heading {
+        font-size: 15px;
+    }
+
+    .banner-heading:nth-child(3)>span {
+        font-size: 14px;
+    }
+
+    .banner-heading:nth-child(1),
+    .banner-heading:nth-child(3) {
+        font-size: 20px;
+    }
+    .wigited-box {
+        width: 100px;
+        height: 50px;
+        padding: 5px;
+        font-size: 13px;
     }
 
     .wigited-buttons {
@@ -99,17 +128,16 @@
         bottom: 0px !important;
     }
 
-    .shop-left-btn {
-        display: block !important;
-    }
+
     .banner-left {
-        position: static!important;
+        position: static !important;
+        margin-top: 20px;
     }
 
     .home-banner-image {
         width: 90px;
         height: 90px;
-        margin-left: auto;
+        margin-bottom: -10px;
     }
 
 }

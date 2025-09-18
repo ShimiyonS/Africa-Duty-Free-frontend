@@ -93,6 +93,12 @@
     right: 0;
 }
 
+@media (max-width: 426px) {
+    .login-popup {
+        width: 75% !important;
+    }
+}
+
 /* ---------------------------------------------------------------------- */
 
 /* duty-popup-css */
@@ -186,7 +192,7 @@
 .duty-popup-inputs::-webkit-outer-spin-button,
 .duty-popup-inputs::-webkit-inner-spin-button,
 .ant-disable-control::-webkit-outer-spin-button,
-.ant-disable-control::-webkit-inner-spin-button{
+.ant-disable-control::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
@@ -239,7 +245,7 @@
     padding: 0px;
 }
 
-.header-multiply-icon{
+.header-multiply-icon {
     width: 15px;
     height: 15px;
 }
