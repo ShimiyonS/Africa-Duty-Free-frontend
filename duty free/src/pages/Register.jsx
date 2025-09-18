@@ -1,181 +1,241 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import common from '../commonMethod/common';
 
 const Register = () => {
     const navigate = useNavigate();
     const { apiRequest } = common();
 
-    const [form, setForm] = useState({})
-    const [errors, setErrors] = useState({})
-    const [submitting, setSubmitting] = useState(false)
+    const [form, setForm] = useState({});
+    const [state, setState] = useState({
+        password: true,
+        confirmpassword: true
+    });
+    const [errors, setErrors] = useState({});
+    const [submitting, setSubmitting] = useState(false);
+
+    // ✅ password regex (min 8 chars, 1 lowercase, 1 uppercase, 1 number, 1 special char)
+    const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}[\]|:;"'<>,.?/~`]).{8,}$/;
+
     const handleInput = (e) => {
-        const { name, value } = e.target
+        const { name, value } = e.target;
         setForm((prev) => ({
             ...prev,
             [name]: value
-        }))
-    }
+        }));
+
+        setErrors((prev) => ({
+            ...prev,
+            [name]: ""
+        }));
+    };
+
+    const handleEye = (name) => {
+        setState((prev) => ({
+            ...prev,
+            [name]: !prev[name]
+        }));
+    };
 
     const handleConfirmBlur = () => {
         if (form?.confirmpassword && form?.password !== form?.confirmpassword) {
-            setErrors((prev) => ({ ...prev, confirmpassword: 'Passwords do not match' }))
+            setErrors((prev) => ({ ...prev, confirmpassword: 'Passwords do not match' }));
         } else {
-            setErrors((prev) => ({ ...prev, confirmpassword: '' }))
+            setErrors((prev) => ({ ...prev, confirmpassword: '' }));
         }
-    }
+    };
 
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        // simple client validation
-        if (!form?.username || !form?.firstname || !form?.lastname || !form?.email || !form?.password || !form?.confirmpassword) {
-            setErrors((prev) => ({ ...prev, form: 'All fields are required' }))
-            return;
+        let newErrors = {};
+        if (!form?.username?.trim()) newErrors.username = "Username is required";
+        if (!form?.firstname?.trim()) newErrors.firstname = "First name is required";
+        if (!form?.lastname?.trim()) newErrors.lastname = "Last name is required";
+        if (!form?.email?.trim()) {
+            newErrors.email = "Email is required";
+        } else {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(form.email)) {
+                newErrors.email = "Please enter a valid email address";
+            }
         }
-        if (form?.password !== form?.confirmpassword) {
-            setErrors((prev) => ({ ...prev, confirmpassword: 'Passwords do not match' }))
+
+        // ✅ password validation
+        if (!form?.password?.trim()) {
+            newErrors.password = "Password is required";
+        } else if (!passwordRegex.test(form.password)) {
+            newErrors.password =
+                "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character";
+        }
+
+        if (form?.password?.trim() && !form?.confirmpassword?.trim()) {
+            newErrors.confirmpassword = "Confirm password is required";
+        } else if (form?.password !== form?.confirmpassword) {
+            newErrors.confirmpassword = "Passwords do not match";
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
             return;
         }
 
         try {
-            setSubmitting(true)
-            setErrors({})
+            setSubmitting(true);
+            setErrors({});
             const payload = {
                 username: form?.username,
                 firstName: form?.firstname,
                 lastName: form?.lastname,
                 email: form?.email,
                 password: form?.password
-            }
-            const res = await apiRequest('POST', '/auth/register', payload)
+            };
+            const res = await apiRequest('POST', '/auth/register', payload);
             if (res?.status && res?.token) {
-                navigate('/')
-                return
+                localStorage.setItem('token', res.token);
+                localStorage.setItem('user', JSON.stringify(res.user));
+                navigate('/');
+                return;
             } else {
-                setErrors((prev) => ({ ...prev, form: res?.message || 'Registration failed' }))
+                setErrors((prev) => ({ ...prev, form: res?.message || 'Registration failed' }));
             }
         } catch (err) {
-            const message = err?.response?.data?.message || 'Registration failed'
-            setErrors((prev) => ({ ...prev, form: message }))
+            const message = err?.response?.data?.message || 'Registration failed';
+            setErrors((prev) => ({ ...prev, form: message }));
         } finally {
-            setSubmitting(false)
+            setSubmitting(false);
         }
     };
+
+    // ✅ check if password is valid before enabling confirm password
+    const isPasswordValid = passwordRegex.test(form?.password || "");
+
     return (
-        <>
-            <div className="d-flex justify-content-center align-items-center auth-container">
-                <div className="p-4 auth-form">
+        <div className="d-flex justify-content-center align-items-center auth-container">
+            <div className="p-4 auth-form">
+                <form onSubmit={handleRegister}>
 
-                    <form onSubmit={handleRegister}>
-                        <div className="mb-3">
-                            <label htmlFor="username" className="form-label fw-bold">
-                                Username
-                            </label>
+                    {/* Username */}
+                    <div className="mb-3">
+                        <label className="form-label fw-bold required">Username</label>
+                        <input
+                            type="text"
+                            className={`form-control custom-auth-input ${errors?.username ? "is-invalid" : ""}`}
+                            name="username"
+                            value={form?.username || ""}
+                            onChange={handleInput}
+                            placeholder="Enter your username"
+                        />
+                        {errors?.username && <div className="invalid-feedback d-block">{errors.username}</div>}
+                    </div>
+
+                    {/* First Name */}
+                    <div className="mb-3">
+                        <label className="form-label fw-bold required">First Name</label>
+                        <input
+                            type="text"
+                            className={`form-control custom-auth-input ${errors?.firstname ? "is-invalid" : ""}`}
+                            name="firstname"
+                            value={form?.firstname || ""}
+                            onChange={handleInput}
+                            placeholder="Enter your firstname"
+                        />
+                        {errors?.firstname && <div className="invalid-feedback d-block">{errors.firstname}</div>}
+                    </div>
+
+                    {/* Last Name */}
+                    <div className="mb-3">
+                        <label className="form-label fw-bold required">Last Name</label>
+                        <input
+                            type="text"
+                            className={`form-control custom-auth-input ${errors?.lastname ? "is-invalid" : ""}`}
+                            name="lastname"
+                            value={form?.lastname || ""}
+                            onChange={handleInput}
+                            placeholder="Enter your lastname"
+                        />
+                        {errors?.lastname && <div className="invalid-feedback d-block">{errors.lastname}</div>}
+                    </div>
+
+                    {/* Email */}
+                    <div className="mb-3">
+                        <label className="form-label fw-bold required">Email address</label>
+                        <input
+                            type="email"
+                            className={`form-control custom-auth-input ${errors?.email ? "is-invalid" : ""}`}
+                            name="email"
+                            value={form?.email || ""}
+                            onChange={handleInput}
+                            placeholder="Enter your email"
+                        />
+                        {errors?.email && <div className="invalid-feedback d-block">{errors.email}</div>}
+                    </div>
+
+                    {/* Password */}
+                    <div className="mb-3 position-relative">
+                        <label className="form-label fw-bold required">Password</label>
+                        <div className='position-relative'>
                             <input
-                                type="text"
-                                className="form-control custom-auth-input"
-                                id="username"
-                                name="username"
-                                value={form?.username}
-                                onChange={(e) => handleInput(e)}
-                                required
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="firstname" className="form-label fw-bold">
-                                First Name
-                            </label>
-                            <input
-                                type="text"
-                                className="form-control custom-auth-input"
-                                id="firstname"
-                                name='firstname'
-                                value={form?.firstname}
-                                onChange={(e) => handleInput(e)}
-                                required
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="lastname" className="form-label fw-bold">
-                                Last Name
-                            </label>
-                            <input
-                                type="text"
-                                className="form-control custom-auth-input"
-                                id="lastname"
-                                value={form?.lastname}
-                                name={"lastname"}
-                                onChange={(e) => handleInput(e)}
-                                required
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="email" className="form-label fw-bold">
-                                Email address
-                            </label>
-                            <input
-                                type="email"
-                                className="form-control custom-auth-input"
-                                id="email"
-                                name='email'
-                                value={form?.email}
-                                onChange={(e) => handleInput(e)}
-                                required
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="password" className="form-label fw-bold">
-                                Password
-                            </label>
-                            <input
-                                type="password"
-                                className="form-control custom-auth-input"
-                                id="password"
+                                type={state.password ? "password" : "text"}
+                                className={`form-control custom-auth-input ${errors?.password ? "is-invalid" : ""}`}
                                 name="password"
-                                value={form?.password}
-                                onChange={(e) => handleInput(e)}
-                                required
+                                value={form?.password || ""}
+                                onChange={handleInput}
+                                placeholder="Enter your password"
                             />
+                            <span
+                                className="position-absolute  translate-middle-y password-icon pe-3"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => handleEye("password")}
+                            >
+                                {state.password ? <EyeInvisibleOutlined /> : <EyeTwoTone />}
+                            </span>
                         </div>
+                        {errors?.password && <div className="invalid-feedback d-block">{errors.password}</div>}
+                    </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="confirmpassword" className="form-label fw-bold">
-                                Confirm Password
-                            </label>
+                    {/* Confirm Password */}
+                    <div className="mb-3 position-relative">
+                        <label className="form-label fw-bold required">Confirm Password</label>
+                        <div className='position-relative'>
                             <input
-                                type="password"
-                                className={`form-control custom-auth-input ${errors?.confirmpassword ? 'is-invalid' : ''}`}
-                                id="confirmpassword"
+                                type={state.confirmpassword ? "password" : "text"}
+                                className={`form-control custom-auth-input ${errors?.confirmpassword ? "is-invalid" : ""}`}
                                 name="confirmpassword"
-                                value={form?.confirmpassword}
-                                onChange={(e) => handleInput(e)}
+                                value={form?.confirmpassword || ""}
+                                onChange={handleInput}
                                 onBlur={handleConfirmBlur}
-                                placeholder='Confirm Password'
-                                required
+                                placeholder="Confirm password"
+                                disabled={!isPasswordValid}   // ✅ disable until password valid
                             />
-                            {errors?.confirmpassword ? (
-                                <div className="invalid-feedback d-block">{errors.confirmpassword}</div>
-                            ) : null}
+                            <span
+                                className="position-absolute translate-middle-y pe-3 password-icon"
+                                style={{ cursor: isPasswordValid ? "pointer" : "not-allowed", opacity: isPasswordValid ? 1 : 0.5 }}
+                                onClick={() => isPasswordValid && handleEye("confirmpassword")}
+                            >
+                                {state.confirmpassword ? <EyeInvisibleOutlined /> : <EyeTwoTone />}
+                            </span>
                         </div>
 
-                        <div className="mt-4 d-flex gap-2 gap-md-4">
-                            <button type="submit" disabled={submitting} className="border-0 auth-btns button-text-primary button-bg-primary">
-                                Register
-                            </button>
-                            <Link to="/login" className="text-decoration-none auth-btns button-text-primary button-bg-danger">
-                                Login
-                            </Link>
-                        </div>
-                        {errors?.form ? (
-                            <div className="mt-3 text-danger small">{errors.form}</div>
-                        ) : null}
-                    </form>
-                </div>
-            </div>
+                        {errors?.confirmpassword && <div className="invalid-feedback d-block">{errors.confirmpassword}</div>}
+                    </div>
 
-        </>
-    )
-}
+                    {errors?.form && <div className="alert alert-danger mt-3">{errors.form}</div>}
 
-export default Register
+                    <div className="mt-4 d-flex gap-2 gap-md-4">
+                        <button type="submit" disabled={submitting} className="border-0 auth-btns button-text-primary button-bg-primary">
+                            {submitting ? "Registering..." : "Register"}
+                        </button>
+                        <Link to="/login" className="text-decoration-none auth-btns button-text-primary button-bg-danger">
+                            Login
+                        </Link>
+                    </div>
+                </form>
+            </div >
+        </div >
+    );
+};
+
+export default Register;

@@ -7,6 +7,7 @@ import ListAllUsers from '../pages/AdminPages/ListAllUsers';
 import ListAllBrands from '../pages/AdminPages/ListAllBrands'
 import ListAllSubCategories from '../pages/AdminPages/ListAllSubCategories'
 import ListAllCategories from '../pages/AdminPages/ListAllCategory';
+import Dashboard from '../pages/AdminPages/Dashboard'
 import ListAllOrders from '../pages/AdminPages/ListAllOrders';
 
 
@@ -15,7 +16,7 @@ const AdminRoutes = () => {
         <>
             <Routes>
                 <Route path="/" element={<AdminLayout />}>
-                    <Route index path="/" element={<p>vicky</p>} />
+                    <Route index path="/" element={<Dashboard />} />
                     <Route path="*" element={<NoPage />} />
                     <Route path="/brands" element={<ListAllBrands />} />
                     <Route index path="/products" element={<ListAllProducts />} />

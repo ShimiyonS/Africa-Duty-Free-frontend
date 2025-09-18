@@ -74,8 +74,12 @@
 
 @media (max-width:426px) {
     .discount-main-component {
-        height: 252px !important;
+        height: 300px !important;
         background-position-x: left;
+    }
+
+    .content-div p {
+        color: var(--text-color-secondary);
     }
 
     .discount-main-component::before {

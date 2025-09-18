@@ -4,7 +4,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { useMyContext } from '../../Provider/CommonProvider';
 import { Link } from 'react-router-dom';
 
-const AdminHeader = ({ title, addComponent, hideBack }) => {
+const AdminHeader = ({ title, addComponent, hideBack, customClass}) => {
     const { handleAdminToggle } = useMyContext();
     const profileimg = localStorage.getItem("image")
     const username = localStorage.getItem("admin")
@@ -19,7 +19,7 @@ const AdminHeader = ({ title, addComponent, hideBack }) => {
                 <h2 className="adminform-heading justuspro-medium">{title}</h2>
             </Flex>
             {/* drawer popup  */}
-            <Flex align='center' gap={15}>
+            <Flex align='center' gap={15} className={customClass ? customClass : "admin-header-container"}>
                 {addComponent && addComponent}
                 {adminToken &&
                     <Link to={"/siteadmin/profile"} className='header-profile'>

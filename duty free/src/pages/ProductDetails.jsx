@@ -17,7 +17,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { FaGetPocket } from "react-icons/fa";
 import { BsEnvelopePaperFill } from "react-icons/bs";
 import { FaRegPaperPlane } from "react-icons/fa6";
-import { IoIosShareAlt } from "react-icons/io";
+import { IoIosShareAlt, IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { MdFullscreen } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { FiMinimize } from "react-icons/fi";
@@ -31,9 +31,11 @@ import BreadCrumb from "../components/commonComponents/BreadCrumb.jsx";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
 import { toast } from "react-toastify";
+import { useMyContext } from "../Provider/CommonProvider.jsx";
 
 const ProductDetails = () => {
-    const { apiRequest, dispatch } = Common()
+    const { handleOpenAlert } = useMyContext()
+    const { apiRequest, toggleUserWishlist, wishlistItems, addUserCart } = Common()
     const { slug } = useParams()
     const [product, setProduct] = useState(null)
     const [activeTab, setActiveTab] = useState("description");
@@ -45,6 +47,7 @@ const ProductDetails = () => {
     const BASEURL = import.meta.env.VITE_APP_BASE_URL;
     const [rating, setRating] = useState(false)
     const [mainImg, setMainImg] = useState('')
+    const user = JSON.parse(localStorage.getItem("user"))
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -68,37 +71,21 @@ const ProductDetails = () => {
     }, [slug])
 
 
-    const handleAddTocart = async (id) => {
-        try {
-            const response = await apiRequest("POST", "/cart/add",
-                {
-                    userId: 1,
-                    productId: id,
-                    quantity: 1
-                }
-            )
-            toast.success(response?.message)
-            console.log(response?.message)
-
-            // Optimistically update Redux cart for header/count
-            const added = response?.item || response?.data || {};
-            const productData = added.product || product || {};
-            dispatch(
-                upsertCartItem({
-                    id: productData?.id || id,
-                    title: productData?.productName || productData?.title,
-                    price: Number(productData?.price) || 0,
-                    quantityDelta: 1,
-                    thumbnail: productData?.imageUrl,
-                })
-            );
-        } catch (error) {
-            console.log(error.message)
-            toast.error(error.message)
-        }
+    const handleAddTocart = async (item) => {
+        addUserCart({
+            userId: user?.id,
+            productId: item?.id,
+            quantity: 1
+        })
+        handleOpenAlert({
+            text: `${item?.productName || item?.name} has been added your cart list`,
+            link: "/cart",
+            linkText: "VIEW CART"
+        })
     }
     const handleMainimgChange = (img) => {
-        setMainImg(img)
+        setMainImg(img || product?.imageUrl)
+
     }
 
     // Fullscreen function
@@ -163,6 +150,16 @@ const ProductDetails = () => {
             });
     };
 
+    const handleToggleWishList = async (item) => {
+        await toggleUserWishlist(user?.id, item?.id)
+        handleOpenAlert({
+            text: `${item?.productName || item?.name} has been ${wishlistItems.includes(item?.id) ? "removed" : "added"} to your whishlist`,
+            link: "/wishlist",
+            linkText: "VIEW WISHLIST"
+        })
+    };
+
+
 
     return (
         <div className="container">
@@ -204,7 +201,7 @@ const ProductDetails = () => {
                 {loading ?
                     <Loader /> :
                     <>
-                        <BreadCrumb navigation={[{ key: "home", nav: "/" }, { key: `${product?.category}`, nav: `/product-category/${product?.category}` }]} />
+                        <BreadCrumb navigation={[{ key: "home", nav: "/" }, { key: `${product?.subCategory?.category?.categoryName}`, nav: `/product-category/${product?.subCategory?.category?.slug}` }]} />
                         <div className="d-flex flex-wrap align-items-center justify-content-center product-wrapper pb-5 ">
 
                             <div className="col-12 col-md-8 col-lg-6 d-flex flex-column" >
@@ -252,14 +249,9 @@ const ProductDetails = () => {
                                 <p className="pb-2 product-single-price text-color-danger text-break dmsans-bold">${product?.price}</p>
                                 <p className="product-description text-break">{product?.description}</p>
                                 <div className="d-flex flex-wrap gap-3">
-                                    {/* <div className="d-flex rounded-5 increment-wrapper align-items-center flex-wrap ">
-                                        <button onClick={() => handleCount("")} className=" border-0 text-center p-0 bg-transparent text-color-gold" disabled={product?.minimumOrderQuantity === 1}>-</button>
-                                        <input type="number" name="minimumOrderQuantity" onChange={(e) => { handleChange(e) }} min={1} className="border-0 text-center p-0 input-hide-arrow dmsans-bold" value={Number(product?.minimumOrderQuantity)} />
-                                        <button onClick={() => handleCount("increment")} className=" border-0 text-center p-0 bg-transparent text-color-gold" disabled={product?.minimumOrderQuantity === 100}>+</button>
-                                    </div> */}
                                     <div >
                                         <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0 button-bg-gold d-flex justify-content-center align-items-center"
-                                            onClick={() => handleAddTocart(product?.id)}>
+                                            onClick={() => handleAddTocart(product)}>
                                             <span className="text-color-secondary pe-4 dmsans-bold">
                                                 Add to cart
                                             </span>
@@ -271,8 +263,19 @@ const ProductDetails = () => {
 
 
                                 <div className="d-flex align-items-md-center flex-column flex-md-row pt-5 gap-3">
-                                    <div className="rounded-5 wishlist p-2 d-flex justify-content-center align-items-center py-3">
-                                        <span type="submit" name="add-to-cart" className="add-wishlist rounded-5 border-0 px-4 py-2 dmsans-bold" >Add to wishlist</span> <CiHeart size={30} />
+                                    <div onClick={() => handleToggleWishList(product)} className="rounded-5 wishlist p-2 d-flex justify-content-center align-items-center py-3">
+                                        {wishlistItems?.find((i) => i.id === product?.id) ?
+                                            <>
+                                                <span className="add-wishlist rounded-5 border-0 px-3 py-2 dmsans-bold" >
+                                                    Added to wishlist
+                                                </span>
+                                                <IoMdHeart style={{ width: "25px", height: "25px" }} />
+                                            </>
+                                            : <>
+                                                <span className="add-wishlist rounded-5 border-0 px-3 py-2 dmsans-bold">Add to  wishlist</span>
+                                                <IoMdHeartEmpty style={{ width: "25px", height: "25px" }} />
+                                            </>
+                                        }
                                     </div>
                                     <div className="position-relative share-content" >
                                         <div className="gap-3 share-emoji  p-3 rounded-5"><Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`}><SlSocialFacebook /></Link>

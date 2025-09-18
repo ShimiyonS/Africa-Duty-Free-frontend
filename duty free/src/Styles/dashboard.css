@@ -1,0 +1,129 @@
+.total-order {
+    background-color: #0071FE;
+    border-radius: 25px;
+    padding: 15px 17px 21px 27px !important;
+    color: #fff;
+}
+
+.dashboard-card {
+    padding: 15px;
+}
+
+.product-analytic {
+    padding: 20px 0 0 10px;
+}
+
+.calendar-icon-div {
+    background-color: #fff;
+    border-radius: 50px;
+    width: 22%;
+    height: 55px
+}
+
+.text-color-white {
+    color: var(--text-color-secondary)
+}
+
+.calendar-icon {
+    color: #0071FE
+}
+
+.view-card-title {
+    margin-bottom: 10px !important;
+    text-decoration: none;
+}
+
+.view-card-title:hover {
+    color: white
+}
+
+.table-order-relative {
+    position: relative;
+}
+
+.view-card-icon-absolute {
+    position: absolute;
+    right: -9px;
+    bottom: -7px;
+    opacity: 0.2;
+    border-bottom-right-radius: 51px;
+}
+
+.dashboard-total-order {
+    right: -3px !important;
+    bottom: -13px !important;
+}
+
+.dashboard-dollar-icon {
+    right: 0px !important;
+    bottom: -3px !important;
+    border-bottom-right-radius: 30px !important;
+}
+
+
+
+.dashboard-table-sub-heading {
+    padding: 10px 0 0 15px;
+}
+
+.dashboard-total-users {
+    background-color: #04D5C9 !important
+}
+
+.calendar-icon-user {
+    color: #04D5C9
+}
+
+.dashboard-total-orders {
+    background-color: #9385F4
+}
+
+.calendar-icon-order {
+    color: #9385F4
+}
+
+.dashboard-total-earning {
+    background-color: #FC9B6A
+}
+
+.calendar-icon-earning {
+    color: #FC9B6A
+}
+
+.product-analytics {
+    padding-top: 30px;
+}
+
+.product-analytics-heading {
+    margin-bottom: 30px;
+}
+
+.earning-analytic-title {
+    padding: 33px
+}
+
+.earning-analysis {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width:1441px) {
+    .dashboard-order-main {
+        padding-bottom: 20px;
+    }
+}
+
+@media(max-width:1025px) {
+    .dashboard-order-main {
+        padding-top: 20px;
+    }
+}
+
+.dashboard-order-image {
+    display: flex;
+    gap: 10px;
+}
+
+.amount-column {
+    padding-left: 10px !important;
+}

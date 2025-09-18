@@ -6,7 +6,6 @@ import DeletePopup from '../../components/commonComponents/DeletePopup'
 import AdminHeader from '../../components/AdminComponents/AdminHeader';
 
 
-
 const ListAllSubCategories = () => {
     const [pagination, setPagination] = useState({
         current: 1,
@@ -188,7 +187,7 @@ const ListAllSubCategories = () => {
         },
     ];
     // record.categories
-     const categorys = [
+    const categorys = [
         {
             id: 1,
             name: "Beauty",
@@ -217,7 +216,6 @@ const ListAllSubCategories = () => {
             title: 'Id',
             dataIndex: 'id',
             key: 'id',
-            fixed: 'left',
             width: 50
         },
         {
@@ -271,7 +269,7 @@ const ListAllSubCategories = () => {
 
     return (
         <div>
-            <AdminHeader title={`View Sub Categories`} addComponent={<AddEditSubCategories mode="add" productData={null} />} hideBack={true} />
+            <AdminHeader title={`View Sub Categories`} addComponent={<AddEditSubCategories mode="add" productData={null} />} hideBack={true} customClass={"admin-container-responsive"} />
             <Row justify={"space-between"} className='admin-header-space'>
                 <Col xs={24} sm={12} md={10} xl={8}>
                     <Form.Item label="Filter option">
@@ -295,20 +293,23 @@ const ListAllSubCategories = () => {
                     </Form.Item>
                 </Col>
             </Row>
-            <Table columns={columns} dataSource={filteredData} className="sub-category-pagination" pagination={{
-                position: ["bottomCenter"],
-                current: pagination.current,
-                pageSize: pagination.pageSize,
-                showSizeChanger: true,
-                pageSizeOptions: ["5", "10", "20", "50"],
-                showQuickJumper: true,
-                onChange: (page, pageSize) => {
-                    setPagination({ current: page, pageSize });
-                },
-                showTotal: (total) => `Total ${total} subCategories`,
-            }} />
-        </div >
-
+            <div className="antd-table-wrapper">
+                <div className="antd-radius-table antd-order-container" >
+                    <Table columns={columns} dataSource={filteredData} className="sub-category-pagination" scroll={{ x: 800 }} pagination={{
+                        position: ["bottomCenter"],
+                        current: pagination.current,
+                        pageSize: pagination.pageSize,
+                        showSizeChanger: true,
+                        pageSizeOptions: ["5", "10", "20", "50"],
+                        showQuickJumper: true,
+                        onChange: (page, pageSize) => {
+                            setPagination({ current: page, pageSize });
+                        },
+                        showTotal: (total) => `Total ${total} subCategories`,
+                    }} />
+                </div >
+            </div>
+        </div>
     )
 }
 export default ListAllSubCategories

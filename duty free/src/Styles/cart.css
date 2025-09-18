@@ -203,6 +203,12 @@
 .table-cart {
     border-left: 1px solid #C6C7C8;
     border-right: 1px solid #C6C7C8;
+    border-top: 1px solid #C6C7C8;
+    border-bottom: 1px solid #C6C7C8;
+}
+
+.table-light {
+    border-bottom: 1px solid #C6C7C8 !important;
 }
 
 @media (max-width: 426px) {

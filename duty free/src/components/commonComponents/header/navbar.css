@@ -38,7 +38,7 @@ li .nav-link:hover {
     }
 
     .nav-link {
-        padding: 8px;
+        padding: 8px !important;
         font-size: 14px;
         border-bottom: 0px;
     }
@@ -56,3 +56,9 @@ li .nav-link:hover {
     display: flex;
     gap: 1.5rem;
 } */
+
+@media (max-width: 426px) {
+    .sidebar {
+        width: 100%;
+    }
+}

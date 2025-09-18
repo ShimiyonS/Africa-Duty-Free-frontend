@@ -30,7 +30,6 @@ const ListAllProducts = () => {
             title: 'Id',
             dataIndex: 'id',
             key: 'id',
-            fixed: 'left',
             width: 50,
         },
         {
@@ -146,19 +145,22 @@ const ListAllProducts = () => {
                     </Form.Item>
                 </Col>
             </Row>
-
-            <Table dataSource={productData} columns={columns} className='product-page-table brand-pagination' pagination={{
-                position: ["bottomCenter"],
-                current: pagination.current,
-                pageSize: pagination.pageSize,
-                showSizeChanger: true,
-                pageSizeOptions: ["5", "10", "20", "50"],
-                showQuickJumper: true,
-                onChange: (page, pageSize) => {
-                    setPagination({ current: page, pageSize });
-                },
-                showTotal: (total) => `Total ${total} Products`,
-            }} />
+            <div className="antd-table-wrapper">
+                <div className="antd-radius-table antd-order-container" >
+                    <Table dataSource={productData} columns={columns} scroll={{ x: 800 }} className='product-page-table brand-pagination' pagination={{
+                        position: ["bottomCenter"],
+                        current: pagination.current,
+                        pageSize: pagination.pageSize,
+                        showSizeChanger: true,
+                        pageSizeOptions: ["5", "10", "20", "50"],
+                        showQuickJumper: true,
+                        onChange: (page, pageSize) => {
+                            setPagination({ current: page, pageSize });
+                        },
+                        showTotal: (total) => `Total ${total} Products`,
+                    }} />
+                </div>
+            </div>
         </>
     )
 }

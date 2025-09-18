@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { HiEmojiSad } from "react-icons/hi";
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import "../Styles/login.css"
 import UserDefaultProfile from "../assets/user-default-profile.jpg"
 import { Link, useNavigate } from "react-router-dom";
@@ -14,46 +15,93 @@ import { setOrders } from "../store/slice/orderSlice";
 
 const Login = () => {
     const navigate = useNavigate();
-    const { apiRequest } = common();
+    const { apiRequest, getUserWishlist, getUserCartlist } = common();
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({ email: "", password: "" })
     const [token, setToken] = useState(localStorage.getItem("token"))
     const [error, setError] = useState("")
+    const [errors, setErrors] = useState({});
+
     const [loading, setLoading] = useState(false)
+    const [state, setState] = useState({
+        password: true,
+    });
+    const handleInput = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value
+        }));
+
+        setErrors((prev) => ({
+            ...prev,
+            [name]: ""
+        }));
+    };
+    const handleEye = (name) => {
+        setState((prev) => ({
+            ...prev,
+            [name]: !prev[name]
+        }));
+    };
+
+
+
 
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setError("")
+        let newErrors = {};
+
+        if (!formData?.usernameOrEmail?.trim()) {
+            newErrors.usernameOrEmail = "Username or email is required";
+        }
+        if (!formData?.password?.trim()) {
+            newErrors.password = "Password is required";
+        }
+        if (Object.keys(newErrors)?.length > 0) {
+            setErrors(newErrors);
+            return;
+        }
         setLoading(true)
         try {
             const payload = {
-                usernameOrEmail: formData.email,
+                usernameOrEmail: formData.usernameOrEmail,
                 password: formData.password
             }
+            setErrors({});
             const res = await apiRequest('POST', '/auth/login', payload)
             if (res?.token && res?.user) {
                 // store token and user data
                 console.log("data", res)
                 localStorage.setItem('token', res.token)
                 localStorage.setItem('user', JSON.stringify(res.user))
-                // optionally store extras
-                if (res.orders) localStorage.setItem('orders', JSON.stringify(res.orders))
-                if (res.wishlist) localStorage.setItem('wishlist', JSON.stringify(res.wishlist))
-                if (res.cart) localStorage.setItem('cart', JSON.stringify(res.cart))
+
+                await getUserWishlist(res?.user?.id)
+                await getUserCartlist(res?.user?.id)
+                // // optionally store extras
+                // if (res.orders) localStorage.setItem('orders', JSON.stringify(res.orders))
+                // if (res.wishlist) localStorage.setItem('wishlist', JSON.stringify(res.wishlist))
+                // if (res.cart) localStorage.setItem('cart', JSON.stringify(res.cart))
+
 
                 // Redux
                 dispatch(setAuth({ token: res.token, user: res.user }))
-                if (Array.isArray(res.cart?.items)) {
-                    dispatch(setCartItems(res.cart.items))
-                } else if (Array.isArray(res.cart)) {
-                    dispatch(setCartItems(res.cart))
-                }
-                if (Array.isArray(res.wishlist)) dispatch(setWishlist(res.wishlist))
-                if (Array.isArray(res.orders)) dispatch(setOrders(res.orders))
-
+                // if (Array.isArray(res.cart?.items)) {
+                //     dispatch(setCartItems(res.cart.items))
+                // } else if (Array.isArray(res.cart)) {
+                //     dispatch(setCartItems(res.cart))
+                // }
+                // if (Array.isArray(res.wishlist)) dispatch(setWishlist(res.wishlist))
+                // if (Array.isArray(res.orders)) dispatch(setOrders(res.orders))
                 setToken(res.token)
-                navigate('/')
+                // checking the role 
+                if (res?.user?.role === "admin" || res?.user?.role === "superadmin") {
+                    navigate('/siteadmin')
+                } else {
+                    navigate('/')
+                }
             } else {
                 setError(res?.message || 'Login failed')
             }
@@ -83,30 +131,45 @@ const Login = () => {
 
                         <form onSubmit={handleLogin}>
                             <div className="mb-3">
-                                <label htmlFor="useremail" className="form-label fw-bold">
+                                <label htmlFor="email" className="form-label fw-bold required">
                                     Username or E-mail
                                 </label>
                                 <input
-                                    type="email"
-                                    className="form-control custom-auth-input"
-                                    id="useremail"
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    required
+                                    type="text"
+                                    className={`form-control custom-auth-input ${errors?.usernameOrEmail ? "is-invalid" : ""}`}
+                                    id="text"
+                                    name="usernameOrEmail"
+                                    value={formData?.usernameOrEmail}
+                                    onChange={handleInput}
+                                    placeholder="Enter your username or email"
                                 />
+                                {errors?.usernameOrEmail && <div className="invalid-feedback d-block">{errors.usernameOrEmail}</div>}
+
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="password" className="form-label fw-bold">
+                                <label htmlFor="password" className="form-label fw-bold required">
                                     Password
                                 </label>
-                                <input
-                                    type="password"
-                                    className="form-control custom-auth-input"
-                                    id="password"
-                                    value={formData.password}
-                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                    required
-                                />
+                                <div className='position-relative'>
+                                    <input
+                                        type={state.password ? "password" : "text"}
+                                        className={`form-control custom-auth-input ${errors?.password ? "is-invalid" : ""}`}
+                                        id="password"
+                                        name="password"
+                                        placeholder="Enter your password"
+                                        value={formData?.password}
+                                        onChange={handleInput}
+                                    />
+                                    <span
+                                        className="position-absolute  translate-middle-y password-icon pe-3"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => handleEye("password")}
+                                    >
+                                        {state.password ? <EyeInvisibleOutlined /> : <EyeTwoTone />}
+                                    </span>
+                                </div>
+                                {errors?.password && <div className="invalid-feedback d-block">{errors.password}</div>}
+
                             </div>
                             <div className="mb-3 custom-login-checkbox">
                                 <input type="checkbox" id="remember" />
@@ -130,7 +193,7 @@ const Login = () => {
                                 </Link>
                             </div>
                             {error ? (
-                                <div className="mt-3 text-danger small">{error}</div>
+                                <div className="alert alert-danger mt-3">{error}</div>
                             ) : null}
                         </form>
 

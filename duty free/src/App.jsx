@@ -25,9 +25,31 @@ import ProtectedAdminRoute from './routes/ProtectedAdminRoute';
 import Search from './pages/Search';
 import Wishlist from './pages/Wishlist';
 import HomePage from './pages/homePage/HomePage';
+import { setBrand } from "./store/slice/brandSlice";
+import common from './commonMethod/common';
 
 function App() {
   const location = useLocation()
+  const { apiRequest, dispatch, getUserWishlist, getUserCartlist } = common();
+  const user = JSON.parse(localStorage.getItem("user"))
+
+
+  const fetchBrand = async () => {
+    try {
+      const res = await apiRequest('GET', '/brand')
+      if (Array.isArray(res.brands)) dispatch(setBrand(res.brands))
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    if (user) {
+      getUserWishlist(user?.id)
+      getUserCartlist()
+    }
+  }, [])
+
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.scrollY > 20) {
@@ -37,6 +59,7 @@ function App() {
         });
       }
     };
+    fetchBrand();
     toggleVisibility();
   }, [location]);
   return (
@@ -49,6 +72,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/password-reset" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ForgotPassword />} />
           <Route path="/product-category/:slug" element={<CategoryDetails />} />
           <Route path="/product-category/:slug/:subslug" element={<CategoryDetails />} />
           <Route path="/product/:slug" element={<ProductDetails />} />

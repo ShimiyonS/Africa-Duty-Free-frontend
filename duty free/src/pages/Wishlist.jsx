@@ -1,31 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import Common from '../commonMethod/Common'
+import Common from '../commonMethod/common'
 import ProductCard from '../components/commonComponents/ProductCard'
 import DiscountComponent from '../components/commonComponents/DiscountComponent'
 import { Link } from 'react-router-dom'
 
 const Wishlist = () => {
-    const [products, setproducts] = useState([])
-    const { apiRequest } = Common()
-    const userId = 1
-    const getWishList = async () => {
-        try {
-            const wishlist = await apiRequest("GET", `/auth/${userId}/wishlist`)
-            setproducts(wishlist?.products)
-            console.log(wishlist?.products)
-        } catch (error) {
-            console.log(error.message)
-        }
-    }
-
-
-    useEffect(() => {
-        getWishList();
-    }, [])
-
+    const { wishlistItems } = Common()
     return (
         <>
-            {products?.length === 0 ?
+            {wishlistItems?.length === 0 ?
                 <>
                     <div className='container p-5'>
                         <p className='justuspro-medium'>Your wishlist is currently empty.</p>
@@ -34,7 +17,7 @@ const Wishlist = () => {
                 </> :
                 <>
                     <div className="product-grid container mx-auto my-5">
-                        {products.map((Item, index) => (
+                        {wishlistItems?.map((Item, index) => (
                             <ProductCard gridplacement={"product-grid"} hidePagnation={true} hidePopTool={true} imageheight={250} data={Item} />
                         ))}
                     </div>

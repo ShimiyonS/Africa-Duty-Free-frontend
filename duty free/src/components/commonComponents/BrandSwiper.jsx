@@ -20,9 +20,11 @@ import Brand14 from "../../assets/banner14.png";
 import Brand15 from "../../assets/banner15.png";
 import Brand16 from "../../assets/banner16.png";
 import Brand17 from "../../assets/banner17.png";
+import common from '../../commonMethod/common';
 
 
 const BrandSwiper = () => {
+    const { brandItems } = common();
     const brands = [
         Brand1, Brand2, Brand3, Brand4, Brand5,
         Brand6, Brand7, Brand8, Brand9, Brand10,
@@ -41,7 +43,11 @@ const BrandSwiper = () => {
                 }}
                 breakpoints={{
                     320: {
-                        slidesPerView: 1,
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                    420: {
+                        slidesPerView: 3,
                         spaceBetween: 20,
                     },
                     768: {

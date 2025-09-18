@@ -8,6 +8,7 @@ import CategoryBanner from '../components/commonComponents/CategoryBanner';
 import NewProducts from '../components/commonComponents/NewProducts';
 import { banner } from '../Files/data';
 import SaleCard from '../components/commonComponents/SaleCard';
+import TitleComponent from '../components/TitleComponent';
 
 const ShopDetails = () => {
     const [shop, setShop] = useState([])
@@ -22,14 +23,15 @@ const ShopDetails = () => {
     }, [])
 
     return (
-        <div className=''>
+        <div className='container'>
             <BreadCrumb navigation={[{ key: "home", nav: "/" }, { key: "products", nav: "/shop" }, { key: `${"shop"}`, nav: "" }]} />
             <CategoryBanner bannerDetails={bannerDetails} />
             <BrandSwiper />
             <BestBuy />
             <Products data={shop} headingText={"Welcome to Our Shop"} paraClassName={'ps-4 linear-bg-heading text-color-secondary'} gridplacement={"product-grid"} imageheight={300} hidePopTool={true} />
             <SaleCard data={0} imageClass={"small-image"} />
-            <NewProducts heading={"New Products"} productsdata={shop} hidePopTool={true} />
+            <TitleComponent heading={"New Products"} />
+            <NewProducts productsdata={shop} hidePopTool={true} parentClassName={"mt-4"} />
             <SaleCard data={1} headingClass={"text-center"} imageClass={"big-image"} />
         </div>
     )
