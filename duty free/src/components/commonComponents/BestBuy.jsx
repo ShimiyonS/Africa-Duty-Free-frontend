@@ -37,10 +37,10 @@ const bestBuyDefault = [
 const BestBuy = ({ data = bestBuyDefault, itemClassName, slug }) => {
     // const { slug, subslug } = useParams();
     return (
-        <div className='d-flex align-items-center flex-wrap container'>
+        <div className='d-flex align-items-center flex-wrap container mb-5'>
             {data?.map((item, idx) => {
                 return (
-                    <div className={`${itemClassName ? itemClassName : "p-5 col-12 col-md-6 col-lg-3"}`} key={idx}>
+                    <div className={`${itemClassName ? itemClassName : "p-3 p-md-5 p-lg-5 col-12 col-md-6 col-lg-3"}`} key={idx}>
                         <CategoryCard item={item} image={item.image} text={item?.name} link={slug ? slug + "/" + item?.slug : item?.slug} />
                     </div>
                 )
