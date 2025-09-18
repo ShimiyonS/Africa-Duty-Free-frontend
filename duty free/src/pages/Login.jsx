@@ -74,6 +74,7 @@ const Login = () => {
             const res = await apiRequest('POST', '/auth/login', payload)
             if (res?.token && res?.user) {
                 // store token and user data
+                console.log("data", res)
                 localStorage.setItem('token', res.token)
                 localStorage.setItem('user', JSON.stringify(res.user))
 

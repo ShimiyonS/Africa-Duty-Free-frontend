@@ -38,6 +38,7 @@ const AddEditProducts = ({ mode, productData }) => {
     }
 
     const handleSubmit = async (values) => {
+        console.log("mode", mode)
         if (mode == "edit") {
             try {
                 const fileList = values?.uploadImage || []
@@ -60,6 +61,7 @@ const AddEditProducts = ({ mode, productData }) => {
                     description: values.description,
                     imageUrl: imageUrlToUse,
                 }
+                console.log("productDetail", productDetail)
                 const response = await apiRequest("PUT", `/product/${productData?.id}`, productDetail)
                 console.log(response.message)
                 toast.success(response?.message)
@@ -105,8 +107,9 @@ const AddEditProducts = ({ mode, productData }) => {
     const handleCategoryChange = (value) => {
         setSelectedCategory(value);
         const selected = categories.find((cat) => cat?.id === value);
-        setSubCategories(selected?.subCategorys || []);
-        form.setFieldsValue({ subCategorys: [] });
+        console.log(selected,"ssssssssssssssss")
+        setSubCategories(selected?.subCategories || []);
+        form.setFieldsValue({ subCategories: [] });
     };
 
 
