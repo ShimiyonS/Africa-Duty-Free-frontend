@@ -14,11 +14,10 @@ const MyAccountSidebar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token")
     localStorage.removeItem("user")
-    localStorage.removeItem("orders")
-    localStorage.removeItem("wishlist")
-    localStorage.removeItem("cart")
+    localStorage.removeItem("role")
     navigate('/login')
   }
+
   return (
 
     <div className="side-bar-links d-flex flex-column gap-3">
