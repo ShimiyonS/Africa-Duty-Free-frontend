@@ -30,19 +30,26 @@ import common from './commonMethod/common';
 
 function App() {
   const location = useLocation()
-  const { apiRequest, dispatch } = common();
+  const { apiRequest, dispatch, getUserWishlist, getUserCartlist } = common();
+  const user = JSON.parse(localStorage.getItem("user"))
 
 
   const fetchBrand = async () => {
     try {
-      const res = await apiRequest('GET', '/products')
-      if (Array.isArray(res.products)) dispatch(setBrand(res.products))
+      const res = await apiRequest('GET', '/brand')
+      if (Array.isArray(res.brands)) dispatch(setBrand(res.brands))
 
     } catch (err) {
       console.log(err);
     }
   };
-  
+  useEffect(() => {
+    if (user) {
+      getUserWishlist(user?.id)
+      getUserCartlist()
+    }
+  }, [])
+
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.scrollY > 20) {

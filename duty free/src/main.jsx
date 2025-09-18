@@ -9,10 +9,12 @@ import { BrowserRouter as Router, Routes, Route, BrowserRouter, } from 'react-ro
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import store, { persistor } from './store/store.js';
+import { ToastContainer } from 'react-toastify';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <MyProvider>
+        <ToastContainer position="top-right" autoClose={2000} />
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <App />

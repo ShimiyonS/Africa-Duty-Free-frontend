@@ -50,7 +50,7 @@ const Checkout = () => {
 
   const computeTotal = () => {
     const total = (cart || []).reduce(
-      (acc, item) => acc + (item?.quantity || 0) * (item?.price || 0),
+      (acc, item) => acc + (item?.quantity || 0) * (item?.product?.price || 0),
       0
     );
     return Number(total.toFixed(2)); // rounds to 2 decimals
@@ -112,9 +112,9 @@ const Checkout = () => {
       // 1. First create the order
       const orderResponse = await apiRequest("POST", "/orders", {
         items: cart.map(item => ({
-          product_id: item.id,
-          quantity: item.quantity,
-          price: item.price
+          product_id: item?.product?.id,
+          quantity: item?.quantity,
+          price: item?.product?.price
         })),
         total: computeTotal(),
         userId: 1, // TODO: change to user id 
@@ -151,7 +151,7 @@ const Checkout = () => {
   };
   return (
     <div className="container mt-5">
-      <div className="d-flex align-items-center flex-wrap gap-2">
+      {/* <div className="d-flex align-items-center flex-wrap gap-2">
         <p className="m-0">Have a coupon?</p>
         <button
           type="button"
@@ -162,7 +162,7 @@ const Checkout = () => {
         >
           Click here to enter your code
         </button>
-      </div>
+      </div> */}
       {couponStatus ? (
         <>
           <input
@@ -473,24 +473,27 @@ const Checkout = () => {
                 className="d-flex align-items-center flex-wrap table-box-list"
               >
                 <div className="col-8 col-lg-10 cart-table-item">
-                  <div className="d-flex align-items-center flex-wrap gap-3 p-2">
-                    <img
-                      src={item?.thumbnail}
-                      className="checkout-item-image"
-                      alt={item?.title || "Product"}
-                    />
-                    <div>
+                  <div className="d-flex align-items-center flex-wrap p-2">
+                    <div className="col-4">
+                      <img
+                        src={item?.product?.imageUrl}
+                        className="checkout-item-image"
+                        alt={item?.title || "Product"}
+                      />
+                    </div>
+                    <div className="col-8">
                       <Link
-                        to={`/product/${item.id}`}
-                        className="text-decoration-none cart-product-link justuspro-regular text-color-primary"
+                        to={`/product/${item?.product?.slug}`}
+                        className="text-decoration-none cart-product-link justuspro-regular text-color-danger dmsans-bold"
                       >
-                        {item.title} * {item?.quantity}
+                        {item?.product?.productName}
                       </Link>
+                      <p>${item?.product?.price} * {item?.quantity}</p>
                     </div>
                   </div>
                 </div>
                 <div className="col-4 col-lg-2 cart-table-item text-break dmsans-bold">
-                  ${item?.price * item?.quantity}
+                  ${item?.product?.price * item?.quantity}
                 </div>
               </div>
             );

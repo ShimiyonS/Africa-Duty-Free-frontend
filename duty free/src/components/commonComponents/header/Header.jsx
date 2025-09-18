@@ -6,17 +6,15 @@ import Wishlist from "../../../assets/wishlist.svg"
 import { CiSearch } from "react-icons/ci";
 import "./Header.css"
 import { Link, useNavigate } from 'react-router-dom'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, } from 'react'
 import Common from '../../../commonMethod/common'
-import { setCartItems } from '../../../store/slice/cartSlice'
 import { IoClose } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
-import { toast } from 'react-toastify'
 
 const Header = ({ togglemenu, togglesidebar }) => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState();
-  const { apiRequest, dispatch, cartItems } = Common()
+  const { cartItems } = Common()
   useEffect(() => {
 
     const offcanvasEl = document.getElementById("offcanvasRight");
@@ -47,43 +45,10 @@ const Header = ({ togglemenu, togglesidebar }) => {
     }
   }
 
-
-  const getCartProducts = useCallback(async () => {
-    try {
-      const response = await apiRequest("GET", "/cart")
-      const items = Array.isArray(response?.items) ? response.items : []
-      const mapped = items.map((row) => ({
-        id: row?.product?.id,
-        title: row?.product?.productName,
-        price: row?.product?.price,
-        quantity: row?.quantity || 0,
-        thumbnail: row?.product?.imageUrl
-      }))
-      dispatch(setCartItems(mapped))
-    } catch (error) {
-      console.log(error.message)
-      toast.error(error.message)
-    }
-  }, [apiRequest, dispatch])
-
-
-  // Refresh cart each time offcanvas opens
-  useEffect(() => {
-    const el = document.getElementById("offcanvasRight");
-    const handleShown = () => {
-      getCartProducts();
-    };
-    el?.addEventListener("shown.bs.offcanvas", handleShown);
-    return () => {
-      el?.removeEventListener("shown.bs.offcanvas", handleShown);
-    };
-  }, [getCartProducts])
-
-
   const mathRound = (cartItems) => {
     const total = cartItems.reduce(
       (acc, item) =>
-        acc + (item?.quantity || 0) * (item?.price || 0),
+        acc + (item?.quantity || 0) * (item?.product?.price || 0),
       0
     );
     return Math.round(total * 100) / 100;
@@ -109,17 +74,17 @@ const Header = ({ togglemenu, togglesidebar }) => {
               <button className='bg-transparent m-0 p-0 border-0' data-bs-toggle="modal" data-bs-target="#dutyPopup">
                 <img src={Airplane} style={{ width: "34px" }} alt="airplane" />
               </button>
-              {localStorage.getItem('token') ? 
-              <Link to={`/my-account`}><img src={User} style={{ width: "34px" }} alt="user" /></Link> :
-               <button
-                className='bg-transparent m-0 p-0 border-0'
-                data-bs-toggle="modal"
-                data-bs-target="#customPopup">
-                <img src={User} style={{ width: "34px" }} alt="user" />
-              </button>}
+              {localStorage.getItem('token') ?
+                <Link to={`/my-account`}><img src={User} style={{ width: "34px" }} alt="user" /></Link> :
+                <button
+                  className='bg-transparent m-0 p-0 border-0'
+                  data-bs-toggle="modal"
+                  data-bs-target="#customPopup">
+                  <img src={User} style={{ width: "34px" }} alt="user" />
+                </button>}
               <button className='bg-transparent m-0 p-0 border-0 header-cart-toggle' type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                 <img src={Bag} style={{ width: "34px" }} alt="cart" />
-                <div className='header-cart-total text-color-secondary bg-color-gold'>{cartItems.length}</div>
+                <div className='header-cart-total text-color-secondary bg-color-gold'>{cartItems?.length}</div>
               </button>
               <Link to={`wishlist`}>
                 <img src={Wishlist} width={40} height={40} alt="whislist" />
@@ -279,10 +244,10 @@ const Header = ({ togglemenu, togglesidebar }) => {
               {cartItems?.map((item, index) => {
                 return (
                   <div className='d-flex align-items-center gap-3 p-2' key={index}>
-                    <img src={item?.thumbnail} className='header-cart-image' />
+                    <img src={item?.product?.imageUrl} className='header-cart-image' />
                     <div>
-                      <button onClick={() => { navigate(`/product/${item.id}`) }} className='text-decoration-none header-cart-product-link text-color-danger' type='button' data-bs-dismiss="offcanvas" aria-label="Close">{item.title}</button>
-                      <p><span className='fs-6'>{item?.quantity} </span> <IoIosClose className='header-multiply-icon' /> <span className='fw-bold text-break'>${item?.price}</span></p>
+                      <button onClick={() => { navigate(`/product/${item?.product?.slug}`) }} className='text-decoration-none header-cart-product-link text-color-danger' type='button' data-bs-dismiss="offcanvas" aria-label="Close">{item?.product?.productName}</button>
+                      <p><span className='fs-6'>{item?.quantity} </span> <IoIosClose className='header-multiply-icon' /> <span className='fw-bold text-break'>${item?.product?.price}</span></p>
                     </div>
                   </div>
                 )

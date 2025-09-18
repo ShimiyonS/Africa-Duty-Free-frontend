@@ -24,10 +24,7 @@ import common from '../../commonMethod/common';
 
 
 const BrandSwiper = () => {
-    const {brandItems} = common();
-
-    console.log(brandItems);
-    
+    const { brandItems } = common();
     const brands = [
         Brand1, Brand2, Brand3, Brand4, Brand5,
         Brand6, Brand7, Brand8, Brand9, Brand10,

@@ -10,7 +10,7 @@ import brand from "./slice/brandSlice"
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["wishlist"], // state slices you want to persist
+    whitelist: [], // state slices you want to persist
 };
 const rootReducer = combineReducers({
     cart,

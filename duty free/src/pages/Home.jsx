@@ -20,7 +20,9 @@ import SwiperComponent from "../components/commonComponents/swiperComponent"
 const Home = () => {
   const { apiRequest } = Common()
   const [products, setProducts] = useState([])
+
   const [category, setCategory] = useState([])
+  const [categoryLoading, setCategoryLoading] = useState(false)
 
   const location = useLocation()
   const slug = location.pathname.split("/").pop();
@@ -28,9 +30,16 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await apiRequest("POST", "/products/details", { "api_key": import.meta.env.VITE_APP_YESERP_API_KEY }, {}, import.meta.env.VITE_APP_YESERP_URL);
-        setProducts(data?.data)
-        console.log(data?.data)
+        const data = await apiRequest("GET", "/product", { limit: 100 });
+        setProducts(data?.products)
+        const uniqueSubCategories = [
+          ...new Map(
+            (data?.products || [])
+              .map(item => [item?.subCategory?.slug, item?.subCategory]) // use slug as key
+          ).values()
+        ];
+        setCategory(uniqueSubCategories)
+        console.log()
 
       } catch (error) {
         console.log(error.message)
@@ -39,53 +48,30 @@ const Home = () => {
     fetchProducts();
   }, [])
 
-  useEffect(() => {
-    const fetchCategory = async () => {
-      try {
-        const data = await apiRequest("GET", "/categories", {}, { "X-API-Key": import.meta.env.VITE_APP_YESERP_API_KEY }, import.meta.env.VITE_APP_YESERP_URL);
-        setCategory(data?.data?.filter(item => item?.x_parent_id === null))
-        console.log(data?.data)
+  // useEffect(() => {
+  //   const fetchCategory = async () => {
+  //     setCategoryLoading(true)
+  //     try {
+  //       const data = await apiRequest("GET", "/categories", {}, { "X-API-Key": import.meta.env.VITE_APP_YESERP_API_KEY }, import.meta.env.VITE_APP_YESERP_URL);
+  //       setCategory(data?.data?.filter(item => item?.x_parent_id === null))
+  //       console.log(data?.data)
 
-      } catch (error) {
-        console.log(error.message)
-      }
-    };
-    fetchCategory();
-  }, [])
-
-  const bestBuy = [
-    {
-      name: "Fragrance",
-      slug: "fragrances",
-      image: categoryimage1,
-      des: "Indulge in your favorite spirits with exclusive duty-free."
-    },
-    {
-      name: "Skincare",
-      slug: "skincare",
-      image: categoryimage2,
-      des: "Indulge in your favorite spirits with exclusive duty-free."
-    },
-    {
-      name: "Gift Sets",
-      slug: "gift-sets",
-      image: categoryimage3,
-      des: "Indulge in your favorite spirits with exclusive duty-free."
-    },
-    {
-      name: "Accesoires",
-      slug: "accessories",
-      image: categoryimage4,
-      des: "Indulge in your favorite spirits with exclusive duty-free."
-    }
-  ]
+  //     } catch (error) {
+  //       console.log(error.message)
+  //     }
+  //     finally {
+  //       setCategoryLoading(false)
+  //     }
+  //   };
+  //   fetchCategory();
+  // }, [])
 
   return (
     <div className="container">
       <Banner />
       <BrandSwiper />
       <div>
-        <BestBuy data={category} itemClassName={`p-3 col-12 col-md-6 col-lg-3`} slug={""} />
+        <BestBuy data={category} itemClassName={`p-3 col-12 col-md-6 col-lg-3`}  loading={categoryLoading} />
       </div>
       <div className="pagebody">
         <TitleComponent heading={"Most Popular"} />
