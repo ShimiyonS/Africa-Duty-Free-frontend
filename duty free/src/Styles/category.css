@@ -162,7 +162,6 @@
 }
 
 .sub-category-container {
-    width: 18%;
     display: flex;
     gap: 4px;
     flex-direction: column;

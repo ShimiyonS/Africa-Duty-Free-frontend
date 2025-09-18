@@ -2,16 +2,25 @@ import { Link, useNavigate } from 'react-router-dom';
 import "../Styles/cart.css"
 import { IoMdClose } from 'react-icons/io';
 import common from '../commonMethod/common.js';
+import { toast } from 'react-toastify';
 
 const Cart = () => {
     const navigate = useNavigate();
     const { removeUserCart, cartItems, changeProductQuantityCart } = common()
     const user = JSON.parse(localStorage.getItem("user"))
     const removeItem = async (productId) => {
+        if (!user) {
+            toast.error("please login")
+            return
+        }
         removeUserCart(productId)
     }
 
     const changeQty = async (item, action) => {
+        if (!user) {
+            toast.error("please login")
+            return
+        }
         changeProductQuantityCart({ userId: user?.id, productId: item?.product?.id, action })
     }
 

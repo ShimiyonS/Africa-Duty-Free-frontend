@@ -1,7 +1,17 @@
 import "./navbar.css"
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { TfiClose } from "react-icons/tfi";
 const NavBar = ({ condition, togglemenu }) => {
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    localStorage.removeItem("role")
+    navigate('/login')
+  }
+
   return (
     <div className={`${condition ? "sidebartoggle-active" : ""} sidebar bg-color-primary`}>
       <nav className="nav-header p-1">
@@ -22,25 +32,27 @@ const NavBar = ({ condition, togglemenu }) => {
           {localStorage.getItem('token') ?
             <>
               <li className="d-md-none"><NavLink to={`/my-account`} className="nav-link px-3 pb-1 fw-bold">MY ACCOUNT</NavLink></li>
+              <li className="d-md-none"><NavLink to={`/cart`} className="nav-link px-3 pb-1 fw-bold">CART</NavLink></li>
+              <li className="d-md-none"><NavLink to={`/wishlist`} className="nav-link px-3 pb-1 fw-bold">WISHLIST</NavLink></li>
+              <li className="d-md-none"><button onClick={handleLogout} className='bg-transparent m-0 p-0 border-0 nav-link px-3 pb-1 fw-bold'>LOGOUT</button></li>
+            </>
+            :
+            <>
               <li className="d-md-none">
                 <button className='bg-transparent m-0 p-0 border-0 nav-link px-3 pb-1 fw-bold' data-bs-toggle="modal" data-bs-target="#dutyPopup">
                   DUTY FREE
                 </button>
               </li>
-              <li className="d-md-none"><NavLink to={`/cart`} className="nav-link px-3 pb-1 fw-bold">CART</NavLink></li>
-              <li className="d-md-none"><NavLink to={`/wishlist`} className="nav-link px-3 pb-1 fw-bold">WISHLIST</NavLink></li>
-              <li className="d-md-none"><button className='bg-transparent m-0 p-0 border-0 nav-link px-3 pb-1 fw-bold'>LOGOUT</button></li>
+              <li className="d-md-none">
+                <button
+                  className='bg-transparent m-0 p-0 border-0 nav-link px-3 pb-1 fw-bold'
+                  data-bs-toggle="modal"
+                  data-bs-target="#customPopup">
+                  LOGIN
+                </button>
+              </li>
             </>
-
-            :
-            <li className="d-md-none">
-              <button
-                className='bg-transparent m-0 p-0 border-0 nav-link px-3 pb-1 fw-bold'
-                data-bs-toggle="modal"
-                data-bs-target="#customPopup">
-                LOGIN
-              </button>
-            </li>}
+          }
         </ul>
       </nav>
     </div >

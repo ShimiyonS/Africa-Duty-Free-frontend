@@ -4,6 +4,7 @@ import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { FaShoppingCart, FaEye } from "react-icons/fa";
 import { useMyContext } from "../../Provider/CommonProvider";
 import common from "../../commonMethod/common";
+import { toast } from "react-toastify";
 
 const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop, imageheight = 200, titleclassname = "text-color-primary", priceclassname = "text-color-danger" }) => {
     const { handleOpenAlert } = useMyContext()
@@ -17,6 +18,10 @@ const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop
         })
     }
     const handleToggleWishList = async (item) => {
+        if (!user) {
+            toast.error("please login")
+            return
+        }
         await toggleUserWishlist(user?.id, item?.id)
         handleOpenAlert({
             text: `${item?.productName || item?.name} has been ${wishlistItems.includes(item?.id) ? "removed" : "added"} to your whishlist`,
@@ -28,7 +33,9 @@ const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop
     return (
         <>
             <div className='p-2 position-relative product-card'>
-                {!hideWishlist && <button type="button" onClick={() => handleToggleWishList(data)} className="bg-transparent border-0 heart-btn position-absolute">{wishlistItems.find((i) => i.id === data.id) ? <IoMdHeart /> : <IoMdHeartEmpty />}   </button>}
+                {!hideWishlist &&
+                    <button type="button" onClick={() => handleToggleWishList(data)} className="bg-transparent border-0 heart-btn position-absolute">{wishlistItems.find((i) => i.id === data.id) ? <IoMdHeart /> : <IoMdHeartEmpty />}   </button>
+                }
                 <div>
                     <Link to={`/product/${data?.xid || data?.slug}`} className="">
                         <img src={data?.imageUrl || data?.image_url} height={imageheight} className='p-2 product-image' />

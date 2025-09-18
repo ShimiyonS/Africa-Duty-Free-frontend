@@ -72,6 +72,10 @@ const ProductDetails = () => {
 
 
     const handleAddTocart = async (item) => {
+        if (!user) {
+            toast.error("please login")
+            return
+        }
         addUserCart({
             userId: user?.id,
             productId: item?.id,
@@ -151,6 +155,10 @@ const ProductDetails = () => {
     };
 
     const handleToggleWishList = async (item) => {
+        if (!user) {
+            toast.error("please login")
+            return
+        }
         await toggleUserWishlist(user?.id, item?.id)
         handleOpenAlert({
             text: `${item?.productName || item?.name} has been ${wishlistItems.includes(item?.id) ? "removed" : "added"} to your whishlist`,
@@ -171,11 +179,11 @@ const ProductDetails = () => {
                         <div className="share-icon">
                             <IoIosShareAlt />
                             <div className="share-tooltip bg-color-primary">
-                                <Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`} className="share-facebook text-decoration-none p-2">
+                                <Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${slug}`)}`} target="_blank" className="share-facebook text-decoration-none p-2">
                                     Share on Facebook
                                 </Link>
-                                <Link to={`https://twitter.com/intent/tweet?text=${encodeURIComponent(product?.id)}&url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`} className="share-twitter text-decoration-none p-2">                                    Tweet</Link>
-                                <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `} className="share-pinterest text-decoration-none p-2">
+                                <Link to={`https://twitter.com/intent/tweet?text=${encodeURIComponent(slug)}&url=${encodeURIComponent(`${BASEURL}/product/${slug}`)}`} target="_blank" className="share-twitter text-decoration-none p-2">                                    Tweet</Link>
+                                <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${slug}`)} `} target="_blank" className="share-pinterest text-decoration-none p-2">
                                     Pin it
                                 </Link>
                                 <p className="share--download text-decoration-none p-2 text-black" onClick={() => handleDownloadImage(mainImg)} >
@@ -250,44 +258,64 @@ const ProductDetails = () => {
                                 <p className="product-description text-break">{product?.description}</p>
                                 <div className="d-flex flex-wrap gap-3">
                                     <div >
-                                        <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0 button-bg-gold d-flex justify-content-center align-items-center"
-                                            onClick={() => handleAddTocart(product)}>
-                                            <span className="text-color-secondary pe-4 dmsans-bold">
-                                                Add to cart
-                                            </span>
-                                            <img src={Bag} alt="bag" className="product-bag " />
-                                        </button>
+                                        {localStorage.getItem("token") ? (
+                                            <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0 button-bg-gold d-flex justify-content-center align-items-center"
+                                                onClick={() => handleAddTocart(product)}>
+                                                <span className="text-color-secondary pe-4 dmsans-bold">
+                                                    Add to cart
+                                                </span>
+                                                <img src={Bag} alt="bag" className="product-bag " />
+                                            </button>
+                                        ) : (
+                                            <button type="submit" name="add-to-cart" className="add-cart rounded-5 border-0 button-bg-gold d-flex justify-content-center align-items-center"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#customPopup">
+                                                <span className="text-color-secondary pe-4 dmsans-bold">
+                                                    Add to cart
+                                                </span>
+                                                <img src={Bag} alt="bag" className="product-bag " />
+                                            </button>
+                                        )}
                                     </div>
 
                                 </div>
 
 
                                 <div className="d-flex align-items-md-center flex-column flex-md-row pt-5 gap-3">
-                                    <div onClick={() => handleToggleWishList(product)} className="rounded-5 wishlist p-2 d-flex justify-content-center align-items-center py-3">
-                                        {wishlistItems?.find((i) => i.id === product?.id) ?
-                                            <>
-                                                <span className="add-wishlist rounded-5 border-0 px-3 py-2 dmsans-bold" >
-                                                    Added to wishlist
-                                                </span>
-                                                <IoMdHeart style={{ width: "25px", height: "25px" }} />
-                                            </>
-                                            : <>
+                                    {localStorage.getItem("token") ? (
+                                        <div onClick={() => handleToggleWishList(product)} className="rounded-5 wishlist p-2 d-flex justify-content-center align-items-center py-3">
+                                            {wishlistItems?.find((i) => i.id === product?.id) ?
+                                                <>
+                                                    <span className="add-wishlist rounded-5 border-0 px-3 py-2 dmsans-bold" >
+                                                        Added to wishlist
+                                                    </span>
+                                                    <IoMdHeart style={{ width: "25px", height: "25px" }} />
+                                                </>
+                                                : <>
+                                                    <span className="add-wishlist rounded-5 border-0 px-3 py-2 dmsans-bold">Add to  wishlist</span>
+                                                    <IoMdHeartEmpty style={{ width: "25px", height: "25px" }} />
+                                                </>
+                                            }
+                                        </div>) :
+                                        (
+                                            <div data-bs-toggle="modal"
+                                                data-bs-target="#customPopup" role="button"
+                                                tabIndex={0} className="rounded-5 wishlist p-2 d-flex justify-content-center align-items-center py-3">
                                                 <span className="add-wishlist rounded-5 border-0 px-3 py-2 dmsans-bold">Add to  wishlist</span>
                                                 <IoMdHeartEmpty style={{ width: "25px", height: "25px" }} />
-                                            </>
-                                        }
-                                    </div>
+
+                                            </div>)}
                                     <div className="position-relative share-content" >
-                                        <div className="gap-3 share-emoji  p-3 rounded-5"><Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`}><SlSocialFacebook /></Link>
-                                            <Link to={`https://twitter.com/intent/tweet?text=${encodeURIComponent(product?.id)}&url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`}><TfiTwitter /></Link>
-                                            <Link to={`https://plus.google.com/share?url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`}> <FaGooglePlusG /></Link>
-                                            <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `}><FaPinterestP /></Link>
-                                            <Link to={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `}><FaLinkedinIn /></Link>
-                                            <Link to={`http://www.stumbleupon.com/submit?url=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `}><ImStumbleupon /></Link>
-                                            <Link to={`whatsapp://send?text=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `}><FaWhatsapp /></Link>
-                                            <Link to={`https://getpocket.com/save?url${encodeURIComponent(`${BASEURL}/product/${product?.id}`)} `}><FaGetPocket /></Link>
-                                            <Link to={`mailto:?subject=${encodeURIComponent(product?.id)}&body=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`}><BsEnvelopePaperFill /> </Link>
-                                            <Link to={`tg://msg?text=${encodeURIComponent(`${BASEURL}/product/${product?.id}`)}`}><FaRegPaperPlane /></Link>
+                                        <div className="gap-3 share-emoji  p-3 rounded-5"><Link to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASEURL}/product/${slug}`)}`}><SlSocialFacebook /></Link>
+                                            <Link to={`https://twitter.com/intent/tweet?text=${encodeURIComponent(slug)}&url=${encodeURIComponent(`${BASEURL}/product/${slug}`)}`} target="_blank"><TfiTwitter /></Link>
+                                            <Link to={`https://plus.google.com/share?url=${encodeURIComponent(`${BASEURL}/product/${slug}`)}`} target="_blank"> <FaGooglePlusG /></Link>
+                                            <Link to={`http://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${BASEURL}/product/${slug}`)} `} target="_blank"><FaPinterestP /></Link>
+                                            <Link to={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`${BASEURL}/product/${slug}`)} `} target="_blank"><FaLinkedinIn /></Link>
+                                            <Link to={`http://www.stumbleupon.com/submit?url=${encodeURIComponent(`${BASEURL}/product/${slug}`)} `} target="_blank"><ImStumbleupon /></Link>
+                                            <Link to={`whatsapp://send?text=${encodeURIComponent(`${BASEURL}/product/${slug}`)} `} target="_blank"><FaWhatsapp /></Link>
+                                            <Link to={`https://getpocket.com/save?url${encodeURIComponent(`${BASEURL}/product/${slug}`)} `} target="_blank"><FaGetPocket /></Link>
+                                            <Link to={`mailto:?subject=${encodeURIComponent(slug)}&body=${encodeURIComponent(`${BASEURL}/product/${slug}`)}`} target="_blank"><BsEnvelopePaperFill /> </Link>
+                                            <Link to={`tg://msg?text=${encodeURIComponent(`${BASEURL}/product/${slug}`)}`} target="_blank"><FaRegPaperPlane /></Link>
                                         </div>
                                         <span className="pe-2 dmsans-bold">Share</span>
                                         <BsShare />

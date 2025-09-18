@@ -43,10 +43,6 @@ li .nav-link:hover {
         border-bottom: 0px;
     }
 
-    li .nav-link:hover {
-        border-bottom: 4px solid var(--text-color-primary) !important;
-    }
-
     .sidebartoggle-active {
         left: 0px;
     }
