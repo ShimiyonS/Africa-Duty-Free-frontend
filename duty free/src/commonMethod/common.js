@@ -10,6 +10,8 @@ const generateSlug = (value) => {
 
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { setWishlist } from "../store/slice/wishlistSlice";
+import { setCartItems } from "../store/slice/cartSlice";
 
 
 const api = axios.create({
@@ -27,13 +29,14 @@ api.interceptors.request.use(
     },
     (error) => Promise.reject(error)
 );
-const apiRequest = async (method, url, data = {}, headers = {}) => {
+const apiRequest = async (method, url, data = {}, headers = {}, baseURL, params) => {
     try {
         const response = await api({
             method,
             url,
+            baseURL: baseURL || import.meta.env.VITE_APP_API_URL,
             data,
-            params: method === "GET" ? data : {},
+            params: method === "GET" ? data : params,
             headers,
         });
         return response.data;
@@ -44,10 +47,39 @@ const apiRequest = async (method, url, data = {}, headers = {}) => {
     }
 };
 
+
 const common = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart?.items || []);
+    const wishlistItems = useSelector((state) => state.wishlist?.items || []);
     const brandItems = useSelector((state) => state.brand?.items || [])
-    return { dispatch, cartItems, brandItems, firstLetterCapital, apiRequest, generateSlug }
+
+    const getUserWishlist = async (userId) => {
+        const res = await apiRequest("GET", `/auth/${userId}/wishlist`);
+        dispatch(setWishlist(res?.products || []));
+    };
+    const getUserCartlist = async () => {
+        const res = await apiRequest("GET", `/cart`);
+        dispatch(setCartItems(res?.items || []));
+    };
+    const addUserCart = async (data) => {
+        const res = await apiRequest("POST", `/cart/add`, data);
+        getUserCartlist()
+    };
+    const removeUserCart = async (productId) => {
+        const res = await apiRequest("DELETE", `/cart/remove/${productId}`);
+        getUserCartlist()
+    };
+    const changeProductQuantityCart = async (data) => {
+        const res = await apiRequest("POST", `/cart/quantity`, data);
+        getUserCartlist()
+    };
+
+    const toggleUserWishlist = async (userId, productId) => {
+        const res = await apiRequest("POST", `/auth/${userId}/wishlist/toggle`, { productId });
+        getUserWishlist(userId);
+    };
+
+    return { changeProductQuantityCart, removeUserCart, addUserCart, getUserCartlist, toggleUserWishlist, getUserWishlist, dispatch, cartItems, brandItems, wishlistItems, firstLetterCapital, apiRequest, generateSlug }
 }
 export default common;

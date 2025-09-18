@@ -4,7 +4,7 @@ import CategoryBanner from '../components/commonComponents/CategoryBanner'
 import BrandSwiper from '../components/commonComponents/BrandSwiper'
 import NewProducts from '../components/commonComponents/NewProducts'
 // import Products from '../components/commonComponents/Products'
-import Common from '../commonMethod/common'
+import Common from '../commonMethod/common.js'
 import SaleCard from '../components/commonComponents/SaleCard'
 import BestBuy from '../components/commonComponents/BestBuy'
 import { Link, useParams } from 'react-router-dom'
@@ -43,7 +43,7 @@ const CategoryDetails = () => {
         try {
             const products = await apiRequest("GET", `/subcategory/products/getproductsbysubcategory/${subslug}`)
             setProducts(products?.subCategory?.products)
-            console.log(products?.subCategory?.products)
+            // console.log(products?.subCategory?.products)
         } catch (error) {
             console.log("api fetching error ", error.message)
         }
@@ -162,10 +162,10 @@ const CategoryDetails = () => {
                                         return (
                                             <>
                                                 <div className='sub-category-container' key={idx}>
-                                                    <Link to={`/product/${product?.id}`} className="sub-category-image remove-box-shadow" style={{ height: "200px" }}>
-                                                        <img src={product?.productImage} height={150} className=' product-image' />
+                                                    <Link to={`/product/${product?.slug}`} className="sub-category-image remove-box-shadow" style={{ height: "200px" }}>
+                                                        <img src={product?.productImage || product?.imageUrl} height={150} className=' product-image' />
                                                     </Link>
-                                                    <Link to={`/product/${product?.id}`} className={`$ product-title dmsans-bold d-block text-decoration-none mb-0 pt-2`}>{product.name}</Link>
+                                                    <Link to={`/product/${product?.slug}`} className={`$ product-title dmsans-bold d-block text-decoration-none mb-0 pt-2`}>{product?.name || product?.productName}</Link>
                                                     <p className={`$ product-price dmsans-bold `}>${product?.price}</p>
                                                 </div>
                                                 {/* <div className='col-12 col-sm-6 col-md-6 col-lg-3'>
@@ -177,7 +177,7 @@ const CategoryDetails = () => {
                                         )
                                     })}
                                 </div>
-                                <button type='button' className='sub-category-button text-color-secondary button-bg-danger  border-0 mx-auto my-5  d-block '>Show more items</button>
+                                {/* <button type='button' className='sub-category-button text-color-secondary button-bg-danger  border-0 mx-auto my-5  d-block '>Show more items</button> */}
                             </div>
                         </div>
                     </div>

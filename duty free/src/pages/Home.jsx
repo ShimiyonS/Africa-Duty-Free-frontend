@@ -9,7 +9,7 @@ import OfferProduct1 from "../assets/categoryimage1.jpg"
 import OfferProduct2 from "../assets/categoryimage5.jpg"
 import NewProducts from "../components/commonComponents/NewProducts"
 import { useEffect, useState } from "react"
-import Common from "../commonMethod/Common"
+import Common from "../commonMethod/common"
 import BestBuy from "../components/commonComponents/BestBuy"
 import Banner from "../components/commonComponents/Banner"
 import TitleComponent from "../components/TitleComponent"
@@ -21,15 +21,25 @@ const Home = () => {
   const { apiRequest } = Common()
   const [products, setProducts] = useState([])
 
+  const [category, setCategory] = useState([])
+  const [categoryLoading, setCategoryLoading] = useState(false)
+
   const location = useLocation()
   const slug = location.pathname.split("/").pop();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await apiRequest("GET", "/product");
+        const data = await apiRequest("GET", "/product", { limit: 100 });
         setProducts(data?.products)
-        console.log(data?.products)
+        const uniqueSubCategories = [
+          ...new Map(
+            (data?.products || [])
+              .map(item => [item?.subCategory?.slug, item?.subCategory]) // use slug as key
+          ).values()
+        ];
+        setCategory(uniqueSubCategories)
+        console.log()
 
       } catch (error) {
         console.log(error.message)
@@ -38,39 +48,30 @@ const Home = () => {
     fetchProducts();
   }, [])
 
-  const bestBuy = [
-    {
-      name: "Fragrance",
-      slug: "fragrances",
-      image: categoryimage1,
-      des: "Indulge in your favorite spirits with exclusive duty-free."
-    },
-    {
-      name: "Skincare",
-      slug: "skincare",
-      image: categoryimage2,
-      des: "Indulge in your favorite spirits with exclusive duty-free."
-    },
-    {
-      name: "Gift Sets",
-      slug: "gift-sets",
-      image: categoryimage3,
-      des: "Indulge in your favorite spirits with exclusive duty-free."
-    },
-    {
-      name: "Accesoires",
-      slug: "accessories",
-      image: categoryimage4,
-      des: "Indulge in your favorite spirits with exclusive duty-free."
-    }
-  ]
+  // useEffect(() => {
+  //   const fetchCategory = async () => {
+  //     setCategoryLoading(true)
+  //     try {
+  //       const data = await apiRequest("GET", "/categories", {}, { "X-API-Key": import.meta.env.VITE_APP_YESERP_API_KEY }, import.meta.env.VITE_APP_YESERP_URL);
+  //       setCategory(data?.data?.filter(item => item?.x_parent_id === null))
+  //       console.log(data?.data)
+
+  //     } catch (error) {
+  //       console.log(error.message)
+  //     }
+  //     finally {
+  //       setCategoryLoading(false)
+  //     }
+  //   };
+  //   fetchCategory();
+  // }, [])
 
   return (
     <div className="container">
       <Banner />
       <BrandSwiper />
       <div>
-        <BestBuy data={bestBuy} itemClassName={`p-3 col-12 col-md-6 col-lg-3`} slug={"beauty"} />
+        <BestBuy data={category} itemClassName={`p-3 col-12 col-md-6 col-lg-3`}  loading={categoryLoading} />
       </div>
       <div className="pagebody">
         <TitleComponent heading={"Most Popular"} />

@@ -1,21 +1,17 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const SubCategory = ({ subCategorys }) => {
-    const location = useNavigate()
-    const categoryHandler = (slug) => {
-        location(`/product-category/beauty/${slug}`)
-    }
+    const { slug, subslug } = useParams();
     return (
         <div className=' sub-category-page-container'>
             {subCategorys.map((subCategory, idex) =>
                 <div className='sub-category-container' key={idex}>
-                    <div onClick={() => categoryHandler(subCategory?.slug)} className='sub-category-name'>{subCategory?.subcategoryName}</div>
-                    <Link to={`/beauty/${subCategory?.slug}`} className="sub-category-image">
-                        {/* <img src={subCategory.products[0]?.imageUrl} height={200} className=' product-image' /> */}
-                        <img src="http://localhost:8000/uploads/product/images/1757323591936-7661_MAIN_1_original_webshop.jpg" height={200} className=' product-image' />
+                    <Link to={`/product-category/${slug}/${subCategory?.slug}`} className='sub-category-name text-decoration-none'>{subCategory?.subcategoryName}</Link>
+                    <Link to={`/product-category/${slug}/${subCategory?.slug}`} className="sub-category-image">
+                        <img src={subCategory?.image} height={200} className=' product-image' />
                     </Link>
-                    <Link to={`/beauty/${subCategory?.slug}`} className={`$ product-title dmsans-bold d-block text-decoration-none mb-0 pt-2`}>{subCategory?.products[0]?.productName}</Link>
+                    <Link to={`/product/${subCategory?.products[0]?.slug}`} className={`$ product-title dmsans-bold d-block text-decoration-none mb-0 pt-2`}>{subCategory?.products[0]?.productName}</Link>
                     <p className={`$ product-price dmsans-bold `}>${subCategory?.products[0]?.price}</p>
                 </div>
             )}
