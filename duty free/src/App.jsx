@@ -27,6 +27,7 @@ import Wishlist from './pages/Wishlist';
 import HomePage from './pages/homePage/HomePage';
 import { setBrand } from "./store/slice/brandSlice";
 import common from './commonMethod/common';
+import PaymentCallback from './pages/PaymentCallback';
 
 function App() {
   const location = useLocation()
@@ -83,6 +84,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/payment/callback" element={<PaymentCallback />} />
           <Route path="account/*" element={<ProtectedRoute ><AccountRoutes /></ProtectedRoute>} />
           <Route path="my-account/*" element={<ProtectedRoute ><MyAccountRoutes /></ProtectedRoute>} />
           <Route path="checkout" element={<Checkout />} />
