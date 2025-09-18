@@ -57,6 +57,7 @@ const ProductDetails = () => {
                 if (response?.status) {
                     setProduct(response?.product);
                     setLoading(false)
+                    setMainImg(response?.product?.imageUrl)
                 } else {
                     toast.error("Backend error")
                 }
@@ -69,6 +70,7 @@ const ProductDetails = () => {
         }
         fetchProduct();
     }, [slug])
+
 
 
     const handleAddTocart = async (item) => {
@@ -202,7 +204,7 @@ const ProductDetails = () => {
                     <Loader /> :
                     <>
                         <BreadCrumb navigation={[{ key: "home", nav: "/" }, { key: `${product?.subCategory?.category?.categoryName}`, nav: `/product-category/${product?.subCategory?.category?.slug}` }]} />
-                        <div className="d-flex flex-wrap align-items-center justify-content-center product-wrapper pb-5 ">
+                        <div className="d-flex flex-wrap align-items-center justify-content-center product-wrapper pb-2 pb-md-5 ">
 
                             <div className="col-12 col-md-8 col-lg-6 d-flex flex-column" >
                                 <div className="position-relative">
@@ -212,8 +214,8 @@ const ProductDetails = () => {
                                     </div>
                                 </div>
 
-                                {product?.images?.length > 4 ?
-                                    <div className="container mx-auto">
+                                {product?.images && product?.images?.length > 4 ?
+                                    <div className=" mx-auto">
                                         <Swiper
                                             slidesPerView={4}
 
@@ -262,7 +264,7 @@ const ProductDetails = () => {
                                 </div>
 
 
-                                <div className="d-flex align-items-md-center flex-column flex-md-row pt-5 gap-3">
+                                <div className="d-flex align-items-md-center flex-column flex-md-row pt-2 pt-md-5 gap-3">
                                     <div onClick={() => handleToggleWishList(product)} className="rounded-5 wishlist p-2 d-flex justify-content-center align-items-center py-3">
                                         {wishlistItems?.find((i) => i.id === product?.id) ?
                                             <>
@@ -314,7 +316,7 @@ const ProductDetails = () => {
                             </div>
 
                         </div>
-                        <div className="container pt-5 ">
+                        <div className="pt-2 pt-md-5">
                             <div className="product-description-bottom rounded-5 overflow-hidden col-sm-12 col-md-12 col-lg-12">
                                 <div className=" bg-color-gold  d-flex justify-content-center">
                                     <div className="d-flex gap-5">
@@ -334,11 +336,11 @@ const ProductDetails = () => {
                                 </div>
 
                                 {activeTab === "review" &&
-                                    <div className="text-center product-description-details p-5">
+                                    <div className="text-center product-description-details p-3 p-md-5">
                                         <div className="pb-4 ">
                                             <h2 className="review-header justuspro-medium">Be the first to Review “Veuve Clicquot Yellow Label Brut White 0.75L”</h2>
                                             <p className=" m-0 text-start product-email-content text-color-muted">Your email address will not be published. Required fields are marked *</p>
-                                            <div className="d-flex pt-5 gap-3">
+                                            <div className="d-flex pt-3 pt-md-5 gap-3">
                                                 <p className="text-start dmsans-bold ">Your Rating</p>
                                                 <div className="flex gap-2 text-2xl">
                                                     {[1, 2, 3, 4, 5].map((num) => (
@@ -354,10 +356,10 @@ const ProductDetails = () => {
                                             </div>
                                         </div>
 
-                                        <div className="form-main-div">
+                                        <div className="form-main-div w-100">
                                             <form className="  rounded-4 pb-3">
-                                                <div className="row mb-3">
-                                                    <div className="col-md-6 mb-3 mb-md-0">
+                                                <div className="d-flex flex-wrap mb-3">
+                                                    <div className="col-md-6 col-12 mb-3 mb-md-0 p-0">
                                                         <input
                                                             type="text"
                                                             placeholder="Name *"
@@ -365,7 +367,7 @@ const ProductDetails = () => {
                                                             required
                                                         />
                                                     </div>
-                                                    <div className="col-md-6">
+                                                    <div className="col-md-6 p-0  col-12 ">
                                                         <input
                                                             type="email"
                                                             placeholder="Email *"
