@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Common from '../../commonMethod/Common';
+import Common from '../../commonMethod/common';
 import ProductCard from './ProductCard';
 import "../../Styles/product.css";
 import PaginationCommon from './PaginationCommon';
