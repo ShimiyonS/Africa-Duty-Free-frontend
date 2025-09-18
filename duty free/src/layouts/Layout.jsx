@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import SaleBanner from '../components/commonComponents/header/SaleBanner.jsx'
 import Header from '../components/commonComponents/header/Header.jsx'
-import NavBar from '../components/commonComponents/header/navbar.jsx'
+import NavBar from '../components/commonComponents/header/Navbar.jsx'
 import Footer from '../components/commonComponents/footer/Footer.jsx'
 import { useEffect, useState, Fragment } from 'react'
 import CardModal from '../components/commonComponents/CardModal.jsx'
