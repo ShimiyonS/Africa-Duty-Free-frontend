@@ -1,4 +1,4 @@
-import "./MyaccountSidebar.css"
+import "./MyAccountSidebar.css"
 import { AiOutlineDashboard } from "react-icons/ai";
 import { LiaCartArrowDownSolid } from "react-icons/lia";
 import { RxDownload } from "react-icons/rx";

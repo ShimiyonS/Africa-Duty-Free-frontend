@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Common from '../commonMethod/Common';
+import Common from '../commonMethod/common.js';
 import BreadCrumb from '../components/commonComponents/BreadCrumb';
 import Products from '../components/commonComponents/Products';
 import BestBuy from '../components/commonComponents/BestBuy';
