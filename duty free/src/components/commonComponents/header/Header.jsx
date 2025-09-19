@@ -7,7 +7,7 @@ import { CiSearch } from "react-icons/ci";
 import "./Header.css"
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState, } from 'react'
-import Common from '../../../commonMethod/common'
+import Common from '../../../commonMethod/common.js'
 import { IoClose } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
 

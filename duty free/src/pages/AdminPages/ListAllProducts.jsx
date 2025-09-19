@@ -3,7 +3,7 @@ import { Col, Form, Input, Row, Select, Space, Table } from "antd";
 import AddEditProducts from '../../components/AdminComponents/AddEditProducts';
 import DeletePopup from '../../components/commonComponents/DeletePopup'
 import { toast } from 'react-toastify';
-import common from '../../commonMethod/common';
+import common from '../../commonMethod/common.js';
 import AdminHeader from "../../components/AdminComponents/AdminHeader"
 import { Link } from 'react-router-dom';
 

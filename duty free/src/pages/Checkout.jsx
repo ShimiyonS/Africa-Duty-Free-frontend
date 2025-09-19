@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../Styles/checkout.css";
-import common from "../commonMethod/common";
+import common from "../commonMethod/common.js";
 import { Link } from "react-router-dom";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { FaCreditCard } from "react-icons/fa6";
@@ -269,7 +269,7 @@ const Checkout = () => {
     }
   };
   return (
-    <div className="container mt-5">
+    <div className="container mt-0 mt-md-5">
       {/* <div className="d-flex align-items-center flex-wrap gap-2">
         <p className="m-0">Have a coupon?</p>
         <button
@@ -305,7 +305,7 @@ const Checkout = () => {
       ) : (
         ""
       )}
-      <div className="d-flex flex-wrap py-5 ">
+      <div className="d-flex flex-wrap py-2  py-md-5 ">
         <div className="col-12 col-lg-6 p-lg-3">
           <h1 className="justuspro-bold mb-4 cart-heading">Billing details</h1>
           <label className="checkout-form-label required dmsans-bold">
@@ -313,7 +313,7 @@ const Checkout = () => {
           </label>
           <input
             type="email"
-            placeholder=""
+            placeholder="Please enter billing email"
             className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.email ? 'border-danger' : ''}`}
             name="email"
             value={form.email}
@@ -328,7 +328,7 @@ const Checkout = () => {
           </label>
           <input
             type="text"
-            placeholder=""
+            placeholder="Please enter billing first name"
             className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.firstName ? 'border-danger' : ''}`}
             name="firstName"
             value={form.firstName}
@@ -345,7 +345,7 @@ const Checkout = () => {
           </label>
           <input
             type="text"
-            placeholder=""
+            placeholder="Please enter billing last name"
             className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.lastName ? 'border-danger' : ''}`}
             name="lastName"
             value={form.lastName}
@@ -353,7 +353,7 @@ const Checkout = () => {
             onBlur={handleBlur}
           />
           {errors.lastName && (
-            <div  className="invalid-feedback d-block mt-2" >
+            <div className="invalid-feedback d-block mt-2" >
               {errors.lastName}
             </div>
           )}
@@ -362,7 +362,7 @@ const Checkout = () => {
           </label>
           <input
             type="text"
-            placeholder=""
+            placeholder="Please enter billing company name"
             className="d-block col-12 col-lg-8 placeholder-custom custom-input"
             name="company"
             value={form.company}
@@ -371,23 +371,24 @@ const Checkout = () => {
           <label className="checkout-form-label required dmsans-bold">
             Country / Region
           </label>
-          <div></div>
           <div className={`d-block col-12 col-lg-8 placeholder-custom custom-select-address ${errors.country ? 'border-danger' : ''}`}>
             <CountryDropdown
               value={form.country}
+              placeholder="Please select country"
               onChange={(val) =>
                 handleChange({ target: { name: "country", value: val } })
               }
               onBlur={() => handleBlur({ target: { name: "country", value: form.country } })}
               valueType="short"
+              className="custom-input"
             />
           </div>
           {errors.country && (
-            <div  className="invalid-feedback d-block mt-2" >
+            <div className="invalid-feedback d-block mt-2" >
               {errors.country}
             </div>
           )}
-          <div></div>
+
           <label className="checkout-form-label required dmsans-bold">
             Street address
           </label>
@@ -401,7 +402,7 @@ const Checkout = () => {
             onBlur={handleBlur}
           />
           {errors.street1 && (
-            <div  className="invalid-feedback d-block mt-2" >
+            <div className="invalid-feedback d-block mt-2" >
               {errors.street1}
             </div>
           )}
@@ -418,7 +419,7 @@ const Checkout = () => {
           </label>
           <input
             type="text"
-            placeholder=""
+            placeholder="Please enter billing city"
             className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.city ? 'border-danger' : ''}`}
             name="city"
             value={form.city}
@@ -426,7 +427,7 @@ const Checkout = () => {
             onBlur={handleBlur}
           />
           {errors.city && (
-            <div  className="invalid-feedback d-block mt-2" >
+            <div className="invalid-feedback d-block mt-2" >
               {errors.city}
             </div>
           )}
@@ -441,7 +442,7 @@ const Checkout = () => {
               onChange={(val) =>
                 handleChange({ target: { name: "region", value: val } })
               }
-              classes="d-block col-12 col-lg-8 placeholder-custom custom-input"
+              className="d-block col-12 col-lg-8 placeholder-custom custom-input"
               countryValueType="short"
             />
           </div>
@@ -451,7 +452,7 @@ const Checkout = () => {
           </label>
           <input
             type="text"
-            placeholder=""
+            placeholder="Please enter billing postcode"
             className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.postcode ? 'border-danger' : ''}`}
             name="postcode"
             value={form.postcode}
@@ -459,7 +460,7 @@ const Checkout = () => {
             onBlur={handleBlur}
           />
           {errors.postcode && (
-            <div  className="invalid-feedback d-block mt-2" >
+            <div className="invalid-feedback d-block mt-2" >
               {errors.postcode}
             </div>
           )}
@@ -468,7 +469,7 @@ const Checkout = () => {
           </label>
           <input
             type="text"
-            placeholder=""
+            placeholder="Please enter phone number"
             className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.phone ? 'border-danger' : ''}`}
             name="phone"
             value={form.phone}
@@ -476,7 +477,7 @@ const Checkout = () => {
             onBlur={handleBlur}
           />
           {errors.phone && (
-            <div  className="invalid-feedback d-block mt-2" >
+            <div className="invalid-feedback d-block mt-2" >
               {errors.phone}
             </div>
           )}
@@ -515,7 +516,7 @@ const Checkout = () => {
                 onBlur={handleBlur}
               />
               {errors.sFirstName && (
-                <div  className="invalid-feedback d-block mt-2" >
+                <div className="invalid-feedback d-block mt-2" >
                   {errors.sFirstName}
                 </div>
               )}
@@ -532,7 +533,7 @@ const Checkout = () => {
                 onBlur={handleBlur}
               />
               {errors.sLastName && (
-                <div  className="invalid-feedback d-block mt-2" >
+                <div className="invalid-feedback d-block mt-2" >
                   {errors.sLastName}
                 </div>
               )}
@@ -562,7 +563,7 @@ const Checkout = () => {
                 />
               </div>
               {errors.sCountry && (
-                <div  className="invalid-feedback d-block mt-2" >
+                <div className="invalid-feedback d-block mt-2" >
                   {errors.sCountry}
                 </div>
               )}
@@ -580,7 +581,7 @@ const Checkout = () => {
                 onBlur={handleBlur}
               />
               {errors.sStreet1 && (
-                <div  className="invalid-feedback d-block mt-2" >
+                <div className="invalid-feedback d-block mt-2" >
                   {errors.sStreet1}
                 </div>
               )}
@@ -605,7 +606,7 @@ const Checkout = () => {
                 onBlur={handleBlur}
               />
               {errors.sCity && (
-                <div  className="invalid-feedback d-block mt-2" >
+                <div className="invalid-feedback d-block mt-2" >
                   {errors.sCity}
                 </div>
               )}
@@ -638,13 +639,13 @@ const Checkout = () => {
                 onBlur={handleBlur}
               />
               {errors.sPostcode && (
-                <div  className="invalid-feedback d-block mt-2" >
+                <div className="invalid-feedback d-block mt-2" >
                   {errors.sPostcode}
                 </div>
               )}
             </div>
           )}
-          <label className="checkout-form-label mt-5">
+          <label className="checkout-form-label mt-md-5">
             Order notes (optional)
           </label>
           <textarea
@@ -673,15 +674,15 @@ const Checkout = () => {
                 className="d-flex align-items-center flex-wrap table-box-list"
               >
                 <div className="col-8 col-lg-10 cart-table-item">
-                  <div className="d-flex align-items-center flex-wrap p-2">
-                    <div className="col-4">
+                  <div className="d-flex flex-wrap align-items-center flex-wrap p-2">
+                    <div className="col-12 col-md-4">
                       <img
                         src={item?.product?.imageUrl}
                         className="checkout-item-image"
                         alt={item?.title || "Product"}
                       />
                     </div>
-                    <div className="col-8">
+                    <div className="col-12 col-md-8">
                       <Link
                         to={`/product/${item?.product?.slug}`}
                         className="text-decoration-none cart-product-link justuspro-regular text-color-danger dmsans-bold"
@@ -724,11 +725,11 @@ const Checkout = () => {
               ${computeTotal()}
             </div>
           </div>
-          <p className="table-box mt-5 mb-0 justuspro-regular text-color-primary">
+          {/* <p className="table-box mt-5 mb-0 justuspro-regular text-color-primary">
             Sorry, it seems that there are no available payment methods. Please
             contact us if you require assistance or wish to make alternate
             arrangements.
-          </p>
+          </p> */}
           <div>
             <div style={{
               border: "1px solid #ddd",

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Common from '../../commonMethod/common'
+import Common from '../../commonMethod/common.js'
 import { Button, Col, Flex, Modal, Row } from 'antd';
 import { MdDeleteOutline } from 'react-icons/md';
 import defaultimg from '../../assets/default.png'

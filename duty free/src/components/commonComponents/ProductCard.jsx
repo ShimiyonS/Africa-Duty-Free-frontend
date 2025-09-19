@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { FaShoppingCart, FaEye } from "react-icons/fa";
 import { useMyContext } from "../../Provider/CommonProvider";
-import common from "../../commonMethod/common";
+import common from "../../commonMethod/common.js";
 import { toast } from "react-toastify";
 
 const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop, imageheight = 200, titleclassname = "text-color-primary", priceclassname = "text-color-danger" }) => {
