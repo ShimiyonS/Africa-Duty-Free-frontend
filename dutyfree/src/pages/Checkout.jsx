@@ -296,15 +296,17 @@ const Checkout = () => {
     try {
       const res = await apiRequest("GET", "/address");
       const data = res?.addresses
+      console.log(data)
       setAddress((prev) => ({
         ...prev,
         billing: data?.find((item) => item?.type == "billing"),
         shipping: data?.filter((item) => item?.type == "shipping")
       }))
+      console.log(address)
       // toast.success(res?.message)
     }
     catch (error) {
-      toast.success(error?.message)
+      toast.error(error?.message)
     }
   }
 
@@ -363,7 +365,8 @@ const Checkout = () => {
       <div className="d-flex flex-wrap py-2  py-md-5 ">
         <div className="col-12 col-lg-6 p-lg-3">
           <h1 className="justuspro-bold mb-4 cart-heading">Billing details</h1>
-          {Object.keys(address?.billing)?.length > 0 ?
+          {console.log(address)}
+          {Object.keys(address?.billing || {})?.length > 0 ?
             <div className="address-block mb-5">
               <p><strong>Name:  </strong>{address?.billing?.firstName}  {address?.billing?.lastName}</p>
               <p><strong>Country:</strong> {address?.billing?.country}</p>
