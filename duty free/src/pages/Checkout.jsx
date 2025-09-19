@@ -243,7 +243,6 @@ const Checkout = () => {
           price: item?.product?.price
         })),
         total: computeTotal(),
-        userId: 1, // TODO: change to user id 
       });
 
       const orderId = orderResponse.orderId;
@@ -256,7 +255,6 @@ const Checkout = () => {
         paymentMethod: method,
         orderId: orderId,
         redirectUrl: window.location.origin + "/payment/callback",
-        userId: 1,
       });
 
       // 3. Redirect to payment page
@@ -731,28 +729,11 @@ const Checkout = () => {
             arrangements.
           </p> */}
           <div>
-            <div style={{
-              border: "1px solid #ddd",
-              padding: "20px",
-              margin: "20px 0px "
-            }}>
-              <h3 style={{ marginBottom: "15px" }}>Choose a Payment Method</h3>
+            <div className="payment-method-container">
+              <h3 className="payment-method-title">Choose a Payment Method</h3>
 
-              <div style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                marginBottom: "20px"
-              }}>
-                <label style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  cursor: "pointer",
-                  padding: "10px",
-                  border: paymentMethod === "card" ? "2px solid #f9a825" : "1px solid #ccc",
-                  borderRadius: "6px"
-                }}>
+              <div className="payment-method-options">
+                <label className={`payment-method-label ${paymentMethod === "card" ? "selected" : ""}`}>
                   <input
                     type="radio"
                     name="payment"
@@ -764,15 +745,7 @@ const Checkout = () => {
                   Pay with Card
                 </label>
 
-                <label style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  cursor: "pointer",
-                  padding: "10px",
-                  border: paymentMethod === "mobilemoneyghana" ? "2px solid #f9a825" : "1px solid #ccc",
-                  borderRadius: "6px"
-                }}>
+                <label className={`payment-method-label ${paymentMethod === "mobilemoneyghana" ? "selected" : ""}`}>
                   <input
                     type="radio"
                     name="payment"
@@ -784,15 +757,7 @@ const Checkout = () => {
                   Mobile Money
                 </label>
 
-                <label style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  cursor: "pointer",
-                  padding: "10px",
-                  border: paymentMethod === "bank" ? "2px solid #f9a825" : "1px solid #ccc",
-                  borderRadius: "6px"
-                }}>
+                <label className={`payment-method-label ${paymentMethod === "bank" ? "selected" : ""}`}>
                   <input
                     type="radio"
                     name="payment"
@@ -807,15 +772,7 @@ const Checkout = () => {
 
               {/* Payment method error message */}
               {paymentMethodError && (
-                <div style={{
-                  color: "#dc3545",
-                  fontSize: "14px",
-                  marginTop: "10px",
-                  padding: "8px 12px",
-                  backgroundColor: "#f8d7da",
-                  border: "1px solid #f5c6cb",
-                  borderRadius: "4px"
-                }}>
+                <div className="payment-method-error">
                   {paymentMethodError}
                 </div>
               )}
