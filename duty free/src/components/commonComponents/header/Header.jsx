@@ -14,7 +14,81 @@ import { IoIosClose } from "react-icons/io";
 const Header = ({ togglemenu, togglesidebar }) => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState();
-  const { cartItems } = Common()
+  const [form, setForm] = useState({});
+  const [errors, setErrors] = useState({});
+  const { cartItems, restrictNumbers } = Common()
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+
+    let newValue = value;
+
+    if (name === "name") {
+      newValue = restrictNumbers(value);
+    }
+
+    if (name === "phonenumber") {
+      newValue = value.replace(/[^0-9]/g, "");
+    }
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: newValue
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: ""
+    }));
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'e' || e.key === 'E' || e.key === '-') {
+      e.preventDefault();
+    }
+  };
+
+
+  const submitDutyFreeForm = (e) => {
+    e.preventDefault();
+
+    let newErrors = {};
+    if (!form?.name?.trim()) newErrors.name = "Please Enter your name";
+    if (!form?.phonenumber?.trim()) newErrors.phonenumber = "Please Enter your phonenumber";
+    if (!form?.email?.trim()) {
+      newErrors.email = "Email is required";
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(form.email)) {
+        newErrors.email = "Please enter a valid email address";
+      }
+    }
+    if (!form?.destination?.trim()) newErrors.destination = "Please Enter your destination";
+    if (!form?.remember) {
+      newErrors.remember = "Please select your traveller type";
+    }
+    if (!form?.airport) newErrors.airport = "Please select your airport";
+    if (!form?.message?.trim()) newErrors.message = "Please Enter your message";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+      setErrors({});
+
+      //implement your form handle logic
+
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setSubmitting(false);
+    }
+
+  }
+
   useEffect(() => {
 
     const offcanvasEl = document.getElementById("offcanvasRight");
@@ -116,10 +190,12 @@ const Header = ({ togglemenu, togglesidebar }) => {
             </div>
             <div className="modal-body">
 
-              <form action="" className='duty-popup-form'>
+              <form onSubmit={submitDutyFreeForm} className='duty-popup-form'>
                 <div className="row col-12 mb-4">
                   <label className='text-color-primary' htmlFor="collection-point">Collection point:</label>
-                  <select id="collection-point" name="airport" className='duty-popup-inputs'>
+                  <select id="collection-point" name="airport" className={`duty-popup-inputs form-control ${errors?.airport ? "is-invalid" : ""}`} value={form?.airport || ""}
+                    onChange={handleInput}>
+                    <option value="" disabled selected>Select your Airport</option>
                     <option value="blantyre">Malawi - Blantyre Airport</option>
                     <option value="lilongwe">Malawi - Lilongwe Airport</option>
                     <option value="ndola">Zambia - Ndola Airport</option>
@@ -129,47 +205,58 @@ const Header = ({ togglemenu, togglesidebar }) => {
                     <option value="chirundu">Zimbabwe - Chirundu Border post</option>
                     <option value="bulawayo">Zimbabwe - Bulawayo Airport</option>
                   </select>
+                  {errors?.airport && <div className="invalid-feedback d-block">{errors.airport}</div>}
                 </div>
 
                 <div className="row col-12 mb-4">
                   <div className="col-12 col-md-6 ps-md-0 mb-4 mb-md-0">
-                    <input type="text" placeholder='Name' id='name' name='name' className='duty-popup-inputs' />
+                    <input type="text" placeholder='Name' id='name' name='name' className={`duty-popup-inputs form-control ${errors?.name ? "is-invalid" : ""}`} value={form?.name || ""}
+                      onChange={handleInput} />
+                    {errors?.name && <div className="ms-3 invalid-feedback d-block">{errors.name}</div>}
                   </div>
                   <div className="col-12 col-md-6 pe-md-0 mb-4 mb-md-0">
-                    <input type="number" placeholder='Phone Number' id='phonenumber' name='phonenumber' className='duty-popup-inputs' />
+                    <input type="number" placeholder='Phone Number' id='phonenumber' name='phonenumber' className={`duty-popup-inputs form-control ${errors?.phonenumber ? "is-invalid" : ""}`} value={form?.phonenumber || ""}
+                      onChange={handleInput} onKeyDown={handleKeyDown} min="0" />
+                    {errors?.phonenumber && <div className="ms-3 invalid-feedback d-block">{errors.phonenumber}</div>}
                   </div>
                 </div>
 
                 <div className="row col-12 mb-4">
-                  <input type="email" name="email" id="email" placeholder='Your Email' className='duty-popup-inputs' />
+                  <input type="email" name="email" id="email" placeholder='Your Email' className={`duty-popup-inputs form-control ${errors?.email ? "is-invalid" : ""}`} value={form?.email || ""}
+                    onChange={handleInput} />
+                  {errors?.email && <div className="invalid-feedback d-block">{errors.email}</div>}
                 </div>
 
                 <div className="row col-12 mb-4">
                   <p className='text-color-primary'>Are you a</p>
-                  <div className='d-flex justify-content-evenly'>
+                  <div className='d-block d-md-flex justify-content-evenly'>
                     <div className="radio-section">
-                      <input type="radio" name="remember" className='custom-radio' />
-                      <label htmlFor="remember" className="input-checkbox-label">Diplomat</label>
+                      <input type="radio" name="remember" id="diplomat" value="Diplomat" className='custom-radio' onChange={handleInput} />
+                      <label htmlFor="diplomat" className="input-checkbox-label">Diplomat</label>
                     </div>
                     <div className="radio-section">
-                      <input type="radio" name="remember" className='custom-radio' />
-                      <label htmlFor="remember" className="input-checkbox-label">Traveller</label>
+                      <input type="radio" name="remember" id="traveller" value="Traveller" className='custom-radio' onChange={handleInput} />
+                      <label htmlFor="traveller" className="input-checkbox-label">Traveller</label>
                     </div>
                     <div className="radio-section">
-                      <input type="radio" name="remember" className='custom-radio' />
-                      <label htmlFor="remember" className="input-checkbox-label">Dityfree shop owner</label>
+                      <input type="radio" name="remember" id="shop-owner" value="Dityfree shop owner" className='custom-radio' onChange={handleInput} />
+                      <label htmlFor="shop-owner" className="input-checkbox-label">Duty-free shop owner</label>
                     </div>
-
                   </div>
+                  {errors?.remember && <div className="ms-3 invalid-feedback d-block text-center">{errors.remember}</div>}
                 </div>
 
                 <div className="row col-12 mb-4">
                   <label className='text-color-primary' htmlFor="destination">Destination</label>
-                  <input type="text" id='destination' name='destination' className='duty-popup-inputs' />
+                  <input type="text" id='destination' name='destination' className={`duty-popup-inputs form-control ${errors?.destination ? "is-invalid" : ""}`} value={form?.destination || ""}
+                    onChange={handleInput} />
+                  {errors?.name && <div className="invalid-feedback d-block">{errors.destination}</div>}
                 </div>
 
                 <div className="row col-12 mb-4">
-                  <textarea name="message" className='duty-popup-textarea' id="" rows={10} cols={4} placeholder='Your Message Here' ></textarea>
+                  <textarea name="message" className={`duty-popup-textarea form-control ${errors?.message ? "is-invalid" : ""}`} id="" rows={10} cols={4} placeholder='Your Message Here' value={form?.message || ""}
+                    onChange={handleInput} ></textarea>
+                  {errors?.message && <div className="invalid-feedback d-block">{errors.message}</div>}
                 </div>
 
                 <div className="d-flex justify-content-end">

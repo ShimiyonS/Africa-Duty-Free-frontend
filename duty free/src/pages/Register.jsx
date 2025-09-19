@@ -5,7 +5,7 @@ import common from '../commonMethod/common.js';
 
 const Register = () => {
     const navigate = useNavigate();
-    const { apiRequest } = common();
+    const { apiRequest, restrictNumbers, verifyEmail, passwordConditions } = common();
 
     const [form, setForm] = useState({});
     const [state, setState] = useState({
@@ -15,15 +15,16 @@ const Register = () => {
     const [errors, setErrors] = useState({});
     const [submitting, setSubmitting] = useState(false);
 
-    // ✅ password regex (min 8 chars, 1 lowercase, 1 uppercase, 1 number, 1 special char)
-    const passwordRegex =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}[\]|:;"'<>,.?/~`]).{8,}$/;
-
     const handleInput = (e) => {
         const { name, value } = e.target;
+
+        let newValue = value;
+
+        if (name === "firstname" || name === "lastname") newValue = restrictNumbers(value);
+
         setForm((prev) => ({
             ...prev,
-            [name]: value
+            [name]: newValue
         }));
 
         setErrors((prev) => ({
@@ -103,8 +104,7 @@ const Register = () => {
         if (!form?.email?.trim()) {
             newErrors.email = "Email is required";
         } else {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(form.email.trim())) {
+            if (!verifyEmail(form.email)) {
                 newErrors.email = "Please enter a valid email address";
             }
         }
@@ -115,7 +115,7 @@ const Register = () => {
 
         if (!form?.password?.trim()) {
             newErrors.password = "Password is required";
-        } else if (!passwordRegex.test(form.password)) {
+        } else if (!passwordConditions(form?.password)) {
             newErrors.password =
                 "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character";
         }
@@ -166,6 +166,8 @@ const Register = () => {
         }
     };
 
+    // ✅ check if password is valid before enabling confirm password
+    const isPasswordValid = passwordConditions(form?.password || "");
 
     return (
         <div className="d-flex justify-content-center align-items-center auth-container">

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import common from "../commonMethod/common.js";
 import { useNavigate } from "react-router-dom";
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
@@ -9,15 +11,36 @@ const ForgotPassword = () => {
     const token = params.get("token");
     const updated = params.get("updated")
 
-    const { apiRequest } = common();
+    const { apiRequest, verifyEmail, passwordConditions } = common();
     const [loading, setLoading] = useState(false)
-    const [email, setEmail] = useState("");
-    const [verify, setVerify] = useState(false);
-    const [password, setPassword] = useState({
-        newPassword: "",
-        confirmPassword: "",
+    const [form, setForm] = useState({})
+    const [state, setState] = useState({
+        password: true,
+        confirmpassword: true
     });
-    const [errorMsg, setErrorMsg] = useState("");
+    const [errors, setErrors] = useState({});
+    const [verify, setVerify] = useState(false);
+
+    const handleEye = (name) => {
+        setState((prev) => ({
+            ...prev,
+            [name]: !prev[name]
+        }));
+    };
+
+    const handleInput = (e) => {
+        const { name, value } = e.target;
+
+        setForm((prev) => ({
+            ...prev,
+            [name]: value
+        }));
+
+        setErrors((prev) => ({
+            ...prev,
+            [name]: ""
+        }));
+    };
 
     const handleVerify = async (userid, token) => {
         if (!userid || !token) return;
@@ -38,10 +61,23 @@ const ForgotPassword = () => {
 
 
     const handleForgotPassword = async (e) => {
+
         e.preventDefault();
+
+        let newErrors = {};
+
+        if (!form?.email?.trim()) newErrors.email = "Email is required";
+
+        if (!verifyEmail(form.email)) newErrors.email = "Please enter a valid email address";
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
         try {
             setLoading(true)
-            const payload = { email };
+            const payload = { email: form?.email, redirectUrl: window.location.origin };
             const res = await apiRequest("POST", "/auth/forgot-password", payload);
             console.log(res);
             navigate("/reset-password?updated=checkmail")
@@ -52,28 +88,36 @@ const ForgotPassword = () => {
         }
     };
 
-    const handleConfirmBlur = () => {
-        if (password?.confirmPassword && password?.newPassword !== password?.confirmPassword) {
-            setErrorMsg('Passwords must not be same')
-        } else {
-            setErrorMsg('')
-        }
-    }
-
 
     const handlePasswordChange = async (e) => {
         e.preventDefault();
 
-        if (password.newPassword !== password.confirmPassword) {
-            setErrorMsg("Passwords must not be same");
+        let newErrors = {};
+
+        if (!form?.newPassword?.trim()) {
+            newErrors.newPassword = "New Password is required";
+        } else if (!passwordConditions(form?.newPassword)) {
+            newErrors.newPassword =
+                "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one numeric digit, and one special character.";
+        }
+        if (!form?.confirmPassword?.trim()) newErrors.confirmPassword = "Confirm Password is required";
+
+        if (form?.newPassword !== form?.confirmPassword) {
+            newErrors.newPassword = "Both new password and confirm password must be same"
+            newErrors.confirmPassword = "Both new password and confirm password must be same"
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
             return;
         }
 
         try {
             setLoading(true)
-            const payload = { uid, token, newPassword: password.confirmPassword };
+            const payload = { uid, token, newPassword: form?.confirmPassword };
             const res = await apiRequest("POST", "/auth/reset-password", payload);
             console.log(res);
+            if(res.status) toast.success(res.message)
             navigate('/login')
         } catch (err) {
             console.error(err);
@@ -96,12 +140,13 @@ const ForgotPassword = () => {
                             <div className="mb-3">
                                 <input
                                     type="email"
-                                    className="form-control custom-auth-input"
+                                    className={`form-control custom-auth-input ${errors?.email ? "is-invalid" : ""}`}
                                     placeholder="Enter your email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
+                                    name="email"
+                                    value={form?.email || ""}
+                                    onChange={handleInput}
                                 />
+                                {errors?.email && <div className="invalid-feedback d-block">{errors.email}</div>}
                             </div>
 
                             <div className="d-flex justify-content-center mt-4">
@@ -133,16 +178,24 @@ const ForgotPassword = () => {
                                     <label htmlFor="newPassword" className="form-label fw-bold">
                                         New Password
                                     </label>
-                                    <input
-                                        type="password"
-                                        className="form-control custom-auth-input"
-                                        id="newPassword"
-                                        value={password.newPassword}
-                                        onChange={(e) =>
-                                            setPassword({ ...password, newPassword: e.target.value })
-                                        }
-                                        required
-                                    />
+                                    <div className='position-relative'>
+                                        <input
+                                            type={state.password ? "password" : "text"}
+                                            className={`form-control custom-auth-input ${errors?.newPassword ? "is-invalid" : ""}`}
+                                            id="newPassword"
+                                            name="newPassword"
+                                            value={form?.newPassword || ""}
+                                            onChange={handleInput}
+                                        />
+                                        <span
+                                            className="position-absolute  translate-middle-y password-icon pe-3"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleEye("password")}
+                                        >
+                                            {state.password ? <EyeInvisibleOutlined /> : <EyeTwoTone />}
+                                        </span>
+                                    </div>
+                                    {errors?.newPassword && <div className="invalid-feedback d-block">{errors.newPassword}</div>}
                                 </div>
 
                                 <div className="mb-3">
@@ -152,23 +205,27 @@ const ForgotPassword = () => {
                                     >
                                         Confirm Password
                                     </label>
-                                    <input
-                                        type="password"
-                                        className="form-control custom-auth-input"
-                                        id="confirmPassword"
-                                        value={password.confirmPassword}
-                                        onBlur={handleConfirmBlur}
-                                        onChange={(e) =>
-                                            setPassword({
-                                                ...password,
-                                                confirmPassword: e.target.value,
-                                            })
-                                        }
-                                        required
-                                    />
+                                    <div className='position-relative'>
+                                        <input
+                                            type={state.confirmpassword ? "password" : "text"}
+                                            className={`form-control custom-auth-input ${errors?.confirmPassword ? "is-invalid" : ""}`}
+                                            id="confirmPassword"
+                                            name="confirmPassword"
+                                            value={form?.confirmPassword || ""}
+                                            onChange={handleInput}
+                                        />
+                                        <span
+                                            className="position-absolute translate-middle-y pe-3 password-icon"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleEye("confirmpassword")}
+                                        >
+                                            {state.confirmpassword ? <EyeInvisibleOutlined /> : <EyeTwoTone />}
+                                        </span>
+                                    </div>
+                                    {errors?.confirmPassword && <div className="invalid-feedback d-block">{errors.confirmPassword}</div>}
                                 </div>
 
-                                {errorMsg && <p className="text-danger">{errorMsg}</p>}
+                                {errors?.form && <div className="alert alert-danger mt-3">{errors.form}</div>}
 
                                 <div className="d-flex justify-content-center mt-4">
                                     <button

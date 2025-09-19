@@ -34,7 +34,17 @@ const ProductCard = ({ data, hideWishlist, hidePopTool, hideCart, hideAddCartPop
         <>
             <div className='p-2 position-relative product-card'>
                 {!hideWishlist &&
-                    <button type="button" onClick={() => handleToggleWishList(data)} className="bg-transparent border-0 heart-btn position-absolute">{wishlistItems.find((i) => i.id === data.id) ? <IoMdHeart /> : <IoMdHeartEmpty />}   </button>
+                    <>
+                        {!user ? <button
+                            className="bg-transparent border-0 heart-btn position-absolute"
+                            data-bs-toggle="modal"
+                            data-bs-target="#customPopup">
+                            <IoMdHeartEmpty />
+                        </button> :
+                            <button type="button" onClick={() => handleToggleWishList(data)} className="bg-transparent border-0 heart-btn position-absolute">{wishlistItems.find((i) => i.id === data.id) ? <IoMdHeart /> : <IoMdHeartEmpty />}   </button>
+                        }
+                    </>
+
                 }
                 <div>
                     <Link to={`/product/${data?.xid || data?.slug}`} className="">
