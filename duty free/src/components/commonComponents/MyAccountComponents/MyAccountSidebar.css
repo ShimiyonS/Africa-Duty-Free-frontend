@@ -62,15 +62,3 @@
 }
 
 /* ------------------------------------------------------ */
-
-/* myaccountdetails css */
-
-.password-see-icon {
-    position: relative;
-}
-
-.see-btn {
-    position: absolute;
-    top: 20px;
-    right: 10px;
-}

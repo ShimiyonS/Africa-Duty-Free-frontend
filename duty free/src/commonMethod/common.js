@@ -1,6 +1,21 @@
 
 const firstLetterCapital = (text) => { if (!text) return ""; return text.charAt(0).toUpperCase() + text.slice(1); };
 
+const restrictNumbers = (val) => { if (!val) return ""; return val.replace(/[^A-Za-z\s]/g, ""); };
+
+const verifyEmail = (email) => {
+    if (!email) return false
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email)
+}
+
+const passwordConditions = (password) => {
+    if (!password) return false
+    const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}[\]|:;"'<>,.?/~`]).{8,}$/;
+    return passwordRegex.test(password)
+}
+
 const generateSlug = (value) => {
     return value
         .toLowerCase()
@@ -80,6 +95,6 @@ const common = () => {
         getUserWishlist(userId);
     };
 
-    return { changeProductQuantityCart, removeUserCart, addUserCart, getUserCartlist, toggleUserWishlist, getUserWishlist, dispatch, cartItems, brandItems, wishlistItems, firstLetterCapital, apiRequest, generateSlug }
+    return { changeProductQuantityCart, removeUserCart, addUserCart, getUserCartlist, toggleUserWishlist, getUserWishlist, dispatch, cartItems, brandItems, wishlistItems, firstLetterCapital, restrictNumbers, verifyEmail, passwordConditions, apiRequest, generateSlug }
 }
 export default common;

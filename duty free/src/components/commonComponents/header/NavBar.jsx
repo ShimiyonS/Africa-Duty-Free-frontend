@@ -31,19 +31,19 @@ const NavBar = ({ condition, togglemenu }) => {
 
           {localStorage.getItem('token') ?
             <>
-              <li className="d-md-none"><NavLink to={`/my-account`} className="nav-link px-3 pb-1 fw-bold">MY ACCOUNT</NavLink></li>
-              <li className="d-md-none"><NavLink to={`/cart`} className="nav-link px-3 pb-1 fw-bold">CART</NavLink></li>
-              <li className="d-md-none"><NavLink to={`/wishlist`} className="nav-link px-3 pb-1 fw-bold">WISHLIST</NavLink></li>
-              <li className="d-md-none"><button onClick={handleLogout} className='bg-transparent m-0 p-0 border-0 nav-link px-3 pb-1 fw-bold'>LOGOUT</button></li>
+              <li className="d-lg-none"><NavLink to={`/my-account`} className="nav-link px-3 pb-1 fw-bold">MY ACCOUNT</NavLink></li>
+              <li className="d-lg-none"><NavLink to={`/cart`} className="nav-link px-3 pb-1 fw-bold">CART</NavLink></li>
+              <li className="d-lg-none"><NavLink to={`/wishlist`} className="nav-link px-3 pb-1 fw-bold">WISHLIST</NavLink></li>
+              <li className="d-lg-none"><button onClick={handleLogout} className='bg-transparent m-0 p-0 border-0 nav-link px-3 pb-1 fw-bold'>LOGOUT</button></li>
             </>
             :
             <>
-              <li className="d-md-none">
+              <li className="d-lg-none">
                 <button className='bg-transparent m-0 p-0 border-0 nav-link px-3 pb-1 fw-bold' data-bs-toggle="modal" data-bs-target="#dutyPopup">
                   DUTY FREE
                 </button>
               </li>
-              <li className="d-md-none">
+              <li className="d-lg-none">
                 <button
                   className='bg-transparent m-0 p-0 border-0 nav-link px-3 pb-1 fw-bold'
                   data-bs-toggle="modal"

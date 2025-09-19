@@ -12,12 +12,15 @@ import TitleComponent from '../components/TitleComponent';
 
 const ShopDetails = () => {
     const [shop, setShop] = useState([])
+    const [category, setCategory] = useState([])
     const bannerDetails = banner?.find((item) => item?.name === "shop");
     const { apiRequest } = Common()
     useEffect(() => {
         const fetchShop = async () => {
-            const data = await apiRequest("GET", `/products/`);
+            const data = await apiRequest("GET", `/product`, { limit: 100 } );
+            const category = await apiRequest("GET", "/subcategory");
             setShop(data?.products)
+            setCategory(Array.from(new Map(category?.subCategories.map(item => [item?.slug, item])).values()))
         };
         fetchShop();
     }, [])
@@ -27,7 +30,7 @@ const ShopDetails = () => {
             <BreadCrumb navigation={[{ key: "home", nav: "/" }, { key: "products", nav: "/shop" }, { key: `${"shop"}`, nav: "" }]} />
             <CategoryBanner bannerDetails={bannerDetails} />
             <BrandSwiper />
-            <BestBuy />
+            <BestBuy data={category} />
             <Products data={shop} headingText={"Welcome to Our Shop"} paraClassName={'ps-4 linear-bg-heading text-color-secondary'} gridplacement={"product-grid"} imageheight={300} hidePopTool={true} />
             <SaleCard data={0} imageClass={"small-image"} />
             <TitleComponent heading={"New Products"} />
