@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "../Styles/main.css"
 import NewProducts from '../components/commonComponents/NewProducts'
-import Common from '../commonMethod/Common'
+import Common from '../commonMethod/common.js'
 import Banner1 from "../assets/homebanner1.jpeg"
 import Banner2 from "../assets/homebanner2.jpeg"
 import Banner3 from "../assets/homebanner3.jpeg"

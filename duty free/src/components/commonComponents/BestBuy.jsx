@@ -3,8 +3,8 @@ import categoryimage1 from "../../assets/categoryimage1.jpg"
 import categoryimage2 from "../../assets/categoryimage2.jpg"
 import categoryimage3 from "../../assets/categoryimage3.jpg"
 import categoryimage4 from "../../assets/categoryimage4.jpg"
-import CategoryCard from './CategoryCard'
-import CategoryLoader from "./loader/categoryLoader"
+import CategoryCard from './CategoryCard.jsx'
+import CategoryLoader from "./loader/CategoryLoader.jsx"
 const bestBuyDefault = [
     {
         name: "Fragrance",

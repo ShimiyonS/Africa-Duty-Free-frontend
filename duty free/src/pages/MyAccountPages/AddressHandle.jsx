@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import Common from "../../commonMethod/Common";
+import Common from "../../commonMethod/common.js";
 import AddressForm from "../../components/commonComponents/MyAccountComponents/AddressForm";
 const AddressHandle = () => {
     const { type } = useParams();
