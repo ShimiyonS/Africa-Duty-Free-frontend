@@ -243,7 +243,7 @@ const Checkout = () => {
           price: item?.product?.price
         })),
         total: computeTotal(),
-        userId: 1, // TODO: change to user id 
+        userId: 1, // TODO: change to user id
       });
 
       const orderId = orderResponse.orderId;
@@ -353,7 +353,7 @@ const Checkout = () => {
             onBlur={handleBlur}
           />
           {errors.lastName && (
-            <div  className="invalid-feedback d-block mt-2" >
+            <div className="invalid-feedback d-block mt-2" >
               {errors.lastName}
             </div>
           )}
@@ -383,7 +383,7 @@ const Checkout = () => {
             />
           </div>
           {errors.country && (
-            <div  className="invalid-feedback d-block mt-2" >
+            <div className="invalid-feedback d-block mt-2" >
               {errors.country}
             </div>
           )}
@@ -401,7 +401,7 @@ const Checkout = () => {
             onBlur={handleBlur}
           />
           {errors.street1 && (
-            <div  className="invalid-feedback d-block mt-2" >
+            <div className="invalid-feedback d-block mt-2" >
               {errors.street1}
             </div>
           )}
@@ -426,7 +426,7 @@ const Checkout = () => {
             onBlur={handleBlur}
           />
           {errors.city && (
-            <div  className="invalid-feedback d-block mt-2" >
+            <div className="invalid-feedback d-block mt-2" >
               {errors.city}
             </div>
           )}
@@ -459,7 +459,7 @@ const Checkout = () => {
             onBlur={handleBlur}
           />
           {errors.postcode && (
-            <div  className="invalid-feedback d-block mt-2" >
+            <div className="invalid-feedback d-block mt-2" >
               {errors.postcode}
             </div>
           )}
@@ -476,7 +476,7 @@ const Checkout = () => {
             onBlur={handleBlur}
           />
           {errors.phone && (
-            <div  className="invalid-feedback d-block mt-2" >
+            <div className="invalid-feedback d-block mt-2" >
               {errors.phone}
             </div>
           )}
@@ -515,7 +515,7 @@ const Checkout = () => {
                 onBlur={handleBlur}
               />
               {errors.sFirstName && (
-                <div  className="invalid-feedback d-block mt-2" >
+                <div className="invalid-feedback d-block mt-2" >
                   {errors.sFirstName}
                 </div>
               )}
@@ -532,7 +532,7 @@ const Checkout = () => {
                 onBlur={handleBlur}
               />
               {errors.sLastName && (
-                <div  className="invalid-feedback d-block mt-2" >
+                <div className="invalid-feedback d-block mt-2" >
                   {errors.sLastName}
                 </div>
               )}
@@ -562,7 +562,7 @@ const Checkout = () => {
                 />
               </div>
               {errors.sCountry && (
-                <div  className="invalid-feedback d-block mt-2" >
+                <div className="invalid-feedback d-block mt-2" >
                   {errors.sCountry}
                 </div>
               )}
@@ -580,7 +580,7 @@ const Checkout = () => {
                 onBlur={handleBlur}
               />
               {errors.sStreet1 && (
-                <div  className="invalid-feedback d-block mt-2" >
+                <div className="invalid-feedback d-block mt-2" >
                   {errors.sStreet1}
                 </div>
               )}
@@ -605,7 +605,7 @@ const Checkout = () => {
                 onBlur={handleBlur}
               />
               {errors.sCity && (
-                <div  className="invalid-feedback d-block mt-2" >
+                <div className="invalid-feedback d-block mt-2" >
                   {errors.sCity}
                 </div>
               )}
@@ -638,7 +638,7 @@ const Checkout = () => {
                 onBlur={handleBlur}
               />
               {errors.sPostcode && (
-                <div  className="invalid-feedback d-block mt-2" >
+                <div className="invalid-feedback d-block mt-2" >
                   {errors.sPostcode}
                 </div>
               )}
@@ -730,28 +730,11 @@ const Checkout = () => {
             arrangements.
           </p>
           <div>
-            <div style={{
-              border: "1px solid #ddd",
-              padding: "20px",
-              margin: "20px 0px "
-            }}>
-              <h3 style={{ marginBottom: "15px" }}>Choose a Payment Method</h3>
+            <div className="payment-method-container">
+              <h3 className="payment-method-title">Choose a Payment Method</h3>
 
-              <div style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                marginBottom: "20px"
-              }}>
-                <label style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  cursor: "pointer",
-                  padding: "10px",
-                  border: paymentMethod === "card" ? "2px solid #f9a825" : "1px solid #ccc",
-                  borderRadius: "6px"
-                }}>
+              <div className="payment-method-options">
+                <label className={`payment-method-label ${paymentMethod === "card" ? "selected" : ""}`}>
                   <input
                     type="radio"
                     name="payment"
@@ -763,15 +746,7 @@ const Checkout = () => {
                   Pay with Card
                 </label>
 
-                <label style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  cursor: "pointer",
-                  padding: "10px",
-                  border: paymentMethod === "mobilemoneyghana" ? "2px solid #f9a825" : "1px solid #ccc",
-                  borderRadius: "6px"
-                }}>
+                <label className={`payment-method-label ${paymentMethod === "mobilemoneyghana" ? "selected" : ""}`}>
                   <input
                     type="radio"
                     name="payment"
@@ -783,15 +758,7 @@ const Checkout = () => {
                   Mobile Money
                 </label>
 
-                <label style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  cursor: "pointer",
-                  padding: "10px",
-                  border: paymentMethod === "bank" ? "2px solid #f9a825" : "1px solid #ccc",
-                  borderRadius: "6px"
-                }}>
+                <label className={`payment-method-label ${paymentMethod === "bank" ? "selected" : ""}`}>
                   <input
                     type="radio"
                     name="payment"
@@ -806,15 +773,7 @@ const Checkout = () => {
 
               {/* Payment method error message */}
               {paymentMethodError && (
-                <div style={{
-                  color: "#dc3545",
-                  fontSize: "14px",
-                  marginTop: "10px",
-                  padding: "8px 12px",
-                  backgroundColor: "#f8d7da",
-                  border: "1px solid #f5c6cb",
-                  borderRadius: "4px"
-                }}>
+                <div className="payment-method-error">
                   {paymentMethodError}
                 </div>
               )}
