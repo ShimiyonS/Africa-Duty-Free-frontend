@@ -20,7 +20,7 @@ import Brand14 from "../../assets/banner14.png";
 import Brand15 from "../../assets/banner15.png";
 import Brand16 from "../../assets/banner16.png";
 import Brand17 from "../../assets/banner17.png";
-import common from '../../commonMethod/common';
+import common from '../../commonMethod/common.js';
 
 
 const BrandSwiper = () => {

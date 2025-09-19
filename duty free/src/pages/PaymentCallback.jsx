@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import common from "../commonMethod/common";
+import common from "../commonMethod/common.js";
 
 const PaymentCallback = () => {
     const navigate = useNavigate();

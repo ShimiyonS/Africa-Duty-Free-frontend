@@ -28,8 +28,8 @@ const Cart = () => {
     return (
         <div className='container py-4'>
             {cartItems?.length > 0 ?
-                <div className='d-flex  flex-wrap py-5 '>
-                    <div className='col-lg-8 p-3'>
+                <div className='d-flex flex-wrap py-5'>
+                    <div className='col-lg-8 col-12 p-3'>
                         <h1 className='mb-4 cart-heading justuspro-bold'>Shopping bag</h1>
 
                         <div className="main-wrapper">
@@ -78,7 +78,7 @@ const Cart = () => {
                             </div>
                         </div>
 
-                        <div className='d-flex align-items-center flex-wrap my-4'>
+                        {/* <div className='d-flex align-items-center flex-wrap my-4'>
                             <div className='col-lg-6'>
                                 <div className='position-relative'>
                                     <input type='text' placeholder='Coupon code' className='w-100 coupon-input border-0 px-5 py-4 text-color-primary-cart' />
@@ -86,11 +86,11 @@ const Cart = () => {
                                 </div>
                             </div>
                             <div className='col-lg-6 text-end ps-md-5 pt-5 pt-md-0'>
-                                {/* <button className='bg-transparent update-cart  justuspro-medium' onClick={fetchCart}>UPDATE CART</button> */}
+                                <button className='bg-transparent update-cart  justuspro-medium' onClick={fetchCart}>UPDATE CART</button>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
-                    <div className='col-lg-4 p-3'>
+                    <div className='col-lg-4 col-12 p-3'>
                         <h1 className='justuspro-bold mb-4'>Cart Totals</h1>
                         <div className='d-flex align-items-center table-box'>
                             <div className='col-6  right-total justuspro-bold'>SUBTOTAL</div>
@@ -101,14 +101,14 @@ const Cart = () => {
                                 <p className=' right-total justuspro-bold'> SHIPPING</p>
                                 <p className='delivery-type px-4 py-3 justuspro-bold'>FREE SHIPPING</p>
                                 <p className=' right-total justuspro-bold'>SHIPPING OPTIONS WILL BE UPDATED DURING CHECKOUT.</p>
-                                <button onClick={null} className=" dmsans-regular  bg-transparent border-0 outline-0 p-0 link-custom text-color-danger"  >Calculate shipping</button>
+                                {/* <button onClick={null} className=" dmsans-regular  bg-transparent border-0 outline-0 p-0 link-custom text-color-danger"  >Calculate shipping</button> */}
                             </div>
                         </div>
                         <div className='d-flex align-items-center flex-wrap table-box'>
                             <div className='col-6  right-total justuspro-bold'>TOTAL</div>
                             <div className='col-6  right-total dmsans-bold'> ${subtotal.toFixed(2)}</div>
-                            <Link to={"/checkout"} className='proceed-button col-12 mt-3 mb-5 text-decoration-none d-block text-center text-color-secondary justuspro-medium bg-color-secondary'>PROCEED TO CHECKOUT</Link>
-                            <Link to={"/checkout"} className='col-12 text-decoration-none d-block text-center '>Proceed to checkout</Link>
+                            <Link to={"/checkout"} className='proceed-button col-12 mt-3  text-decoration-none d-block text-center text-color-secondary justuspro-medium bg-color-secondary'>PROCEED TO CHECKOUT</Link>
+                            {/* <Link to={"/checkout"} className='col-12 text-decoration-none d-block text-center '>Proceed to checkout</Link> */}
 
                         </div>
                     </div>

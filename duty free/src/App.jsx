@@ -26,7 +26,7 @@ import Search from './pages/Search';
 import Wishlist from './pages/Wishlist';
 import HomePage from './pages/homePage/HomePage';
 import { setBrand } from "./store/slice/brandSlice";
-import common from './commonMethod/common';
+import common from './commonMethod/common.js';
 import PaymentCallback from './pages/PaymentCallback';
 
 function App() {
@@ -60,9 +60,12 @@ function App() {
         });
       }
     };
-    fetchBrand();
     toggleVisibility();
   }, [location]);
+
+  useEffect(() => {
+    fetchBrand();
+  }, [])
   return (
     <>
       <Routes>

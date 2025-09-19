@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import common from "../commonMethod/common";
+import common from "../commonMethod/common.js";
 import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {

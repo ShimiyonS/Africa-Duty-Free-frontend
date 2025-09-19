@@ -225,4 +225,19 @@
         width: 60px !important;
         height: 60px !important;
     }
+
+    .table-cart {
+        width: 700px;
+    }
+
+    .proceed-button {
+        font-size: 15px;
+    }
+
+    .cart-heading {
+        font-size: 22px;
+    }
+    .checkout-form-label{
+        margin-bottom: 15px;
+    }
 }

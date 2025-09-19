@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Common from '../commonMethod/common';
+import Common from '../commonMethod/common.js';
 import NewProducts from '../components/commonComponents/NewProducts';
 import NotFound from '../components/commonComponents/NotFound';
 const Search = () => {
