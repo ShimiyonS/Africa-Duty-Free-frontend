@@ -44,25 +44,37 @@ const MyaccountAddresses = () => {
                     <h2 className='justuspro-bold'>Billing address</h2>
                     <Link to="/my-account/edit-address/billing" className='myaccountaddress-button text-color-secondary button-bg-primary'>EDIT BILLING ADDRESS</Link>
                 </div>
-                <div className="address-card p-3 border rounded shadow-sm">
-                    <h5 className="fw-bold mb-3">Billing Address</h5>
+                <div className="address-block mb-5">
                     <p><strong>Firstname:</strong> {form?.billing?.firstName}</p>
                     <p><strong>Lastname:</strong> {form?.billing?.lastName}</p>
                     <p><strong>Country:</strong> {form?.billing?.country}</p>
                     <p><strong>Region:</strong> {form?.billing?.region}</p>
                     <p><strong>City:</strong> {form?.billing?.city}</p>
                     <p><strong>Street:</strong> {form?.billing?.street1}</p>
+                    <p><strong>postalCode:</strong> {form?.billing?.postalCode}</p>
+                    <p><strong>Phone number:</strong> {form?.billing?.phone}</p>
                 </div>
 
             </div>
             <div className='shipping-address-section borderbottom-1'>
                 <div className='d-flex justify-content-between align-items-center py-4'>
                     <h2 className='justuspro-bold'>Shipping address</h2>
-                    <Link to="/my-account/edit-address/shipping" className='myaccountaddress-button text-color-secondary button-bg-primary'>EDIT SHIPPING ADDRESS</Link>
                 </div>
-                <div className='address-block mb-5'>
-                    <p className='text-color-muted'>You have not set up this type of address yet.</p>
-                </div>
+                {form?.shipping?.length > 0 ? form?.shipping?.map((item) => {
+                    return (
+                        <div className="address-block mb-5">
+                            <p><strong>Firstname:</strong> {item?.firstName}</p>
+                            <p><strong>Lastname:</strong> {item?.lastName}</p>
+                            <p><strong>Country:</strong> {item?.country}</p>
+                            <p><strong>Region:</strong> {item?.region}</p>
+                            <p><strong>City:</strong> {item?.city}</p>
+                            <p><strong>Street:</strong> {item?.street1}</p>
+                            <p><strong>postalCode:</strong> {item?.postalCode}</p>
+                            <p><strong>Phone number:</strong> {item?.phone}</p>
+                            <Link to={`/my-account/edit-address/shipping/${item?.id}`} className='myaccountaddress-button text-color-secondary button-bg-primary'>EDIT SHIPPING ADDRESS</Link>
+
+                        </div>)
+                }) : <p>No shipping address found</p>}
             </div>
         </>
     )
