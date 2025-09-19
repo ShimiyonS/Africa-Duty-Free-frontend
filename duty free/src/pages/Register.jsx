@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import common from '../commonMethod/common';
+import common from '../commonMethod/common.js';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -39,31 +39,80 @@ const Register = () => {
         }));
     };
 
-    const handleConfirmBlur = () => {
-        if (form?.confirmpassword && form?.password !== form?.confirmpassword) {
-            setErrors((prev) => ({ ...prev, confirmpassword: 'Passwords do not match' }));
-        } else {
-            setErrors((prev) => ({ ...prev, confirmpassword: '' }));
+
+    const handleBlur = (e) => {
+        const { name, value } = e.target;
+        let error = "";
+
+        switch (name) {
+            case "username":
+                if (!value.trim()) error = "Username is required";
+                break;
+
+            case "firstname":
+                if (!value.trim()) error = "First name is required";
+                break;
+
+            case "lastname":
+                if (!value.trim()) error = "Last name is required";
+                break;
+
+            case "email":
+                if (!value.trim()) {
+                    error = "Email is required";
+                } else {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(value.trim())) {
+                        error = "Please enter a valid email address";
+                    }
+                }
+                break;
+
+            case "password":
+                if (!value.trim()) {
+                    error = "Password is required";
+                } else if (!passwordRegex.test(value)) {
+                    error =
+                        "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character";
+                }
+                break;
+
+            case "confirmpassword":
+                if (!value.trim()) {
+                    error = "Confirm password is required";
+                } else if (form.password !== value) {
+                    error = "Passwords do not match";
+                }
+                break;
+
+            default:
+                break;
         }
+
+        setErrors((prev) => ({ ...prev, [name]: error }));
     };
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
-
+    const handleValidation = () => {
         let newErrors = {};
+
         if (!form?.username?.trim()) newErrors.username = "Username is required";
         if (!form?.firstname?.trim()) newErrors.firstname = "First name is required";
         if (!form?.lastname?.trim()) newErrors.lastname = "Last name is required";
+
+        // Email validation
         if (!form?.email?.trim()) {
             newErrors.email = "Email is required";
         } else {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(form.email)) {
+            if (!emailRegex.test(form.email.trim())) {
                 newErrors.email = "Please enter a valid email address";
             }
         }
 
-        // ✅ password validation
+        // Password validation
+        const passwordRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
         if (!form?.password?.trim()) {
             newErrors.password = "Password is required";
         } else if (!passwordRegex.test(form.password)) {
@@ -71,17 +120,25 @@ const Register = () => {
                 "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character";
         }
 
-        if (form?.password?.trim() && !form?.confirmpassword?.trim()) {
+        // Confirm password
+        if (!form?.confirmpassword?.trim()) {
             newErrors.confirmpassword = "Confirm password is required";
         } else if (form?.password !== form?.confirmpassword) {
             newErrors.confirmpassword = "Passwords do not match";
         }
 
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-            return;
-        }
+        setErrors(newErrors);
 
+        // ✅ Return true if NO errors
+        return Object.keys(newErrors).length === 0;
+    };
+
+
+
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        if (!handleValidation()) return;
         try {
             setSubmitting(true);
             setErrors({});
@@ -109,8 +166,6 @@ const Register = () => {
         }
     };
 
-    // ✅ check if password is valid before enabling confirm password
-    const isPasswordValid = passwordRegex.test(form?.password || "");
 
     return (
         <div className="d-flex justify-content-center align-items-center auth-container">
@@ -126,6 +181,7 @@ const Register = () => {
                             name="username"
                             value={form?.username || ""}
                             onChange={handleInput}
+                            onBlur={handleBlur}
                             placeholder="Enter your username"
                         />
                         {errors?.username && <div className="invalid-feedback d-block">{errors.username}</div>}
@@ -140,6 +196,7 @@ const Register = () => {
                             name="firstname"
                             value={form?.firstname || ""}
                             onChange={handleInput}
+                            onBlur={handleBlur}
                             placeholder="Enter your firstname"
                         />
                         {errors?.firstname && <div className="invalid-feedback d-block">{errors.firstname}</div>}
@@ -154,6 +211,7 @@ const Register = () => {
                             name="lastname"
                             value={form?.lastname || ""}
                             onChange={handleInput}
+                            onBlur={handleBlur}
                             placeholder="Enter your lastname"
                         />
                         {errors?.lastname && <div className="invalid-feedback d-block">{errors.lastname}</div>}
@@ -168,6 +226,7 @@ const Register = () => {
                             name="email"
                             value={form?.email || ""}
                             onChange={handleInput}
+                            onBlur={handleBlur}
                             placeholder="Enter your email"
                         />
                         {errors?.email && <div className="invalid-feedback d-block">{errors.email}</div>}
@@ -183,6 +242,7 @@ const Register = () => {
                                 name="password"
                                 value={form?.password || ""}
                                 onChange={handleInput}
+                                onBlur={handleBlur}
                                 placeholder="Enter your password"
                             />
                             <span
@@ -206,14 +266,12 @@ const Register = () => {
                                 name="confirmpassword"
                                 value={form?.confirmpassword || ""}
                                 onChange={handleInput}
-                                onBlur={handleConfirmBlur}
+                                onBlur={handleBlur}
                                 placeholder="Confirm password"
-                                disabled={!isPasswordValid}   // ✅ disable until password valid
                             />
                             <span
                                 className="position-absolute translate-middle-y pe-3 password-icon"
-                                style={{ cursor: isPasswordValid ? "pointer" : "not-allowed", opacity: isPasswordValid ? 1 : 0.5 }}
-                                onClick={() => isPasswordValid && handleEye("confirmpassword")}
+                                onClick={() => handleEye("confirmpassword")}
                             >
                                 {state.confirmpassword ? <EyeInvisibleOutlined /> : <EyeTwoTone />}
                             </span>

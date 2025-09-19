@@ -5,7 +5,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import "../Styles/login.css"
 import UserDefaultProfile from "../assets/user-default-profile.jpg"
 import { Link, useNavigate } from "react-router-dom";
-import common from "../commonMethod/common";
+import common from "../commonMethod/common.js";
 import { useDispatch } from "react-redux";
 import { setAuth } from "../store/slice/authSlice";
 import { setCartItems } from "../store/slice/cartSlice";

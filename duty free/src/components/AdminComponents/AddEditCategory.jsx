@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Button, Col, Drawer, Form, Input, Row, Select, Upload, } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import common from '../../commonMethod/common';
+import common from '../../commonMethod/common.js';
 import { toast } from "react-toastify";
 import { FaRegEdit } from 'react-icons/fa';
 
