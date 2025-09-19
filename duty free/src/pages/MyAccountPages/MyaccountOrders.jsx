@@ -36,7 +36,33 @@ const MyaccountOrders = () => {
   return (
     <div>
       <Link to="/shop" className='d-block text-center text-decoration-none'>Browse product</Link>
-      {order?.length > 0 ? "ues" : ""}
+      {order?.length > 0 ?
+        <table className='w-100 table table-bordered mt-5'>
+          <thead>
+            <tr>
+              <th>Order Id </th>
+              <th>Billing Address</th>
+              <th>Shipping Address</th>
+              <th>Payment Mode</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {order?.map((item) => {
+              return (
+                <tr>
+                  <td>{item?.tx_ref}</td>
+                  <td>{item?.billingAddress?.street1}, {item?.billingAddress?.country}, {item?.billingAddress?.region}, {item?.billingAddress?.city}, {item?.billingAddress?.postalCode}</td>
+                  <td>{item?.shippingAddress?.street1}, {item?.shippingAddress?.country}, {item?.shippingAddress?.region}, {item?.shippingAddress?.city}, {item?.shippingAddress?.postalCode}</td>
+                  <td>{item?.payment_method}</td>
+                  <td>{item?.status}</td>
+                  <td>{item?.total}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table> : ""}
     </div>
   )
 }

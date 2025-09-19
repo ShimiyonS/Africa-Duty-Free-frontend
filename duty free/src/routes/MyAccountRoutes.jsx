@@ -13,13 +13,14 @@ const MyAccountRoutes = () => {
     return (
         <Routes>
             <Route path="/" element={<MyAccountLayout />}>
-                <Route index path="/" element={<MyaccountDashboard/>} />
-                <Route index path="/dashboard" element={<MyaccountDashboard/>} />
-                <Route index path="/orders" element={<MyaccountOrders/>} />
-                <Route index path="/downloads" element={<MyaccountDownloads/>} />
-                <Route index path="/address" element={<MyaccountAddresses/>} />
-                <Route index path="/edit-address/:type" element={<AddressForm/>} />
-                <Route index path="/edit-account" element={<MyaccountDetails/>} />
+                <Route index path="/" element={<MyaccountDashboard />} />
+                <Route index path="/dashboard" element={<MyaccountDashboard />} />
+                <Route index path="/orders" element={<MyaccountOrders />} />
+                <Route index path="/downloads" element={<MyaccountDownloads />} />
+                <Route index path="/address" element={<MyaccountAddresses />} />
+                <Route index path="/edit-address/:type" element={<AddressForm />} />
+                <Route index path="/edit-address/:type/:id" element={<AddressForm />} />
+                <Route index path="/edit-account" element={<MyaccountDetails />} />
             </Route>
             <Route path="*" element={<NoPage />} />
         </Routes>

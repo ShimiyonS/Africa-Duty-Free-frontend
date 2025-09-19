@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import common from '../../../commonMethod/common.js';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { toast } from 'react-toastify';
 
 const AddressForm = () => {
-    const { type } = useParams();
+    const { type, id } = useParams();
     const { firstLetterCapital, apiRequest } = common();
     const user = JSON.stringify(localStorage.getItem("user"))
     const [loading, setLoading] = useState(false)
@@ -22,6 +22,7 @@ const AddressForm = () => {
         phone: ""
     });
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate()
     const handleRefresh = () => {
         setRefresh((prev) => !prev)
     }
@@ -46,17 +47,7 @@ const AddressForm = () => {
         newErrors.city = validateRequiredField(form?.city, "City");
         newErrors.postalCode = validatePostcode(form?.postalCode);
         newErrors.phone = validatePhone(form?.phone);
-
-        // // Shipping address validation (if different)
-        // if (form?.shipDifferent) {
-        //     newErrors.sFirstName = validateRequiredField(form?.sFirstName, "Shipping first name");
-        //     newErrors.sLastName = validateRequiredField(form?.sLastName, "Shipping last name");
-        //     newErrors.sCountry = validateRequiredField(form?.sCountry, "Shipping country");
-        //     newErrors.sStreet1 = validateRequiredField(form?.sStreet1, "Shipping street address");
-        //     newErrors.sCity = validateRequiredField(form?.sCity, "Shipping city");
-        //     newErrors.sPostcode = validatePostcode(form?.sPostcode);
-        // }
-
+        newErrors.region = validateRequiredField(form.region, "Region");
         setErrors(newErrors);
         return Object.values(newErrors).every(error => error === "");
     };
@@ -77,6 +68,7 @@ const AddressForm = () => {
                 street2: form?.street2,
                 postalCode: form?.postalCode,
                 phone: form?.phone,
+                id: form?.id,
                 isDefault: type == "billing" ? true : false,
             };
 
@@ -85,6 +77,7 @@ const AddressForm = () => {
                 const res = await apiRequest("POST", "/address", { [type]: { ...payload } });
                 setForm()
                 handleRefresh()
+                navigate("/my-account/address")
                 toast.success(res?.message)
 
             }
@@ -172,7 +165,7 @@ const AddressForm = () => {
     const fetchUserAddress = async () => {
         try {
             const res = await apiRequest("GET", "/address");
-            const data = res?.addresses?.filter((item) => item?.type == type)
+            const data = type == "billing" ? res?.addresses?.find((item) => item?.type == type) : res?.addresses?.find((item) => item?.id == id)
             setForm(data)
             toast.success(res?.message)
         }
@@ -204,7 +197,7 @@ const AddressForm = () => {
                     onChange={handleChange}
                     placeholder="Please enter billing first name"
                     onBlur={handleBlur}
-                    className={`  form-control  placeholder-custom custom-input ${errors.firstName ? "is-invalid" : ""
+                    className={`form-control  placeholder-custom custom-input ${errors.firstName ? "is-invalid" : ""
                         }`}
                 />
                 {errors.firstName && (
@@ -220,7 +213,7 @@ const AddressForm = () => {
                     value={form?.lastName}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    className={`d-block form-control  placeholder-custom custom-input ${errors.lastName ? "is-invalid" : ""
+                    className={` form-control  placeholder-custom custom-input ${errors.lastName ? "is-invalid" : ""
                         }`}
                 />
                 {errors.lastName && (
@@ -235,7 +228,7 @@ const AddressForm = () => {
                     placeholder="Please enter billing company name"
                     value={form?.company}
                     onChange={handleChange}
-                    className="d-block form-control  placeholder-custom custom-input"
+                    className="form-control  placeholder-custom custom-input"
                 />
 
                 {/* Region */}
@@ -249,7 +242,7 @@ const AddressForm = () => {
                         }
                         onBlur={() => handleBlur({ target: { name: "country", value: form?.country } })}
                         valueType="short"
-                        className='form-control placeholder-custom custom-input w-100'
+                        className={`${errors.country ? 'is-invalid' : ''} form-control placeholder-custom custom-input w-100`}
                     />
                 </div>
                 {errors.country && (
@@ -265,8 +258,7 @@ const AddressForm = () => {
                     value={form?.street1}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    className={`d-block form-control  placeholder-custom custom-input ${errors.street1 ? "is-invalid" : ""
-                        }`}
+                    className={` form-control  placeholder-custom custom-input ${errors.street1 ? "is-invalid" : ""}`}
                 />
                 {errors.street1 && (
                     <div className="text-danger small mb-2">{errors.street1}</div>
@@ -290,8 +282,7 @@ const AddressForm = () => {
                     value={form?.city}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    className={`d-block form-control  placeholder-custom custom-input ${errors.city ? "is-invalid" : ""
-                        }`}
+                    className={` form-control  placeholder-custom custom-input ${errors.city ? "is-invalid" : ""}`}
                 />
                 {errors.city && <div className="text-danger small mb-2">{errors.city}</div>}
 
@@ -303,7 +294,7 @@ const AddressForm = () => {
                     onChange={(val) =>
                         handleChange({ target: { name: "region", value: val } })
                     }
-                    className="placeholder-custom form-control w-100 custom-input"
+                    className={`placeholder-custom form-control w-100 custom-input ${errors.region ? "is-invalid" : ""}`}
                     countryValueType="short"
                 />
                 {errors.region && (
@@ -319,7 +310,7 @@ const AddressForm = () => {
                     value={form?.postalCode}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    className={`d-block form-control  placeholder-custom custom-input ${errors.postalCode ? "is-invalid" : ""
+                    className={`form-control  placeholder-custom custom-input ${errors.postalCode ? "is-invalid" : ""
                         }`}
                 />
                 {errors.postalCode && (
