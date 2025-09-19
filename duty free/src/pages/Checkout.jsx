@@ -243,7 +243,6 @@ const Checkout = () => {
           price: item?.product?.price
         })),
         total: computeTotal(),
-        userId: 1, // TODO: change to user id
       });
 
       const orderId = orderResponse.orderId;
@@ -256,7 +255,6 @@ const Checkout = () => {
         paymentMethod: method,
         orderId: orderId,
         redirectUrl: window.location.origin + "/payment/callback",
-        userId: 1,
       });
 
       // 3. Redirect to payment page
