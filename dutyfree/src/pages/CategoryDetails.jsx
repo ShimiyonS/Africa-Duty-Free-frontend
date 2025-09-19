@@ -156,29 +156,38 @@ const CategoryDetails = () => {
                                     <li className='list-item pb-1 ps-2 justuspro-medium mb-0 text-color-primary'>Over 30%</li>
                                 </ul>
                             </div>
-                            <div className='col-12 col-sm-9 col-md-9 '>
-                                <div className='d-flex gap-4 flex-wrap'>
-                                    {products.map((product, idx) => {
-                                        return (
-                                            <>{console.log(product)}
-                                                <div className='sub-category-container' key={idx}>
-                                                    <Link to={`/product/${product?.slug}`} className="sub-category-image remove-box-shadow" style={{ height: "200px" }}>
-                                                        <img src={product?.productImage || product?.imageUrl} height={150} className=' product-image' />
-                                                    </Link>
-                                                    <Link to={`/product/${product?.slug}`} className={`$ product-title dmsans-bold d-block text-decoration-none mb-0 pt-2`}>{product?.name || product?.productName}</Link>
-                                                    <p className={`$ product-price dmsans-bold `}>${product?.price}</p>
-                                                </div>
-                                                {/* <div className='col-12 col-sm-6 col-md-6 col-lg-3'>
-                                                    <img src={item?.thumbnail} className='filter-image' />
-                                                    <p className='filter-title text-color-primary mb-1 justuspro-medium'>{item?.title}</p>
-                                                    <p className='filter-title text-color-danger mb-0 justuspro-medium'>${item?.price}</p>
-                                                </div> */}
-                                            </>
-                                        )
-                                    })}
+                            <div className="col-12 col-sm-9 col-md-9">
+                                <div className="row "> {/* row wrapper */}
+                                    {products.map((product, idx) => (
+                                        <div key={idx} className="col-12 col-md-3"> {/* responsive col */}
+                                            <div className="sub-category-container">
+                                                <Link
+                                                    to={`/product/${product?.slug}`}
+                                                    className="sub-category-image remove-box-shadow"
+                                                    style={{ height: "200px" }}
+                                                >
+                                                    <img
+                                                        src={product?.productImage || product?.imageUrl}
+                                                        height={150}
+                                                        className="product-image"
+                                                        alt={product?.name || product?.productName}
+                                                    />
+                                                </Link>
+
+                                                <Link
+                                                    to={`/product/${product?.slug}`}
+                                                    className="product-title dmsans-bold d-block text-decoration-none mb-0 pt-2"
+                                                >
+                                                    {product?.name || product?.productName}
+                                                </Link>
+
+                                                <p className="product-price dmsans-bold">${product?.price}</p>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                                {/* <button type='button' className='sub-category-button text-color-secondary button-bg-danger  border-0 mx-auto my-5  d-block '>Show more items</button> */}
                             </div>
+
                         </div>
                     </div>
                 </div>
