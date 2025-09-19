@@ -1,5 +1,5 @@
 import { useLocation, useParams } from 'react-router-dom';
-import Common from '../../commonMethod/Common';
+import Common from '../../commonMethod/common.js';
 
 const CategoryBanner = ({ bannerDetails }) => {
     const {subslug } = useParams();

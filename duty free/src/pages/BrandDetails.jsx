@@ -8,7 +8,7 @@ import Products from '../components/commonComponents/Products'
 import NewProducts from '../components/commonComponents/NewProducts'
 import SaleCard from '../components/commonComponents/SaleCard'
 import { banner } from '../Files/data'
-import Common from '../commonMethod/Common'
+import Common from '../commonMethod/common.js'
 
 const BrandDetails = () => {
     const { slug } = useParams()

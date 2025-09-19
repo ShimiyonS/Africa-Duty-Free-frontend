@@ -22,7 +22,7 @@ import { MdFullscreen } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { FiMinimize } from "react-icons/fi";
 import Products from '../components/commonComponents/Products'
-import Loader from "../components/commonComponents/loader/loader.jsx";
+import Loader from "../components/commonComponents/loader/Loader.jsx";
 import { GoZoomIn } from "react-icons/go";
 import { Link } from 'react-router-dom'
 import { IoStarOutline } from "react-icons/io5";
