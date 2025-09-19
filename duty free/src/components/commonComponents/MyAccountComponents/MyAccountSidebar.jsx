@@ -35,7 +35,7 @@ const MyAccountSidebar = () => {
       </div>
       <div className="d-flex align-items-center gap-3">
         <LuMapPin className="myaccountsidebar-icons" />
-        <NavLink to="/my-account/edit-address" className="text-decoration-none myaccount-links">ADDRESSES</NavLink>
+        <NavLink to="/my-account/address" className="text-decoration-none myaccount-links">ADDRESSES</NavLink>
       </div>
       <div className="d-flex align-items-center gap-3">
         <SlUser className="myaccountsidebar-icons" />

@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "../Styles/checkout.css";
-import common from "../commonMethod/common";
+import common from "../commonMethod/common.js";
 import { Link } from "react-router-dom";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { FaCreditCard } from "react-icons/fa6";
 import { FaMobileAlt, FaUniversity } from "react-icons/fa";
 import { toast } from "react-toastify";
 const Checkout = () => {
+  const { apiRequest, cartItems } = common();
+  const user = JSON.stringify(localStorage.getItem("user"))
+
+  const [address, setAddress] = useState({
+    billing: {},
+    shipping: []
+  })
   const [couponStatus] = useState(false);
   const [cart, setCart] = useState([]);
   const [form, setForm] = useState({
@@ -32,16 +39,17 @@ const Checkout = () => {
     sRegion: "",
     sPostcode: "",
     orderNotes: "",
+    sphone: ""
   });
   const [btnClick, setBtnClick] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [errors, setErrors] = useState({});
   const [paymentMethodError, setPaymentMethodError] = useState("");
-  const { apiRequest, cartItems } = common();
 
   useEffect(() => {
     setCart(Array.isArray(cartItems) ? cartItems : []);
   }, [cartItems]);
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -62,9 +70,6 @@ const Checkout = () => {
     // Validate individual field on blur
     let error = "";
     switch (name) {
-      case "email":
-        error = validateEmail(value);
-        break;
       case "phone":
         error = validatePhone(value);
         break;
@@ -137,7 +142,7 @@ const Checkout = () => {
     };
 
     let shipping = undefined;
-    if (form.shipDifferent || btnClick) {
+    if (btnClick) {
       shipping = {
         firstName: form.sFirstName,
         lastName: form.sLastName,
@@ -160,6 +165,7 @@ const Checkout = () => {
     try {
       const payload = buildAddressPayload();
       const res = await apiRequest("POST", "/address", payload);
+      await fetchUserAddress()
       console.log("Addresses saved:", res);
       return res;
     } catch (err) {
@@ -168,8 +174,6 @@ const Checkout = () => {
     }
   };
 
-
-
   const [paymentMethod, setPaymentMethod] = useState("");
 
   const handlePaymentMethodChange = (method) => {
@@ -177,13 +181,6 @@ const Checkout = () => {
     setPaymentMethodError("");
   };
 
-  // Field-specific validation functions
-  const validateEmail = (email) => {
-    if (!email?.trim()) return "Email is required";
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) return "Please enter a valid email address";
-    return "";
-  };
 
   const validatePhone = (phone) => {
     if (!phone?.trim()) return "Phone number is required";
@@ -208,23 +205,25 @@ const Checkout = () => {
     const newErrors = {};
 
     // Billing address validation
-    newErrors.email = validateEmail(form.email);
     newErrors.firstName = validateRequiredField(form.firstName, "First name");
     newErrors.lastName = validateRequiredField(form.lastName, "Last name");
     newErrors.country = validateRequiredField(form.country, "Country");
+    newErrors.region = validateRequiredField(form.region, "Region");
     newErrors.street1 = validateRequiredField(form.street1, "Street address");
     newErrors.city = validateRequiredField(form.city, "City");
     newErrors.postcode = validatePostcode(form.postcode);
     newErrors.phone = validatePhone(form.phone);
 
     // Shipping address validation (if different)
-    if (form.shipDifferent) {
+    if (btnClick) {
       newErrors.sFirstName = validateRequiredField(form.sFirstName, "Shipping first name");
       newErrors.sLastName = validateRequiredField(form.sLastName, "Shipping last name");
       newErrors.sCountry = validateRequiredField(form.sCountry, "Shipping country");
       newErrors.sStreet1 = validateRequiredField(form.sStreet1, "Shipping street address");
       newErrors.sCity = validateRequiredField(form.sCity, "Shipping city");
+      newErrors.sRegion = validateRequiredField(form.sRegion, "Shipping Region");
       newErrors.sPostcode = validatePostcode(form.sPostcode);
+      newErrors.sphone = validatePhone(form.sphone);
     }
 
     setErrors(newErrors);
@@ -233,30 +232,54 @@ const Checkout = () => {
 
 
 
-  const onPay = async (method) => {
+  const onPay = async () => {
+    if (!paymentMethod) {
+      setPaymentMethodError("Please select a payment method");
+      toast.error("Please select a payment method");
+      return;
+    }
+
+    if (!address?.billing?.id) {
+      const isValid = validateAllFields();
+      if (!isValid) {
+        toast.error("Please complete all required fields");
+        return;
+      }
+      else {
+        submitAddresses()
+      }
+    }
+    if (btnClick) {
+      if (address?.shipping?.length < 0 || !address?.shipping?.find((item) => item?.checked == 1)) {
+        toast.error("Please Select Shipping address");
+        return;
+      }
+    }
+    const payload = {
+      items: cart?.map(item => ({
+        product_id: item?.product?.id,
+        quantity: item?.quantity,
+        price: item?.product?.price
+      })),
+      total: computeTotal(),
+      billingAddressId: address?.billing?.id,
+      shippingAddressId: btnClick ? address?.shipping?.filter((item) => item?.checked == 1)[0]?.id : address?.billing?.id
+    }
+    console.log(payload)
+
     try {
       // 1. First create the order
-      const orderResponse = await apiRequest("POST", "/orders", {
-        items: cart.map(item => ({
-          product_id: item?.product?.id,
-          quantity: item?.quantity,
-          price: item?.product?.price
-        })),
-        total: computeTotal(),
-        userId: 1, // TODO: change to user id 
-      });
+      const orderResponse = await apiRequest("POST", "/orders", payload);
 
       const orderId = orderResponse.orderId;
 
       // 2. Then initialize payment with order ID
       const paymentResponse = await apiRequest("POST", "/payment/initialize", {
         amount: computeTotal(),
-        email: form.email || "test@test.com",
         name: `${form.firstName} ${form.lastName}`.trim() || "Test User",
-        paymentMethod: method,
+        paymentMethod: paymentMethod,
         orderId: orderId,
         redirectUrl: window.location.origin + "/payment/callback",
-        userId: 1,
       });
 
       // 3. Redirect to payment page
@@ -265,11 +288,43 @@ const Checkout = () => {
       }
     } catch (error) {
       console.error("Payment initialization failed:", error);
-      alert("Payment initialization failed. Please try again.");
+      toast.error("Payment initialization failed. Please try again.");
     }
   };
+
+  const fetchUserAddress = async () => {
+    try {
+      const res = await apiRequest("GET", "/address");
+      const data = res?.addresses
+      setAddress((prev) => ({
+        ...prev,
+        billing: data?.find((item) => item?.type == "billing"),
+        shipping: data?.filter((item) => item?.type == "shipping")
+      }))
+      // toast.success(res?.message)
+    }
+    catch (error) {
+      toast.success(error?.message)
+    }
+  }
+
+  const enableShipping = (e) => {
+    const { checked } = e.target
+    setBtnClick(!btnClick)
+    if (!checked) {
+      setAddress((prev) => ({
+        ...prev,
+        shipping: prev?.shipping?.map((item) => ({ ...item, checked: 0 }))
+      }))
+    }
+  }
+  useEffect(() => {
+    if (user) {
+      fetchUserAddress()
+    }
+  }, [])
   return (
-    <div className="container mt-5">
+    <div className="container mt-0 mt-md-5">
       {/* <div className="d-flex align-items-center flex-wrap gap-2">
         <p className="m-0">Have a coupon?</p>
         <button
@@ -305,218 +360,36 @@ const Checkout = () => {
       ) : (
         ""
       )}
-      <div className="d-flex flex-wrap py-5 ">
+      <div className="d-flex flex-wrap py-2  py-md-5 ">
         <div className="col-12 col-lg-6 p-lg-3">
           <h1 className="justuspro-bold mb-4 cart-heading">Billing details</h1>
-          <label className="checkout-form-label required dmsans-bold">
-            Email address
-          </label>
-          <input
-            type="email"
-            placeholder=""
-            className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.email ? 'border-danger' : ''}`}
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.email && (
-            <div className="invalid-feedback d-block mt-2" >{errors.email}</div>
-          )}
-          <label className="checkout-form-label required dmsans-bold">
-            First name
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.firstName ? 'border-danger' : ''}`}
-            name="firstName"
-            value={form.firstName}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.firstName && (
-            <div className="invalid-feedback d-block mt-2">
-              {errors.firstName}
+          {Object.keys(address?.billing)?.length > 0 ?
+            <div className="address-block mb-5">
+              <p><strong>Name:  </strong>{address?.billing?.firstName}  {address?.billing?.lastName}</p>
+              <p><strong>Country:</strong> {address?.billing?.country}</p>
+              <p><strong>Region:</strong> {address?.billing?.region}</p>
+              <p><strong>City:</strong> {address?.billing?.city}</p>
+              <p><strong>Street:</strong> {address?.billing?.street1}</p>
+              <p><strong>postalCode:</strong> {address?.billing?.postalCode}</p>
+              <p><strong>Phone number:</strong> {address?.billing?.phone}</p>
             </div>
-          )}
-          <label className="checkout-form-label required dmsans-bold">
-            Last name
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.lastName ? 'border-danger' : ''}`}
-            name="lastName"
-            value={form.lastName}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.lastName && (
-            <div  className="invalid-feedback d-block mt-2" >
-              {errors.lastName}
-            </div>
-          )}
-          <label className="checkout-form-label dmsans-bold">
-            Company name (optional)
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="d-block col-12 col-lg-8 placeholder-custom custom-input"
-            name="company"
-            value={form.company}
-            onChange={handleChange}
-          />
-          <label className="checkout-form-label required dmsans-bold">
-            Country / Region
-          </label>
-          <div></div>
-          <div className={`d-block col-12 col-lg-8 placeholder-custom custom-select-address ${errors.country ? 'border-danger' : ''}`}>
-            <CountryDropdown
-              value={form.country}
-              onChange={(val) =>
-                handleChange({ target: { name: "country", value: val } })
-              }
-              onBlur={() => handleBlur({ target: { name: "country", value: form.country } })}
-              valueType="short"
-            />
-          </div>
-          {errors.country && (
-            <div  className="invalid-feedback d-block mt-2" >
-              {errors.country}
-            </div>
-          )}
-          <div></div>
-          <label className="checkout-form-label required dmsans-bold">
-            Street address
-          </label>
-          <input
-            type="text"
-            placeholder="House number and street name"
-            className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.street1 ? 'border-danger' : ''}`}
-            name="street1"
-            value={form.street1}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.street1 && (
-            <div  className="invalid-feedback d-block mt-2" >
-              {errors.street1}
-            </div>
-          )}
-          <input
-            type="text"
-            placeholder="Apartment, suite, unit, etc. (optional)"
-            className="d-block col-12 col-lg-8 placeholder-custom custom-input"
-            name="street2"
-            value={form.street2}
-            onChange={handleChange}
-          />
-          <label className="checkout-form-label required dmsans-bold">
-            Town / City
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.city ? 'border-danger' : ''}`}
-            name="city"
-            value={form.city}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.city && (
-            <div  className="invalid-feedback d-block mt-2" >
-              {errors.city}
-            </div>
-          )}
-          <label className="checkout-form-label dmsans-bold ">
-            State / Province
-          </label>
-          <div></div>
-          <div className="d-block col-12 col-lg-8 placeholder-custom custom-select-address">
-            <RegionDropdown
-              country={form.country}
-              value={form.region}
-              onChange={(val) =>
-                handleChange({ target: { name: "region", value: val } })
-              }
-              classes="d-block col-12 col-lg-8 placeholder-custom custom-input"
-              countryValueType="short"
-            />
-          </div>
-          <div></div>
-          <label className="checkout-form-label required dmsans-bold">
-            Postcode
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.postcode ? 'border-danger' : ''}`}
-            name="postcode"
-            value={form.postcode}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.postcode && (
-            <div  className="invalid-feedback d-block mt-2" >
-              {errors.postcode}
-            </div>
-          )}
-          <label className="checkout-form-label required dmsans-bold">
-            Phone
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.phone ? 'border-danger' : ''}`}
-            name="phone"
-            value={form.phone}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.phone && (
-            <div  className="invalid-feedback d-block mt-2" >
-              {errors.phone}
-            </div>
-          )}
-          <div className="d-flex align-items-center gap-2 my-4">
-            <input
-              type="checkbox"
-              onChange={(e) => {
-                setBtnClick(e.target.checked);
-                handleChange({
-                  target: {
-                    name: "shipDifferent",
-                    type: "checkbox",
-                    checked: e.target.checked,
-                  },
-                });
-              }}
-              checked={btnClick}
-            ></input>
-            <h1 className="justuspro-bold cart-heading">
-              Ship to a different address?
-            </h1>
-          </div>
-          {btnClick && (
-            <div className="">
-              {" "}
+            :
+            <div>
               <label className="checkout-form-label required dmsans-bold">
                 First name
               </label>
               <input
                 type="text"
-                placeholder=""
-                className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.sFirstName ? 'border-danger' : ''}`}
-                name="sFirstName"
-                value={form.sFirstName}
+                placeholder="Please enter billing first name"
+                className={`form-control  placeholder-custom custom-input ${errors.firstName ? 'is-invalid' : ''}`}
+                name="firstName"
+                value={form.firstName}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.sFirstName && (
-                <div  className="invalid-feedback d-block mt-2" >
-                  {errors.sFirstName}
+              {errors.firstName && (
+                <div className="invalid-feedback d-block mt-2">
+                  {errors.firstName}
                 </div>
               )}
               <label className="checkout-form-label required dmsans-bold">
@@ -524,16 +397,16 @@ const Checkout = () => {
               </label>
               <input
                 type="text"
-                placeholder=""
-                className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.sLastName ? 'border-danger' : ''}`}
-                name="sLastName"
-                value={form.sLastName}
+                placeholder="Please enter billing last name"
+                className={` form-control placeholder-custom custom-input ${errors.lastName ? 'is-invalid' : ''}`}
+                name="lastName"
+                value={form.lastName}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.sLastName && (
-                <div  className="invalid-feedback d-block mt-2" >
-                  {errors.sLastName}
+              {errors.lastName && (
+                <div className="invalid-feedback d-block mt-2" >
+                  {errors.lastName}
                 </div>
               )}
               <label className="checkout-form-label dmsans-bold">
@@ -541,110 +414,334 @@ const Checkout = () => {
               </label>
               <input
                 type="text"
-                placeholder=""
-                className="d-block col-12 col-lg-8 placeholder-custom custom-input"
-                name="sCompany"
-                value={form.sCompany}
+                placeholder="Please enter billing company name"
+                className="form-control  placeholder-custom custom-input"
+                name="company"
+                value={form.company}
                 onChange={handleChange}
               />
               <label className="checkout-form-label required dmsans-bold">
                 Country / Region
               </label>
-              <div></div>
-              <div className={`d-block col-12 col-lg-8 placeholder-custom custom-select-address ${errors.sCountry ? 'border-danger' : ''}`}>
+              <div className={`placeholder-custom custom-select-address `}>
                 <CountryDropdown
-                  value={form.sCountry}
+                  value={form.country}
+                  placeholder="Please select country"
                   onChange={(val) =>
-                    handleChange({ target: { name: "sCountry", value: val } })
+                    handleChange({ target: { name: "country", value: val } })
                   }
-                  onBlur={() => handleBlur({ target: { name: "sCountry", value: form.sCountry } })}
+                  onBlur={() => handleBlur({ target: { name: "country", value: form.country } })}
                   valueType="short"
+                  className={`${errors.country ? 'is-invalid' : ''} form-control placeholder-custom custom-input w-100`}
                 />
               </div>
-              {errors.sCountry && (
-                <div  className="invalid-feedback d-block mt-2" >
-                  {errors.sCountry}
+              {errors.country && (
+                <div className="invalid-feedback d-block mt-2" >
+                  {errors.country}
                 </div>
               )}
-              <div></div>
+
               <label className="checkout-form-label required dmsans-bold">
                 Street address
               </label>
               <input
                 type="text"
                 placeholder="House number and street name"
-                className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.sStreet1 ? 'border-danger' : ''}`}
-                name="sStreet1"
-                value={form.sStreet1}
+                className={`form-control  placeholder-custom custom-input ${errors.street1 ? "is-invalid" : ""}`}
+                name="street1"
+                value={form.street1}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.sStreet1 && (
-                <div  className="invalid-feedback d-block mt-2" >
-                  {errors.sStreet1}
+              {errors.street1 && (
+                <div className="invalid-feedback d-block mt-2" >
+                  {errors.street1}
                 </div>
               )}
-              <input
+              {/* <input
                 type="text"
                 placeholder="Apartment, suite, unit, etc. (optional)"
                 className="d-block col-12 col-lg-8 placeholder-custom custom-input"
-                name="sStreet2"
-                value={form.sStreet2}
+                name="street2"
+                value={form.street2}
                 onChange={handleChange}
-              />
+              /> */}
               <label className="checkout-form-label required dmsans-bold">
                 Town / City
               </label>
               <input
                 type="text"
-                placeholder=""
-                className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.sCity ? 'border-danger' : ''}`}
-                name="sCity"
-                value={form.sCity}
+                placeholder="Please enter billing city"
+                className={` form-control  placeholder-custom custom-input ${errors.city ? "is-invalid" : ""}`}
+                name="city"
+                value={form.city}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.sCity && (
-                <div  className="invalid-feedback d-block mt-2" >
-                  {errors.sCity}
+              {errors.city && (
+                <div className="invalid-feedback d-block mt-2" >
+                  {errors.city}
                 </div>
               )}
               <label className="checkout-form-label dmsans-bold ">
                 State / Province
               </label>
-              <div></div>
-              <div className="d-block col-12 col-lg-8 placeholder-custom custom-select-address">
+              <div className="placeholder-custom custom-select-address required">
                 <RegionDropdown
-                  country={form.sCountry}
-                  value={form.sRegion}
+                  country={form.country}
+                  value={form.region}
                   onChange={(val) =>
-                    handleChange({ target: { name: "sRegion", value: val } })
+                    handleChange({ target: { name: "region", value: val } })
                   }
-                  classes="d-block col-12 col-lg-8 placeholder-custom custom-select-address"
+                  className={`placeholder-custom form-control w-100 custom-input ${errors.region ? "is-invalid" : ""}`}
                   countryValueType="short"
                 />
+                {errors.region && (
+                  <div className="invalid-feedback d-block mt-2">{errors.region}</div>
+                )}
               </div>
-              <div></div>
               <label className="checkout-form-label required dmsans-bold">
                 Postcode
               </label>
               <input
-                type="text"
-                placeholder=""
-                className={`d-block col-12 col-lg-8 placeholder-custom custom-input ${errors.sPostcode ? 'border-danger' : ''}`}
-                name="sPostcode"
-                value={form.sPostcode}
+                type="number"
+                placeholder="Please enter billing postcode"
+                className={`form-control  placeholder-custom custom-input ${errors.postalCode ? "is-invalid" : ""
+                  }`}
+                name="postcode"
+                value={form.postcode}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.sPostcode && (
-                <div  className="invalid-feedback d-block mt-2" >
-                  {errors.sPostcode}
+              {errors.postcode && (
+                <div className="invalid-feedback d-block mt-2" >
+                  {errors.postcode}
+                </div>
+              )}
+              <label className="checkout-form-label required dmsans-bold">
+                Phone
+              </label>
+              <input
+                type="number"
+                placeholder="Please enter phone number"
+                className={`d-block form-control  placeholder-custom custom-input ${errors.phone ? "is-invalid" : ""
+                  }`}
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {errors.phone && (
+                <div className="invalid-feedback d-block mt-2" >
+                  {errors.phone}
                 </div>
               )}
             </div>
+          }
+          <div className="d-flex align-items-center gap-2 my-4">
+            <input
+              type="checkbox"
+              onChange={(e) => enableShipping(e)}
+            ></input>
+            <h1 className="justuspro-bold cart-heading">
+              Ship to a different address?
+            </h1>
+          </div>
+          {btnClick && (
+            <div className="">
+              {address?.shipping?.length > 0 ?
+                address?.shipping?.map((item) => {
+                  return (
+                    <div className="address-block mb-3">
+                      <input
+                        type="checkbox"
+                        checked={item?.checked || false} // controlled checkbox
+                        onChange={() =>
+                          setAddress((prev) => ({
+                            ...prev,
+                            shipping: prev?.shipping?.map((addr) =>
+                              addr.id === item.id
+                                ? { ...addr, checked: !addr.checked } // toggle clicked one
+                                : { ...addr, checked: false } // uncheck others
+                            ),
+                          }))
+                        }
+                      />
+                      <p>{item?.firstName}  {item?.lastName}</p>
+                      <p>{item?.phone}</p>
+                      <p> {item?.street1},{item?.country},{item?.region},{item?.city},{item?.postalCode}</p>
+                    </div>)
+                }) :
+                <>
+                  <label className="checkout-form-label required dmsans-bold">
+                    First name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Please enter shipping first name"
+                    className={`form-control  placeholder-custom custom-input ${errors.sFirstName ? 'is-invalid' : ''}`}
+                    name="sFirstName"
+                    value={form.sFirstName}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.sFirstName && (
+                    <div className="invalid-feedback d-block mt-2" >
+                      {errors.sFirstName}
+                    </div>
+                  )}
+                  <label className="checkout-form-label required dmsans-bold">
+                    Last name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Please enter shipping last name"
+                    className={` form-control placeholder-custom custom-input ${errors.sLastName ? 'is-invalid' : ''}`}
+                    name="sLastName"
+                    value={form.sLastName}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.sLastName && (
+                    <div className="invalid-feedback d-block mt-2" >
+                      {errors.sLastName}
+                    </div>
+                  )}
+                  <label className="checkout-form-label dmsans-bold">
+                    Company name (optional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Please enter shipping company name"
+                    className="form-control  placeholder-custom custom-input"
+                    name="sCompany"
+                    value={form.sCompany}
+                    onChange={handleChange}
+                  />
+                  <label className="checkout-form-label required dmsans-bold">
+                    Country / Region
+                  </label>
+
+                  <div className={`placeholder-custom custom-select-address`}>
+                    <CountryDropdown
+                      value={form.sCountry}
+                      onChange={(val) =>
+                        handleChange({ target: { name: "sCountry", value: val } })
+                      }
+                      onBlur={() => handleBlur({ target: { name: "sCountry", value: form.sCountry } })}
+                      valueType="short"
+                      placeholder="Please select country"
+                      className={`${errors.sCountry ? 'is-invalid' : ''} form-control placeholder-custom custom-input w-100`}
+
+                    />
+                  </div>
+                  {errors.sCountry && (
+                    <div className="invalid-feedback d-block mt-2" >
+                      {errors.sCountry}
+                    </div>
+                  )}
+
+                  <label className="checkout-form-label required dmsans-bold">
+                    Street address
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="House number and street name"
+                    className={`form-control  placeholder-custom custom-input ${errors.sStreet1 ? "is-invalid" : ""}`}
+                    name="sStreet1"
+                    value={form.sStreet1}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.sStreet1 && (
+                    <div className="invalid-feedback d-block mt-2" >
+                      {errors.sStreet1}
+                    </div>
+                  )}
+                  {/* <input
+                    type="text"
+                    placeholder="Apartment, suite, unit, etc. (optional)"
+                    className="d-block col-12 col-lg-8 placeholder-custom custom-input"
+                    name="sStreet2"
+                    value={form.sStreet2}
+                    onChange={handleChange}
+                  /> */}
+                  <label className="checkout-form-label required dmsans-bold">
+                    Town / City
+                  </label>
+                  <input
+                    type="text"
+                    placeholder=""
+                    className={` form-control  placeholder-custom custom-input ${errors.sCity ? "is-invalid" : ""}`}
+
+                    name="sCity"
+                    value={form.sCity}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.sCity && (
+                    <div className="invalid-feedback d-block mt-2" >
+                      {errors.sCity}
+                    </div>
+                  )}
+                  <label className="checkout-form-label dmsans-bold ">
+                    State / Province
+                  </label>
+                  <div className="placeholder-custom custom-select-address required">
+                    <RegionDropdown
+                      country={form.sCountry}
+                      value={form.sRegion}
+                      onChange={(val) =>
+                        handleChange({ target: { name: "sRegion", value: val } })
+                      }
+                      className={`placeholder-custom form-control w-100 custom-input ${errors.sRegion ? "is-invalid" : ""}`}
+                      countryValueType="short"
+                    />
+                    {errors.sRegion && (
+                      <div className="invalid-feedback d-block mt-2">{errors.sRegion}</div>
+                    )}
+                  </div>
+                  <label className="checkout-form-label required dmsans-bold">
+                    Postcode
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="Please enter postcode number"
+                    className={`d-block form-control  placeholder-custom custom-input ${errors.sPostcode ? "is-invalid" : ""
+                      }`}
+                    name="sPostcode"
+                    value={form.sPostcode}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.sPostcode && (
+                    <div className="invalid-feedback d-block mt-2" >
+                      {errors.sPostcode}
+                    </div>
+                  )}
+                  <label className="checkout-form-label required dmsans-bold">
+                    Phone
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="Please enter phone number"
+                    className={`d-block form-control  placeholder-custom custom-input ${errors.sphone ? "is-invalid" : ""
+                      }`}
+                    name="sphone"
+                    value={form.sphone}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {errors.sphone && (
+                    <div className="invalid-feedback d-block mt-2" >
+                      {errors.sphone}
+                    </div>
+                  )}
+                </>
+              }
+            </div>
           )}
-          <label className="checkout-form-label mt-5">
+          {/* <label className="checkout-form-label mt-md-5">
             Order notes (optional)
           </label>
           <textarea
@@ -654,7 +751,7 @@ const Checkout = () => {
             name="orderNotes"
             value={form.orderNotes}
             onChange={handleChange}
-          ></textarea>
+          ></textarea> */}
         </div>
         <div className="col-12 col-lg-6 p-lg-3">
           <h1 className="justuspro-bold mb-4 cart-heading">Your order</h1>
@@ -673,15 +770,15 @@ const Checkout = () => {
                 className="d-flex align-items-center flex-wrap table-box-list"
               >
                 <div className="col-8 col-lg-10 cart-table-item">
-                  <div className="d-flex align-items-center flex-wrap p-2">
-                    <div className="col-4">
+                  <div className="d-flex flex-wrap align-items-center flex-wrap p-2">
+                    <div className="col-12 col-md-4">
                       <img
                         src={item?.product?.imageUrl}
                         className="checkout-item-image"
                         alt={item?.title || "Product"}
                       />
                     </div>
-                    <div className="col-8">
+                    <div className="col-12 col-md-8">
                       <Link
                         to={`/product/${item?.product?.slug}`}
                         className="text-decoration-none cart-product-link justuspro-regular text-color-danger dmsans-bold"
@@ -724,34 +821,17 @@ const Checkout = () => {
               ${computeTotal()}
             </div>
           </div>
-          <p className="table-box mt-5 mb-0 justuspro-regular text-color-primary">
+          {/* <p className="table-box mt-5 mb-0 justuspro-regular text-color-primary">
             Sorry, it seems that there are no available payment methods. Please
             contact us if you require assistance or wish to make alternate
             arrangements.
-          </p>
+          </p> */}
           <div>
-            <div style={{
-              border: "1px solid #ddd",
-              padding: "20px",
-              margin: "20px 0px "
-            }}>
-              <h3 style={{ marginBottom: "15px" }}>Choose a Payment Method</h3>
+            <div className="payment-method-container">
+              <h3 className="payment-method-title">Choose a Payment Method</h3>
 
-              <div style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                marginBottom: "20px"
-              }}>
-                <label style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  cursor: "pointer",
-                  padding: "10px",
-                  border: paymentMethod === "card" ? "2px solid #f9a825" : "1px solid #ccc",
-                  borderRadius: "6px"
-                }}>
+              <div className="payment-method-options">
+                <label className={`payment-method-label ${paymentMethod === "card" ? "selected" : ""}`}>
                   <input
                     type="radio"
                     name="payment"
@@ -763,15 +843,7 @@ const Checkout = () => {
                   Pay with Card
                 </label>
 
-                <label style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  cursor: "pointer",
-                  padding: "10px",
-                  border: paymentMethod === "mobilemoneyghana" ? "2px solid #f9a825" : "1px solid #ccc",
-                  borderRadius: "6px"
-                }}>
+                <label className={`payment-method-label ${paymentMethod === "mobilemoneyghana" ? "selected" : ""}`}>
                   <input
                     type="radio"
                     name="payment"
@@ -783,15 +855,7 @@ const Checkout = () => {
                   Mobile Money
                 </label>
 
-                <label style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  cursor: "pointer",
-                  padding: "10px",
-                  border: paymentMethod === "bank" ? "2px solid #f9a825" : "1px solid #ccc",
-                  borderRadius: "6px"
-                }}>
+                <label className={`payment-method-label ${paymentMethod === "bank" ? "selected" : ""}`}>
                   <input
                     type="radio"
                     name="payment"
@@ -806,15 +870,7 @@ const Checkout = () => {
 
               {/* Payment method error message */}
               {paymentMethodError && (
-                <div style={{
-                  color: "#dc3545",
-                  fontSize: "14px",
-                  marginTop: "10px",
-                  padding: "8px 12px",
-                  backgroundColor: "#f8d7da",
-                  border: "1px solid #f5c6cb",
-                  borderRadius: "4px"
-                }}>
+                <div className="payment-method-error">
                   {paymentMethodError}
                 </div>
               )}
@@ -833,39 +889,13 @@ const Checkout = () => {
                 privacy policy.
               </Link>
             </p>
-            <button
-              onClick={async () => {
-                try {
-                  // First check payment method
-                  if (!paymentMethod) {
-                    setPaymentMethodError("Please select a payment method");
-                    toast.error("Please select a payment method");
-                    return;
-                  }
-
-                  // Then validate all fields and show errors
-                  const isValid = validateAllFields();
-                  if (!isValid) {
-                    toast.error("Please complete all required fields");
-                    return;
-                  }
-
-                  // If validation passes, proceed with payment
-                  await submitAddresses();
-                  await onPay(paymentMethod);
-                } catch (e) {
-                  console.error(e);
-                  alert("Order placement failed. Please try again.");
-                }
-              }}
-              className="order-btn w-100 border-0 justuspro-medium text-color-primary button-bg-primary"
-            >
+            <button type="button" onClick={() => onPay()} className="order-btn w-100 border-0 justuspro-medium text-color-primary button-bg-primary">
               PLACE ORDER
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

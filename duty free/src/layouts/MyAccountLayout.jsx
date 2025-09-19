@@ -11,10 +11,8 @@ const MyAccountLayout = () => {
                     <MyAccountSidebar />
                 </div>
 
-                <div className="col-12 col-md-9">
-                    <div className="col-12 col-md-9 mx-auto">
-                        <Outlet />
-                    </div>
+                <div className="col-12 col-md-9 px-2 px-md-5">
+                    <Outlet />
                 </div>
             </div>
 
